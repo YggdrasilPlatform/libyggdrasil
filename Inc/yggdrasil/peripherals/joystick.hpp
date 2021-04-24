@@ -178,7 +178,7 @@ namespace bsp::ygg::prph {
 		static_assert(sizeof(ConfigurationRegister) == sizeof(u16), "Configuration register definition wrong");
 
 
-		constexpr static inline u8 DeviceAddress 		= 0xB0;		///< I2C device address
+		constexpr static inline u8 DeviceAddress 		= 0x90;		///< I2C device address
 		constexpr static inline u8 ReservedBits			= 0x03;		///< Reserved bits must be write as 0x03
 		constexpr static inline u16 ConversionDone		= 0x8000;	///< Configuration done flag (OS bit in configuration register)
 
@@ -199,20 +199,24 @@ namespace bsp::ygg::prph {
 		 * @note Start a conversion and poll until the conversion is finished
 		 */
 		static u16 getADCValue(MUX channel) {
+			bool done = false;
 			ConfigurationRegister configRegister = {0};
-			configRegister.OS = 0;
+			configRegister.OS = 1;
 			configRegister.MUX = static_cast<u8>(channel);
 			configRegister.PGA = static_cast<u8>(PGA::FSR_4p096);
 			configRegister.MODE = static_cast<u8>(MODE::SingleShot);
 			configRegister.DR = static_cast<u8>(DR::SPS1600);
 			configRegister.Reserved = ReservedBits;
 
-			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister), bit_cast<u16>(configRegister));		// Start Conversion
+			bsp::I2CA::write<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister), byteSwap(bit_cast<u16>(configRegister)));		// Start Conversion
 
-			while(!(bsp::I2CA::read<u8>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister)) && ConversionDone)) {		// Poll the conversion
+			while(byteSwap(bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister))) & ConversionDone){
 				core::delay(1);
 			}
-			return bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConversionRegister));
+
+
+			volatile auto adcdata = byteSwap(bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConversionRegister)));
+			return adcdata;
 
 		}
 
