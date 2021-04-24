@@ -41,12 +41,12 @@ namespace bsp::mid::drv {
 
 		template<size_t N>
 		ALWAYS_INLINE static void read(u8 address, std::array<u8, N> &data) {
-
+			HAL_I2C_Master_Receive(Context, address, data.data(), data.size(), HAL_MAX_DELAY);
 		}
 
 		template<size_t N>
 		ALWAYS_INLINE static void write(u8 address, const std::array<u8, N> &data) {
-
+			HAL_I2C_Master_Transmit(Context, address, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
 		}
 	private:
 
