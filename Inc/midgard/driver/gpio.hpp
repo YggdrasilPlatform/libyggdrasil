@@ -69,7 +69,7 @@ namespace bsp::mid::drv {
 	     * @param state Pin state
 	     * @return Pin
 	     */
-	    ALWAYS_INLINE constexpr auto& operator=(bool state) noexcept {
+	    ALWAYS_INLINE constexpr auto& operator=(bool state) const noexcept {
 	        ODRx = state;
 
 	        return *this;

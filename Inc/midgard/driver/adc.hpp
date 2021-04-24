@@ -30,14 +30,14 @@
 
 #include <cmath>
 
-struct ADC_HandleTypeDef;
+
 
 namespace bsp::mid::drv {
 
 	template<ADC_HandleTypeDef *Context, u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
-	struct ADC {
+	struct AnalogDigitalConverter {
 
-		ADC() {
+		AnalogDigitalConverter() {
 
 		}
 

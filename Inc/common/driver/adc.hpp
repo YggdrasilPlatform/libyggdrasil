@@ -37,10 +37,10 @@ namespace bsp::drv {
 	 * @tparam ADCChannel ADCChannel implementation
 	 */
 	template<auto Context>
-	struct ADC {
-		ADC() = delete;
-		ADC(const ADC&) = delete;
-		ADC(ADC &&) = delete;
+	struct AnalogDigitalConverter {
+		AnalogDigitalConverter() = delete;
+		AnalogDigitalConverter(const AnalogDigitalConverter&) = delete;
+		AnalogDigitalConverter(AnalogDigitalConverter &&) = delete;
 
 		/*template<u8 Index>
 		static inline auto Channel = ADCChannel<Context, Index>();*/

@@ -50,21 +50,21 @@
 		 * @brief GPIO Port definitions
 		 * @{
 		 */
-		using GPIOA = bsp::drv::GPIOPort<0x4002'0000, bsp::mid::drv::GPIOPort>;
-		using GPIOB = bsp::drv::GPIOPort<0x4002'0400, bsp::mid::drv::GPIOPort>;
-		using GPIOC = bsp::drv::GPIOPort<0x4002'0800, bsp::mid::drv::GPIOPort>;
-		using GPIOD = bsp::drv::GPIOPort<0x4002'0C00, bsp::mid::drv::GPIOPort>;
-		using GPIOE = bsp::drv::GPIOPort<0x4002'1000, bsp::mid::drv::GPIOPort>;
-		using GPIOF = bsp::drv::GPIOPort<0x4002'1400, bsp::mid::drv::GPIOPort>;
-		using GPIOG = bsp::drv::GPIOPort<0x4002'1800, bsp::mid::drv::GPIOPort>;
-		using GPIOH = bsp::drv::GPIOPort<0x4002'1C00, bsp::mid::drv::GPIOPort>;
-		using GPIOI = bsp::drv::GPIOPort<0x4002'2000, bsp::mid::drv::GPIOPort>;
-		using GPIOJ = bsp::drv::GPIOPort<0x4002'2400, bsp::mid::drv::GPIOPort>;
-		using GPIOK = bsp::drv::GPIOPort<0x4002'2800, bsp::mid::drv::GPIOPort>;
+		using GPIOPortA = bsp::drv::GPIOPort<0x4002'0000, bsp::mid::drv::GPIOPort>;
+		using GPIOPortB = bsp::drv::GPIOPort<0x4002'0400, bsp::mid::drv::GPIOPort>;
+		using GPIOPortC = bsp::drv::GPIOPort<0x4002'0800, bsp::mid::drv::GPIOPort>;
+		using GPIOPortD = bsp::drv::GPIOPort<0x4002'0C00, bsp::mid::drv::GPIOPort>;
+		using GPIOPortE = bsp::drv::GPIOPort<0x4002'1000, bsp::mid::drv::GPIOPort>;
+		using GPIOPortF = bsp::drv::GPIOPort<0x4002'1400, bsp::mid::drv::GPIOPort>;
+		using GPIOPortG = bsp::drv::GPIOPort<0x4002'1800, bsp::mid::drv::GPIOPort>;
+		using GPIOPortH = bsp::drv::GPIOPort<0x4002'1C00, bsp::mid::drv::GPIOPort>;
+		using GPIOPortI = bsp::drv::GPIOPort<0x4002'2000, bsp::mid::drv::GPIOPort>;
+		using GPIOPortJ = bsp::drv::GPIOPort<0x4002'2400, bsp::mid::drv::GPIOPort>;
+		using GPIOPortK = bsp::drv::GPIOPort<0x4002'2800, bsp::mid::drv::GPIOPort>;
 		/** @} */
 
-		static constexpr auto& LeftJoyStickButton = GPIOG::Pin<9>;
-		static constexpr auto& RightJoyStickButton = GPIOG::Pin<10>;
+		static constexpr auto& LeftJoyStickButton = GPIOPortG::Pin<9>;
+		static constexpr auto& RightJoyStickButton = GPIOPortG::Pin<10>;
 
 		static constexpr auto& LD1 = GPIOPortJ::Pin<0>;
 		static constexpr auto& LDA = LD1;
@@ -107,11 +107,14 @@
 			static constexpr auto& G = GPIOPortG::Pin<6>;
 			static constexpr auto& DP = GPIOPortG::Pin<7>;
 
+			static constexpr auto& All = GPIOPortG::Out<0,7>;
+
 			static constexpr auto& Select0 = GPIOPortJ::Pin<12>;
 			static constexpr auto& Select1 = GPIOPortJ::Pin<13>;
 			static constexpr auto& Select2 = GPIOPortJ::Pin<14>;
 			static constexpr auto& Select3 = GPIOPortJ::Pin<15>;
 
+			static constexpr auto& SelectAll = GPIOPortJ::Out<12,15>;
 
 		}
 
