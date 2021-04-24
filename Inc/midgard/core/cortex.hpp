@@ -48,9 +48,9 @@ namespace bsp::core {
 	}
 
 	ALWAYS_INLINE static void delay(u32 ms) {
-		u32 startTime = SysTick->VAL;
+		u32 startTime = HAL_GetTick();
 
-		while (SysTick->VAL < startTime + ms)
+		while (HAL_GetTick() < startTime + ms)
 			NOP();
 	}
 
