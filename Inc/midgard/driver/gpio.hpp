@@ -36,8 +36,8 @@ namespace bsp::mid::drv {
 		 * @brief Register map for used registers
 		 */
 		enum class RegisterMap {
-			IDR = 0x08,
-			ODR = 0x0C,
+			IDR = 0x10,
+			ODR = 0x14,
 		};
 
 	}

@@ -94,7 +94,7 @@ namespace bsp {
 		 * @tparam To Last bit to include in bitfield
 		 */
 		template<u8 From, u8 To>
-		using Field = BitField<BaseAddress, SizeType, From, To>;
+		using Field = BitField<BaseAddress + static_cast<addr_t>(Offset), SizeType, From, To>;
 
 		static_assert((BaseAddress % sizeof(SizeType)) == 0, "MMIO Register address is not correctly aligned");
 	};
