@@ -122,10 +122,8 @@
 		 * @brief GPIO Port definitions
 		 * @{
 		 */
-		using I2CA = bsp::drv::I2C<&hi2c1, bsp::mid::drv::I2C>;
-		using I2CB = bsp::drv::I2C<&hi2c2, bsp::mid::drv::I2C>;
-		using I2CC = bsp::drv::I2C<&hi2c3, bsp::mid::drv::I2C>;
-		using I2CD = bsp::drv::I2C<&hi2c4, bsp::mid::drv::I2C>;
+		using I2CA = bsp::drv::I2C<&hi2c2, bsp::mid::drv::I2C>;
+		using I2CB = bsp::drv::I2C<&hi2c4, bsp::mid::drv::I2C>;
 		/** @} */
 
 	}
