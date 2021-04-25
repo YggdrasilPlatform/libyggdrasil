@@ -130,7 +130,7 @@ namespace bsp::ygg::prph {
 
 
 
-		constexpr static inline u8 DeviceAddress 		= 0x44;		///< I2C device address
+		constexpr static inline u8 DeviceAddress 		= 0x88;		///< I2C device address
 
 
 
