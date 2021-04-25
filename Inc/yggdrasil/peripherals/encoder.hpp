@@ -5,13 +5,13 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Midgard -                            *
+  *                          - Peripherals -                        *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file midgard/midgard.hpp                                      *
-  *  @ingroup midgard                                               *
+  *  @file yggdrasil/peripherals/color_sensor.hpp   	            *
+  *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief Top-level include file for Midgard					    *
+  *  @brief API to use the SK9822 RGB Led							*
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -26,19 +26,37 @@
 
 #pragma once
 
-#include <yggdrasil/peripherals/six_axis_sensor.hpp>
-#include <yggdrasil/peripherals/color_sensor.hpp>
-#include <yggdrasil/peripherals/humidity_sensor.hpp>
-#include <yggdrasil/peripherals/joystick.hpp>
-#include <yggdrasil/peripherals/rtc.hpp>
-#include <yggdrasil/peripherals/seven_segment.hpp>
+#include <common/attributes.hpp>
+#include <common/types.hpp>
+#include <common/utils.hpp>
 
-#include <yggdrasil/peripherals/encoder.hpp>
+#include "../../Core/Inc/main.h"
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS)
+extern TIM_HandleTypeDef htim8;
 
-	namespace bsp::ygg {
+namespace bsp::ygg::prph {
 
-	}
 
-#endif
+
+
+	class Encoder {
+	public:
+		Encoder() = delete;
+
+		static void init(){
+			HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);
+		}
+
+		static u16 getCount(){
+			return TIM8->CNT;
+		}
+
+	private:
+
+
+
+
+
+	};
+
+}
