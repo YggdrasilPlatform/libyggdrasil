@@ -199,7 +199,6 @@ namespace bsp::ygg::prph {
 		 * @note Start a conversion and poll until the conversion is finished
 		 */
 		static u16 getADCValue(MUX channel) {
-			bool done = false;
 			ConfigurationRegister configRegister = {0};
 			configRegister.OS = 1;
 			configRegister.MUX = static_cast<u8>(channel);
