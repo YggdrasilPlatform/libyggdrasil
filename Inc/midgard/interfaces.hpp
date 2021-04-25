@@ -119,6 +119,8 @@
 
 		}
 
+		static constexpr auto& RGB_EN = GPIOPortD::Pin<9>;
+
 		/**
 		 * @brief GPIO Port definitions
 		 * @{
