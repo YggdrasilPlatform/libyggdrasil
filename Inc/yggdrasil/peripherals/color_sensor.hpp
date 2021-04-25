@@ -39,6 +39,13 @@ namespace bsp::ygg::prph {
 		u16 brightness;
 	};
 
+	struct RGBA8 {
+		u8 r;
+		u8 g;
+		u8 b;
+		u8 a;
+	};
+
 
 	class ColorSensor {
 	public:
@@ -71,17 +78,18 @@ namespace bsp::ygg::prph {
 		 * @brief Initialization of the TCS3472 color sensor
 		 *
 		 * @return True when the connected device matched the device id, false when not
-		 * @note This function does not start a conversion. Values for integration time (50ms) and gain (1x) are set
+		 * @note This function does start a conversion. Values for integration time (2.4ms) and gain (1x) are set
 		 */
 
 		static bool init() {
 			if (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::ID)) != DeviceID) {		// Check device id
 					return false;
 			}
-			setIntergrationTime(IntegrationTime::_50ms);			// Set integration time
+			setIntergrationTime(IntegrationTime::_2_4ms);			// Set integration time
 			setGain(Gain::_1x);										// Set gain
-			enable();												// Enable sensor, this does not start a conversion
-
+			enable();												// Enable sensor
+			startConversion();										// Start a conversion
+			core::delay(3);											// Wait for the conversion to complete
 			return true;
 
 		}
@@ -94,6 +102,7 @@ namespace bsp::ygg::prph {
 		 * @note Integration time = (256 - IntegrationTime) * 2.4ms
 		 */
 		static inline void setIntergrationTime(IntegrationTime integrationTime) {
+			m_integrationTime = static_cast<u8>(integrationTime);
 			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(RegisterID::ATIME),  static_cast<u8>(integrationTime));	// Write integration time in the ATIME register
 		}
 
@@ -116,7 +125,8 @@ namespace bsp::ygg::prph {
 			EnableRegister enRegister = {0};
 			enRegister.PON = 1;
 			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::EN), bit_cast<u8>(enRegister));				// Enable sensor
-			//delay(3);																									// Wait for power up
+			core::delay(3);																													// Wait for power up
+
 		}
 
 		/**
@@ -129,27 +139,84 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief Start a new measurement and read the color values
+		 * @brief Start a conversion and returns the set integration time
 		 *
-		 * @return Color RGB and brightness value (all 16 Bit)
-		 * @note This function is polling the result and blocks the code for the duration of the integration time
+		 * @return integration time in ms
 		 */
-		static Color getColor() {
+		static u16 startConversion(){
 			EnableRegister enRegister = {0};
+
 			enRegister.PON = 1;																								// Enable
 			enRegister.AEN = 1;																								// Enable RGBC
 			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::EN), bit_cast<u8>(enRegister));	// Write enable register
-			while(bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::STATUS)) && ConversionDone) {			// Wait for cnoversion to complete
-				//delay(1);																								// TODO	// Wait to not avoid continuous i2c communication
-			}
 
-			return bsp::I2CA::read<Color>(10, 10);
+			return static_cast<u16>((256 - m_integrationTime) * 2.4F + 0.9);
+		}
+
+
+		/**
+		 * @brief Used to poll a conversion
+		 *
+		 * @return 1 when the conversion is finished, 0 when not
+		 */
+		static bool getState(){
+			return (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::STATUS)) & ConversionDone);			// Wait for conversion to complete
+		}
+
+
+		/**
+		 * @brief Get the color values and start a new measurement (optional)
+		 *
+		 * @param Restart a measurment after reading with the same setting
+		 * @return Color RGB and brightness value (all 16 Bit)
+		 * @note The integration time must be passed since the last read
+		 */
+		static Color getColor(bool restart = true) {
+			Color receivedColor = {0};
+
+			while(!getState());
+
+			receivedColor.brightness = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CDATA));
+			receivedColor.brightness |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CDATAH)) << 8);
+
+			receivedColor.r = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::RDATA));
+			receivedColor.r |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::RDATAH)) << 8);
+
+			receivedColor.g = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::GDATA));
+			receivedColor.g |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::GDATAH)) << 8);
+
+			receivedColor.b = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::BDATA));
+			receivedColor.b |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::BDATAH)) << 8);
+
+			if(restart) startConversion();
+
+			return receivedColor;
+		}
+
+		/**
+		 * @brief Get the color values and start a new measurement (optional)
+		 *
+		 * @param Restart a measurment after reading with the same setting
+		 * @return Color RGBA8 value
+		 * @note The integration time must be passed since the last read
+		 */
+		static RGBA8 getColorRGBA8(bool restart = true) {
+			RGBA8 RGBA8Color = {0};
+			Color receivedColor = getColor(restart);
+
+			RGBA8Color.r = static_cast<u8>(receivedColor.r >> 8);
+			RGBA8Color.g = static_cast<u8>(receivedColor.g >> 8);
+			RGBA8Color.b = static_cast<u8>(receivedColor.b >> 8);
+			RGBA8Color.a = static_cast<u8>(receivedColor.brightness >> 8);
+
+
+			return RGBA8Color;
 		}
 
 	private:
 
 
-
+		static inline u8 m_integrationTime;
 
 		/**
 		 * @brief Register map of the TCS3472 color sensor.
@@ -202,7 +269,7 @@ namespace bsp::ygg::prph {
 		};
 		static_assert (sizeof(StatusRegister) == sizeof(u8), "Status register definition wrong");
 
-		constexpr static inline u8 DeviceAddress 		= 0x29;		///< I2C device address
+		constexpr static inline u8 DeviceAddress 		= 0x52;		///< I2C device address
 		constexpr static inline u8 DeviceID				= 0x44;		///< ID for TCS34725
 		constexpr static inline u8 CommandBit			= 0x80;		///< Set to write a command
 		constexpr static inline u8 ConversionDone		= 0x01;		///< Conversion done flag
