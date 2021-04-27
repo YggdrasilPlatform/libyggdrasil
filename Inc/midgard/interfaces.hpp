@@ -33,6 +33,7 @@
 #include <midgard/driver/uart.hpp>
 #include <midgard/driver/i2c.hpp>
 #include <midgard/driver/spi.hpp>
+#include <midgard/driver/timer.hpp>
 
 #include <midgard/core/cache.hpp>
 #include <midgard/core/cortex.hpp>
@@ -40,14 +41,23 @@
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
-	extern "C" I2C_HandleTypeDef hi2c1;
-	extern "C" I2C_HandleTypeDef hi2c2;
-	extern "C" I2C_HandleTypeDef hi2c3;
-	extern "C" I2C_HandleTypeDef hi2c4;
+	extern "C" {
+		I2C_HandleTypeDef hi2c1;
+		I2C_HandleTypeDef hi2c2;
+		I2C_HandleTypeDef hi2c3;
+		I2C_HandleTypeDef hi2c4;
 
-	extern "C" SPI_HandleTypeDef hspi2;
-	extern "C" SPI_HandleTypeDef hspi4;
-	extern "C" SPI_HandleTypeDef hspi5;
+		SPI_HandleTypeDef hspi2;
+		SPI_HandleTypeDef hspi4;
+		SPI_HandleTypeDef hspi5;
+
+		TIM_HandleTypeDef htim3;
+		TIM_HandleTypeDef htim4;
+		TIM_HandleTypeDef htim5;
+		TIM_HandleTypeDef htim8;
+		TIM_HandleTypeDef htim11;
+		TIM_HandleTypeDef htim12;
+	}
 
 	namespace bsp {
 
@@ -139,6 +149,27 @@
 		using SPIB = bsp::drv::SPI<&hspi4, bsp::mid::drv::SPI>;
 		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
 
+
+		using TimerA = bsp::drv::Timer<&htim12, bsp::mid::drv::Timer, u16>;
+		using TimerB = bsp::drv::Timer<&htim4, bsp::mid::drv::Timer, u16>;
+		using TimerC = bsp::drv::Timer<&htim5, bsp::mid::drv::Timer, u16>;
+		using TimerD = bsp::drv::Timer<&htim3, bsp::mid::drv::Timer, u16>;
+		using TimerE = bsp::drv::Timer<&htim11, bsp::mid::drv::Timer, u16>;
+		using TimerF = bsp::drv::Timer<&htim8, bsp::mid::drv::Timer, u16>;
+
+		static constexpr auto& TimerACHA = TimerA::Channel<1>;
+
+		static constexpr auto& TimerBCHA = TimerB::Channel<1>;
+		static constexpr auto& TimerBCHB = TimerB::Channel<2>;
+		static constexpr auto& TimerBCHC = TimerB::Channel<3>;
+		static constexpr auto& TimerBCHD = TimerB::Channel<4>;
+
+		static constexpr auto& TimerCCHA = TimerC::Channel<1>;
+
+		static constexpr auto& TimerDCHA = TimerD::Channel<1>;
+		static constexpr auto& TimerDCHB = TimerD::Channel<2>;
+		static constexpr auto& TimerDCHC = TimerD::Channel<3>;
+		static constexpr auto& TimerDCHD = TimerD::Channel<4>;
 	}
 
 #endif
