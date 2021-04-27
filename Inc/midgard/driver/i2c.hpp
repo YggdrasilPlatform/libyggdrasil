@@ -11,7 +11,7 @@
   *  @ingroup midgard                                               *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief UART abstraction implementation for Midgard  		    *
+  *  @brief I2C abstraction implementation for Midgard  		    *
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *

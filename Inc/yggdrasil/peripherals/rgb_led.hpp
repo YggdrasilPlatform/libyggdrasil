@@ -7,7 +7,7 @@
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Peripherals -                        *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file yggdrasil/peripherals/rgb_led.hpp   	            *
+  *  @file yggdrasil/peripherals/rgb_led.hpp   	            		*
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
