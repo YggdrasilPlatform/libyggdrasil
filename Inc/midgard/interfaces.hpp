@@ -32,6 +32,7 @@
 #include <midgard/driver/adc.hpp>
 #include <midgard/driver/uart.hpp>
 #include <midgard/driver/i2c.hpp>
+#include <midgard/driver/spi.hpp>
 
 #include <midgard/core/cache.hpp>
 #include <midgard/core/cortex.hpp>
@@ -43,6 +44,10 @@
 	extern "C" I2C_HandleTypeDef hi2c2;
 	extern "C" I2C_HandleTypeDef hi2c3;
 	extern "C" I2C_HandleTypeDef hi2c4;
+
+	extern "C" SPI_HandleTypeDef hspi2;
+	extern "C" SPI_HandleTypeDef hspi4;
+	extern "C" SPI_HandleTypeDef hspi5;
 
 	namespace bsp {
 
@@ -128,6 +133,11 @@
 		using I2CA = bsp::drv::I2C<&hi2c2, bsp::mid::drv::I2C>;
 		using I2CB = bsp::drv::I2C<&hi2c4, bsp::mid::drv::I2C>;
 		/** @} */
+
+
+		using SPIA = bsp::drv::SPI<&hspi2, bsp::mid::drv::SPI>;
+		using SPIB = bsp::drv::SPI<&hspi4, bsp::mid::drv::SPI>;
+		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
 
 	}
 
