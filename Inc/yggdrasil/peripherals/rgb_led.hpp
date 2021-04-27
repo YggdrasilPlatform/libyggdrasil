@@ -7,7 +7,7 @@
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Peripherals -                        *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file yggdrasil/peripherals/color_sensor.hpp   	            *
+  *  @file yggdrasil/peripherals/rgb_led.hpp   	            *
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -34,6 +34,8 @@
 
 extern SPI_HandleTypeDef hspi2;
 
+
+
 namespace bsp::ygg::prph {
 
 
@@ -52,8 +54,20 @@ namespace bsp::ygg::prph {
 		 */
 
 		static void enable() {
+			RGBA8 color = {0};
 			RGB_EN = 1;
+			for(u8 i = 1; i <= MAXLED; i++){
+				setLED(i, color);
+			}
 		}
+
+		static void clear() {
+			RGBA8 color = {0};
+			for(u8 i = 1; i <= MAXLED; i++){
+				setLED(i, color);
+			}
+		}
+
 
 
 		static void setLED(uint8_t number, RGBA8 color) {
@@ -65,12 +79,50 @@ namespace bsp::ygg::prph {
 			}
 		}
 
+		static void setLED(uint8_t *arryOfNumbers, RGBA8 color) {
+			for(u8 cnt = 0; cnt < sizeof(arryOfNumbers); cnt++){
+				u8 number = arryOfNumbers[cnt];
+				if (number > 0 && number <= MAXLED){
+					m_LEDs[(number - 1)][0] = (0xE0 | color.a);
+					m_LEDs[(number - 1)][1] = color.b;
+					m_LEDs[(number - 1)][2] = color.g;
+					m_LEDs[(number - 1)][3] = color.r;
+				}
+			}
+		}
+
+		static void setLEDmasked(uint16_t enableMask, RGBA8 color) {
+			for(u8 cnt = 0; cnt < MAXLED; cnt++){
+				if((enableMask >> cnt ) & 1){
+					m_LEDs[cnt][0] = (0xE0 | color.a);
+					m_LEDs[cnt][1] = color.b;
+					m_LEDs[cnt][2] = color.g;
+					m_LEDs[cnt][3] = color.r;
+				}
+			}
+		}
+		static void dice(uint8_t number, RGBA8 color) {
+			clear();
+			switch (number) {
+				case 1:	setLEDmasked(0x0010, color); break;
+				case 2:	setLEDmasked(0x0044, color); break;
+				case 3:	setLEDmasked(0x0111, color); break;
+				case 4:	setLEDmasked(0x0145, color); break;
+				case 5:	setLEDmasked(0x0155, color); break;
+				case 6:	setLEDmasked(0x016D, color); break;
+
+				default: setLEDmasked(0, color); break;
+
+			}
+		}
+
 
 
 
 		static void flush(){
 			 SPIsendStartFrame();
-			 HAL_SPI_Transmit(&hspi2, *m_LEDs, (MAXLED*4), 50);
+			 bsp::SPIA::write<u8[9][4]>(m_LEDs);
+			 //HAL_SPI_Transmit(&hspi2, *m_LEDs, (MAXLED*4), 50);
 			 SPIsendEndFrame();
 
 
