@@ -7,7 +7,7 @@
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Peripherals -                        *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file yggdrasil/peripherals/color_sensor.hpp   	            *
+  *  @file yggdrasil/peripherals/encoder.hpp   	     		        *
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -49,6 +49,10 @@ namespace bsp::ygg::prph {
 
 		static u16 getCount(){
 			return TIM8->CNT;
+		}
+
+		static void resetCountTo(u16 value = 0){
+			TIM8->CNT = value;
 		}
 
 	private:
