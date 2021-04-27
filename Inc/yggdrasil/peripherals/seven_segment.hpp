@@ -30,6 +30,8 @@
 #include <common/types.hpp>
 #include <common/utils.hpp>
 
+#include <cstdlib>
+
 namespace bsp::ygg::prph {
 
 
@@ -86,15 +88,16 @@ namespace bsp::ygg::prph {
 			switch(currSegment){
 				case 0:
 					if(value < 0) SevenSegment::setDigit('-');
+					else SevenSegment::setDigit(' ');
 				break;
 				case 1:
-					SevenSegment::setDigit((value / 100) % 10);
+					SevenSegment::setDigit((std::abs(value) / 100) % 10);
 				break;
 				case 2:
-					SevenSegment::setDigit((value / 10) % 10);
+					SevenSegment::setDigit((std::abs(value) / 10) % 10);
 				break;
 				case 3:
-					SevenSegment::setDigit((value / 1) % 10);
+					SevenSegment::setDigit((std::abs(value) / 1) % 10);
 				break;
 			}
 			currSegment = (currSegment + 1) % 4;
@@ -148,33 +151,34 @@ namespace bsp::ygg::prph {
 
 		static void setDigit(char value){
 			switch(value){
-				case 0:		seven_segment::All = 0xC0; break;
-				case 1:		seven_segment::All = 0xF9; break;
-				case 2:		seven_segment::All = 0xA4; break;
-				case 3:		seven_segment::All = 0xB0; break;
-				case 4:		seven_segment::All = 0x99; break;
-				case 5:		seven_segment::All = 0x92; break;
-				case 6:		seven_segment::All = 0x82; break;
-				case 7:		seven_segment::All = 0xF8; break;
-				case 8:		seven_segment::All = 0x80; break;
-				case 9:		seven_segment::All = 0x90; break;
-				case 0x0A:	seven_segment::All = 0x88; break;
-				case 0x0B:	seven_segment::All = 0x83; break;
-				case 0x0C:	seven_segment::All = 0xC6; break;
-				case 0x0D:	seven_segment::All = 0xA1; break;
-				case 0x0E:	seven_segment::All = 0x86; break;
-				case 0x0F:	seven_segment::All = 0x8E; break;
-				case '-':   seven_segment::All = 0x9F; break;
+				case 0:		seven_segment::All = 0x3F; break;
+				case 1:		seven_segment::All = 0x06; break;
+				case 2:		seven_segment::All = 0x5B; break;
+				case 3:		seven_segment::All = 0x4F; break;
+				case 4:		seven_segment::All = 0x66; break;
+				case 5:		seven_segment::All = 0x6D; break;
+				case 6:		seven_segment::All = 0x7D; break;
+				case 7:		seven_segment::All = 0x07; break;
+				case 8:		seven_segment::All = 0x7F; break;
+				case 9:		seven_segment::All = 0x6F; break;
+				case 0x0A:	seven_segment::All = 0x77; break;
+				case 0x0B:	seven_segment::All = 0xF4; break;
+				case 0x0C:	seven_segment::All = 0x39; break;
+				case 0x0D:	seven_segment::All = 0x5E; break;
+				case 0x0E:	seven_segment::All = 0x79; break;
+				case 0x0F:	seven_segment::All = 0x71; break;
+				case '-':   seven_segment::All = 0x40; break;
+				case ' ':   seven_segment::All = 0x00; break;
 			}
 
 		}
 
 		static void enableDigit(u8 number){
 			switch(number){
-				case 0:		seven_segment::SelectAll = ~0x01; break;
-				case 1:		seven_segment::SelectAll = ~0x02; break;
-				case 2:		seven_segment::SelectAll = ~0x04; break;
-				case 3:		seven_segment::SelectAll = ~0x08; break;
+				case 0:		seven_segment::SelectAll = 0x01; break;
+				case 1:		seven_segment::SelectAll = 0x02; break;
+				case 2:		seven_segment::SelectAll = 0x04; break;
+				case 3:		seven_segment::SelectAll = 0x08; break;
 			}
 		}
 
