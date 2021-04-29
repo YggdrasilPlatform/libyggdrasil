@@ -39,8 +39,9 @@ namespace bsp::ygg::prph {
 	  i16 y;
 	};
 
-	struct JoyStickData {
+	struct JoystickData {
 	  Position pos;
+	  u16 magnitude;
 	  bool pressed;
 	};
 
@@ -56,15 +57,19 @@ namespace bsp::ygg::prph {
 		 * @return JoyStickData struct
 		 * @note This function is polling
 		 */
-		static JoyStickData getLeftJoyStick() {
-			JoyStickData tempData = {0};
-			tempData.pressed = LeftJoyStickButton;								// Read the button state
-			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
-			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
-			if(tempData.pos.x * tempData.pos.x + tempData.pos.y * tempData.pos.y < s_deadzone * s_deadzone){
-				tempData.pos = {0,0};
+		static JoystickData getLeft() {
+			JoystickData data = {0};
+
+			data.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
+			data.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
+			data.magnitude = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
+			data.pressed = LeftJoyStickButton;								// Read the button state
+
+			if(data.magnitude < Joystick::s_deadzone) {
+				data.pos = { 0, 0 };
 			}
-			return tempData;
+
+			return data;
 		}
 
 		/**
@@ -73,15 +78,19 @@ namespace bsp::ygg::prph {
 		 * @return JoyStickData struct
 		 * @note This function is polling
 		 */
-		static JoyStickData getRightJoyStick(){
-			JoyStickData tempData = {0};
-			tempData.pressed = RightJoyStickButton;								// Read the button state
-			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN2));	// Get ADC Value
-			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN3));	// Get ADC Value
-			if(tempData.pos.x * tempData.pos.x + tempData.pos.y * tempData.pos.y < s_deadzone * s_deadzone){
-				tempData.pos = {0,0};
+		static JoystickData getRight() {
+			JoystickData data = { 0 };
+
+			data.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN2));		// Get ADC Value
+			data.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN3));		// Get ADC Value
+			data.magnitude = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
+			data.pressed = RightJoyStickButton;											// Read the button state
+
+			if(data.magnitude < Joystick::s_deadzone) {
+				data.pos = { 0, 0 };
 			}
-			return tempData;
+
+			return data;
 		}
 
 		/**
@@ -89,7 +98,7 @@ namespace bsp::ygg::prph {
 		 *
 		 * @param deadzone Deadzone value
 		 */
-		static void setDeadzone(u8 deadzone){
+		static void setDeadzone(u8 deadzone) {
 			if (deadzone < PositionMax)
 				Joystick::s_deadzone = deadzone;
 		}
@@ -99,12 +108,9 @@ namespace bsp::ygg::prph {
 		 *
 		 * @return Current deadzone value
 		 */
-		static u8 getDeadzone(){
+		static u8 getDeadzone() {
 			return Joystick::s_deadzone;
 		}
-
-
-
 
 	private:
 
@@ -183,8 +189,8 @@ namespace bsp::ygg::prph {
 		constexpr static inline u16 ConversionDone		= 0x8000;	///< Configuration done flag (OS bit in configuration register)
 
 		constexpr static inline u16 CenterPosition		= 0x34A;		///< Configuration done flag (OS bit in configuration register)
-		constexpr static inline u16 MaxPosition			= 0x56A;	///< Single ended maximal value (lost 1 bit due to single ended measurement)
-		constexpr static inline u16 MinPosition			= 0x100;
+		constexpr static inline u16 MaxADCValue			= 0x56A;	///< Single ended maximal value (lost 1 bit due to single ended measurement)
+		constexpr static inline u16 MinADCValue			= 0x100;
 		constexpr static inline i8 PositionRange		= 200;
 		constexpr static inline i8 PositionMin			= -100;
 		constexpr static inline i8 PositionMax			= 100;
@@ -227,7 +233,7 @@ namespace bsp::ygg::prph {
 		 * @return i8 converted data to an range from -100 to 100 where 0 equals center position
 		 */
 		static inline i16 transformInputData(u16 adcData) {
-			return ((((static_cast<i16>(adcData >> 4) - MinPosition) / float(MaxPosition - MinPosition)) * 2.0F) - 1.0F) * 100.0F;	// Convert the 11 bit tow's complement value to a i8 ranged [-100,100]
+			return ((((static_cast<i16>(adcData >> 4) - MinADCValue) / float(MaxADCValue - MinADCValue)) * 2.0F) - 1.0F) * 100.0F;	// Convert the 11 bit tow's complement value to a i8 ranged [-100,100]
 		}
 
 	};
