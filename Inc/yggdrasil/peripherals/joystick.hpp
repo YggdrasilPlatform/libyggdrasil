@@ -58,7 +58,7 @@ namespace bsp::ygg::prph {
 		 */
 		static JoyStickData getLeftJoyStick() {
 			JoyStickData tempData = {0};
-			tempData.pressed = !LeftJoyStickButton;								// Read the button state
+			tempData.pressed = LeftJoyStickButton;								// Read the button state
 			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
 			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
 			if(tempData.pos.x * tempData.pos.x + tempData.pos.y * tempData.pos.y < s_deadzone * s_deadzone){
@@ -75,7 +75,7 @@ namespace bsp::ygg::prph {
 		 */
 		static JoyStickData getRightJoyStick(){
 			JoyStickData tempData = {0};
-			tempData.pressed = !RightJoyStickButton;								// Read the button state
+			tempData.pressed = RightJoyStickButton;								// Read the button state
 			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN2));	// Get ADC Value
 			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN3));	// Get ADC Value
 			if(tempData.pos.x * tempData.pos.x + tempData.pos.y * tempData.pos.y < s_deadzone * s_deadzone){

@@ -52,7 +52,7 @@ namespace bsp::asg::drv {
 	 * @tparam BaseAddress GPIO Block base address
 	 * @tparam Pin Pin number
 	 */
-	template<addr_t BaseAddress, u8 Pin>
+	template<addr_t BaseAddress, u8 Pin, bsp::drv::Active LogicActive>
 	struct GPIOPin {
 	private:
 		GPIOPin() = default;
@@ -70,7 +70,7 @@ namespace bsp::asg::drv {
 	     * @return Pin
 	     */
 	    ALWAYS_INLINE constexpr auto& operator=(bool state) const noexcept {
-	        ODRx = state;
+	        ODRx = LogicActive == bsp::drv::Active::High ? state : !state;
 
 	        return *this;
 	    }
@@ -80,7 +80,7 @@ namespace bsp::asg::drv {
 	     * @return Pin value
 	     */
 	    [[nodiscard]] ALWAYS_INLINE constexpr operator u8() const noexcept {
-	        return IDRx;
+	        return LogicActive == bsp::drv::Active::High ? IDRx : !IDRx;
 	    }
 
 	private:
@@ -114,8 +114,8 @@ namespace bsp::asg::drv {
 	    using ODR 	= Register<BaseAddress, RegisterMap::ODR, u32>;
 
 	public:
-		template<u8 Pin>
-		static constexpr auto Pin = GPIOPin<BaseAddress, Pin>();
+		template<u8 Pin, bsp::drv::Active LogicActive>
+		static constexpr auto Pin = GPIOPin<BaseAddress, Pin, LogicActive>();
 
 		template<u8 From, u8 To>
 		static constexpr auto In = typename IDR::template Field<From, To>();

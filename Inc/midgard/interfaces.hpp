@@ -78,8 +78,8 @@
 		using GPIOPortK = bsp::drv::GPIOPort<0x4002'2800, bsp::mid::drv::GPIOPort>;
 		/** @} */
 
-		static constexpr auto& LeftJoyStickButton = GPIOPortG::Pin<10>;
-		static constexpr auto& RightJoyStickButton = GPIOPortG::Pin<11>;
+		static constexpr auto& LeftJoyStickButton = GPIOPortG::Pin<10, drv::Active::Low>;
+		static constexpr auto& RightJoyStickButton = GPIOPortG::Pin<11, drv::Active::Low>;
 
 		static constexpr auto& LD1 = GPIOPortJ::Pin<0>;
 		static constexpr auto& LDA = LD1;

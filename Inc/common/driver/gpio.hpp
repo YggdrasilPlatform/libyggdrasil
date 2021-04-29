@@ -31,6 +31,11 @@
 
 namespace bsp::drv {
 
+	enum class Active {
+		Low,
+		High
+	};
+
 	/**
 	 * @brief Base class for GPIO port abstraction
 	 * @tparam BaseAddress GPIO port bank base address
@@ -46,8 +51,8 @@ namespace bsp::drv {
 	     * @brief GPIO Pin
 	     * @tparam Number Pin number
 	     */
-	    template<u8 Number>
-	    static inline auto& Pin = GPIOImpl<BaseAddress>::template Pin<Number>;
+	    template<u8 Number, Active LogicActive = Active::High>
+	    static inline auto& Pin = GPIOImpl<BaseAddress>::template Pin<Number, LogicActive>;
 
 	    /**
 	     * @brief Input bitfield
