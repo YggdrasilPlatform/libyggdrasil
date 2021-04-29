@@ -32,8 +32,6 @@
 #include <string_view>
 #include <array>
 
-#include <cmsis_gcc.h>
-
 namespace bsp::mid::drv {
 
 	template<auto Context>
