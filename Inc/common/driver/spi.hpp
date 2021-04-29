@@ -31,6 +31,7 @@
 #include <common/utils.hpp>
 
 #include <array>
+#include <type_traits>
 
 namespace bsp::drv {
 
@@ -41,19 +42,29 @@ namespace bsp::drv {
 		using Impl = SPIImpl<Context>;
 
 		template<typename T>
-		static T read(u8 address, u8 reg) {
+		static T read() {
 			std::array<u8, sizeof(T)> data;
-			Impl::write(address, std::array<u8, 1>{ reg });
-			Impl::read(address, data);
+			Impl::read(data);
 
 			return bit_cast<T>(data);
 		}
 
 		template<typename T>
-		static void write(T value) {
-			std::array<u8, sizeof(T)> data;
-			std::memcpy(data.data(), &value, sizeof(T));
-			Impl::write(data);
+		static void write(const T &value) {
+			if constexpr (std::is_pointer<T>::value) {
+				constexpr size_t Size = sizeof(std::remove_pointer<T>);
+
+				std::array<u8, Size> data;
+				std::memcpy(data.data(), value, Size);
+				Impl::write(data);
+			} else {
+				constexpr size_t Size = sizeof(T);
+
+				std::array<u8, Size> data;
+				std::memcpy(data.data(), &value, Size);
+				Impl::write(data);
+			}
+
 		}
 	};
 }
