@@ -45,6 +45,15 @@ namespace bsp::mid::drv {
 			}
 		}
 
+		template<size_t N>
+		ALWAYS_INLINE static void transmit(const std::array<u8, N> &buffer) {
+			for (char c : buffer) {
+				while(!TXE);
+
+				TRNS = c;
+			}
+		}
+
 		ALWAYS_INLINE static void receive(std::string &buffer) {
 			while (true) {
 				while (!RXNE);

@@ -28,33 +28,40 @@
 
 #include <common/registers.hpp>
 #include <common/attributes.hpp>
+#include <common/utils.hpp>
 
-#include <string>
-#include <string_view>
 #include <array>
 
 namespace bsp::drv {
 
-	template<addr_t BaseAddress, template<addr_t> typename UARTImpl>
+	template<addr_t BaseAddress, template<auto> typename UARTImpl>
 	struct UART {
-		UART() = default;
+		UART() = delete;
 
 		using Impl = UARTImpl<BaseAddress>;
 
-		auto& operator<<(std::string_view buffer) const noexcept {
-			Impl::transmit(buffer);
-			return *this;
-		}
+		static std::string readString() {
+			std::string data;
+			Impl::receive(data);
 
-		auto& operator>>(std::string &buffer) {
-			Impl::receive(buffer);
-			return *this;
+			return data;
 		}
 
 		template<size_t N>
-		auto& operator>>(std::array<u8, N> &buffer) {
-			Impl::receive(buffer);
-			return *this;
+		static std::array<u8, N> read() {
+			std::array<u8, N> data;
+			Impl::receive(data);
+
+			return data;
+		}
+
+		static void write(std::string_view data) {
+			Impl::transmit(data);
+		}
+
+		template<size_t N>
+		static void write(const std::array<u8, N> &data) {
+			Impl::transmit(data);
 		}
 	};
 }
