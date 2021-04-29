@@ -136,6 +136,13 @@ namespace bsp {
 	    else __builtin_unreachable();
 	}
 
+	template<typename T>
+	auto enumValue(T value) {
+		static_assert(std::is_enum<T>::value, "Cannot get value of non-enum type");
+
+		return static_cast<std::underlying_type<T>>(value);
+	}
+
 	/**
 	 * @brief Helper class to store the data of a given type in reverse order
 	 * @tparam T Type stored
