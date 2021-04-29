@@ -37,6 +37,7 @@
 	#include <common/registers.hpp>
 	#include <common/types.hpp>
 	#include <common/utils.hpp>
+	#include <common/math.hpp>
 
 	#if BOARD == ASGARD
 		#include <asgard/asgard.hpp>
