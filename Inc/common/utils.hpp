@@ -121,35 +121,48 @@ namespace bsp {
 
 	/**
 	 * @brief Swaps bytes of input value to convert between big and little endian
-	 * @param value 8 bit value
+	 * @param value Integral value to swap
+	 * @tparam T Type of value to swap
 	 */
-	ALWAYS_INLINE static u8 byteSwap(u8 value) {
-		return value;
+	template<typename T>
+	constexpr T byteSwap(T value) {
+		static_assert(std::is_integral<T>::value, "Only integral types can be byte swapped");
+		static_assert(sizeof(T) <= sizeof(u64), "Value cannot be bigger than 64 bit");
+
+	    if constexpr (sizeof(T) == 1) 		return value;
+	    else if constexpr (sizeof(T) == 2) 	return __builtin_bswap16(value);
+	    else if constexpr (sizeof(T) == 4) 	return __builtin_bswap32(value);
+	    else if constexpr (sizeof(T) == 8) 	return __builtin_bswap64(value);
+	    else __builtin_unreachable();
 	}
 
 	/**
-	 * @brief Swaps bytes of input value to convert between big and little endian
-	 * @param value 16 bit value
+	 * @brief Helper class to store the data of a given type in reverse order
+	 * @tparam T Type stored
 	 */
-	ALWAYS_INLINE static u16 byteSwap(u16 value) {
-		return __builtin_bswap16(value);
-	}
+	template<typename T>
+	struct PACKED ByteSwapped {
+	    constexpr ByteSwapped() : m_value(0) {}
+	    constexpr ByteSwapped(T value) : m_value(byteSwap(value)) {}
 
-	/**
-	 * @brief Swaps bytes of input value to convert between big and little endian
-	 * @param value 32 bit value
-	 */
-	ALWAYS_INLINE static u32 byteSwap(u32 value) {
-		return __builtin_bswap32(value);
-	}
+	    constexpr operator T() const noexcept {
+	        return byteSwap(this->m_value);
+	    }
 
-	/**
-	 * @brief Swaps bytes of input value to convert between big and little endian
-	 * @param value 64 bit value
-	 */
-	ALWAYS_INLINE static u64 byteSwap(u64 value) {
-		return __builtin_bswap64(value);
-	}
+	    constexpr auto operator=(T value) {
+	        this->m_value = byteSwap(value);
+
+	        return *this;
+	    }
+
+	    constexpr auto operator=(ByteSwapped value) {
+	        this->m_value = value.m_value;
+
+	        return *this;
+	    }
+	private:
+	    T m_value;
+	};
 
 	#undef assert
 

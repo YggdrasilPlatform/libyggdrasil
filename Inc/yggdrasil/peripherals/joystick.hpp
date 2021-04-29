@@ -35,8 +35,8 @@
 namespace bsp::ygg::prph {
 
 	struct Position {
-	  i8 x;
-	  i8 y;
+	  i16 x;
+	  i16 y;
 	};
 
 	struct JoyStickData {
@@ -58,9 +58,9 @@ namespace bsp::ygg::prph {
 		 */
 		static JoyStickData getLeftJoyStick() {
 			JoyStickData tempData = {0};
-			tempData.pressed = LeftJoyStickButton;								// Read the button state
-			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
-			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
+			tempData.pressed = !LeftJoyStickButton;								// Read the button state
+			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
+			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
 			if(tempData.pos.x * tempData.pos.x + tempData.pos.y * tempData.pos.y < s_deadzone * s_deadzone){
 				tempData.pos = {0,0};
 			}
@@ -75,9 +75,9 @@ namespace bsp::ygg::prph {
 		 */
 		static JoyStickData getRightJoyStick(){
 			JoyStickData tempData = {0};
-			tempData.pressed = RightJoyStickButton;								// Read the button state
-			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN3));	// Get ADC Value
-			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN2));	// Get ADC Value
+			tempData.pressed = !RightJoyStickButton;								// Read the button state
+			tempData.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN2));	// Get ADC Value
+			tempData.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN3));	// Get ADC Value
 			if(tempData.pos.x * tempData.pos.x + tempData.pos.y * tempData.pos.y < s_deadzone * s_deadzone){
 				tempData.pos = {0,0};
 			}
@@ -182,8 +182,9 @@ namespace bsp::ygg::prph {
 		constexpr static inline u8 ReservedBits			= 0x03;		///< Reserved bits must be write as 0x03
 		constexpr static inline u16 ConversionDone		= 0x8000;	///< Configuration done flag (OS bit in configuration register)
 
-		constexpr static inline i8 CenterPosition		= 0x7F;		///< Configuration done flag (OS bit in configuration register)
-		constexpr static inline u16 AdcMaxValue			= 0x7FF;	///< Single ended maximal value (lost 1 bit due to single ended measurement)
+		constexpr static inline u16 CenterPosition		= 0x34A;		///< Configuration done flag (OS bit in configuration register)
+		constexpr static inline u16 MaxPosition			= 0x56A;	///< Single ended maximal value (lost 1 bit due to single ended measurement)
+		constexpr static inline u16 MinPosition			= 0x100;
 		constexpr static inline i8 PositionRange		= 200;
 		constexpr static inline i8 PositionMin			= -100;
 		constexpr static inline i8 PositionMax			= 100;
@@ -209,7 +210,7 @@ namespace bsp::ygg::prph {
 
 			bsp::I2CA::write<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister), byteSwap(bit_cast<u16>(configRegister)));		// Start Conversion
 
-			while(byteSwap(bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister))) & ConversionDone){
+			while((byteSwap(bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister))) & ConversionDone) == ConversionDone) {
 				core::delay(1);
 			}
 
@@ -225,8 +226,8 @@ namespace bsp::ygg::prph {
 		 * @param u16 12 bit ADC data left aligned
 		 * @return i8 converted data to an range from -100 to 100 where 0 equals center position
 		 */
-		static inline i8 transformInputData(u16 adcData) {
-			return (i8)((static_cast<float>(PositionRange) / static_cast<float>(AdcMaxValue)) * static_cast<float>(adcData) + static_cast<float>(PositionMin));	// Convert the 11 bit tow's complement value to a i8 ranged [-100,100]
+		static inline i16 transformInputData(u16 adcData) {
+			return ((((static_cast<i16>(adcData >> 4) - MinPosition) / float(MaxPosition - MinPosition)) * 2.0F) - 1.0F) * 100.0F;	// Convert the 11 bit tow's complement value to a i8 ranged [-100,100]
 		}
 
 	};
