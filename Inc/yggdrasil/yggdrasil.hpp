@@ -26,13 +26,15 @@
 
 #pragma once
 
+#include <yggdrasil/types.hpp>
+
 #include <yggdrasil/peripherals/six_axis_sensor.hpp>
 #include <yggdrasil/peripherals/color_sensor.hpp>
 #include <yggdrasil/peripherals/humidity_sensor.hpp>
 #include <yggdrasil/peripherals/joystick.hpp>
 #include <yggdrasil/peripherals/rtc.hpp>
 #include <yggdrasil/peripherals/seven_segment.hpp>
-#include <yggdrasil/peripherals/rgb_led.hpp>
+#include <yggdrasil/peripherals/rgb_matrix.hpp>
 #include <yggdrasil/peripherals/encoder.hpp>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)

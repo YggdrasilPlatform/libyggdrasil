@@ -32,21 +32,6 @@
 
 namespace bsp::ygg::prph {
 
-	struct Color {
-		u16 r;
-		u16 g;
-		u16 b;
-		u16 brightness;
-	};
-
-	struct RGBA8 {
-		u8 r;
-		u8 g;
-		u8 b;
-		u8 a;
-	};
-
-
 	class ColorSensor {
 	public:
 		ColorSensor() = delete;
@@ -102,7 +87,7 @@ namespace bsp::ygg::prph {
 		 * @note Integration time = (256 - IntegrationTime) * 2.4ms
 		 */
 		static inline void setIntergrationTime(IntegrationTime integrationTime) {
-			m_integrationTime = static_cast<u8>(integrationTime);
+			ColorSensor::s_integrationTime = static_cast<u8>(integrationTime);
 			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(RegisterID::ATIME),  static_cast<u8>(integrationTime));	// Write integration time in the ATIME register
 		}
 
@@ -150,7 +135,7 @@ namespace bsp::ygg::prph {
 			enRegister.AEN = 1;																								// Enable RGBC
 			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::EN), bit_cast<u8>(enRegister));	// Write enable register
 
-			return static_cast<u16>((256 - m_integrationTime) * 2.4F + 0.9);
+			return static_cast<u16>((256 - ColorSensor::s_integrationTime) * 2.4F + 0.9);
 		}
 
 
@@ -171,26 +156,16 @@ namespace bsp::ygg::prph {
 		 * @return Color RGB and brightness value (all 16 Bit)
 		 * @note The integration time must be passed since the last read
 		 */
-		static Color getColor(bool restart = true) {
-			Color receivedColor = {0};
+		static RGBA16 getColor16(bool restart = true) {
+			while (!getState());
 
-			while(!getState());
 
-			receivedColor.brightness = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CDATA));
-			receivedColor.brightness |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CDATAH)) << 8);
-
-			receivedColor.r = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::RDATA));
-			receivedColor.r |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::RDATAH)) << 8);
-
-			receivedColor.g = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::GDATA));
-			receivedColor.g |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::GDATAH)) << 8);
-
-			receivedColor.b = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::BDATA));
-			receivedColor.b |= (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::BDATAH)) << 8);
+			auto data = bsp::I2CA::read<std::array<u16, 4>>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CDATA));
+			RGBA16 color { byteSwap(data[0]), byteSwap(data[1]), byteSwap(data[2]), byteSwap(data[3]) };
 
 			if(restart) startConversion();
 
-			return receivedColor;
+			return color;
 		}
 
 		/**
@@ -200,23 +175,23 @@ namespace bsp::ygg::prph {
 		 * @return Color RGBA8 value
 		 * @note The integration time must be passed since the last read
 		 */
-		static RGBA8 getColorRGBA8(bool restart = true) {
-			RGBA8 RGBA8Color = {0};
-			Color receivedColor = getColor(restart);
+		static RGBA8 getColor8(bool restart = true) {
+			RGBA16 color16 = getColor16(restart);
 
-			RGBA8Color.r = static_cast<u8>(receivedColor.r >> 8);
-			RGBA8Color.g = static_cast<u8>(receivedColor.g >> 8);
-			RGBA8Color.b = static_cast<u8>(receivedColor.b >> 8);
-			RGBA8Color.a = static_cast<u8>(receivedColor.brightness >> 8);
+			RGBA8 color8 = {0};
+			color8.r = static_cast<u8>(color16.r >> 8);
+			color8.g = static_cast<u8>(color16.g >> 8);
+			color8.b = static_cast<u8>(color16.b >> 8);
+			color8.a = static_cast<u8>(color16.a >> 8);
 
 
-			return RGBA8Color;
+			return color8;
 		}
 
 	private:
 
 
-		static inline u8 m_integrationTime;
+		static inline u8 s_integrationTime;
 
 		/**
 		 * @brief Register map of the TCS3472 color sensor.
