@@ -38,7 +38,16 @@ namespace bsp::drv {
 	struct I2C {
 		I2C() = delete;
 
+
 		using Impl = I2CImpl<Context>;
+
+		template<typename T>
+		static T read(u8 address) {
+			std::array<u8, sizeof(T)> data;
+			Impl::read(address, data);
+
+			return bit_cast<T>(data);
+		}
 
 		template<typename T>
 		static T read(u8 address, u8 reg) {
@@ -49,11 +58,17 @@ namespace bsp::drv {
 			return bit_cast<T>(data);
 		}
 
-		template<typename T>
-		static void write(u8 address, u8 reg, T value) {
-			std::array<u8, sizeof(T) + 1> data;
+		static void write(u8 address, auto value) {
+			std::array<u8, sizeof(value)> data;
+			std::memcpy(data.data(), &value, sizeof(value));
+
+			Impl::write(address, data);
+		}
+
+		static void write(u8 address, u8 reg, auto value) {
+			std::array<u8, sizeof(value) + 1> data;
 			data[0] = reg;
-			std::memcpy(data.data() + 1, &value, sizeof(T));
+			std::memcpy(data.data() + 1, &value, sizeof(value));
 
 			Impl::write(address, data);
 		}
