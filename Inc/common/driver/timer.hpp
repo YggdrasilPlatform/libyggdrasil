@@ -49,6 +49,32 @@ namespace bsp::drv {
 	     */
 	    template<u8 Number>
 	    static inline auto& Channel = TimerImpl<Context, Size>::template Channel<Number>;
+	    template<u8 Number>
+	    static inline auto& Encoder = TimerImpl<Context, Size>::template Encoder<Number>;
+
+
+	    using Impl = TimerImpl<Context, Size>;
+
+	    static inline Size getCount() {
+	    	return Impl::getCount();
+	    }
+
+	    static inline void setCount(Size cnt) {
+	    	Impl::setCount(cnt);
+	    }
+
+	    static inline void resetCount() {
+	    	Impl::setCount(0);
+	    }
+
+	    static inline u32 getPwmFrequency() {
+	    	return Impl::getPwmFrequency();
+	    }
+
+	    static inline bool setPwmFrequency(u32 f_hz, Size resolution = 0) {
+	    	return Impl::setPwmFrequency(f_hz, resolution);
+	    }
+
 
 
 	};
