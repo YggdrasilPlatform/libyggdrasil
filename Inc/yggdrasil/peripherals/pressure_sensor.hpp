@@ -7,11 +7,11 @@
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Yggdrasil -                          *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file yggdrasil/peripherals/humidity_sensor.hpp                *
+  *  @file yggdrasil/peripherals/pressure_sensor.hpp                *
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief API to use the SHT40-AD1B-R2 humidity sensor  	        *
+  *  @brief API to use the LPS22HBTR pressure sensor	  	        *
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -58,25 +58,37 @@ namespace bsp::ygg::prph {
 
 		static SensorData getSensorData(){
 			SensorData senorData = {0};
-			ControlRegister2 ctrlReg2 = { .ONE_SHOT = 1, .I2C_DIS = 1, .IF_ADD_INC = 1};
-			bsp::SPIACE = true;
-			bsp::SPIA::write<std::array<u8,2>>({enumValue(Register::CTRL_REG2), bit_cast<u8>(ctrlReg2)});
-			do{
-				bsp::SPIA::write<u8>(enumValue(Register::CTRL_REG2) | RequestResponse);
-			} while(bsp::SPIA::read<u8>() & ConversionDone);
-
-			bsp::SPIA::write<u8>(enumValue(Register::PRESS_OUT_XL)| RequestResponse);
-			auto data = bsp::SPIA::read<std::array<u8,3>>();
+			ControlRegister2 ctrlReg2 = { .ONE_SHOT = 1, .I2C_DIS = 0, .IF_ADD_INC = 0 };
 
 			bsp::SPIACE = false;
+			bsp::SPIA::write<std::array<u8,2>>({enumValue(Register::CTRL_REG2), bit_cast<u8>(ctrlReg2)});
+			bsp::SPIACE = true;
+			do{
+				bsp::SPIACE = true;
+				core::delay(10);
+				bsp::SPIACE = false;
+				bsp::SPIA::write<u8>(enumValue(Register::CTRL_REG2) | RequestResponse);
+			} while((bsp::SPIA::read<u8>() & ConversionDone) == 0);
 
-			senorData.pressure = static_cast<float>(data[0] | (data[1] << 8) | (data[2] << 16)) / 4096.0;
+			{
+				auto xl = readRegister(Register::PRESS_OUT_XL);
+				auto l  = readRegister(Register::PRESS_OUT_L);
+				auto h  = readRegister(Register::PRESS_OUT_H);
+
+				senorData.pressure = static_cast<float>(xl | (l << 8) | (h << 16)) / 4096.0;
+			}
+
+			{
+				auto l  = readRegister(Register::TEMP_OUT_L);
+				auto h  = readRegister(Register::TEMP_OUT_H);
+
+				senorData.sensorTemperature = static_cast<float>(l | (h << 8)) / 100;
+			}
+
 
 			return senorData;
 
 		}
-
-
 
 	private:
 
@@ -122,9 +134,17 @@ namespace bsp::ygg::prph {
 		static_assert (sizeof(ControlRegister2) == sizeof(u8), "Control register 2 definition wrong");
 
 		constexpr static inline u8 RequestResponse = 0x80;		///> Requests a write from the sensor on the following clocks
-		constexpr static inline u8 DeviceID = 0x1b;			///> Value of the who am i register
+		constexpr static inline u8 DeviceID = 0xb1;			///> Value of the who am i register
 		constexpr static inline u8 ConversionDone = 0x01;	///> Conversion done flag
 
+		static u8 readRegister(Register reg) {
+			bsp::SPIACE = false;
+			bsp::SPIA::write<u8>(enumValue(reg) | RequestResponse);
+			auto value = bsp::SPIA::read<u8>();
+			bsp::SPIACE = true;
+
+			return value;
+		}
 
 	};
 
