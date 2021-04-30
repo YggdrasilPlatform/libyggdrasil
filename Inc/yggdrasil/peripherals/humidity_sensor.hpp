@@ -44,7 +44,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Heater commands for the SHT40-AD1B-R2 sensor
 		 */
-		enum class HeaterCommand : u8{
+		enum class HeaterCommand : u8 {
 			Heat200mWFor1s	 = 0x39,		///< activate Highest heater power & High precis. meas. (typ. 200mW @ 3.3V) for 1s
 			Heat200mWFor0p1s = 0x32,		///< activate Highest heater power & High precis. meas. (typ. 200mW @ 3.3V) for 0.1s
 			Heat110mWFor1s	 = 0x2F,		///< activate Highest heater power & High precis. meas. (typ. 110mW @ 3.3V) for 1s
@@ -53,7 +53,7 @@ namespace bsp::ygg::prph {
 			Heat20mWFor0p1s	 = 0x15,		///< activate Highest heater power & High precis. meas. (typ. 20mW @ 3.3V) for 0.1s
 		};
 
-		enum class Precision : u8{
+		enum class Precision : u8 {
 			High 	 	= 0xFD,		///< measure T & RH with High precision (High repeatability)
 			Medium  	= 0xF6,		///< measure T & RH with medium precision (medium repeatability)
 			Low 		= 0xE0,		///< measure T & RH with lowest precision (low repeatability)
@@ -62,13 +62,11 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Initialization of the SHT40-AD1B-R2 relative humidity and temperature sensor
 		 *
-		 * @return Void
 		 * @note The sensor does not need a special initialization, this function just does a soft reset
 		 */
 		static void init() {
-			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(Command::SoftReset), {});
-
-
+			bsp::I2CA::write(DeviceAddress, enumValue(Command::SoftReset));
+			core::delay(2);
 		}
 
 		/**
@@ -77,13 +75,16 @@ namespace bsp::ygg::prph {
 		 * @return SensorData struct containing the humidity value in % and the sensor temperature
 		 */
 		static SensorData getSensorData(Precision precision = Precision::High) {
-			auto rawData = bsp::I2CA::read<SensorDataRaw>(DeviceAddress, static_cast<u8>(precision));	// Try to read directly without the delay
+			bsp::I2CA::write(DeviceAddress, enumValue(precision));	// Try to read directly without the delay
+			core::delay(10);
+
+			auto rawData = bsp::I2CA::read<SensorDataRaw>(DeviceAddress);
 
 			SensorData data;
-			data.sensorTemperature = -45 + 175 * (float)(rawData.th * 256 + rawData.tl)/65535;
-			data.humidity = -6 + 125 * (float)(rawData.rhh * 256 + rawData.rhl)/65535;
+			data.sensorTemperature = -45 + 175 * static_cast<float>((u16(rawData.th) << 8) | rawData.tl) / 0xFFFF;
+			data.humidity = -6 + 125 * static_cast<float>((u16(rawData.rhh) << 8) | rawData.rhl) / 0xFFFF;
 
-			if(data.humidity > 100) data.humidity = 100;
+			if (data.humidity > 100) data.humidity = 100;
 			else if(data.humidity < 0) data.humidity = 0;
 
 			return data;
@@ -94,11 +95,10 @@ namespace bsp::ygg::prph {
 		 * @brief Enable the heater module on the sensor
 		 *
 		 * @param Power and duration command
-		 * @return Void
-		 * @note  The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
+		 * @warning The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
 		 */
 		static inline void enableHeater(HeaterCommand command) {
-			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(command), {});
+			bsp::I2CA::write(DeviceAddress, enumValue(command));
 		}
 
 	private:
@@ -120,13 +120,7 @@ namespace bsp::ygg::prph {
 			SoftReset		 = 0x94,		///< Soft reset
 		};
 
-
-
-
 		constexpr static inline u8 DeviceAddress 		= 0x88;		///< I2C device address
-
-
-
 
 	};
 
