@@ -11,7 +11,7 @@
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief API to use the TCS3472 color sensor  	        		*
+  *  @brief Driver to use the TCS3472 color sensor  	        		*
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -158,10 +158,19 @@ namespace bsp::ygg::prph {
 		 */
 		static RGBA16 getColor16(bool restart = true) {
 			while (!getState());
+			RGBA16 color = {0};
 
+			color.r = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::RDATA));
+			color.r |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::RDATAH)) << 8;
 
-			auto data = bsp::I2CA::read<std::array<u16, 4>>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CDATA));
-			RGBA16 color { byteSwap(data[0]), byteSwap(data[1]), byteSwap(data[2]), byteSwap(data[3]) };
+			color.g = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::GDATA));
+			color.g |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::GDATAH)) << 8;
+
+			color.b = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATA));
+			color.b |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATAH)) << 8;
+
+			color.a = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATA));
+			color.a |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATAH)) << 8;
 
 			if(restart) startConversion();
 
