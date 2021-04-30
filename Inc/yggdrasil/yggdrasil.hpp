@@ -31,11 +31,11 @@
 #include <yggdrasil/peripherals/six_axis_sensor.hpp>
 #include <yggdrasil/peripherals/color_sensor.hpp>
 #include <yggdrasil/peripherals/humidity_sensor.hpp>
+#include <yggdrasil/peripherals/pressure_sensor.hpp>
 #include <yggdrasil/peripherals/joystick.hpp>
 #include <yggdrasil/peripherals/rtc.hpp>
 #include <yggdrasil/peripherals/seven_segment.hpp>
 #include <yggdrasil/peripherals/rgb_matrix.hpp>
-#include <yggdrasil/peripherals/encoder.hpp>
 #include <yggdrasil/peripherals/motor_driver.hpp>
 #include <yggdrasil/peripherals/push_pull_driver.hpp>
 
