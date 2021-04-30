@@ -159,17 +159,25 @@
 
 		static constexpr auto& TimerACHA = TimerA::Channel<1>;
 
-		static constexpr auto& TimerBCHA = TimerB::Channel<1>;
+
 		static constexpr auto& TimerBCHB = TimerB::Channel<2>;
 		static constexpr auto& TimerBCHC = TimerB::Channel<3>;
-		static constexpr auto& TimerBCHD = TimerB::Channel<4>;
+
 
 		static constexpr auto& TimerCCHA = TimerC::Channel<1>;
 
-		static constexpr auto& TimerDCHA = TimerD::Channel<1>;
-		static constexpr auto& TimerDCHB = TimerD::Channel<2>;
+		static constexpr auto& TimerDCHA = TimerD::Channel<2>;
+		static constexpr auto& TimerDCHB = TimerD::Channel<1>;
 		static constexpr auto& TimerDCHC = TimerD::Channel<3>;
 		static constexpr auto& TimerDCHD = TimerD::Channel<4>;
+
+		static constexpr auto& Encoder = TimerF::Encoder<0>;
+
+		static constexpr auto& TC78Mode = GPIOPortI::Pin<12>;
+		static constexpr auto& TC78Err  = GPIOPortI::Pin<13>;
+		static constexpr auto& TC78Stby = GPIOPortI::Pin<14>;
+		static constexpr auto& PhaseA = GPIOPortD::Pin<15>;
+		static constexpr auto& PhaseB = GPIOPortD::Pin<12>;
 	}
 
 #endif

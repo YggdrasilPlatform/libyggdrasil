@@ -36,6 +36,9 @@
 #include <yggdrasil/peripherals/seven_segment.hpp>
 #include <yggdrasil/peripherals/rgb_matrix.hpp>
 #include <yggdrasil/peripherals/encoder.hpp>
+#include <yggdrasil/peripherals/motor_driver.hpp>
+#include <yggdrasil/peripherals/push_pull_driver.hpp>
+
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
