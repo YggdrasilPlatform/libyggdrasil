@@ -77,22 +77,16 @@ namespace bsp::ygg::prph {
 		 * @return SensorData struct containing the humidity value in % and the sensor temperature
 		 */
 		static SensorData getSensorData(Precision precision = Precision::High) {
-			SensorDataRaw rawData = {0};
-			SensorData sensorData = {0};
-			rawData = bsp::I2CA::read<SensorDataRaw>(DeviceAddress, static_cast<u8>(precision));
+			auto rawData = bsp::I2CA::read<SensorDataRaw>(DeviceAddress, static_cast<u8>(precision));	// Try to read directly without the delay
 
-			/* According to the datasheed the code should be like this
-			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(Command::High), {});
-			// delay(10) //TODO
-			bsp::I2CA::read<SensorDataRaw>(DeviceAddress, {});	// Try to read directly without the delay
-			*/
+			SensorData data;
+			data.sensorTemperature = -45 + 175 * (float)(rawData.th * 256 + rawData.tl)/65535;
+			data.humidity = -6 + 125 * (float)(rawData.rhh * 256 + rawData.rhl)/65535;
 
-			sensorData.sensorTemperature = -45 + (float(175 * ((rawData.th << 8) + rawData.tl)) / 0xFFFF);
-			sensorData.humidity = -6 + (float(125 * ((rawData.rhh << 8) + rawData.rhl)) / 0xFFFF);
-			if(sensorData.humidity > 100) sensorData.humidity = 100;
-			else if(sensorData.humidity < 0) sensorData.humidity = 0;
+			if(data.humidity > 100) data.humidity = 100;
+			else if(data.humidity < 0) data.humidity = 0;
 
-			return sensorData;
+			return data;
 
 		}
 
