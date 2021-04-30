@@ -140,7 +140,7 @@ namespace bsp {
 	auto enumValue(T value) {
 		static_assert(std::is_enum<T>::value, "Cannot get value of non-enum type");
 
-		return static_cast<std::underlying_type<T>>(value);
+		return static_cast<typename std::underlying_type<T>::type>(value);
 	}
 
 	/**
