@@ -98,16 +98,11 @@ namespace bsp {
 	 * without invoking undefined behaviour
 	 * @tparam To Type to cast to
 	 * @param src Value to bit-cast to type of To
+	 * @warning This is a terrible bit_cast implementation! Replace this with actual std::bit_cast once the toolchain supports it (GCC 11.1+)
 	 */
 	template <typename To, typename From>
 	constexpr To bit_cast(const From& src) noexcept {
-		static_assert(sizeof(From) == sizeof(To), "Source and destination type must be the same size");
-		static_assert(std::is_trivially_constructible_v<From>, "Source type needs to be trivially constructible");
-		static_assert(std::is_trivially_constructible_v<To>, "Destination type needs to be trivially constructible");
-
-		To dst = {0};
-		std::memcpy(&dst, &src, sizeof(To));
-		return dst;
+		return *reinterpret_cast<To*>(&src);
 	}
 
 	/**
@@ -162,7 +157,7 @@ namespace bsp {
 	        return *this;
 	    }
 
-	    constexpr auto operator=(ByteSwapped value) {
+	    constexpr auto operator=(const ByteSwapped &value) {
 	        this->m_value = value.m_value;
 
 	        return *this;
