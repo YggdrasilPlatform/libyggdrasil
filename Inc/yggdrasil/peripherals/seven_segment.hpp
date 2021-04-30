@@ -184,7 +184,7 @@ namespace bsp::ygg::prph {
 				case 8:		seven_segment::All = 0x7F; break;
 				case 9:		seven_segment::All = 0x6F; break;
 				case 0x0A:	seven_segment::All = 0x77; break;
-				case 0x0B:	seven_segment::All = 0xF4; break;
+				case 0x0B:	seven_segment::All = 0x7C; break;
 				case 0x0C:	seven_segment::All = 0x39; break;
 				case 0x0D:	seven_segment::All = 0x5E; break;
 				case 0x0E:	seven_segment::All = 0x79; break;
