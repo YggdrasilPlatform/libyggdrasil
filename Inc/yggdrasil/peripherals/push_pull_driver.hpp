@@ -49,6 +49,7 @@ namespace bsp::ygg::prph {
 		 * @brief
 		 */
 		enum class Mode {
+			uninitialised = 0,
 			GPIO = 1,
 			PWM = 2,
 			Servo = 3,
@@ -58,58 +59,95 @@ namespace bsp::ygg::prph {
 		 * @brief
 		 */
 		enum class Channel {
-			A = 0,
-			B = 1,
-			C = 2,
-			D = 3,
+			_chA = 0,
+			_chB = 1,
+			_chC = 2,
+			_chD = 3,
 		};
 
 		class Servo{
 		public:
 			Servo() = delete;
 
-			static bool setDegree(Channel channel, float degrees) {
-				if(s_mode[static_cast<u8>(channel)] != Mode::Servo) {
-					return false;
-				}
-				if(degrees > (s_maxRotation / 2)) return false;
-				if(degrees < (-s_maxRotation / 2)) return false;
-
-
-				return true;
+			static void init(Channel channel, float delta_ms = 600){
+				checkMode(channel);
+				s_Delta_ms[static_cast<u8>(channel)] = delta_ms;
 			}
 
-			static bool setRadian(Channel channel, float radian) {
-				if(s_mode[static_cast<u8>(channel)] != Mode::Servo) {
-					return false;
-				}
-				if(radian > (degToRad(s_maxRotation) / 2)) return false;
-				if(radian < (-degToRad(s_maxRotation) / 2)) return false;
+			static void set(Channel channel, float percent) {
+				checkMode(channel);
 
-				return true;
+				if(percent > 100) percent = 100;
+				else if(percent < -100) percent = -100;
+
+				float dutyCycle = ((Midposition_ms + ((s_Delta_ms / 100.0F) * percent)) / Tpwm_ms) * 100.0F;
+
+				switch(channel){
+				case Channel::_chA:
+					bsp::TimerDCHA.setDutyCycle(dutyCycle);
+					break;
+				case Channel::_chB:
+					bsp::TimerDCHB.setDutyCycle(dutyCycle);
+					break;
+				case Channel::_chC:
+					bsp::TimerDCHC.setDutyCycle(dutyCycle);
+					break;
+				case Channel::_chD:
+					bsp::TimerDCHD.setDutyCycle(dutyCycle);
+					break;
+				}
+
+
 			}
 
-			static void setMaxRotationDegree(float degrees){s_maxRotation = degrees;}
+			static void setDeltaHighTime(Channel channel, float delta_ms) {
+				s_Delta_ms[static_cast<u8>(channel)] = delta_ms;
+			}
 
-			static void setMaxRotationRadian(float radian){s_maxRotation = radToDeg(radian);}
 
 		private:
-			static inline float s_maxRotation = 180;
+			static inline std::array s_Delta_ms = {600, 600, 600, 600};
+			constexpr static inline u16 Midposition_ms	= 1500;
+			constexpr static inline u16 Tpwm_ms	= 20000;
 
-			constexpr float radToDeg(float radian) { return radian * 180 / M_PI; }
-			constexpr float degToRad(float degrees) { return degrees * M_PI / 180; }
+			static float radToDeg(float radian) { return radian * 180 / M_PI; }
+			static float degToRad(float degrees) { return degrees * M_PI / 180; }
+
+			static void checkMode(Channel channel){
+				if(s_mode[static_cast<u8>(channel)] != Mode::Servo) {
+					if(bsp::TimerD::getPwmFrequency() != 50){
+						bsp::TimerD::setPwmFrequency(50,40000);
+					}
+					switch(channel){
+					case Channel::_chA:
+						bsp::TimerDCHA.startPwm();
+						break;
+					case Channel::_chB:
+						bsp::TimerDCHB.startPwm();
+						break;
+					case Channel::_chC:
+						bsp::TimerDCHC.startPwm();
+						break;
+					case Channel::_chD:
+						bsp::TimerDCHD.startPwm();
+						break;
+					}
+					s_mode[static_cast<u8>(channel)] = Mode::Servo;
+				}
+			}
 		};
 
 		class PWM{
 		public:
 			PWM() = delete;
-			static void pwmSetDuty(Channel channel, u16 dutyCycle) {
+			static void setDuty(Channel channel, u16 dutyCycle) {
 				if(s_mode[static_cast<u8>(channel)] != Mode::PWM){
 
 				}
-
-				return true;
 			}
+
+		private:
+
 
 		};
 
@@ -124,17 +162,17 @@ namespace bsp::ygg::prph {
 
 
 				switch(channel) {
-					case Channel::A: DriverA = state; break;
-					case Channel::B: DriverB = state; break;
-					case Channel::C: DriverC = state; break;
-					case Channel::D: DriverC = state; break;
+					case Channel::_chA: DriverA = state; break;
+					case Channel::_chB: DriverB = state; break;
+					case Channel::_chC: DriverC = state; break;
+					case Channel::_chD: DriverC = state; break;
 				}
 			}
 
 		};
 
 	private:
-		static inline u8 s_mode[] = {0,0,0,0};
+		static inline std::array s_mode = {Mode::uninitialised,Mode::uninitialised,Mode::uninitialised,Mode::uninitialised};
 
 	};
 
