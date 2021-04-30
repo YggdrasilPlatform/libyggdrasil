@@ -95,10 +95,10 @@
 		static constexpr auto& LedGreen = LD4;
 
 		static constexpr auto& EncoderButton = GPIOPortK::Pin<3>;
-		static constexpr auto& ButtonA = GPIOPortK::Pin<4>;
-		static constexpr auto& ButtonB = GPIOPortK::Pin<5>;
-		static constexpr auto& ButtonC = GPIOPortK::Pin<6>;
-		static constexpr auto& ButtonD = GPIOPortK::Pin<7>;
+		static constexpr auto& ButtonA = GPIOPortK::Pin<4, drv::Active::Low>;
+		static constexpr auto& ButtonB = GPIOPortK::Pin<5, drv::Active::Low>;
+		static constexpr auto& ButtonC = GPIOPortK::Pin<6, drv::Active::Low>;
+		static constexpr auto& ButtonD = GPIOPortK::Pin<7, drv::Active::Low>;
 
 		static constexpr auto& DriverA = GPIOPortC::Pin<13>;
 		static constexpr auto& LD5 = DriverA;
@@ -149,6 +149,8 @@
 		using SPIB = bsp::drv::SPI<&hspi4, bsp::mid::drv::SPI>;
 		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
 
+		static constexpr auto& SPIACE = GPIOPortI::Pin<0>;
+
 
 		using TimerA = bsp::drv::Timer<&htim12, bsp::mid::drv::Timer, u16>;
 		using TimerB = bsp::drv::Timer<&htim4, bsp::mid::drv::Timer, u16>;
@@ -178,6 +180,9 @@
 		static constexpr auto& TC78Stby = GPIOPortI::Pin<14>;
 		static constexpr auto& PhaseA = GPIOPortD::Pin<15>;
 		static constexpr auto& PhaseB = GPIOPortD::Pin<12>;
+
+
+
 	}
 
 #endif
