@@ -33,40 +33,9 @@
 
 namespace bsp::ygg::prph {
 
-	struct rawBcdData {
-		u8 sec;
-		u8 min;
-		u8 hrs;
-		u8 weekday;
-		u8 date;
-		u8 month;
-		u8 year;
-	};
-
-	ALWAYS_INLINE constexpr u8 bcdToBinary(u8 bcd) {
-	    return (bcd & 0xF) + 10 * ((bcd >> 4) & 0xF);
-	}
-
-	ALWAYS_INLINE constexpr u8 binaryToBcd(u8 bin) {
-	    return (bin < 100) ? ((bin / 10) << 4) + (bin % 10) : 0;
-	}
-
 	class RealTimeClock {
 	public:
 		RealTimeClock() = delete;
-
-		/**
-		 * @brief
-		 *
-		 * @return Void
-		 * @note
-		 */
-		static bool init() {
-
-			return true;
-
-		}
-
 
 		/**
 		 * @brief Get the time saved in the RTC
@@ -74,19 +43,19 @@ namespace bsp::ygg::prph {
 		 * @return time_t time saved in the RTC
 		 */
 		static time_t getTime() {
-			rawBcdData rawBCD = {0};
+			RawData rawData = { 0 };
 			tm time;
-			rawBCD = bsp::I2CA::read<rawBcdData>(DeviceAddress, static_cast<u8>(RegisterID::Seconds));
+			rawData = bsp::I2CA::read<RawData>(DeviceAddress, enumValue(RegisterID::Seconds));
 
-			time.tm_sec = bcdToBinary(rawBCD.sec);
-			time.tm_min = bcdToBinary(rawBCD.min);
-			time.tm_hour = bcdToBinary(rawBCD.hrs);
-		    time.tm_mday = bcdToBinary(rawBCD.weekday);
-		    time.tm_mon = bcdToBinary(rawBCD.month);
-		    time.tm_year = bcdToBinary(rawBCD.year) + 100; // Add 100 to set the years since 1900
-		    time.tm_wday = bcdToBinary(rawBCD.weekday);
-		    time.tm_yday = 0;
-		    time.tm_isdst = false;
+			time.tm_sec 	= math::bcdToBinary(rawData.sec);
+			time.tm_min 	= math::bcdToBinary(rawData.min);
+			time.tm_hour 	= math::bcdToBinary(rawData.hrs);
+		    time.tm_mday 	= math::bcdToBinary(rawData.weekday);
+		    time.tm_mon 	= math::bcdToBinary(rawData.month);
+		    time.tm_year 	= math::bcdToBinary(rawData.year) + 100; // Add 100 to set the years since 1900
+		    time.tm_wday 	= math::bcdToBinary(rawData.weekday);
+		    time.tm_yday 	= 0;
+		    time.tm_isdst 	= false;
 
 		    return mktime(&time);
 
@@ -98,23 +67,24 @@ namespace bsp::ygg::prph {
 		 * @param tm struct with the time to save in the RTC
 		 */
 		static void setTime(tm time) {
-			rawBcdData rawBCD = {0};
+			RawData rawData = { 0 };
 
-			rawBCD.sec = binaryToBcd(time.tm_sec);
-			rawBCD.min = binaryToBcd(time.tm_min);
-			rawBCD.hrs = binaryToBcd(time.tm_hour);
-			rawBCD.weekday = binaryToBcd(time.tm_mday);
-			rawBCD.month = binaryToBcd(time.tm_mon);
-			while(time.tm_year > 100){time.tm_year -= 100;} // get the year in range 0 to 99
-			rawBCD.year = binaryToBcd(time.tm_year) + 100;
-			rawBCD.weekday = binaryToBcd(time.tm_wday);
+			rawData.sec 		= math::binaryToBcd(time.tm_sec);
+			rawData.min 		= math::binaryToBcd(time.tm_min);
+			rawData.hrs 		= math::binaryToBcd(time.tm_hour);
+			rawData.weekday 	= math::binaryToBcd(time.tm_mday);
+			rawData.month 		= math::binaryToBcd(time.tm_mon);
+			rawData.weekday 	= math::binaryToBcd(time.tm_wday);
 
-		    bsp::I2CA::write<rawBcdData>(DeviceAddress, static_cast<u8>(RegisterID::Seconds), rawBCD);
+			// get the year in range 0 to 99
+			while (time.tm_year > 100) {
+				time.tm_year -= 100;
+			}
+			rawData.year = math::binaryToBcd(time.tm_year) + 100;
+
+		    bsp::I2CA::write<RawData>(DeviceAddress, enumValue(RegisterID::Seconds), rawData);
 
 		}
-
-
-
 
 	private:
 
@@ -187,13 +157,17 @@ namespace bsp::ygg::prph {
 
 		};
 
-
-
-
 		constexpr static inline u8 DeviceAddress 		= 0xA4;		///< I2C device address
 
-
-
+		struct RawData {
+			u8 sec;
+			u8 min;
+			u8 hrs;
+			u8 weekday;
+			u8 date;
+			u8 month;
+			u8 year;
+		};
 
 	};
 

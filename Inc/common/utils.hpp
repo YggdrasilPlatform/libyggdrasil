@@ -101,7 +101,7 @@ namespace bsp {
 	 * @warning This is a terrible bit_cast implementation! Replace this with actual std::bit_cast once the toolchain supports it (GCC 11.1+)
 	 */
 	template <typename To, typename From>
-	constexpr To bit_cast(const From& src) noexcept {
+	constexpr To bit_cast(From& src) noexcept {
 		return *reinterpret_cast<To*>(&src);
 	}
 

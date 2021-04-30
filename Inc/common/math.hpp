@@ -7,11 +7,11 @@
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Common -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file common/utils.hpp                                         *
+  *  @file common/math.hpp                                        	*
   *  @ingroup common                                                *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief Commonly used helper functions						    *
+  *  @brief Commonly used math functions						    *
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -36,43 +36,85 @@
 
 namespace bsp::math {
 
+	/**
+	 * @brief Pi constant
+	 * @tparam T Precision type
+	 * @note Replace with version in std library once it becomes available in toolchain
+	 */
 	template<typename T>
 	constexpr static inline T Pi = T(3.14159265358979323846264338327950288419716939937510);
 
+	/**
+	 * @brief e constant
+	 * @tparam T Precision type
+	 * @note Replace with version in std library once it becomes available in toolchain
+	 */
 	template<typename T>
 	constexpr static inline T e  = T(2.71828182845904523536028747135266249775724709369995);
 
 
-
+	/**
+	 * @brief Clamps a input value between a min and max value
+	 * @param value Input
+	 * @param min Min value
+	 * @param max Max value
+	 * @return Clamped value
+	 */
 	template<typename T>
 	constexpr T clamp(T value, T min, T max) {
 		return std::max(std::min(value, min), max);
 	}
 
+	/**
+	 * @brief Conversion between degree and radian
+	 * @param deg Degree
+	 * @return Radians
+	 */
 	template<typename T>
 	constexpr T degreeToRadian(T deg) {
 		return (deg / 360.0) * 2 * Pi<T>;
 	}
 
+	/**
+	 * @brief Conversion between radian and degree
+	 * @param rad Radians
+	 * @return Degrees
+	 */
 	template<typename T>
 	constexpr T radianToDegree(T rad) {
 		return (rad / (2 * Pi<T>)) * 360.0;
 	}
 
+	/**
+	 * @brief Kibibyte literal
+	 */
     ALWAYS_INLINE constexpr u64 operator ""_kB(u64 n) {
         return n * u64(1024);
     }
 
+    /**
+     * @brief Mibibyte literal
+     */
     ALWAYS_INLINE constexpr u64 operator ""_MB(u64 n) {
         return operator""_kB(n) * u64(1024);
     }
 
+    /**
+     * @brief Gibibyte literal
+     */
     ALWAYS_INLINE constexpr u64 operator ""_GB(u64 n) {
         return operator""_MB(n) * u64(1024);
     }
 
+    /**
+     * @brief Calculates the CRC16 Checksum of the data in a container
+     * @param data Iterateable Container type
+     * @param initialValue Value to start at
+     * @tparam Polynomial Polynomial used to calculate LUT
+     * @return CRC16 checksum
+     */
     template<u16 Polynomial = 0x8005>
-    u16 crc16(const auto &data, u16 initialValue = 0x00) {
+    constexpr u16 crc16(const auto &data, u16 initialValue = 0x00) {
         constexpr auto Table = [] {
             std::array<u16, 256> table;
 
@@ -103,6 +145,13 @@ namespace bsp::math {
         return crc;
     }
 
+    /**
+     * @brief Calculates the CRC32 Checksum of the data in a container
+     * @param data Iterateable Container type
+     * @param initialValue Value to start at
+     * @tparam Polynomial Polynomial used to calculate LUT
+     * @return CRC32 checksum
+     */
     template<u32 Polynomial = 0x04C11DB7>
     u32 crc32(const auto &data, u32 initialValue = 0x00) {
         constexpr auto Table = [] {
@@ -129,5 +178,23 @@ namespace bsp::math {
 
         return ~crc;
     }
+
+    /**
+     * @brief Converts a Binary Coded Decimal value to Binary
+     * @param bcd BCD input
+     * @return Binary representation
+     */
+	ALWAYS_INLINE constexpr u8 bcdToBinary(u8 bcd) {
+	    return (bcd & 0xF) + 10 * ((bcd >> 4) & 0xF);
+	}
+
+    /**
+     * @brief Converts a Binary value to Binary Coded Decimal
+     * @param bin Binary input
+     * @return BCD representation
+     */
+	ALWAYS_INLINE constexpr u8 binaryToBcd(u8 bin) {
+	    return (bin < 100) ? ((bin / 10) << 4) + (bin % 10) : 0;
+	}
 
 }

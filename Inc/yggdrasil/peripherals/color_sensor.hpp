@@ -67,14 +67,17 @@ namespace bsp::ygg::prph {
 		 */
 
 		static bool init() {
-			if (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::ID)) != DeviceID) {		// Check device id
-					return false;
+			while (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::ID)) != DeviceID) {		// Check device id
+				core::delay(1);
 			}
+
 			setIntergrationTime(IntegrationTime::_2_4ms);			// Set integration time
 			setGain(Gain::_1x);										// Set gain
 			enable();												// Enable sensor
 			startConversion();										// Start a conversion
+
 			core::delay(3);											// Wait for the conversion to complete
+
 			return true;
 
 		}
@@ -87,8 +90,8 @@ namespace bsp::ygg::prph {
 		 * @note Integration time = (256 - IntegrationTime) * 2.4ms
 		 */
 		static inline void setIntergrationTime(IntegrationTime integrationTime) {
-			ColorSensor::s_integrationTime = static_cast<u8>(integrationTime);
-			bsp::I2CA::write<u8>(DeviceAddress, static_cast<u8>(RegisterID::ATIME),  static_cast<u8>(integrationTime));	// Write integration time in the ATIME register
+			ColorSensor::s_integrationTime = enumValue(integrationTime);
+			bsp::I2CA::write<u8>(DeviceAddress, enumValue(RegisterID::ATIME),  enumValue(integrationTime));	// Write integration time in the ATIME register
 		}
 
 		/**
@@ -98,7 +101,7 @@ namespace bsp::ygg::prph {
 		 * @note value can be 1x, 4x, 16x and 60x
 		 */
 		static inline void setGain(Gain gain) {
-			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::CTRL), static_cast<u8>(gain));				// Set gain value in the CTRL register
+			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::CTRL), enumValue(gain));				// Set gain value in the CTRL register
 		}
 
 		/**
@@ -107,19 +110,20 @@ namespace bsp::ygg::prph {
 		 * @note This function does not start a conversion
 		 */
 		static void enable() {
-			EnableRegister enRegister = {0};
+			EnableRegister enRegister = { 0 };
 			enRegister.PON = 1;
-			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::EN), bit_cast<u8>(enRegister));				// Enable sensor
-			core::delay(3);																													// Wait for power up
 
+			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));				// Enable sensor
+
+			core::delay(3);																										// Wait for power up
 		}
 
 		/**
 		 * @brief Disables the sensor
 		 */
 		static void disable() {
-			EnableRegister enRegister = {0};
-			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::EN), bit_cast<u8>(enRegister));				// Disable sensor
+			EnableRegister enRegister = { 0 };
+			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));				// Disable sensor
 
 		}
 
@@ -128,12 +132,12 @@ namespace bsp::ygg::prph {
 		 *
 		 * @return integration time in ms
 		 */
-		static u16 startConversion(){
-			EnableRegister enRegister = {0};
+		static u16 startConversion() {
+			EnableRegister enRegister = { 0 };
 
 			enRegister.PON = 1;																								// Enable
 			enRegister.AEN = 1;																								// Enable RGBC
-			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::EN), bit_cast<u8>(enRegister));	// Write enable register
+			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));	// Write enable register
 
 			return static_cast<u16>((256 - ColorSensor::s_integrationTime) * 2.4F + 0.9);
 		}
@@ -144,8 +148,8 @@ namespace bsp::ygg::prph {
 		 *
 		 * @return 1 when the conversion is finished, 0 when not
 		 */
-		static bool getState(){
-			return (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | static_cast<u8>(RegisterID::STATUS)) & ConversionDone);			// Wait for conversion to complete
+		static bool isDone() {
+			return (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::STATUS)) & ConversionDone);			// Wait for conversion to complete
 		}
 
 
@@ -157,19 +161,22 @@ namespace bsp::ygg::prph {
 		 * @note The integration time must be passed since the last read
 		 */
 		static RGBA16 getColor16(bool restart = true) {
-			while (!getState());
-			RGBA16 color = {0};
+			while (!isDone()) {
+				core::delay(1);
+			}
 
-			color.r = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::RDATA));
+			RGBA16 color = { 0 };
+
+			color.r  = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::RDATA));
 			color.r |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::RDATAH)) << 8;
 
-			color.g = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::GDATA));
+			color.g  = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::GDATA));
 			color.g |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::GDATAH)) << 8;
 
-			color.b = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATA));
+			color.b  = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATA));
 			color.b |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATAH)) << 8;
 
-			color.a = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATA));
+			color.a  = bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATA));
 			color.a |= bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::BDATAH)) << 8;
 
 			if(restart) startConversion();
@@ -233,12 +240,12 @@ namespace bsp::ygg::prph {
 		 * @brief Enable register
 		 */
 		struct EnableRegister {
-			u8 PON : 1;			///< Power on
-			u8 AEN : 1;			///< RGBC enable, activates the two channel ADC
-			u8 Reserved : 1;	///< Write as 0
-			u8 WEN : 1;			///< Wait enable
-			u8 AIEN : 1;		///< RGBC interrupt enable
-			u8 Reserved2 :3;	///< Write as 0
+			u8 PON 			: 1;	///< Power on
+			u8 AEN 			: 1;	///< RGBC enable, activates the two channel ADC
+			u8 Reserved 	: 1;	///< Write as 0
+			u8 WEN 			: 1;	///< Wait enable
+			u8 AIEN 		: 1;	///< RGBC interrupt enable
+			u8 Reserved2 	: 3;	///< Write as 0
 		};
 		static_assert (sizeof(EnableRegister) == sizeof(u8), "Enable register definition wrong");
 
@@ -246,10 +253,10 @@ namespace bsp::ygg::prph {
 		 * @brief Status register
 		 */
 		struct StatusRegister {
-			u8 AVALID : 1;		///< RGBC Valid. Indicates that the RGBC channels have completed an integration cycle.
-			u8 Reserved1 : 3;	///< Reserved
-			u8 AINT : 1;		///< RGBC clear channel interrupt
-			u8 Reserved2: 3;	///< Reserved
+			u8 AVALID 		: 1;	///< RGBC Valid. Indicates that the RGBC channels have completed an integration cycle.
+			u8 Reserved1 	: 3;	///< Reserved
+			u8 AINT 		: 1;	///< RGBC clear channel interrupt
+			u8 Reserved2	: 3;	///< Reserved
 		};
 		static_assert (sizeof(StatusRegister) == sizeof(u8), "Status register definition wrong");
 

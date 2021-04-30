@@ -43,16 +43,16 @@ namespace bsp::ygg::prph {
 	public:
 		MotorDriver() = delete;
 
-		enum class Channel {
-			_MchA = 0,
-			_MchB = 1,
+		enum class Channel : u8 {
+			A = 0,
+			B = 1,
 		};
 
 		/**
 		 * @brief init function for the motor as a dual channel dc driver
 		 * @note this function does start the needed pwm generators
 		 */
-		static void init(){
+		static void init() {
 			TC78Mode = true;	// Set the mode as dual DC motor driver
 			core::delay(1);
 			TC78Stby = true;	// Enables the motor driver
@@ -66,14 +66,14 @@ namespace bsp::ygg::prph {
 		 *
 		 * @param true for standby, false for active
 		 */
-		static void standby(bool stby){
-			if(stby){
+		static void standby(bool stby) {
+			if(stby) {
 				TC78Stby = false;				// Set the driver to standby
 
 				bsp::TimerBCHB.stopPwm();
 				bsp::TimerBCHC.stopPwm();
 			}
-			else{
+			else {
 				TC78Stby = true;				// Enables the motor driver
 
 				bsp::TimerBCHB.startPwm();
@@ -83,20 +83,21 @@ namespace bsp::ygg::prph {
 
 
 		/**
-		 * @brief contorlls the speed and rotation of each channel
+		 * @brief Controls the speed and rotation of each channel
 		 *
-		 * @param ch agrument to set the channel (A or B)
+		 * @param ch Channel to set speed
 		 * @param speed ranged from -100% o 100% where - does change the rotation direction
 		 */
-		static void setSpeed(Channel ch, float speed){
-			bool rotation = speed > 0 ? true : false;	// Get the rotation for the selected channel
+		static void setSpeed(Channel ch, float speed) {
+			bool rotation = speed > 0;			// Get the rotation for the selected channel
 			speed = std::abs(speed);			// Get the absolute duty for the selected channel
+
 			switch(ch){
-			case Channel::_MchA:
+			case Channel::A:
 				PhaseA = rotation;				// Set the rotation fpr channel A
 				TimerBCHB.setDutyCycle(speed);	// Set the pwm for channel A
 				break;
-			case Channel::_MchB:
+			case Channel::B:
 				PhaseB = rotation;				// Set the rotation fpr channel B
 				TimerBCHC.setDutyCycle(speed);	// Set the pwm for channel B
 				break;
@@ -109,7 +110,7 @@ namespace bsp::ygg::prph {
 		 *
 		 * @return false when no error occurring, true when in thermal shutdown (TSD) or over current (ISD)
 		 */
-		static bool getStatus(){
+		static bool hasError() {
 			return TC78Err;
 		}
 

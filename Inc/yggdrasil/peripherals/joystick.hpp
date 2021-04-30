@@ -58,7 +58,7 @@ namespace bsp::ygg::prph {
 		 * @note This function is polling
 		 */
 		static JoystickData getLeft() {
-			JoystickData data = {0};
+			JoystickData data = { 0 };
 
 			data.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
 			data.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
@@ -207,23 +207,22 @@ namespace bsp::ygg::prph {
 		 */
 		static u16 getADCValue(MUX channel) {
 			ConfigurationRegister configRegister = {0};
-			configRegister.OS = 1;
-			configRegister.MUX = static_cast<u8>(channel);
-			configRegister.PGA = static_cast<u8>(PGA::FSR_4p096);
-			configRegister.MODE = static_cast<u8>(MODE::SingleShot);
-			configRegister.DR = static_cast<u8>(DR::SPS1600);
+			configRegister.OS 		= 1;
+			configRegister.MUX 		= enumValue(channel);
+			configRegister.PGA 		= enumValue(PGA::FSR_4p096);
+			configRegister.MODE 	= enumValue(MODE::SingleShot);
+			configRegister.DR 		= enumValue(DR::SPS1600);
 			configRegister.Reserved = ReservedBits;
 
-			bsp::I2CA::write<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister), byteSwap(bit_cast<u16>(configRegister)));		// Start Conversion
+			bsp::I2CA::write<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConfigurationRegister), bit_cast<u16>(configRegister));		// Start Conversion
 
-			while((byteSwap(bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConfigurationRegister))) & ConversionDone) == ConversionDone) {
+			while((bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConfigurationRegister)) & ConversionDone) == ConversionDone) {
 				core::delay(1);
 			}
 
+			auto adcData = bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConversionRegister));
 
-			volatile auto adcdata = byteSwap(bsp::I2CA::read<u16>(DeviceAddress, static_cast<u8>(RegisterID::ConversionRegister)));
-			return adcdata;
-
+			return adcData;
 		}
 
 		/**

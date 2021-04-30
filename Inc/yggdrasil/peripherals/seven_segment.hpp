@@ -35,7 +35,6 @@
 namespace bsp::ygg::prph {
 
 
-
 	class SevenSegment {
 	public:
 		SevenSegment() = delete;
@@ -79,7 +78,7 @@ namespace bsp::ygg::prph {
 
 			enableDigit(currSegment);	// Enable the current segment
 
-			switch(currSegment){
+			switch(currSegment) {
 				case 0:
 					if(value < 0) SevenSegment::setDigit('-');				// Display the minus
 					else SevenSegment::setDigit(' ');
@@ -162,7 +161,6 @@ namespace bsp::ygg::prph {
 			}
 
 			currSegment = (currSegment + 1) % 4;	// Increment current segment
-
 		}
 
 		/**
@@ -192,7 +190,6 @@ namespace bsp::ygg::prph {
 				case '-':   seven_segment::All = 0x40; break;
 				case ' ':   seven_segment::All = 0x00; break;
 			}
-
 		}
 
 		/**
@@ -211,7 +208,6 @@ namespace bsp::ygg::prph {
 
 
 	private:
-
 
 	};
 

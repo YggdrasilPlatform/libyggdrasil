@@ -38,56 +38,37 @@ namespace bsp::ygg::prph {
 	public:
 		PressureSensor() = delete;
 
-		struct SensorData{
-			float pressure;
-			float sensorTemperature;
-		};
-
-
-		static void init(){
+		/**
+		 * @brief Initializes the LPS22HBTR pressure sensor
+		 */
+		static void init() {
 			u8 id = 0;
-			do{
+			do {
 				bsp::SPIACE = false;
 				bsp::SPIA::write<u8>(enumValue(Register::WHO_AM_I) | RequestResponse);
 				id = bsp::SPIA::read<u8>();
 				bsp::SPIACE = true;
+
 				core::delay(1);
 			} while(id != DeviceID);
 
 		}
 
-		static SensorData getSensorData(){
-			SensorData senorData = {0};
-			ControlRegister2 ctrlReg2 = { .ONE_SHOT = 1, .I2C_DIS = 0, .IF_ADD_INC = 0 };
 
-			bsp::SPIACE = false;
-			bsp::SPIA::write<std::array<u8,2>>({enumValue(Register::CTRL_REG2), bit_cast<u8>(ctrlReg2)});
-			bsp::SPIACE = true;
-			do{
-				bsp::SPIACE = true;
-				core::delay(10);
-				bsp::SPIACE = false;
-				bsp::SPIA::write<u8>(enumValue(Register::CTRL_REG2) | RequestResponse);
-			} while((bsp::SPIA::read<u8>() & ConversionDone) == 0);
+		/**
+		 * @brief Get the current air pressure
+		 * @return Pressure in hPa
+		 */
+		static float getPressure() {
+			return getSensorData().pressure;
+		}
 
-			{
-				auto xl = readRegister(Register::PRESS_OUT_XL);
-				auto l  = readRegister(Register::PRESS_OUT_L);
-				auto h  = readRegister(Register::PRESS_OUT_H);
-
-				senorData.pressure = static_cast<float>(xl | (l << 8) | (h << 16)) / 4096.0;
-			}
-
-			{
-				auto l  = readRegister(Register::TEMP_OUT_L);
-				auto h  = readRegister(Register::TEMP_OUT_H);
-
-				senorData.sensorTemperature = static_cast<float>(l | (h << 8)) / 100;
-			}
-
-
-			return senorData;
-
+		/**
+		 * @brief Get the current sensor temperature
+		 * @return Temperature in °C
+		 */
+		static float getTemperature() {
+			return getSensorData().sensorTemperature;
 		}
 
 	private:
@@ -133,6 +114,11 @@ namespace bsp::ygg::prph {
 		};
 		static_assert (sizeof(ControlRegister2) == sizeof(u8), "Control register 2 definition wrong");
 
+		struct SensorData {
+			float pressure;
+			float sensorTemperature;
+		};
+
 		constexpr static inline u8 RequestResponse = 0x80;		///> Requests a write from the sensor on the following clocks
 		constexpr static inline u8 DeviceID = 0xb1;			///> Value of the who am i register
 		constexpr static inline u8 ConversionDone = 0x01;	///> Conversion done flag
@@ -144,6 +130,40 @@ namespace bsp::ygg::prph {
 			bsp::SPIACE = true;
 
 			return value;
+		}
+
+		static SensorData getSensorData() {
+			SensorData senorData = {0};
+			ControlRegister2 ctrlReg2 = { .ONE_SHOT = 1, .I2C_DIS = 0, .IF_ADD_INC = 0 };
+
+			bsp::SPIACE = false;
+			bsp::SPIA::write<std::array<u8,2>>({enumValue(Register::CTRL_REG2), bit_cast<u8>(ctrlReg2)});
+			bsp::SPIACE = true;
+
+			do{
+				bsp::SPIACE = true;
+				core::delay(10);
+				bsp::SPIACE = false;
+				bsp::SPIA::write<u8>(enumValue(Register::CTRL_REG2) | RequestResponse);
+			} while((bsp::SPIA::read<u8>() & ConversionDone) == 0);
+
+			{
+				auto xl = readRegister(Register::PRESS_OUT_XL);
+				auto l  = readRegister(Register::PRESS_OUT_L);
+				auto h  = readRegister(Register::PRESS_OUT_H);
+
+				senorData.pressure = static_cast<float>(xl | (l << 8) | (h << 16)) / 4096.0;
+			}
+
+			{
+				auto l  = readRegister(Register::TEMP_OUT_L);
+				auto h  = readRegister(Register::TEMP_OUT_H);
+
+				senorData.sensorTemperature = static_cast<float>(l | (h << 8)) / 100;
+			}
+
+
+			return senorData;
 		}
 
 	};
