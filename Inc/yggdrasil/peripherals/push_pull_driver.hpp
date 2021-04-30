@@ -80,7 +80,7 @@ namespace bsp::ygg::prph {
 				if(percent > 100) percent = 100;
 				else if(percent < -100) percent = -100;
 
-				float dutyCycle = ((Midposition_ms + ((s_Delta_ms / 100.0F) * percent)) / Tpwm_ms) * 100.0F;
+				float dutyCycle = ((Midposition_ms + ((s_Delta_ms[static_cast<u8>(channel)] / 100.0F) * percent)) / Tpwm_ms) * 100.0F;
 
 				switch(channel){
 				case Channel::_chA:
