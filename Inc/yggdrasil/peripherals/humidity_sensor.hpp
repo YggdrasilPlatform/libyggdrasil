@@ -32,24 +32,14 @@
 
 namespace bsp::ygg::prph {
 
-	struct SensorDataRaw {
-		u8 th;
-		u8 tl;
-		u8 tcrc8;
-		u8 rhh;
-		u8 rhl;
-		u8 rhcrc8;
-	};
-
-	struct SensorData{
-		float humidity;
-		float sensorTemperature;
-	};
-
-
 	class HumiditySensor {
 	public:
 		HumiditySensor() = delete;
+
+		struct SensorData{
+			float humidity;
+			float sensorTemperature;
+		};
 
 		/**
 		 * @brief Heater commands for the SHT40-AD1B-R2 sensor
@@ -118,6 +108,15 @@ namespace bsp::ygg::prph {
 		}
 
 	private:
+
+		struct SensorDataRaw {
+			u8 th;
+			u8 tl;
+			u8 tcrc8;
+			u8 rhh;
+			u8 rhl;
+			u8 rhcrc8;
+		};
 
 		/**
 		 * @brief Commands for the SHT40-AD1B-R2 sensor
