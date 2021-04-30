@@ -11,7 +11,7 @@
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief API to use the SK9822 RGB Led							*
+  *  @brief Driver to use the SK9822 RGB Led							*
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -102,6 +102,7 @@ namespace bsp::ygg::prph {
 				case 5:	setLedMasked(0b101'010'101, color); break;
 				case 6:	setLedMasked(0b101'101'101, color); break;
 			}
+			flush();
 		}
 
 		static void flush(){
