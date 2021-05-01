@@ -42,6 +42,12 @@ namespace bsp::drv {
 		ADConverter(const ADConverter&) = delete;
 		ADConverter(ADConverter &&) = delete;
 
+		/**
+		 * @brief Channel implementation
+		 * @tparam Index ChannelID
+		 * @tparam Offset Calibration offset
+		 * @tparam MaxValue Maximum value reported
+		 */
 		template<u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
 		static inline auto Channel = ADCChannelImpl<Context, Index, Offset, MaxValue>();
 	};

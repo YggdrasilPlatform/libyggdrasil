@@ -30,17 +30,26 @@
 
 #include <cmath>
 
-
 namespace bsp::mid::drv {
 
+	/**
+	 * @brief ADC Channel abstraction
+	 *
+	 * @tparam Context ADC Context
+	 * @tparam Index ChannelID
+	 * @tparam Offset Calibration offset
+	 * @tparam MaxValue Maximum value reported
+	 */
 	template<auto Context, u8 Index, u32 Offset, u32 MaxValue>
 	struct ADCChannel {
+		ADCChannel(const ADCChannel&) = delete;
+		auto operator=(const ADCChannel&) = delete;
 
-		ADCChannel() {
-
-		}
-
-		operator float() {
+		/**
+		 * @brief Get the current ADC value
+		 * @return Current value between 0.0 and 1.0
+		 */
+		operator float() const noexcept {
 			switchChannel();
 
 			HAL_ADC_Start(Context);
@@ -49,18 +58,9 @@ namespace bsp::mid::drv {
 			return std::max(static_cast<float>(HAL_ADC_GetValue(Context)) - Offset, 0.0F) / MaxValue;
 		}
 
-		void switchChannel() {
-			ADC_ChannelConfTypeDef channelConfig = { 0 };
-			constexpr auto HALChannel = getHALChannel();
-
-			channelConfig.Channel = HALChannel;
-			channelConfig.Rank = ADC_REGULAR_RANK_1;
-			channelConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
-
-			HAL_ADC_ConfigChannel(Context, &channelConfig);
-		}
-
 	private:
+		ADCChannel() = default;
+
 		constexpr static u32 getHALChannel() {
 			switch (Index) {
 				case 0:  return ADC_CHANNEL_0;
@@ -85,6 +85,21 @@ namespace bsp::mid::drv {
 				default: bsp::unreachable();
 			}
 		}
+
+
+		void switchChannel() {
+			ADC_ChannelConfTypeDef channelConfig = { 0 };
+			constexpr auto HALChannel = getHALChannel();
+
+			channelConfig.Channel = HALChannel;
+			channelConfig.Rank = ADC_REGULAR_RANK_1;
+			channelConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+
+			HAL_ADC_ConfigChannel(Context, &channelConfig);
+		}
+
+		template<auto, template<auto, u8, u32, u32> typename>
+		friend struct bsp::drv::ADConverter;
 	};
 
 }
