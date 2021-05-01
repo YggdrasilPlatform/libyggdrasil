@@ -36,6 +36,7 @@
 #include <midgard/driver/spi.hpp>
 #include <midgard/driver/timer.hpp>
 #include <midgard/driver/rng.hpp>
+#include <midgard/driver/hash.hpp>
 
 #include <midgard/core/cache.hpp>
 #include <midgard/core/cortex.hpp>
@@ -207,6 +208,7 @@
 		static constexpr auto& PhaseB = GPIOPortD::Pin<12>;
 
 		using Random = bsp::drv::Random<0x5006'0800, bsp::mid::drv::Random>;
+		using Hash	 = bsp::drv::Hash<0x4002'3000, bsp::mid::drv::Hash>;
 
 	}
 
