@@ -36,14 +36,14 @@ namespace bsp::drv {
 	 * @tparam BaseAddress ADC port bank base address
 	 * @tparam ADCChannel ADCChannel implementation
 	 */
-	template<auto Context>
-	struct AnalogDigitalConverter {
-		AnalogDigitalConverter() = delete;
-		AnalogDigitalConverter(const AnalogDigitalConverter&) = delete;
-		AnalogDigitalConverter(AnalogDigitalConverter &&) = delete;
+	template<auto Context, template<auto, u8, u32, u32> typename ADCChannelImpl>
+	struct ADConverter {
+		ADConverter() = delete;
+		ADConverter(const ADConverter&) = delete;
+		ADConverter(ADConverter &&) = delete;
 
-		/*template<u8 Index>
-		static inline auto Channel = ADCChannel<Context, Index>();*/
+		template<u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
+		static inline auto Channel = ADCChannelImpl<Context, Index, Offset, MaxValue>();
 	};
 
 }

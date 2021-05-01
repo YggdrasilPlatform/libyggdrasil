@@ -42,6 +42,7 @@
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
 	extern "C" {
+
 		I2C_HandleTypeDef hi2c1;
 		I2C_HandleTypeDef hi2c2;
 		I2C_HandleTypeDef hi2c3;
@@ -57,6 +58,10 @@
 		TIM_HandleTypeDef htim8;
 		TIM_HandleTypeDef htim11;
 		TIM_HandleTypeDef htim12;
+
+		ADC_HandleTypeDef hadc1;
+		ADC_HandleTypeDef hadc2;
+		ADC_HandleTypeDef hadc3;
 	}
 
 	namespace bsp {
@@ -113,7 +118,18 @@
 		static constexpr auto& LD8 = DriverD;
 		static constexpr auto& LDH = DriverD;
 
+		using ADConverter1 = bsp::drv::ADConverter<&hadc1, bsp::mid::drv::ADCChannel>;
+		using ADConverter2 = bsp::drv::ADConverter<&hadc2, bsp::mid::drv::ADCChannel>;
+		using ADConverter3 = bsp::drv::ADConverter<&hadc3, bsp::mid::drv::ADCChannel>;
+
+		static constexpr auto& ADCA 			= ADConverter1::Channel<3>;
+		static constexpr auto& ADCB 			= ADConverter1::Channel<10>;
+		static constexpr auto& ADCC 			= ADConverter3::Channel<14>;
+		static constexpr auto& ADCD 			= ADConverter3::Channel<15>;
+		static constexpr auto& Potentiometer 	= ADConverter2::Channel<13>;
+
 		namespace seven_segment {
+
 			static constexpr auto& A = GPIOPortG::Pin<0>;
 			static constexpr auto& B = GPIOPortG::Pin<1>;
 			static constexpr auto& C = GPIOPortG::Pin<2>;

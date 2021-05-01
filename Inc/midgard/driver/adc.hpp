@@ -31,22 +31,60 @@
 #include <cmath>
 
 
-
 namespace bsp::mid::drv {
 
-	template<ADC_HandleTypeDef *Context, u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
-	struct AnalogDigitalConverter {
+	template<auto Context, u8 Index, u32 Offset, u32 MaxValue>
+	struct ADCChannel {
 
-		AnalogDigitalConverter() {
+		ADCChannel() {
 
 		}
 
 		operator float() {
-			return 0;
+			switchChannel();
+
+			HAL_ADC_Start(Context);
+			HAL_ADC_PollForConversion(Context, HAL_MAX_DELAY);
+
+			return std::max(static_cast<float>(HAL_ADC_GetValue(Context)) - Offset, 0.0F) / MaxValue;
+		}
+
+		void switchChannel() {
+			ADC_ChannelConfTypeDef channelConfig = { 0 };
+			constexpr auto HALChannel = getHALChannel();
+
+			channelConfig.Channel = HALChannel;
+			channelConfig.Rank = ADC_REGULAR_RANK_1;
+			channelConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+
+			HAL_ADC_ConfigChannel(Context, &channelConfig);
 		}
 
 	private:
-
+		constexpr static u32 getHALChannel() {
+			switch (Index) {
+				case 0:  return ADC_CHANNEL_0;
+				case 1:  return ADC_CHANNEL_1;
+				case 2:  return ADC_CHANNEL_2;
+				case 3:  return ADC_CHANNEL_3;
+				case 4:  return ADC_CHANNEL_4;
+				case 5:  return ADC_CHANNEL_5;
+				case 6:  return ADC_CHANNEL_6;
+				case 7:  return ADC_CHANNEL_7;
+				case 8:  return ADC_CHANNEL_8;
+				case 9:  return ADC_CHANNEL_9;
+				case 10: return ADC_CHANNEL_10;
+				case 11: return ADC_CHANNEL_11;
+				case 12: return ADC_CHANNEL_12;
+				case 13: return ADC_CHANNEL_13;
+				case 14: return ADC_CHANNEL_14;
+				case 15: return ADC_CHANNEL_15;
+				case 16: return ADC_CHANNEL_16;
+				case 17: return ADC_CHANNEL_17;
+				case 18: return ADC_CHANNEL_18;
+				default: bsp::unreachable();
+			}
+		}
 	};
 
 }
