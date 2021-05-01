@@ -5,14 +5,14 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Midgard -                            *
+  *                          - Common -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file midgard/driver/adc.hpp                                   *
-  *  @ingroup midgard                                               *
+  *  @file common/driver/adc.hpp                                    *
+  *  @ingroup common                                                *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief DAC Channel abstraction implementation for Midgard 		*
-  *  			                                                    *
+  *  @brief Base class for the RNG abstraction				 		*
+  *  									                       		*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -26,48 +26,35 @@
 
 #pragma once
 
-#include <common/driver/dac.hpp>
+#include <common/registers.hpp>
+#include <common/attributes.hpp>
 
-#include <cmath>
+#include <array>
 
-namespace bsp::mid::drv {
+namespace bsp::drv {
 
 	/**
-	 * @brief DAC Channel abstraction
-	 *
-	 * @tparam Context DAC Context
-	 * @tparam Index ChannelID
-	 * @tparam Offset Calibration offset
-	 * @tparam MaxValue Maximum value used
+	 * @brief Base class for the RNG abstraction
+	 * @tparam BaseAddress RNG Peripheral Base address
+	 * @tparam RandomImpl Random Implementation
 	 */
-	template<auto Context, u8 Index, u32 Offset, u32 MaxValue>
-	struct DACChannel {
-		DACChannel(const DACChannel&) = delete;
-		auto operator=(const DACChannel&) = delete;
+	template<addr_t BaseAddress, template<addr_t> typename RandomImpl>
+	struct Random {
+		Random() = delete;
+		Random(const Random&) = delete;
+		auto operator=(const Random&) = delete;
+
+		using Impl = RandomImpl<BaseAddress>;
 
 		/**
-		 * @brief Set the current DAC value
-		 * @param value Current value between 0.0 and 1.0
+		 * @brief Get random values seeded by true entropy
+		 * @tparam T Type of data to get. Must be default and trivially constructible
 		 */
-		auto operator=(float value) const noexcept {
-			constexpr auto Channel = getHALChannel();
-			HAL_DAC_SetValue(Context, Channel, DAC_ALIGN_12B_R, u32(std::max(value * MaxValue - Offset, 0.0F)));
-			HAL_DAC_Start(Context, Channel);
+		template<typename T>
+		static T get() {
+			return Impl::template get<T>();
 		}
 
-	private:
-		DACChannel() = default;
-
-		constexpr static u32 getHALChannel() {
-			switch (Index) {
-				case 1:  return DAC_CHANNEL_1;
-				case 2:  return DAC_CHANNEL_2;
-				default: bsp::unreachable();
-			}
-		}
-
-		template<auto, template<auto, u8, u32, u32> typename>
-		friend struct bsp::drv::DAConverter;
 	};
 
 }

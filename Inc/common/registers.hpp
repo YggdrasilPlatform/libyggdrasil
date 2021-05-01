@@ -44,7 +44,7 @@ namespace bsp {
 	template<u32 BaseAddress, typename SizeType, u8 From, u8 To>
 	struct BitField {
 		/** @brief Mask to access the bitfield's bits */
-		static constexpr SizeType Mask = ((1 << (To - From + 1)) - 1) << From;
+		static constexpr SizeType Mask = ((1ULL << u64(To - From + 1)) - 1) << From;
 
 		BitField() = default;
 

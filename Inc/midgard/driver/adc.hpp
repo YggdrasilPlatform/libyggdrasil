@@ -61,7 +61,7 @@ namespace bsp::mid::drv {
 	private:
 		ADCChannel() = default;
 
-		constexpr static u32 getHALChannel() {
+		constexpr static u32 getHALChannel() noexcept {
 			switch (Index) {
 				case 0:  return ADC_CHANNEL_0;
 				case 1:  return ADC_CHANNEL_1;
@@ -87,7 +87,7 @@ namespace bsp::mid::drv {
 		}
 
 
-		void switchChannel() {
+		void switchChannel() const noexcept {
 			ADC_ChannelConfTypeDef channelConfig = { 0 };
 			constexpr auto HALChannel = getHALChannel();
 

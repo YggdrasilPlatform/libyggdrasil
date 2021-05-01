@@ -35,6 +35,7 @@
 #include <midgard/driver/i2c.hpp>
 #include <midgard/driver/spi.hpp>
 #include <midgard/driver/timer.hpp>
+#include <midgard/driver/rng.hpp>
 
 #include <midgard/core/cache.hpp>
 #include <midgard/core/cortex.hpp>
@@ -205,7 +206,7 @@
 		static constexpr auto& PhaseA = GPIOPortD::Pin<15>;
 		static constexpr auto& PhaseB = GPIOPortD::Pin<12>;
 
-
+		using Random = bsp::drv::Random<0x5006'0800, bsp::mid::drv::Random>;
 
 	}
 

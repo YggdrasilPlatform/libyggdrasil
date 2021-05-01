@@ -7,11 +7,11 @@
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Midgard -                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file midgard/driver/adc.hpp                                   *
+  *  @file midgard/driver/rng.hpp                                   *
   *  @ingroup midgard                                               *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief DAC Channel abstraction implementation for Midgard 		*
+  *  @brief RNG abstraction implementation for Midgard 				*
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -26,48 +26,61 @@
 
 #pragma once
 
-#include <common/driver/dac.hpp>
+#include <common/driver/rng.hpp>
 
+#include <common/registers.hpp>
+#include <common/attributes.hpp>
+
+#include <array>
 #include <cmath>
 
 namespace bsp::mid::drv {
 
 	/**
-	 * @brief DAC Channel abstraction
-	 *
-	 * @tparam Context DAC Context
-	 * @tparam Index ChannelID
-	 * @tparam Offset Calibration offset
-	 * @tparam MaxValue Maximum value used
+	 * @brief RNG abstraction
+	 * @tparam BaseAddress RNG Peripheral base address
 	 */
-	template<auto Context, u8 Index, u32 Offset, u32 MaxValue>
-	struct DACChannel {
-		DACChannel(const DACChannel&) = delete;
-		auto operator=(const DACChannel&) = delete;
+	template<addr_t BaseAddress>
+	struct Random {
+		Random() = delete;
+		Random(const Random&) = delete;
+		auto operator=(const Random&) = delete;
 
 		/**
-		 * @brief Set the current DAC value
-		 * @param value Current value between 0.0 and 1.0
+		 * @brief Get random values seeded by true entropy
+		 * @tparam T Type of data to get. Must be default and trivially constructible
 		 */
-		auto operator=(float value) const noexcept {
-			constexpr auto Channel = getHALChannel();
-			HAL_DAC_SetValue(Context, Channel, DAC_ALIGN_12B_R, u32(std::max(value * MaxValue - Offset, 0.0F)));
-			HAL_DAC_Start(Context, Channel);
+		template<typename T>
+		[[nodiscard]] static T get() noexcept {
+			T data;
+
+			RNGEN = true;
+			for (u32 offset = 0; offset < sizeof(T); offset += sizeof(u32)) {
+				while (!DRDY);
+
+				u32 rng = RNGDATA;
+				std::memcpy(&data, &rng, std::min(u32(sizeof(u32)), sizeof(T) - offset));
+			}
+			RNGEN = false;
+
+			return data;
 		}
 
 	private:
-		DACChannel() = default;
+		enum class RegisterMap : u8 {
+			CR = 0x00,
+			SR = 0x04,
+			DR = 0x08,
 
-		constexpr static u32 getHALChannel() {
-			switch (Index) {
-				case 1:  return DAC_CHANNEL_1;
-				case 2:  return DAC_CHANNEL_2;
-				default: bsp::unreachable();
-			}
-		}
+		};
 
-		template<auto, template<auto, u8, u32, u32> typename>
-		friend struct bsp::drv::DAConverter;
+	    using CR = Register<BaseAddress, RegisterMap::CR, u32>;
+	    using SR = Register<BaseAddress, RegisterMap::SR, u32>;
+	    using DR = Register<BaseAddress, RegisterMap::DR, u32>;
+
+	    static inline auto RNGEN 	= typename CR::template Field<2, 2>();
+	    static inline auto DRDY 	= typename SR::template Field<0, 0>();
+	    static inline auto RNGDATA 	= typename DR::template Field<0, 31>();
 	};
 
 }
