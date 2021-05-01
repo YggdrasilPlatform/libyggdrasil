@@ -30,6 +30,7 @@
 
 #include <midgard/driver/gpio.hpp>
 #include <midgard/driver/adc.hpp>
+#include <midgard/driver/dac.hpp>
 #include <midgard/driver/uart.hpp>
 #include <midgard/driver/i2c.hpp>
 #include <midgard/driver/spi.hpp>
@@ -62,6 +63,8 @@
 		ADC_HandleTypeDef hadc1;
 		ADC_HandleTypeDef hadc2;
 		ADC_HandleTypeDef hadc3;
+
+		DAC_HandleTypeDef hdac;
 	}
 
 	namespace bsp {
@@ -127,6 +130,11 @@
 		static constexpr auto& ADCC 			= ADConverter3::Channel<14>;
 		static constexpr auto& ADCD 			= ADConverter3::Channel<15>;
 		static constexpr auto& Potentiometer 	= ADConverter2::Channel<13>;
+
+		using DAConverter = bsp::drv::DAConverter<&hdac, bsp::mid::drv::DACChannel>;
+
+		static constexpr auto& DACA	= DAConverter::Channel<1>;
+		static constexpr auto& DACB	= DAConverter::Channel<2>;
 
 		namespace seven_segment {
 
