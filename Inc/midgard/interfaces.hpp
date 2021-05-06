@@ -175,7 +175,7 @@
 		using SPIB = bsp::drv::SPI<&hspi4, bsp::mid::drv::SPI>;
 		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
 
-		static constexpr auto& SPIACE = GPIOPortI::Pin<0>;
+		static constexpr auto& SPIACE = GPIOPortI::Pin<0, drv::Active::Low>;
 
 
 		using TimerA = bsp::drv::Timer<&htim12, bsp::mid::drv::Timer, u16>;
