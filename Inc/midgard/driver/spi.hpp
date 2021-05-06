@@ -34,14 +34,32 @@
 
 namespace bsp::mid::drv {
 
+	/**
+	 * @brief SPI implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam Context SPI context
+	 */
 	template<auto Context>
 	struct SPI {
 
+		/**
+		 * @brief SPI receive
+		 *
+		 * @tparam N Data size
+	     * @param data Array for the read data
+		 */
 		template<size_t N>
 		ALWAYS_INLINE static void read(std::array<u8, N> &data) {
 			HAL_SPI_Receive(Context, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
 		}
 
+		/**
+		 * @brief SPI write
+		 *
+		 * @tparam N Data size
+	     * @param data Array to send
+		 */
 		template<size_t N>
 		ALWAYS_INLINE static void write(const std::array<u8, N> &data) {
 			HAL_SPI_Transmit(Context, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);

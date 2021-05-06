@@ -53,6 +53,7 @@ namespace bsp {
 
 	/**
 	 * @brief MMIO type template
+	 *
 	 * @tparam T Type to access
 	 */
 	template<typename T>
@@ -60,6 +61,7 @@ namespace bsp {
 
 	/**
 	 * @brief Helper class to create type-safe integral types
+	 *
 	 * @tparam T
 	 */
 	template<typename T>
@@ -76,6 +78,7 @@ namespace bsp {
 
 	/**
 	 * @brief Creates a new, type-safe integral type
+	 *
 	 * @param T Type
 	 * @example using TypeSafeU16 = TYPESAFE(u16);
 	 */

@@ -34,12 +34,23 @@
 
 namespace bsp::drv {
 
+	/**
+	 * @brief Base class for UART abstraction
+	 *
+	 * @tparam Context UART context
+	 * @tparam UARTImpl UART implementation
+	 */
 	template<addr_t BaseAddress, template<auto> typename UARTImpl>
 	struct UART {
 		UART() = delete;
 
 		using Impl = UARTImpl<BaseAddress>;
 
+	    /**
+	     * @brief UART read string function
+	     *
+	     * @return Read string
+	     */
 		static std::string readString() {
 			std::string data;
 			Impl::receive(data);
@@ -47,6 +58,12 @@ namespace bsp::drv {
 			return data;
 		}
 
+	    /**
+	     * @brief UART read function
+	     *
+	     * @tparam N Size to read
+	     * @return Read data
+	     */
 		template<size_t N>
 		static std::array<u8, N> read() {
 			std::array<u8, N> data;
@@ -55,10 +72,21 @@ namespace bsp::drv {
 			return data;
 		}
 
+	    /**
+	     * @brief UART write string function
+	     *
+	     * @param data String to write
+	     */
 		static void write(std::string_view data) {
 			Impl::transmit(data);
 		}
 
+	    /**
+	     * @brief UART write string function
+	     *
+	     * @tparam N Size to write
+	     * @param data Data to write
+	     */
 		template<size_t N>
 		static void write(const std::array<u8, N> &data) {
 			Impl::transmit(data);

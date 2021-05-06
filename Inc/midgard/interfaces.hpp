@@ -180,7 +180,7 @@
 
 		using TimerA = bsp::drv::Timer<&htim12, bsp::mid::drv::Timer, u16>;
 		using TimerB = bsp::drv::Timer<&htim4, bsp::mid::drv::Timer, u16>;
-		using TimerC = bsp::drv::Timer<&htim5, bsp::mid::drv::Timer, u16>;
+		using TimerC = bsp::drv::Timer<&htim5, bsp::mid::drv::Timer, u32>;
 		using TimerD = bsp::drv::Timer<&htim3, bsp::mid::drv::Timer, u16>;
 		using TimerE = bsp::drv::Timer<&htim11, bsp::mid::drv::Timer, u16>;
 		using TimerF = bsp::drv::Timer<&htim8, bsp::mid::drv::Timer, u16>;
@@ -199,7 +199,7 @@
 		static constexpr auto& TimerDCHC = TimerD::Channel<3>;
 		static constexpr auto& TimerDCHD = TimerD::Channel<4>;
 
-		static constexpr auto& Encoder = TimerF::Encoder<0>;
+		static constexpr auto& Encoder = TimerF::Encoder;
 
 		static constexpr auto& TC78Mode = GPIOPortI::Pin<12>;
 		static constexpr auto& TC78Err  = GPIOPortI::Pin<13>;

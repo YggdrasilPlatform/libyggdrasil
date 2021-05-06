@@ -34,20 +34,38 @@
 
 namespace bsp::mid::drv {
 
+	/**
+	 * @brief I2C implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam Context I2C context
+	 */
 	template<auto Context>
 	struct I2C {
 
+		/**
+		 * @brief I2C receive
+		 *
+		 * @tparam N Data size
+		 * @param address Device address
+	     * @param data Array for the read data
+		 */
 		template<size_t N>
 		ALWAYS_INLINE static void read(u8 address, std::array<u8, N> &data) {
 			HAL_I2C_Master_Receive(Context, address, data.data(), data.size(), HAL_MAX_DELAY);
 		}
 
+		/**
+		 * @brief I2C write
+		 *
+		 * @tparam N Data size
+		 * @param address Device address
+	     * @param data Array to send
+		 */
 		template<size_t N>
 		ALWAYS_INLINE static void write(u8 address, const std::array<u8, N> &data) {
 			HAL_I2C_Master_Transmit(Context, address, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
 		}
-	private:
-
 	};
 
 }

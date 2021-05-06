@@ -36,6 +36,7 @@ namespace bsp {
 	/**
 	 * @brief Bitfield abstraction. Provides a way to read from, write to and pass
 	 * around bitfields within registers as if they were normal variables.
+	 *
 	 * @tparam BaseAddress Register base address
 	 * @tparam SizeType Register size
 	 * @tparam From First bit to include in bitfield
@@ -50,6 +51,7 @@ namespace bsp {
 
 		/**
 		 * @brief SizeType conversion operator overload
+		 *
 		 * @return Value in bitfield
 		 */
 		[[nodiscard]] ALWAYS_INLINE constexpr operator SizeType() const {
@@ -58,6 +60,7 @@ namespace bsp {
 
 		/**
 		 * @brief Assignment operator overload
+		 *
 		 * @tparam T Type of parameter. Must be unsigned
 		 * @param value Value to assign to bitfield
 		 * @return new value in bitfield
@@ -79,6 +82,7 @@ namespace bsp {
 	/**
 	 * @brief MMIO Register abstraction. Gives access to bitfields within the register as well as
 	 * a reference to the register value itself.
+	 *
 	 * @tparam BaseAddress Register block base address
 	 * @tparam Offset Register offset from register block base address
 	 * @tparam SizeType Register size
@@ -90,6 +94,7 @@ namespace bsp {
 
 		/**
 		 * @brief Bitfield access
+		 *
 		 * @tparam From First bit to include in bitfield
 		 * @tparam To Last bit to include in bitfield
 		 */

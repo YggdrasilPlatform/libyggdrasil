@@ -35,6 +35,7 @@ namespace bsp::drv {
 
 	/**
 	 * @brief Base class for the RNG abstraction
+	 *
 	 * @tparam BaseAddress RNG Peripheral Base address
 	 * @tparam RandomImpl Random Implementation
 	 */
@@ -48,6 +49,7 @@ namespace bsp::drv {
 
 		/**
 		 * @brief Get random values seeded by true entropy
+		 *
 		 * @tparam T Type of data to get. Must be default and trivially constructible
 		 */
 		template<typename T>

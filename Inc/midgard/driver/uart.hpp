@@ -34,26 +34,21 @@
 
 namespace bsp::mid::drv {
 
+	/**
+	 * @brief UART implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam BaseAddress UART Block base address
+	 */
 	template<addr_t BaseAddress>
 	struct UART {
 
-		ALWAYS_INLINE static void transmit(std::string_view buffer) {
-			for (char c : buffer) {
-				while(!TXE);
-
-				TRNS = c;
-			}
-		}
-
-		template<size_t N>
-		ALWAYS_INLINE static void transmit(const std::array<u8, N> &buffer) {
-			for (char c : buffer) {
-				while(!TXE);
-
-				TRNS = c;
-			}
-		}
-
+		/**
+		 * @brief UART receive string
+		 * @note The function receives until a '\n' or a '\r'
+		 *
+	     * @param buffer Buffer for the read string
+		 */
 		ALWAYS_INLINE static void receive(std::string &buffer) {
 			while (true) {
 				while (!RXNE);
@@ -67,6 +62,12 @@ namespace bsp::mid::drv {
 			}
 		}
 
+		/**
+		 * @brief UART receive
+		 *
+		 * @tparam N Data size
+	     * @param buffer Array for the read data
+		 */
 		template<size_t N>
 		ALWAYS_INLINE static void receive(std::array<u8, N> &buffer) {
 			u32 index = 0;
@@ -81,15 +82,43 @@ namespace bsp::mid::drv {
 			}
 		}
 
+		/**
+		 * @brief UART transmit string
+		 *
+	     * @param buffer Buffer for the string to write
+		 */
+		ALWAYS_INLINE static void transmit(std::string_view buffer) {
+			for (char c : buffer) {
+				while(!TXE);
+
+				TRNS = c;
+			}
+		}
+
+		/**
+		 * @brief UART transmit
+		 *
+		 * @tparam N Data size
+	     * @param buffer Array for the data to write
+		 */
+		template<size_t N>
+		ALWAYS_INLINE static void transmit(const std::array<u8, N> &buffer) {
+			for (char c : buffer) {
+				while(!TXE);
+
+				TRNS = c;
+			}
+		}
+
 	private:
 		enum class RegisterMap {
-			CR1	= 0x00,
-			CR2 = 0x04,
-			CR3 = 0x08,
-			ISR = 0x1C,
-			ICR = 0x20,
-			RDR = 0x24,
-			TDR = 0x28,
+			CR1	= 0x00,			///< Control register 1
+			CR2 = 0x04,			///< Control register 2
+			CR3 = 0x08,			///< Control register 3
+			ISR = 0x1C,			///< Interrupt and status register
+			ICR = 0x20,			///< Interrupt flag clear register
+			RDR = 0x24,			///< Receive data register
+			TDR = 0x28,			///< Transmit data register
 		};
 
 		using CR1 = Register<BaseAddress, RegisterMap::CR1, u32>;
@@ -100,11 +129,11 @@ namespace bsp::mid::drv {
 		using RDR = Register<BaseAddress, RegisterMap::RDR, u32>;
 		using TDR = Register<BaseAddress, RegisterMap::TDR, u32>;
 
-		static inline auto RXNE	= typename ISR::template Field<5, 5>();
-		static inline auto TXE 	= typename ISR::template Field<7, 7>();
+		static inline auto RXNE	= typename ISR::template Field<5, 5>();		///< Read data register not empty
+		static inline auto TXE 	= typename ISR::template Field<7, 7>();		///< Transmit data register empty
 
-		static inline auto RECV = typename RDR::template Field<0, 8>();
-		static inline auto TRNS = typename TDR::template Field<0, 8>();
+		static inline auto RECV = typename RDR::template Field<0, 8>();		///< Receive data value
+		static inline auto TRNS = typename TDR::template Field<0, 8>();		///< Transmit data value
 	};
 
 }

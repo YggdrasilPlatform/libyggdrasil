@@ -33,6 +33,7 @@ namespace bsp::drv {
 
 	/**
 	 * @brief Base class for DAC abstraction
+	 *
 	 * @tparam Context DAC context
 	 * @tparam DACChannelImpl DACChannel implementation
 	 */
@@ -44,6 +45,7 @@ namespace bsp::drv {
 
 		/**
 		 * @brief Channel implementation
+		 *
 		 * @tparam Index ChannelID
 		 * @tparam Offset Calibration offset
 		 * @tparam MaxValue Maximum value used

@@ -52,12 +52,14 @@ namespace bsp {
 
 	/**
 	 * @brief Scope Guard for executing code when exiting the current scope with the ability to release it.
+	 *
 	 * @example auto cleanup = SCOPE_GUARD { doCleanup(); };
 	 */
 	#define SCOPE_GUARD ::bsp::scope_guard::ScopeGuardOnExit() + [&]()
 
 	/**
 	 * @brief Scope Guard for always executing code when exiting the current scope
+	 *
 	 * @example ON_SCOPE_EXIT { doCleanup(); };
 	 */
 	#define ON_SCOPE_EXIT auto ANONYMOUS_VARIABLE(SCOPE_EXIT_) = SCOPE_GUARD
@@ -96,9 +98,10 @@ namespace bsp {
 	/**
 	 * @brief std::bit_cast implementation for doing reinterpret_cast-style conversion
 	 * without invoking undefined behaviour
+	 * @warning This is a terrible bit_cast implementation! Replace this with actual std::bit_cast once the toolchain supports it (GCC 11.1+)
+	 *
 	 * @tparam To Type to cast to
 	 * @param src Value to bit-cast to type of To
-	 * @warning This is a terrible bit_cast implementation! Replace this with actual std::bit_cast once the toolchain supports it (GCC 11.1+)
 	 */
 	template <typename To, typename From>
 	constexpr To bit_cast(From& src) noexcept {

@@ -34,13 +34,25 @@
 
 namespace bsp::drv {
 
+	/**
+	 * @brief Base class for I2C abstraction
+	 *
+	 * @tparam Context I2C context
+	 * @tparam I2CImpl I2C implementation
+	 */
 	template<auto Context, template<auto> typename I2CImpl>
 	struct I2C {
 		I2C() = delete;
 
-
 		using Impl = I2CImpl<Context>;
 
+	    /**
+	     * @brief I2C read function
+	     *
+	     * @tparam T type to read
+	     * @param address Device address
+	     * @return Read data
+	     */
 		template<typename T>
 		static T read(u8 address) {
 			std::array<u8, sizeof(T)> data;
@@ -49,6 +61,14 @@ namespace bsp::drv {
 			return bit_cast<T>(data);
 		}
 
+	    /**
+	     * @brief I2C read function
+	     *
+	     * @tparam T type to read
+	     * @param address Device address
+	     * @param reg Register address
+	     * @return Read data
+	     */
 		template<typename T>
 		static T read(u8 address, u8 reg) {
 			std::array<u8, sizeof(T)> data;
@@ -58,6 +78,12 @@ namespace bsp::drv {
 			return bit_cast<T>(data);
 		}
 
+	    /**
+	     * @brief I2C write function
+	     *
+	     * @param address Device address
+	     * @param value Data to write
+	     */
 		static void write(u8 address, auto value) {
 			std::array<u8, sizeof(value)> data;
 			std::memcpy(data.data(), &value, sizeof(value));
@@ -65,6 +91,13 @@ namespace bsp::drv {
 			Impl::write(address, data);
 		}
 
+	    /**
+	     * @brief I2C write function
+	     *
+	     * @param address Device address
+	     * @param reg Register address
+	     * @param value Data to write
+	     */
 		static void write(u8 address, u8 reg, auto value) {
 			std::array<u8, sizeof(value) + 1> data;
 			data[0] = reg;

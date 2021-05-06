@@ -33,7 +33,8 @@
 namespace bsp::mid::drv {
 
 	/**
-	 * @brief DAC Channel abstraction
+	 * @brief DAC Channel implementation for Midgard
+	 * @warn Do not use this on its own!
 	 *
 	 * @tparam Context DAC Context
 	 * @tparam Index ChannelID
@@ -47,6 +48,7 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Set the current DAC value
+		 *
 		 * @param value Current value between 0.0 and 1.0
 		 */
 		auto operator=(float value) const noexcept {
@@ -58,6 +60,11 @@ namespace bsp::mid::drv {
 	private:
 		DACChannel() = default;
 
+		/**
+		 * @brief get HAL channel definition depending on the set index
+		 *
+		 * @return HAL channel definition
+		 */
 		constexpr static u32 getHALChannel() {
 			switch (Index) {
 				case 1:  return DAC_CHANNEL_1;
@@ -66,6 +73,9 @@ namespace bsp::mid::drv {
 			}
 		}
 
+		/**
+		 * @brief Declare DAConverter frontend as friend
+		 */
 		template<auto, template<auto, u8, u32, u32> typename>
 		friend struct bsp::drv::DAConverter;
 	};

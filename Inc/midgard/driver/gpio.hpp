@@ -36,27 +36,26 @@ namespace bsp::mid::drv {
 		 * @brief Register map for used registers
 		 */
 		enum class RegisterMap {
-			IDR = 0x10,
-			ODR = 0x14,
+			IDR = 0x10,		///< Input data register
+			ODR = 0x14,		///< Output data register
 		};
 
 	}
 
 
+	// Forward declaring
 	template<addr_t BaseAddress>
 	struct GPIOPort;
 
 	/**
-	 * @brief GPIOPin implementation for Asgard
+	 * @brief GPIOPin implementation for Midgard
 	 * @warn Do not use this on its own!
+	 *
 	 * @tparam BaseAddress GPIO Block base address
 	 * @tparam Pin Pin number
 	 */
 	template<addr_t BaseAddress, u8 Pin, bsp::drv::Active LogicActive>
 	struct GPIOPin {
-	private:
-		GPIOPin() = default;
-	public:
 		GPIOPin(const GPIOPin&) = delete;
 		GPIOPin(GPIOPin&&) = delete;
 
@@ -66,6 +65,7 @@ namespace bsp::mid::drv {
 
 	    /**
 	     * @brief Assignment operator overload
+	     *
 	     * @param state Pin state
 	     * @return Pin
 	     */
@@ -77,6 +77,7 @@ namespace bsp::mid::drv {
 
 	    /**
 	     * @brief u8 conversion operator overload
+	     *
 	     * @return Pin value
 	     */
 	    [[nodiscard]] ALWAYS_INLINE constexpr operator u8() const noexcept {
@@ -84,6 +85,7 @@ namespace bsp::mid::drv {
 	    }
 
 	private:
+	    GPIOPin() = default;
 
 		/**
 		 * @brief IDR register
@@ -97,31 +99,63 @@ namespace bsp::mid::drv {
 	    using ODR 	= Register<BaseAddress, RegisterMap::ODR, u32>;
 	    static inline auto ODRx = typename ODR::template Field<Pin, Pin>();
 
+		/**
+		 * @brief Declare GPIOPort as friend
+		 */
 	    template<addr_t, template<addr_t,u8> typename>
 		friend struct bsp::mid::drv::GPIOPort;
 	};
 
+	/**
+	 * @brief GPIOPort implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam BaseAddress GPIO Block base address
+	 */
 	template<addr_t BaseAddress>
 	struct GPIOPort {
 	private:
 		GPIOPort() = default;
-	public:
-		GPIOPort(const GPIOPort&) = delete;
-		GPIOPort(GPIOPort&&) = delete;
 
-	private:
 	    using IDR 	= Register<BaseAddress, RegisterMap::IDR, u32>;
 	    using ODR 	= Register<BaseAddress, RegisterMap::ODR, u32>;
 
-	public:
+    public:
+		GPIOPort(const GPIOPort&) = delete;
+		GPIOPort(GPIOPort&&) = delete;
+
+	    /**
+	     * @brief GPIO Pin
+	     *
+	     * @tparam Pin Pin number
+	     * @tparam LogicActive Logic active state
+	     */
 		template<u8 Pin, bsp::drv::Active LogicActive>
 		static constexpr auto Pin = GPIOPin<BaseAddress, Pin, LogicActive>();
 
+	    /**
+	     * @brief Read multiple GPIO Pins
+	     * @note These pins must be in a row
+	     *
+	     * @tparam From Start pin number
+	     * @tparam To Stop pin
+	     */
 		template<u8 From, u8 To>
 		static constexpr auto In = typename IDR::template Field<From, To>();
 
+	    /**
+	     * @brief Write multiple GPIO Pins
+	     * @note These pins must be in a row
+	     *
+	     * @tparam From Start pin number
+	     * @tparam To Stop pin
+	     */
 		template<u8 From, u8 To>
 		static constexpr auto Out = typename ODR::template Field<From, To>();
+
+
+
+
 	};
 
 }

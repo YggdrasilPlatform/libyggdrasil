@@ -38,16 +38,18 @@ namespace bsp::math {
 
 	/**
 	 * @brief Pi constant
-	 * @tparam T Precision type
 	 * @note Replace with version in std library once it becomes available in toolchain
+	 *
+	 * @tparam T Precision type
 	 */
 	template<typename T>
 	constexpr static inline T Pi = T(3.14159265358979323846264338327950288419716939937510);
 
 	/**
 	 * @brief e constant
-	 * @tparam T Precision type
 	 * @note Replace with version in std library once it becomes available in toolchain
+	 *
+	 * @tparam T Precision type
 	 */
 	template<typename T>
 	constexpr static inline T e  = T(2.71828182845904523536028747135266249775724709369995);
@@ -55,6 +57,7 @@ namespace bsp::math {
 
 	/**
 	 * @brief Clamps a input value between a min and max value
+	 *
 	 * @param value Input
 	 * @param min Min value
 	 * @param max Max value
@@ -67,6 +70,7 @@ namespace bsp::math {
 
 	/**
 	 * @brief Conversion between degree and radian
+	 *
 	 * @param deg Degree
 	 * @return Radians
 	 */
@@ -77,6 +81,7 @@ namespace bsp::math {
 
 	/**
 	 * @brief Conversion between radian and degree
+	 *
 	 * @param rad Radians
 	 * @return Degrees
 	 */
@@ -108,14 +113,17 @@ namespace bsp::math {
 
     /**
      * @brief Calculates the CRC16 Checksum of the data in a container
+     * @note There is also a hardware CRC module
+     *
+     * @tparam Polynomial Polynomial used to calculate LUT
      * @param data Iterateable Container type
      * @param initialValue Value to start at
-     * @tparam Polynomial Polynomial used to calculate LUT
      * @return CRC16 checksum
      */
     template<u16 Polynomial = 0x8005>
     constexpr u16 crc16(const auto &data, u16 initialValue = 0x00) {
-        constexpr auto Table = [] {
+    	// Lookup table generation
+    	constexpr auto Table = [] {
             std::array<u16, 256> table;
 
             for (u16 i = 0; i < 256; i++) {
@@ -137,6 +145,7 @@ namespace bsp::math {
             return table;
         }();
 
+        // CRC16 calculation
         u16 crc = initialValue;
         for (u8 byte : data) {
             crc = (crc >> 8) ^ Table[(crc ^ u16(byte)) & 0x00FF];
@@ -147,13 +156,15 @@ namespace bsp::math {
 
     /**
      * @brief Calculates the CRC32 Checksum of the data in a container
+     *
+     * @tparam Polynomial Polynomial used to calculate LUT
      * @param data Iterateable Container type
      * @param initialValue Value to start at
-     * @tparam Polynomial Polynomial used to calculate LUT
      * @return CRC32 checksum
      */
     template<u32 Polynomial = 0x04C11DB7>
     u32 crc32(const auto &data, u32 initialValue = 0x00) {
+    	// Lookup table generation
         constexpr auto Table = [] {
             std::array<u32, 256> table = {0};
 
@@ -171,6 +182,7 @@ namespace bsp::math {
             return table;
         }();
 
+        // CRC32 calculation
         u32 crc = initialValue;
         for (u8 byte : data) {
             crc = Table[(crc ^ byte) & 0xFF] ^ (crc >> 8);
@@ -181,6 +193,7 @@ namespace bsp::math {
 
     /**
      * @brief Converts a Binary Coded Decimal value to Binary
+     *
      * @param bcd BCD input
      * @return Binary representation
      */
@@ -190,6 +203,7 @@ namespace bsp::math {
 
     /**
      * @brief Converts a Binary value to Binary Coded Decimal
+     *
      * @param bin Binary input
      * @return BCD representation
      */

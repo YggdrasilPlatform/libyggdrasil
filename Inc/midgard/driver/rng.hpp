@@ -38,6 +38,8 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief RNG abstraction
+	 * @warn Do not use this on its own!
+	 *
 	 * @tparam BaseAddress RNG Peripheral base address
 	 */
 	template<addr_t BaseAddress>
@@ -48,29 +50,30 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Get random values seeded by true entropy
+		 *
 		 * @tparam T Type of data to get. Must be default and trivially constructible
 		 */
 		template<typename T>
 		[[nodiscard]] static T get() noexcept {
 			T data;
 
-			RNGEN = true;
-			for (u32 offset = 0; offset < sizeof(T); offset += sizeof(u32)) {
-				while (!DRDY);
+			RNGEN = true;																	// Enable rng
+			for (u32 offset = 0; offset < sizeof(T); offset += sizeof(u32)) {				// Always get 4 baytes of random data
+				while (!DRDY);																// Wait for the rng to finish
 
-				u32 rng = RNGDATA;
-				std::memcpy(&data, &rng, std::min(u32(sizeof(u32)), sizeof(T) - offset));
+				u32 rng = RNGDATA;															// Get random data (4 bytes)
+				std::memcpy(&data, &rng, std::min(u32(sizeof(u32)), sizeof(T) - offset));	// Fill up 4 bytes to the Type T
 			}
-			RNGEN = false;
+			RNGEN = false;																	// Disable rng
 
-			return data;
+			return data;																	// Return random data
 		}
 
 	private:
 		enum class RegisterMap : u8 {
-			CR = 0x00,
-			SR = 0x04,
-			DR = 0x08,
+			CR = 0x00,		///< Control register
+			SR = 0x04,		///< Status register
+			DR = 0x08,		///< Data register
 
 		};
 
@@ -78,9 +81,9 @@ namespace bsp::mid::drv {
 	    using SR = Register<BaseAddress, RegisterMap::SR, u32>;
 	    using DR = Register<BaseAddress, RegisterMap::DR, u32>;
 
-	    static inline auto RNGEN 	= typename CR::template Field<2, 2>();
-	    static inline auto DRDY 	= typename SR::template Field<0, 0>();
-	    static inline auto RNGDATA 	= typename DR::template Field<0, 31>();
+	    static inline auto RNGEN 	= typename CR::template Field<2, 2>();		///< True random number generator enable
+	    static inline auto DRDY 	= typename SR::template Field<0, 0>();		///< Data Ready
+	    static inline auto RNGDATA 	= typename DR::template Field<0, 31>();		///< Random data
 	};
 
 }

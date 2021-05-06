@@ -33,10 +33,11 @@
 namespace bsp::mid::drv {
 
 	/**
-	 * @brief ADC Channel abstraction
+	 * @brief ADC Channel implementation for Midgard
+	 * @warn Do not use this on its own!
 	 *
 	 * @tparam Context ADC Context
-	 * @tparam Index ChannelID
+	 * @tparam Index Channel ID
 	 * @tparam Offset Calibration offset
 	 * @tparam MaxValue Maximum value reported
 	 */
@@ -47,20 +48,27 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Get the current ADC value
+		 * @note This function polls the result
+		 *
 		 * @return Current value between 0.0 and 1.0
 		 */
 		operator float() const noexcept {
-			switchChannel();
+			switchChannel();										// Switch to the actual channel
 
-			HAL_ADC_Start(Context);
-			HAL_ADC_PollForConversion(Context, HAL_MAX_DELAY);
+			HAL_ADC_Start(Context);									// Start a conversion
+			HAL_ADC_PollForConversion(Context, HAL_MAX_DELAY);		// Wait for conversion
 
-			return std::max(static_cast<float>(HAL_ADC_GetValue(Context)) - Offset, 0.0F) / MaxValue;
+			return std::max(static_cast<float>(HAL_ADC_GetValue(Context)) - Offset, 0.0F) / MaxValue;	// Get the value and transform it to 0.0 to 1.0
 		}
 
 	private:
 		ADCChannel() = default;
 
+		/**
+		 * @brief get HAL channel definition depending on the set index
+		 *
+		 * @return HAL channel definition
+		 */
 		constexpr static u32 getHALChannel() noexcept {
 			switch (Index) {
 				case 0:  return ADC_CHANNEL_0;
@@ -86,18 +94,23 @@ namespace bsp::mid::drv {
 			}
 		}
 
-
+		/**
+		 * @brief Switch ADC channel depending on the set index
+		 */
 		void switchChannel() const noexcept {
 			ADC_ChannelConfTypeDef channelConfig = { 0 };
-			constexpr auto HALChannel = getHALChannel();
+			constexpr auto HALChannel = getHALChannel();			// Get HAL channel name
 
-			channelConfig.Channel = HALChannel;
-			channelConfig.Rank = ADC_REGULAR_RANK_1;
-			channelConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+			channelConfig.Channel = HALChannel;						// Set channel
+			channelConfig.Rank = ADC_REGULAR_RANK_1;				// Set rank to default
+			channelConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;	// Set Sample time
 
-			HAL_ADC_ConfigChannel(Context, &channelConfig);
+			HAL_ADC_ConfigChannel(Context, &channelConfig);			// Switch channel
 		}
 
+		/**
+		 * @brief Declare ADConverter frontend as friend
+		 */
 		template<auto, template<auto, u8, u32, u32> typename>
 		friend struct bsp::drv::ADConverter;
 	};

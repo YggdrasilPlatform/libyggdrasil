@@ -39,6 +39,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief CRC abstraction
+	 *
 	 * @tparam BaseAddress CRC Peripheral base address
 	 */
 	template<addr_t BaseAddress>
@@ -49,6 +50,7 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Hardware accelerated CRC8 caluclation
+		 *
 		 * @param data Data to calculate CRC of
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
@@ -60,6 +62,7 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Hardware accelerated CRC16 caluclation
+		 *
 		 * @param data Data to calculate CRC of
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
@@ -71,6 +74,7 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Hardware accelerated CRC32 caluclation
+		 *
 		 * @param data Data to calculate CRC of
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
@@ -81,12 +85,15 @@ namespace bsp::mid::drv {
 		}
 
 	private:
+		/**
+		 * @brief Register map
+		 */
 		enum class RegisterMap : u8 {
-			DR 		= 0x00,
-			IDR 	= 0x04,
-			CR 		= 0x08,
-			INIT 	= 0x10,
-			POL 	= 0x14
+			DR 		= 0x00,			///< Data register
+			IDR 	= 0x04,			///< Independent data register
+			CR 		= 0x08,			///< Control register
+			INIT 	= 0x10,			///< Initial CRC value
+			POL 	= 0x14			///< CRC polynomial
 		};
 
 	    using DR 	= Register<BaseAddress, RegisterMap::DR, u32>;
@@ -95,34 +102,42 @@ namespace bsp::mid::drv {
 	    using INIT 	= Register<BaseAddress, RegisterMap::INIT, u32>;
 	    using POL 	= Register<BaseAddress, RegisterMap::POL, u32>;
 
-	    static inline auto Data		= typename DR::template Field<0, 31>();
+	    static inline auto Data		= typename DR::template Field<0, 31>();			///< Data register
 
-	    static inline auto RESET	= typename IDR::template Field<0, 0>();
-	    static inline auto POLYSIZE	= typename IDR::template Field<3, 4>();
+	    static inline auto RESET	= typename IDR::template Field<0, 0>();			///< Reset bit
+	    static inline auto POLYSIZE	= typename IDR::template Field<3, 4>();			///< Polynomial size (7, 8, 16 or 32 bit)
 
-	    static inline auto InitialValue = typename INIT::template Field<0, 31>();
-	    static inline auto Polynomial 	= typename POL::template Field<0, 31>();
+	    static inline auto InitialValue = typename INIT::template Field<0, 31>();	///< Used to write the CRC initial value.
+	    static inline auto Polynomial 	= typename POL::template Field<0, 31>(); 	///< Used to write the coefficients of the polynomial to be used for CRC calculation
 
 
+	    /**
+	     * @brief Calculates CRC32
+	     *
+	     * @param data Input data
+	     * @param initValue initial value
+	     * @param polynomial CRC polynomial
+	     * @return CRC32 result
+	     */
 	    static u32 calculate(const auto &data, u32 initValue, u32 polynomial) noexcept {
-	    	InitialValue = initValue;
-	    	Polynomial = polynomial;
-	    	RESET = true;
+	    	InitialValue = initValue;			// Set the initial value register
+	    	Polynomial = polynomial;			// Set the polynomial to the register
+	    	RESET = true;						// Reset to force the CRC to update the set registers
 
 	    	std::array<u8, sizeof(data)> bytes;
 	    	std::memcpy(bytes.data(), &data, bytes.size());
 
 	    	for (u32 i = 0; i < bytes.size(); i += sizeof(u32)) {
-	    		if (bytes.size() >= sizeof(u32))
-	    			Data = byteSwap(*reinterpret_cast<u32*>(&bytes[i]));
-	    		else {
+	    		if (bytes.size() >= sizeof(u32))							// Check if 4 or more bytes are left
+	    			Data = byteSwap(*reinterpret_cast<u32*>(&bytes[i]));	// Write new data to the CRC
+	    		else {														// When less than 4 bytes are left
 	    			u32 value = 0;
-	    			std::memcpy(&value, &bytes[i], bytes.size() - i);
-	    			Data = byteSwap(value);
+	    			std::memcpy(&value, &bytes[i], bytes.size() - i);		// Copy the left bytes to the local 32 bit variable
+	    			Data = byteSwap(value);									// Write the last bytes to the CRC
 	    		}
 	    	}
 
-	    	return Data;
+	    	return Data;													// Return the calculated CRC
 	    }
 
 	};

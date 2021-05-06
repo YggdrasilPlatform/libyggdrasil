@@ -40,6 +40,14 @@
 
 namespace bsp::mid::drv {
 
+	/**
+	 * @brief Timer channel implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam Context Timer context
+	 * @tparam Channel Timer channel number
+	 * @tparam Size Timer width (16 bit or 32 bit)
+	 */
 	template<auto Context, u8 Channel, typename Size>
 	struct TimerChannel {
 		static_assert(Channel >= 1 && Channel <= 4, "Channel index out of range");
@@ -48,7 +56,7 @@ namespace bsp::mid::drv {
 		 * @brief Start PWM generation for the channel
 		 * @Note A duty cycle should be set with setDuty()
 		 *
-		 * @return true when successfully started, false when not
+		 * @return True when successfully started, false when not
 		 */
 		ALWAYS_INLINE bool startPwm() const noexcept {
 			if(!hasPwmModule()) return false;
@@ -65,9 +73,9 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Stop PWM generation for the channel
-		 * @note Does disable the counter when no PWM channel is active
+		 * @note This function disables the counter when no PWM channel is active
 		 *
-		 * @return true when successfully stopped, false when not
+		 * @return True when successfully stopped, false when not
 		 */
 		ALWAYS_INLINE bool stopPwm() const noexcept {
 			if(!hasPwmModule()) return false;
@@ -85,15 +93,14 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Set the duty cycle as a float value
 		 *
-		 * @param duty cycle in %
+		 * @param dutyCycle Duty cycle in % [0 100]
 		 */
 		ALWAYS_INLINE void setDutyCycle(float dutyCycle) const noexcept {
-			dutyCycle = std::abs(dutyCycle);
-			if(dutyCycle > 100) dutyCycle = 100;
-			else if(dutyCycle < 0) dutyCycle = 0;
-			Size arr = Context->Instance->ARR;
+			dutyCycle = std::abs(dutyCycle);						// Make sure that the value is positive
+			if(dutyCycle > 100) dutyCycle = 100;					// Limit the duty cycle to 100
+			Size arr = Context->Instance->ARR;						// Get auto reload register
 			Size ccr = 0;
-			if(dutyCycle != 0) ccr = arr / 100 * dutyCycle;
+			if(dutyCycle != 0) ccr = arr / 100 * dutyCycle;			// Calculate capture compare register value
 			switch(Channel) {
 				case 1: Context->Instance->CCR1 = ccr; break;		// Set the duty cycle for channel 1
 				case 2: Context->Instance->CCR2 = ccr; break;		// Set the duty cycle for channel 2
@@ -105,9 +112,9 @@ namespace bsp::mid::drv {
 
 	private:
 		/**
-		 * @brief checks if the time has an pwm module
+		 * @brief Checks if the time has an pwm module
 		 *
-		 * @return true / false
+		 * @return True or false
 		 */
 		bool hasPwmModule() const noexcept{
 			if ((Context->Instance == TIM6) ||			// Checks if the timer does not have a pwm module (less to check)
@@ -122,86 +129,111 @@ namespace bsp::mid::drv {
 
 	};
 
-	template<auto Context, u8 Channel, typename Size>
+
+	/**
+	 * @brief Timer encoder implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam Context Timer context
+	 * @tparam Size Timer width (16 bit or 32 bit)
+	 */
+	template<auto Context, typename Size>
 	struct TimerEncoder {
 
 		/**
-		 * @brief enable the encoder mode
-		 * @note this does only work for timer with a encoder modul
+		 * @brief Last known turning direction of the encoder
+		 */
+		enum class Direction : u8 {
+			Clockwise,
+			CounterClockwise,
+		};
+
+		/**
+		 * @brief Modes for the encoder, 48 odr 96 steps per turn are possible
+		 */
+		enum class Mode : u8 {
+			_48StepsPerTurn,
+			_96StepsPerTurn
+		};
+
+		/**
+		 * @brief Enable the encoder mode
+		 * @note This does only work for timer with a encoder modul
 		 *
-		 * @return true when successfully enabled, false when not
+		 * @return True when successfully enabled, false when not
 		 */
 		ALWAYS_INLINE bool enable() const noexcept {
-			if(!hasEncoderModule()) return false;
-			Context->Instance->CCER = TIM_CCER_CC1E | TIM_CCER_CC2E;
-			Context->Instance->CR1 = TIM_CR1_CEN;
+			if(!hasEncoderModule()) return false;						// Check if the timer got a pwm modul
+			Context->Instance->CCER = TIM_CCER_CC1E | TIM_CCER_CC2E;	// Enable capture compare channel 1 and 2
+			Context->Instance->CR1 = TIM_CR1_CEN;						// Enable the timer
 			return true;
 		}
 
 		/**
-		 * @brief disable the encoder mode
-		 * @note this does only work for timer with a encoder modul
+		 * @brief Disable the encoder mode
+		 * @note This does only work for timer with a encoder modul
 		 *
-		 * @return true when successfully disabled, false when not
+		 * @return True when successfully disabled, false when not
 		 */
 		ALWAYS_INLINE bool disable() const noexcept {
-			if(!hasEncoderModule()) return false;
-			Context->Instance->CR1 &= ~TIM_CR1_CEN;
-			Context->Instance->CCER &= ~(TIM_CCER_CC1E | TIM_CCER_CC2E);
+			if(!hasEncoderModule()) return false;							// Check if the timer got a pwm modul
+			Context->Instance->CR1 &= ~TIM_CR1_CEN;							// Disable the timer
+			Context->Instance->CCER &= ~(TIM_CCER_CC1E | TIM_CCER_CC2E);	// Disable capture compare channel 1 and 2
 			return true;
 		}
 
 		/**
-		 * @brief disable the encoder mode
-		 * @note this does only work for timer with a encoder modul
+		 * @brief Get the counter value
+		 * @note This does only work for timer with a encoder modul
+		 *
+		 * @return Actual timer count
 		 */
 		ALWAYS_INLINE Size getCount() const noexcept {
-			return Context->Instance->CNT;
+			return Context->Instance->CNT;		// Read the counter value form the register
 		}
 
 		/**
-		 * @brief set the encoder counter value
+		 * @brief Set the encoder counter value
 		 *
-		 * @param new counter value (16 or 32 bit depending to the timer)
+		 * @param cnt New counter value
 		 */
 		ALWAYS_INLINE void setCount(Size cnt) const noexcept {
-			Context->Instance->CNT = cnt;
+			Context->Instance->CNT = cnt;		// Write the new counter value to the register
 		}
 
 		/**
-		 * @brief get the direction of the last rotation
-		 * @note this bit might not be accurate while turning the encoder
+		 * @brief Get the direction of the last rotation
+		 * @note This bit might not be accurate while turning the encoder
 		 *
-		 * @return true for ccw, false for cw
+		 * @return Direction
 		 */
-		ALWAYS_INLINE bool getRotation() const noexcept {
-			return (Context->Instance->CR1 & TIM_CR1_DIR);
+		ALWAYS_INLINE Direction getDirection() const noexcept {
+			return (Context->Instance->CR1 & TIM_CR1_DIR) ? Direction::CounterClockwise : Direction::Clockwise;
 		}
 
 		/**
-		 * @brief set the Mode of the encoder (48 or 96 counts per turn)
+		 * @brief Set the mode of the encoder (48 or 96 counts per turn)
 		 *
-		 * @param mode selection
+		 * @param mode Mode selection
 		 */
-		ALWAYS_INLINE void setMode(u8 mode = 3) const noexcept {							// TODO make a enum class for mode
+		ALWAYS_INLINE void setMode(Mode mode) const noexcept {
 			Context->Instance->CR1 &= ~TIM_CR1_CEN;											// Disable the timer
 			Context->Instance->SMCR &= ~(TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1);					// Reset the mode bits
-			switch(mode) {																	// Set the new mode according to
-				case 1: Context->Instance->SMCR |= TIM_SMCR_SMS_0; break;					// Counter counts up/down on TI1FP1 edge depending on TI2FP2 level
-				case 2: Context->Instance->SMCR |= TIM_SMCR_SMS_1; break;					// Counter counts up/down on TI2FP2 edge depending on TI1FP1 level
-				case 3: Context->Instance->SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1; break;	// Counter counts up/down on both TI1FP1 and TI2FP2 edges depending on the level of the other input
+			switch(mode) {																						// Set the new mode according to
+				case Mode::_48StepsPerTurn: Context->Instance->SMCR |= TIM_SMCR_SMS_0; break;					// Counter counts up/down on TI1FP1 edge depending on TI2FP2 level
+				case Mode::_96StepsPerTurn: Context->Instance->SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1; break;	// Counter counts up/down on both TI1FP1 and TI2FP2 edges depending on the level of the other input
 			}
 			Context->Instance->CR1 = TIM_CR1_CEN;											// Enable the timer
 		}
 
 		/**
-		 * @brief init function for the encoder
-		 * @note defualt mode init is 96 ticks per turn
+		 * @brief Initialization function for the encoder
+		 * @note Default encoder mode is 96 steps per turn
 		 *
-		 * @return true when successfully enabled, false when not
+		 * @return True when successfully enabled, false when not
 		 */
 		ALWAYS_INLINE bool init() const noexcept {
-			if(!hasEncoderModule()) return false;
+			if(!hasEncoderModule()) return false;							// Check if the timer got a pwm modul
 			Context->Instance->CCER = TIM_CCER_CC1E | TIM_CCER_CC2E;		// Enable capture compare 1 and 2
 			Context->Instance->SMCR |= TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1;		// Counter counts up/down on both TI1FP1 and TI2FP2 edges depending on the level of the other input
 			Context->Instance->CR1 = TIM_CR1_CEN;							// Enable the timer
@@ -210,9 +242,9 @@ namespace bsp::mid::drv {
 
 	private:
 		/**
-		 * @brief checks if the time has an encoder module
+		 * @brief Checks if the time has an encoder module
 		 *
-		 * @return true / false
+		 * @return True or false
 		 */
 		bool hasEncoderModule() const noexcept{
 			if ((Context->Instance == TIM1) ||		// All timer with a Encoder Module
@@ -227,41 +259,53 @@ namespace bsp::mid::drv {
 		}
 	};
 
+	/**
+	 * @brief Timer implementation for Midgard
+	 * @warn Do not use this on its own!
+	 *
+	 * @tparam Context Timer context
+	 * @tparam Size Timer width (16 bit or 32 bit)
+	 */
 	template<auto Context, typename Size>
 	struct Timer {
 
-		// TODO Add comments
+	    /**
+	     * @brief Timer channel
+	     *
+	     * @tparam Number Channel number
+	     */
 		template<u8 Number>
 		static constexpr auto Channel = TimerChannel<Context, Number, Size>();
 
+	    /**
+	     * @brief Timer in encoder mode
+	     */
+		static constexpr auto Encoder = TimerEncoder<Context, Size>();
 
-		// TODO remove number
-		template<u8 Number>
-		static constexpr auto Encoder = TimerEncoder<Context, Number, Size>();
-
-		/**
-		 * @brief get the counter value
-		 *
-		 * @return counter value (16 or 32 bit depending to the timer)
-		 */
+	    /**
+	     * @brief Get the counter value
+	     *
+	     * @return Actual timer count
+	     */
 		static Size getCount() {
 			return Context->Instance->CNT;
 		}
 
-		/**
-		 * @brief set the counter value
-		 *
-		 * @param new counter value (16 or 32 bit depending to the timer)
-		 */
+	    /**
+	     * @brief Set the counter value
+	     *
+	     * @param Size new timer value
+	     */
 		static void setCount(Size cnt) {
 			Context->Instance->CNT = cnt;
 		}
 
-		/**
-		 * @brief get the pwm frequency for all channels
-		 *
-		 * @return frequency in hz
-		 */
+	    /**
+	     * @brief Get the pwm frequency
+	     * @note The frequency is for all channels the same
+	     *
+	     * @return Frequency in Hz
+	     */
 		static u32 getPwmFrequency() {
 			auto arr = Context->Instance->ARR;
 			auto psc = Context->Instance->PSC;
@@ -286,12 +330,14 @@ namespace bsp::mid::drv {
 		}
 
 		/**
-		 * @brief set the pwm frequency and (optional) the maximal ticks within on cycle for all channels
+		 * @brief Set the pwm frequency and (optional) the maximal ticks within on cycle for all channels
+		 * @note The actual duty cycle for all channels will be restored after the changes
+		 * @warn Implement a proper error handling, the function does not guarantee to be successful
 		 *
 		 * @param f_hz new frequency in hz
 		 * @param resolution of the pwm, for 0 the actual value will be used
 		 *
-		 * @return true when the adjustment was possible, false when the parameter did not match
+		 * @return True when the adjustment was possible, false when the parameter did not match
 		 */
 		static bool setPwmFrequency(u32 f_hz, Size resolution = 0){
 			u32 pclk1 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
@@ -353,10 +399,10 @@ namespace bsp::mid::drv {
 	private:
 
 		/**
-		 * @brief converts a duty cycle in % to an integer according to the arr register
+		 * @brief Converts a duty cycle in % to an integer according to the arr register
 		 *
-		 * @param duty cycle in %
-		 * @return duty cycle as integer
+		 * @param dutyCycle Duty cycle in %
+		 * @return Duty cycle as an integer
 		 */
 		static constexpr Size dutyToInt(float dutyCycle){
 			if(dutyCycle > 100) dutyCycle = 100;
@@ -366,10 +412,10 @@ namespace bsp::mid::drv {
 		}
 
 		/**
-		 * @brief converts a duty cycle from integer to an float in % according to the arr register
+		 * @brief Converts a duty cycle from integer to an float in % according to the arr register
 		 *
-		 * @param duty cycle as integer
-		 * @return duty cycle as float in %
+		 * @param intDutyCycle duty cycle as an integer
+		 * @return Duty cycle as a float in %
 		 */
 		static constexpr float intToDuty(Size intDutyCycle){
 			Size arr = Context->Instance->ARR;

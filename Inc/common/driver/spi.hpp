@@ -35,12 +35,24 @@
 
 namespace bsp::drv {
 
+	/**
+	 * @brief Base class for SPI abstraction
+	 *
+	 * @tparam Context SPI context
+	 * @tparam SPIImpl SPI implementation
+	 */
 	template<auto Context, template<auto> typename SPIImpl>
 	struct SPI {
 		SPI() = delete;
 
 		using Impl = SPIImpl<Context>;
 
+	    /**
+	     * @brief SPI read function
+	     *
+	     * @tparam T type to read
+	     * @return Read data
+	     */
 		template<typename T>
 		static T read() {
 			std::array<u8, sizeof(T)> data;
@@ -49,6 +61,12 @@ namespace bsp::drv {
 			return bit_cast<T>(data);
 		}
 
+	    /**
+	     * @brief SPI write function
+	     *
+	     * @tparam T type to read
+	     * @param value Data to write
+	     */
 		template<typename T>
 		static void write(const T &value) {
 			if constexpr (std::is_pointer<T>::value) {

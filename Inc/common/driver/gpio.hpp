@@ -38,6 +38,7 @@ namespace bsp::drv {
 
 	/**
 	 * @brief Base class for GPIO port abstraction
+	 *
 	 * @tparam BaseAddress GPIO port bank base address
 	 * @tparam GPIOPin GPIOPin implementation
 	 */
@@ -49,6 +50,7 @@ namespace bsp::drv {
 
 	    /**
 	     * @brief GPIO Pin
+	     *
 	     * @tparam Number Pin number
 	     */
 	    template<u8 Number, Active LogicActive = Active::High>
@@ -56,6 +58,7 @@ namespace bsp::drv {
 
 	    /**
 	     * @brief Input bitfield
+	     *
 	     * @tparam Number Pin number
 	     */
 	    template<u8 From, u8 To>
@@ -63,6 +66,7 @@ namespace bsp::drv {
 
 	    /**
 	     * @brief Output bitfield
+	     *
 	     * @tparam Number Pin number
 	     */
 	    template<u8 From, u8 To>
