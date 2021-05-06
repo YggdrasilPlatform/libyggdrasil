@@ -33,7 +33,9 @@
 namespace bsp::ygg::prph {
 
 
-
+	/**
+	 * @brief Pressure sensor driver LPS22HBTR
+	 */
 	class PressureSensor {
 	public:
 		PressureSensor() = delete;
@@ -44,10 +46,10 @@ namespace bsp::ygg::prph {
 		static void init() {
 			u8 id = 0;
 			do {
-				bsp::SPIACE = false;
+				bsp::SPIACE = true;
 				bsp::SPIA::write<u8>(enumValue(Register::WHO_AM_I) | RequestResponse);
 				id = bsp::SPIA::read<u8>();
-				bsp::SPIACE = true;
+				bsp::SPIACE = false;
 
 				core::delay(1);
 			} while(id != DeviceID);
@@ -57,6 +59,7 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Get the current air pressure
+		 *
 		 * @return Pressure in hPa
 		 */
 		static float getPressure() {
@@ -65,6 +68,7 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Get the current sensor temperature
+		 *
 		 * @return Temperature in °C
 		 */
 		static float getTemperature() {
@@ -114,36 +118,50 @@ namespace bsp::ygg::prph {
 		};
 		static_assert (sizeof(ControlRegister2) == sizeof(u8), "Control register 2 definition wrong");
 
+		/**
+		 * @brief Sensor data
+		 */
 		struct SensorData {
 			float pressure;
 			float sensorTemperature;
 		};
 
-		constexpr static inline u8 RequestResponse = 0x80;		///> Requests a write from the sensor on the following clocks
-		constexpr static inline u8 DeviceID = 0xb1;			///> Value of the who am i register
-		constexpr static inline u8 ConversionDone = 0x01;	///> Conversion done flag
+		constexpr static inline u8 RequestResponse = 0x80;		///< Requests a write from the sensor on the following clocks
+		constexpr static inline u8 DeviceID = 0xb1;				///< Value of the who am i register
+		constexpr static inline u8 ConversionDone = 0x01;		///< Conversion done flag
 
+		/**
+		 * @brief read a register from the sensor
+		 *
+		 * @param reg Register address
+		 * @return read value
+		 */
 		static u8 readRegister(Register reg) {
-			bsp::SPIACE = false;
+			bsp::SPIACE = true;
 			bsp::SPIA::write<u8>(enumValue(reg) | RequestResponse);
 			auto value = bsp::SPIA::read<u8>();
-			bsp::SPIACE = true;
+			bsp::SPIACE = false;
 
 			return value;
 		}
 
+		/**
+		 * @brief get the sensor data
+		 *
+		 * @return Sensordata
+		 */
 		static SensorData getSensorData() {
 			SensorData senorData = {0};
 			ControlRegister2 ctrlReg2 = { .ONE_SHOT = 1, .I2C_DIS = 0, .IF_ADD_INC = 0 };
 
-			bsp::SPIACE = false;
-			bsp::SPIA::write<std::array<u8,2>>({enumValue(Register::CTRL_REG2), bit_cast<u8>(ctrlReg2)});
 			bsp::SPIACE = true;
+			bsp::SPIA::write<std::array<u8,2>>({enumValue(Register::CTRL_REG2), bit_cast<u8>(ctrlReg2)});
+			bsp::SPIACE = false;
 
 			do{
-				bsp::SPIACE = true;
-				core::delay(10);
 				bsp::SPIACE = false;
+				core::delay(10);
+				bsp::SPIACE = true;
 				bsp::SPIA::write<u8>(enumValue(Register::CTRL_REG2) | RequestResponse);
 			} while((bsp::SPIA::read<u8>() & ConversionDone) == 0);
 

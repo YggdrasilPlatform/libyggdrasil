@@ -11,7 +11,7 @@
   *  @ingroup Peripherals                                           *
   *  @author Fabian Weber, Nikolaij Saegesser						*
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief Driver to use the TCS3472 color sensor  	        		*
+  *  @brief Driver to use the TCS3472 color sensor  	        	*
   *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
@@ -32,6 +32,9 @@
 
 namespace bsp::ygg::prph {
 
+	/**
+	 * @brief Color sensor TCS3472 driver
+	 */
 	class ColorSensor {
 	public:
 		ColorSensor() = delete;
@@ -61,9 +64,9 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Initialization of the TCS3472 color sensor
+		 * @note This function does start a conversion. Values for integration time (2.4ms) and gain (1x) are set
 		 *
 		 * @return True when the connected device matched the device id, false when not
-		 * @note This function does start a conversion. Values for integration time (2.4ms) and gain (1x) are set
 		 */
 
 		static bool init() {
@@ -85,9 +88,9 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Set the integration time
-		 *
-		 * @param Integration time value
 		 * @note Integration time = (256 - IntegrationTime) * 2.4ms
+		 *
+		 * @param integrationTime Integration time value
 		 */
 		static inline void setIntergrationTime(IntegrationTime integrationTime) {
 			ColorSensor::s_integrationTime = enumValue(integrationTime);
@@ -96,9 +99,9 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Set the gain
-		 *
-		 * @param Gain value
 		 * @note value can be 1x, 4x, 16x and 60x
+		 *
+		 * @param gain Gain value
 		 */
 		static inline void setGain(Gain gain) {
 			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::CTRL), enumValue(gain));				// Set gain value in the CTRL register
@@ -106,16 +109,15 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Enable the sensor
-		 *
 		 * @note This function does not start a conversion
 		 */
 		static void enable() {
 			EnableRegister enRegister = { 0 };
 			enRegister.PON = 1;
 
-			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));				// Enable sensor
+			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));		// Enable sensor
 
-			core::delay(3);																										// Wait for power up
+			core::delay(3);																								// Wait for power up
 		}
 
 		/**
@@ -123,7 +125,7 @@ namespace bsp::ygg::prph {
 		 */
 		static void disable() {
 			EnableRegister enRegister = { 0 };
-			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));				// Disable sensor
+			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));		// Disable sensor
 
 		}
 
@@ -135,8 +137,8 @@ namespace bsp::ygg::prph {
 		static u16 startConversion() {
 			EnableRegister enRegister = { 0 };
 
-			enRegister.PON = 1;																								// Enable
-			enRegister.AEN = 1;																								// Enable RGBC
+			enRegister.PON = 1;																						// Enable
+			enRegister.AEN = 1;																						// Enable RGBC
 			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));	// Write enable register
 
 			return static_cast<u16>((256 - ColorSensor::s_integrationTime) * 2.4F + 0.9);
@@ -146,23 +148,23 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Used to poll a conversion
 		 *
-		 * @return 1 when the conversion is finished, 0 when not
+		 * @return True when the conversion is finished, false when not
 		 */
 		static bool isDone() {
-			return (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::STATUS)) & ConversionDone);			// Wait for conversion to complete
+			return (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::STATUS)) & ConversionDone);		// Wait for conversion to complete
 		}
 
 
 		/**
 		 * @brief Get the color values and start a new measurement (optional)
-		 *
-		 * @param Restart a measurment after reading with the same setting
-		 * @return Color RGB and brightness value (all 16 Bit)
 		 * @note The integration time must be passed since the last read
+		 *
+		 * @param restart Restart a measurement after reading with the same setting
+		 * @return Color RGB and brightness value (all 16 Bit)
 		 */
 		static RGBA16 getColor16(bool restart = true) {
-			while (!isDone()) {
-				core::delay(1);
+			while (!isDone()) {		// Wait for conversion to be done
+				core::delay(1);		// Avoid spamming the I2C
 			}
 
 			RGBA16 color = { 0 };
@@ -186,10 +188,10 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Get the color values and start a new measurement (optional)
-		 *
-		 * @param Restart a measurment after reading with the same setting
-		 * @return Color RGBA8 value
 		 * @note The integration time must be passed since the last read
+		 *
+		 * @param restart Restart a measurement after reading with the same setting
+		 * @return Color RGBA8 value
 		 */
 		static RGBA8 getColor8(bool restart = true) {
 			RGBA16 color16 = getColor16(restart);
@@ -205,7 +207,6 @@ namespace bsp::ygg::prph {
 		}
 
 	private:
-
 
 		static inline u8 s_integrationTime;
 

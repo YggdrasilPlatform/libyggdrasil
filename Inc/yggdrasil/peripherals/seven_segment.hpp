@@ -34,16 +34,18 @@
 
 namespace bsp::ygg::prph {
 
-
+	/**
+	 * @ Sevensegment driver
+	 */
 	class SevenSegment {
 	public:
 		SevenSegment() = delete;
 
 		/**
-		 * @brief display a unsigned value from 0 to 9999 on the 7 segments
-		 * @note the function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
+		 * @brief Display a unsigned value from 0 to 9999 on the 7 segments
+		 * @note The function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
 		 *
-		 * @param unsigned value to display
+		 * @param value Value to display
 		 */
 		static void setUnsigned(u16 value) {
 			static u8 currSegment = 0;
@@ -68,10 +70,10 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief display a signed value from -999 to 999 on the 7 segments
-		 * @note the function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
+		 * @brief Display a signed value from -999 to 999 on the 7 segments
+		 * @note The function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
 		 *
-		 * @param signed value to display
+		 * @param value Value to display
 		 */
 		static void setSigned(i16 value) {
 			static u8 currSegment = 0;
@@ -97,10 +99,10 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief display a unsigned value from 0 to 0xFFFF in hexadecimal on the 7 segments
-		 * @note the function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
+		 * @brief Display a unsigned value from 0 to 0xFFFF in hexadecimal on the 7 segments
+		 * @note The function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
 		 *
-		 * @param unsigned value to display in hexadecimal
+		 * @param value Value to display in hexadecimal
 		 */
 		static void setHexadecimal(u16 value) {
 			static u8 currSegment = 0;
@@ -125,10 +127,10 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief display a floating point value from -99.9 to 99.9 on the 7 segments, the function will show as many decimal places as possible
-		 * @note the function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
+		 * @brief Display a floating point value from -99.9 to 99.9 on the 7 segments, the function will show as many decimal places as possible
+		 * @note The function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
 		 *
-		 * @param float value to display
+		 * @param value Value to display
 		 */
 		static void setFloatingPoint(float value) {
 			static u8 currSegment = 0;
@@ -164,10 +166,10 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief set the segments to the given value, supports hexadecimal, '-' for minus and ' ' for an empty segment
-		 * @note the function does not enable any segment
+		 * @brief Set the segments to the given value, supports hexadecimal, '-' for minus and ' ' for an empty segment
+		 * @note The function does not enable any segment
 		 *
-		 * @param value to enable the segments
+		 * @param value Digit to set
 		 */
 		static void setDigit(char value){
 			switch(value){
@@ -193,9 +195,9 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief enable one single segment
+		 * @brief Enable one single segment
 		 *
-		 * @param number to enable a single segment
+		 * @param number Digit to enable
 		 */
 		static void enableDigit(u8 number){
 			switch(number){
@@ -205,9 +207,6 @@ namespace bsp::ygg::prph {
 				case 3:		seven_segment::SelectAll = 0x08; break;
 			}
 		}
-
-
-	private:
 
 	};
 

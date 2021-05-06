@@ -36,13 +36,16 @@
 
 namespace bsp::ygg::prph {
 
-
-
-
+	/**
+	 * @brief Dual DC Motor driver driver TC78H660FTG
+	 */
 	class MotorDriver {
 	public:
 		MotorDriver() = delete;
 
+		/**
+		 * @brief Channels
+		 */
 		enum class Channel : u8 {
 			A = 0,
 			B = 1,
@@ -64,7 +67,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief set the motor driver to standby
 		 *
-		 * @param true for standby, false for active
+		 * @param stby True for standby, false for active
 		 */
 		static void standby(bool stby) {
 			if(stby) {
@@ -86,7 +89,7 @@ namespace bsp::ygg::prph {
 		 * @brief Controls the speed and rotation of each channel
 		 *
 		 * @param ch Channel to set speed
-		 * @param speed ranged from -100% o 100% where - does change the rotation direction
+		 * @param speed Speed from -100% o 100% where - does change the rotation direction
 		 */
 		static void setSpeed(Channel ch, float speed) {
 			bool rotation = speed > 0;			// Get the rotation for the selected channel

@@ -33,6 +33,9 @@
 
 namespace bsp::ygg::prph {
 
+	/**
+	 * @brief RTC driver RV-3028-C7
+	 */
 	class RealTimeClock {
 	public:
 		RealTimeClock() = delete;
@@ -40,7 +43,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Get the time saved in the RTC
 		 *
-		 * @return time_t time saved in the RTC
+		 * @return Time saved in the RTC
 		 */
 		static time_t getTime() {
 			RawData rawData = { 0 };
@@ -64,23 +67,22 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Set the time in the RTC
 		 *
-		 * @param tm struct with the time to save in the RTC
+		 * @param time Time to save in the RTC
 		 */
-		static void setTime(tm time) {
+		static void setTime(time_t time) {
 			RawData rawData = { 0 };
+			tm *utc = gmtime(&time);
 
-			rawData.sec 		= math::binaryToBcd(time.tm_sec);
-			rawData.min 		= math::binaryToBcd(time.tm_min);
-			rawData.hrs 		= math::binaryToBcd(time.tm_hour);
-			rawData.weekday 	= math::binaryToBcd(time.tm_mday);
-			rawData.month 		= math::binaryToBcd(time.tm_mon);
-			rawData.weekday 	= math::binaryToBcd(time.tm_wday);
+			rawData.sec 		= math::binaryToBcd(utc.tm_sec);
+			rawData.min 		= math::binaryToBcd(utc.tm_min);
+			rawData.hrs 		= math::binaryToBcd(utc.tm_hour);
+			rawData.weekday 	= math::binaryToBcd(utc.tm_mday);
+			rawData.month 		= math::binaryToBcd(utc.tm_mon);
+			rawData.weekday 	= math::binaryToBcd(utc.tm_wday);
 
-			// get the year in range 0 to 99
-			while (time.tm_year > 100) {
-				time.tm_year -= 100;
-			}
-			rawData.year = math::binaryToBcd(time.tm_year) + 100;
+			utc.tm_year %= 100;	// get the year in range 0 to 99
+
+			rawData.year = math::binaryToBcd(utc.tm_year) + 100;
 
 		    bsp::I2CA::write<RawData>(DeviceAddress, enumValue(RegisterID::Seconds), rawData);
 
@@ -157,8 +159,11 @@ namespace bsp::ygg::prph {
 
 		};
 
-		constexpr static inline u8 DeviceAddress 		= 0xA4;		///< I2C device address
+		constexpr static inline u8 DeviceAddress = 0xA4;		///< I2C device address
 
+		/**
+		 * @brief Raw RTC data
+		 */
 		struct RawData {
 			u8 sec;
 			u8 min;

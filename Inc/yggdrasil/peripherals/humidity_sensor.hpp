@@ -32,13 +32,19 @@
 
 namespace bsp::ygg::prph {
 
+	/**
+	 * @brief Humidity sensor SHT40-AD1B-R2 driver
+	 */
 	class HumiditySensor {
 	public:
 		HumiditySensor() = delete;
 
+		/**
+		 * @brief Sensor data
+		 */
 		struct SensorData{
-			float humidity;
-			float sensorTemperature;
+			float humidity;				///< Humidity sensor value
+			float sensorTemperature;	///< Temperature of the sensor
 		};
 
 		/**
@@ -61,7 +67,6 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Initialization of the SHT40-AD1B-R2 relative humidity and temperature sensor
-		 *
 		 * @note The sensor does not need a special initialization, this function just does a soft reset
 		 */
 		static void init() {
@@ -71,7 +76,9 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Get a measurement without using the heater
+		 * @note The measurement takes about 10ms
 		 *
+		 * @param precision Precision for the conversion
 		 * @return SensorData struct containing the humidity value in % and the sensor temperature
 		 */
 		static SensorData getSensorData(Precision precision = Precision::High) {
@@ -93,9 +100,9 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Enable the heater module on the sensor
-		 *
-		 * @param Power and duration command
 		 * @warning The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
+		 *
+		 * @param level Power and duration command
 		 */
 		static inline void enableHeater(Heat level) {
 			bsp::I2CA::write(DeviceAddress, enumValue(level));
@@ -103,6 +110,9 @@ namespace bsp::ygg::prph {
 
 	private:
 
+		/**
+		 * @brief Raw sensor data
+		 */
 		struct SensorDataRaw {
 			u8 th;
 			u8 tl;

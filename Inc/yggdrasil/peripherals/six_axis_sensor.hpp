@@ -32,35 +32,55 @@
 
 namespace bsp::ygg::prph {
 
+	/**
+	 * @brief 6 axis sensor driver ICM-42605
+	 */
 	class SixAxisSensor {
 	public:
+
+		/**
+		 * @brief Coordinates
+		 */
 		struct Coordinate {
 			float x, y, z;
 		};
 
+		/**
+		 * @brief Absolute board orientation
+		 */
 	    struct Orientation {
 			float roll;		///< Rotation around x-axis
 			float pitch;	///< Rotation around y-axis
-			};
+		};
 
+	    /**
+	     * @brief Accelerometer range
+	     */
 		enum class AccelFullScaleRange : u8 {
-			_2G = 0x03,
-			_4G = 0x02,
-			_8G = 0x01,
-			_16G = 0x00
+			_2G = 0x03,		///< Range from -2G to 2G with highest precision
+			_4G = 0x02,		///< Range from -4G to 4G
+			_8G = 0x01,		///< Range from -8G to 8G
+			_16G = 0x00		///< Range from -16G to 16G with lowest precision
 		};
 
+	    /**
+	     * @brief Gyroscope range
+	     * @note DPS = degree per second
+	     */
 		enum class GyroFullScaleRange : u8 {
-			_2000DPS   = 0x00,
-			_1000DPS   = 0x01,
-			_500DPS    = 0x02,
-			_250DPS    = 0x03,
-			_125DPS    = 0x04,
-			_62_5DPS   = 0x05,
-			_31_25DPS  = 0x06,
-			_15_125DPS = 0x07
+			_2000DPS   = 0x00,	///< Range from -2000DPS to 2000DPS with lowest precision
+			_1000DPS   = 0x01,	///< Range from -1000DPS to 1000DPS
+			_500DPS    = 0x02,	///< Range from -500DPS to 500DPS
+			_250DPS    = 0x03,	///< Range from -250DPS to 250DPS
+			_125DPS    = 0x04,	///< Range from -125DPS to 125DPS
+			_62_5DPS   = 0x05,	///< Range from -62.5DPS to 65.5DPS
+			_31_25DPS  = 0x06,	///< Range from -31.25DPS to 31.25DPS
+			_15_125DPS = 0x07	///< Range from -15.125DPS to 15.125DPS with highest precision
 		};
 
+	    /**
+	     * @brief Accelerometer data rate
+	     */
 		enum class AccelOutputDataRange : u8 {
 			_8000Hz   = 0x03,
 			_4000Hz   = 0x04,
@@ -77,6 +97,9 @@ namespace bsp::ygg::prph {
 			_500Hz    = 0x0F
 		};
 
+	    /**
+	     * @brief Gyroscope data rate
+	     */
 		enum class GyroOutputDataRange : u8 {
 			_8000Hz = 0x03,
 			_4000Hz = 0x04,
@@ -192,7 +215,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Get the internal temperature of the ICM-42605 sensor
 		 *
-		 * @return float temperature value
+		 * @return Temperature value
 		 */
 		static float getTemperature() {
 			auto data = bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterBank0::TEMP_DATA1));
@@ -203,9 +226,9 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Get yggdrasil's current orientation
-		 *
-		 * @retrun orientation (roll and pitch) in the range from -180 to 180
 		 * @note When the board is flat on a plain surface this function returns approximately 0 0
+		 *
+		 * @return orientation (roll and pitch) in the range from -180 to 180
 		 */
 		static Orientation getBoardOrientation() {
 			Orientation orientation = {0};
@@ -230,6 +253,10 @@ namespace bsp::ygg::prph {
 
 
 	private:
+
+		/**
+		 * @brief Register bank 0
+		 */
 		enum class RegisterBank0 : u8 {
 			DEVICE_CONFIG      = 0x11,
 			DRIVE_CONFIG       = 0x13,
@@ -292,6 +319,9 @@ namespace bsp::ygg::prph {
 			REG_BANK_SEL       = 0x76
 		};
 
+		/**
+		 * @brief Register bank 1
+		 */
 		enum class RegisterBank1 : u8 {
 			SENSOR_CONFIG0       = 0x03,
 			GYRO_CONFIG_STATIC2  = 0x0B,
@@ -314,6 +344,9 @@ namespace bsp::ygg::prph {
 			INTF_CONFIG6         = 0x7C
 		};
 
+		/**
+		 * @brief Register bank 2
+		 */
 		enum class RegisterBank2 : u8 {
 			ACCEL_CONFIG_STATIC2 = 0x03,
 			ACCEL_CONFIG_STATIC3 = 0x04,
@@ -323,6 +356,9 @@ namespace bsp::ygg::prph {
 			ZA_ST_DATA           = 0x3D
 		};
 
+		/**
+		 * @brief Register bank 4
+		 */
 		enum class RegisterBank4 : u8 {
 			GYRO_ON_OFF_CONFIG = 0x0E,
 			APEX_CONFIG1       = 0x40,
@@ -353,8 +389,8 @@ namespace bsp::ygg::prph {
 			OFFSET_USER8       = 0x7F
 		};
 
-		constexpr static inline auto DeviceAddress = 0xD2;
-		constexpr static inline auto DeviceID = 0x42;
+		constexpr static inline auto DeviceAddress = 0xD2;		///< I2C device address
+		constexpr static inline auto DeviceID = 0x42;			///< Device ID
 
 		static inline AccelFullScaleRange s_accelScale;
 		static inline GyroFullScaleRange s_gyroScale;

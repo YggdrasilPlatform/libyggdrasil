@@ -34,22 +34,29 @@
 
 namespace bsp::ygg::prph {
 
-	struct Position {
-	  i16 x;
-	  i16 y;
-	};
-
-	struct JoystickData {
-	  Position pos;
-	  u16 magnitude;
-	  bool pressed;
-	};
-
-
+	/**
+	 * @brief Joystick driver using the TLA2024IRUGT ADCS
+	 */
 	class Joystick {
 	public:
 		Joystick() = delete;
 
+		/**
+		 * @brief Signed position data
+		 */
+		struct Position {
+		  i16 x;
+		  i16 y;
+		};
+
+		/**
+		 * @brief Joystick data
+		 */
+		struct JoystickData {
+		  Position pos;		///< Position
+		  u16 mag;			///< Magnitude / radius from the center
+		  bool pressed;		///< State of the joystick button
+		};
 
 		/**
 		 * @brief Get the joystick data for the left joystick
@@ -62,10 +69,10 @@ namespace bsp::ygg::prph {
 
 			data.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN0));	// Get ADC Value
 			data.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN1));	// Get ADC Value
-			data.magnitude = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
+			data.mag = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
 			data.pressed = LeftJoyStickButton;								// Read the button state
 
-			if(data.magnitude < Joystick::s_deadzone) {
+			if(data.mag < Joystick::s_deadzone) {
 				data.pos = { 0, 0 };
 			}
 
@@ -83,10 +90,10 @@ namespace bsp::ygg::prph {
 
 			data.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN2));		// Get ADC Value
 			data.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN3));		// Get ADC Value
-			data.magnitude = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
+			data.mag = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
 			data.pressed = RightJoyStickButton;											// Read the button state
 
-			if(data.magnitude < Joystick::s_deadzone) {
+			if(data.mag < Joystick::s_deadzone) {
 				data.pos = { 0, 0 };
 			}
 
@@ -188,8 +195,8 @@ namespace bsp::ygg::prph {
 		constexpr static inline u8 ReservedBits			= 0x03;		///< Reserved bits must be write as 0x03
 		constexpr static inline u16 ConversionDone		= 0x8000;	///< Configuration done flag (OS bit in configuration register)
 
-		constexpr static inline u16 CenterPosition		= 0x34A;		///< Configuration done flag (OS bit in configuration register)
-		constexpr static inline u16 MaxADCValue			= 0x56A;	///< Single ended maximal value (lost 1 bit due to single ended measurement)
+		constexpr static inline u16 CenterPosition		= 0x34A;
+		constexpr static inline u16 MaxADCValue			= 0x56A;
 		constexpr static inline u16 MinADCValue			= 0x100;
 		constexpr static inline i8 PositionRange		= 200;
 		constexpr static inline i8 PositionMin			= -100;
@@ -200,10 +207,10 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Start a single shot measurement
-		 *
-		 * @param MUX channel to determine the input to convert
-		 * @return u16 12 bit adc data left aligned
 		 * @note Start a conversion and poll until the conversion is finished
+		 *
+		 * @param channel Multiplexer channel to determine the input to convert
+		 * @return u16 12 bit adc data left aligned
 		 */
 		static u16 getADCValue(MUX channel) {
 			ConfigurationRegister configRegister = {0};
@@ -214,13 +221,13 @@ namespace bsp::ygg::prph {
 			configRegister.DR 		= enumValue(DR::SPS1600);
 			configRegister.Reserved = ReservedBits;
 
-			bsp::I2CA::write<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConfigurationRegister), bit_cast<u16>(configRegister));		// Start Conversion
+			bsp::I2CA::write<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConfigurationRegister), bit_cast<u16>(configRegister));					// Start Conversion
 
-			while((bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConfigurationRegister)) & ConversionDone) == ConversionDone) {
-				core::delay(1);
+			while((bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConfigurationRegister)) & ConversionDone) == ConversionDone) {	// Poll results
+				core::delay(1);		// Avoid spamming the I2C
 			}
 
-			auto adcData = bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConversionRegister));
+			auto adcData = bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterID::ConversionRegister));		// Read results
 
 			return adcData;
 		}
@@ -228,7 +235,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Conversion from 12 Bit ADC Value to a
 		 *
-		 * @param u16 12 bit ADC data left aligned
+		 * @param adcData 12 bit ADC data left aligned
 		 * @return i8 converted data to an range from -100 to 100 where 0 equals center position
 		 */
 		static inline i16 transformInputData(u16 adcData) {
