@@ -34,7 +34,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief ADC Channel implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam Context ADC Context
 	 * @tparam Index Channel ID

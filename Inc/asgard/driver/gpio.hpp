@@ -48,7 +48,7 @@ namespace bsp::asg::drv {
 
 	/**
 	 * @brief GPIOPin implementation for Asgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 * @tparam BaseAddress GPIO Block base address
 	 * @tparam Pin Pin number
 	 */

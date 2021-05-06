@@ -36,7 +36,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief UART implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam BaseAddress UART Block base address
 	 */

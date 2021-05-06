@@ -42,7 +42,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief Timer channel implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam Context Timer context
 	 * @tparam Channel Timer channel number
@@ -132,7 +132,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief Timer encoder implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam Context Timer context
 	 * @tparam Size Timer width (16 bit or 32 bit)
@@ -261,7 +261,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief Timer implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam Context Timer context
 	 * @tparam Size Timer width (16 bit or 32 bit)
@@ -332,7 +332,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Set the pwm frequency and (optional) the maximal ticks within on cycle for all channels
 		 * @note The actual duty cycle for all channels will be restored after the changes
-		 * @warn Implement a proper error handling, the function does not guarantee to be successful
+		 * @note Implement a proper error handling, the function does not guarantee to be successful
 		 *
 		 * @param f_hz new frequency in hz
 		 * @param resolution of the pwm, for 0 the actual value will be used

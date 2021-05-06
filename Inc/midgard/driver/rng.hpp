@@ -38,7 +38,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief RNG abstraction
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam BaseAddress RNG Peripheral base address
 	 */

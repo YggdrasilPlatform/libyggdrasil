@@ -111,7 +111,7 @@ namespace bsp {
 	/**
 	 * @brief Signals the compiler that it is impossible to reach this line of code
 	 * Useful for optimization
-	 * @warn If used incorrectly and this line is reached anyways, the program is undefined
+	 * @warning If used incorrectly and this line is reached anyways, the program is undefined
 	 */
 	NO_RETURN ALWAYS_INLINE static void unreachable() {
 		__builtin_unreachable();

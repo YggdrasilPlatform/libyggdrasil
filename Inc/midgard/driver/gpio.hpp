@@ -49,7 +49,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief GPIOPin implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam BaseAddress GPIO Block base address
 	 * @tparam Pin Pin number
@@ -108,7 +108,7 @@ namespace bsp::mid::drv {
 
 	/**
 	 * @brief GPIOPort implementation for Midgard
-	 * @warn Do not use this on its own!
+	 * @warning Do not use this on its own!
 	 *
 	 * @tparam BaseAddress GPIO Block base address
 	 */
