@@ -28,6 +28,7 @@
 
 #include <common/attributes.hpp>
 #include <common/types.hpp>
+#include <common/math.hpp>
 
 namespace bsp::ygg::prph {
 
@@ -36,6 +37,11 @@ namespace bsp::ygg::prph {
 		struct Coordinate {
 			float x, y, z;
 		};
+
+	    struct Orientation {
+			float roll;		///< Rotation around x-axis
+			float pitch;	///< Rotation around y-axis
+			};
 
 		enum class AccelFullScaleRange : u8 {
 			_2G = 0x03,
@@ -94,7 +100,10 @@ namespace bsp::ygg::prph {
 		 * @param accelOdr Output data rate of the Accelerometer
 		 * @param gyroOdr Output data rate of the Gyroscope
 		 */
-		static void init(AccelFullScaleRange accelScale, GyroFullScaleRange gyroScale, AccelOutputDataRange accelOdr, GyroOutputDataRange gyroOdr) {
+		static void init(AccelFullScaleRange accelScale = AccelFullScaleRange::_2G ,
+				GyroFullScaleRange gyroScale = GyroFullScaleRange::_250DPS ,
+				AccelOutputDataRange accelOdr = AccelOutputDataRange::_1000Hz,
+				GyroOutputDataRange gyroOdr = GyroOutputDataRange::_1000Hz) {
 			SixAxisSensor::s_accelScale = accelScale;
 			SixAxisSensor::s_gyroScale = gyroScale;
 
@@ -182,11 +191,41 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Get the internal temperature of the ICM-42605 sensor
+		 *
+		 * @return float temperature value
 		 */
 		static float getTemperature() {
 			auto data = bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterBank0::TEMP_DATA1));
 
 			return (float(data) / 132.48F) + 25;
+		}
+
+
+		/**
+		 * @brief Get yggdrasil's current orientation
+		 *
+		 * @retrun orientation (roll and pitch) in the range from -180 to 180
+		 * @note When the board is flat on a plain surface this function returns approximately 0 0
+		 */
+		static Orientation getBoardOrientation() {
+			Orientation orientation = {0};
+			auto [x, y, z] = bsp::ygg::prph::SixAxisSensor::getAcceleration();
+
+			float gp = sqrt(x*x + y*y + z*z);
+			orientation.roll = asin(y/gp) * 180 / math::Pi<float>;
+			orientation.pitch = asin(x/gp) * 180 / math::Pi<float>;
+
+			if(z < 0){
+				if(x < 0) orientation.pitch = - 180 - orientation.pitch;
+				else orientation.pitch = 180 - orientation.pitch;
+				if(y < 0) orientation.roll = - 180 - orientation.roll;
+				else orientation.roll = 180 - orientation.roll;
+			}
+
+			orientation.roll *= -1;
+
+			return orientation;
+
 		}
 
 
