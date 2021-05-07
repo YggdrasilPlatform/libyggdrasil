@@ -73,16 +73,16 @@ namespace bsp::ygg::prph {
 			RawData rawData = { 0 };
 			tm *utc = gmtime(&time);
 
-			rawData.sec 		= math::binaryToBcd(utc.tm_sec);
-			rawData.min 		= math::binaryToBcd(utc.tm_min);
-			rawData.hrs 		= math::binaryToBcd(utc.tm_hour);
-			rawData.weekday 	= math::binaryToBcd(utc.tm_mday);
-			rawData.month 		= math::binaryToBcd(utc.tm_mon);
-			rawData.weekday 	= math::binaryToBcd(utc.tm_wday);
+			rawData.sec 		= math::binaryToBcd(utc->tm_sec);
+			rawData.min 		= math::binaryToBcd(utc->tm_min);
+			rawData.hrs 		= math::binaryToBcd(utc->tm_hour);
+			rawData.weekday 	= math::binaryToBcd(utc->tm_mday);
+			rawData.month 		= math::binaryToBcd(utc->tm_mon);
+			rawData.weekday 	= math::binaryToBcd(utc->tm_wday);
 
-			utc.tm_year %= 100;	// get the year in range 0 to 99
+			utc->tm_year %= 100;	// get the year in range 0 to 99
 
-			rawData.year = math::binaryToBcd(utc.tm_year) + 100;
+			rawData.year = math::binaryToBcd(utc->tm_year) + 100;
 
 		    bsp::I2CA::write<RawData>(DeviceAddress, enumValue(RegisterID::Seconds), rawData);
 
