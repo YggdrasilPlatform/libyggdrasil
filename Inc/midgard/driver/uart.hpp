@@ -49,7 +49,8 @@ namespace bsp::mid::drv {
 		 *
 	     * @param buffer Buffer for the read string
 		 */
-		ALWAYS_INLINE static void receive(std::string &buffer) {
+		static void receive(std::string &buffer) {
+			UE = true;
 			while (true) {
 				while (!RXNE);
 
@@ -60,6 +61,7 @@ namespace bsp::mid::drv {
 				else
 					buffer.push_back(c);
 			}
+			UE = false;
 		}
 
 		/**
@@ -69,8 +71,9 @@ namespace bsp::mid::drv {
 	     * @param buffer Array for the read data
 		 */
 		template<size_t N>
-		ALWAYS_INLINE static void receive(std::array<u8, N> &buffer) {
+		static void receive(std::array<u8, N> &buffer) {
 			u32 index = 0;
+			UE = true;
 			while (index < N) {
 				while (!RXNE);
 
@@ -80,6 +83,7 @@ namespace bsp::mid::drv {
 
 				index++;
 			}
+			UE = false;
 		}
 
 		/**
@@ -87,12 +91,15 @@ namespace bsp::mid::drv {
 		 *
 	     * @param buffer Buffer for the string to write
 		 */
-		ALWAYS_INLINE static void transmit(std::string_view buffer) {
+		static void transmit(std::string_view buffer) {
+			UE = true;
 			for (char c : buffer) {
 				while(!TXE);
 
 				TRNS = c;
 			}
+			while(!TC);
+			UE = false;
 		}
 
 		/**
@@ -102,12 +109,15 @@ namespace bsp::mid::drv {
 	     * @param buffer Array for the data to write
 		 */
 		template<size_t N>
-		ALWAYS_INLINE static void transmit(const std::array<u8, N> &buffer) {
+		static void transmit(const std::array<u8, N> &buffer) {
+			UE = true;
 			for (char c : buffer) {
 				while(!TXE);
 
 				TRNS = c;
 			}
+			while(!TC);
+			UE = false;
 		}
 
 	private:
@@ -129,8 +139,10 @@ namespace bsp::mid::drv {
 		using RDR = Register<BaseAddress, RegisterMap::RDR, u32>;
 		using TDR = Register<BaseAddress, RegisterMap::TDR, u32>;
 
+		static inline auto UE	= typename CR1::template Field<0, 0>();		///< USART enable
 		static inline auto RXNE	= typename ISR::template Field<5, 5>();		///< Read data register not empty
 		static inline auto TXE 	= typename ISR::template Field<7, 7>();		///< Transmit data register empty
+		static inline auto TC 	= typename ISR::template Field<6, 6>();		///< Transmission complete
 
 		static inline auto RECV = typename RDR::template Field<0, 8>();		///< Receive data value
 		static inline auto TRNS = typename TDR::template Field<0, 8>();		///< Transmit data value
