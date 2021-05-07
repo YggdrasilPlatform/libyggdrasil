@@ -67,6 +67,11 @@
 		ADC_HandleTypeDef hadc3;
 
 		DAC_HandleTypeDef hdac;
+
+		UART_HandleTypeDef huart4;
+		UART_HandleTypeDef huart8;
+		UART_HandleTypeDef huart2;
+
 	}
 
 	namespace bsp {
@@ -209,6 +214,10 @@
 
 		using Random = bsp::drv::Random<0x5006'0800, bsp::mid::drv::Random>;
 		using Hash	 = bsp::drv::Hash<0x4002'3000, bsp::mid::drv::Hash>;
+
+		using UARTA = bsp::drv::UART<0x4000'4400, bsp::mid::drv::UART>;	 	// USART 2
+		using UARTB = bsp::drv::UART<0x4000'7C00, bsp::mid::drv::UART>;		// UART 8
+		using UARTC = bsp::drv::UART<0x4000'4C00, bsp::mid::drv::UART>;		// UART 4
 
 	}
 
