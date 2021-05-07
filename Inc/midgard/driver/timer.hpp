@@ -90,6 +90,36 @@ namespace bsp::mid::drv {
 		}
 
 		/**
+		 * @brief Start set pwm polarity
+		 *
+		 * @param highActive Set channel to high active when true
+		 * @return True when successfully switched, false when not
+		 */
+		ALWAYS_INLINE bool setPolarityHigh(bool highActive = true) const noexcept {
+			if(!hasPwmModule()) return false;
+			if(!highActive){
+				switch(Channel) {
+					case 1: Context->Instance->CCER |= TIM_CCER_CC1P; break;	// Capture/Compare 1 output Polarity to low
+					case 2: Context->Instance->CCER |= TIM_CCER_CC2P; break;	// Capture/Compare 2 output Polarity to low
+					case 3: Context->Instance->CCER |= TIM_CCER_CC3P; break;	// Capture/Compare 3 output Polarity to low
+					case 4: Context->Instance->CCER |= TIM_CCER_CC4P; break;	// Capture/Compare 4 output Polarity to low
+					default: bsp::unreachable();
+				}
+			}
+			else {
+				switch(Channel) {
+					case 1: Context->Instance->CCER &= ~TIM_CCER_CC1P; break;	// Capture/Compare 1 output Polarity to high
+					case 2: Context->Instance->CCER &= ~TIM_CCER_CC2P; break;	// Capture/Compare 2 output Polarity to high
+					case 3: Context->Instance->CCER &= ~TIM_CCER_CC3P; break;	// Capture/Compare 3 output Polarity to high
+					case 4: Context->Instance->CCER &= ~TIM_CCER_CC4P; break;	// Capture/Compare 4 output Polarity to high
+					default: bsp::unreachable();
+				}
+			}
+
+			return true;
+		}
+
+		/**
 		 * @brief Set the duty cycle as a float value
 		 *
 		 * @param dutyCycle Duty cycle in % [0 100]
