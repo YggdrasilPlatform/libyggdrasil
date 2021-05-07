@@ -58,14 +58,20 @@ namespace bsp::ygg::prph {
 			Servo() = delete;
 
 			/**
-			 * @brief
+			 * @brief Set the servo arm rotation in percent relative to its maximal value
+			 * @note The needed high period of pwm signal to reach maximal magnitude can
+			 * be configured with the setDeltaHighTime() function (This is servo specific)
+			 * @warning If the system clock is not 216MHz the function might not be able to set the pwm frequency to 50Hz
+			 *
+			 * @param channel Channel which should be changed
+			 * @param percent Servo arm rotation in percent from -100% to 100%
 			 */
 			static void set(Channel channel, float percent) {
-				if(checkMode(channel) == false) return;
+				if(checkMode(channel) == false) return;				// Chech if the channel is configured as a servo channel
 
 				percent = math::clamp(percent, -100.0F, 100.0F);
 
-				float dutyCycle = ((MidPosition + ((Servo::s_delta[enumValue(channel)] / 100.0F) * percent)) / TPWM) * 100.0F;
+				float dutyCycle = ((MidPosition + ((Servo::s_delta[enumValue(channel)] / 100.0F) * percent)) / TPWM) * 100.0F;	// get the high time in ms and calculate the duty cycle
 
 				switch(channel){
 				case Channel::A:
@@ -85,16 +91,29 @@ namespace bsp::ygg::prph {
 
 			}
 
-			static void setDeltaHighTime(Channel channel, float delta) {
+			/**
+			 * @brief FUnction to set the high time of the pwm pulse
+			 *
+			 * @param channel Channel which should be changed
+			 * @param delta High time of the pwm pulse in ms
+			 */
+			static void setDeltaHighTime(Channel channel, u16 delta) {
 				Servo::s_delta[enumValue(channel)] = delta;
 			}
 
 
 		private:
-			static inline std::array s_delta 		= { 600, 600, 600, 600 };
-			constexpr static inline u16 MidPosition	= 1500;
-			constexpr static inline u16 TPWM		= 20000;
+			static inline std::array s_delta 		= { 600, 600, 600, 600 };		// Delta value for each channel in ms
+			constexpr static inline u16 MidPosition	= 1500;							// 1.5ms high time pulse which represents 0° rotation (minimal is MidPosition - Delta, maximal is MidPosition + Delta)
+			constexpr static inline u16 TPWM		= 20000;						// Period of the pwm frequency in ms
 
+			/**
+			 * @brief Checks if the channel is in servo mode
+			 * @note Configures the timer pwm frequency to 50Hz
+			 *
+			 * @param channel Channel which should be configured
+			 * @return True when successful, false when not (this will come from a system clock frequency which is to low)
+			 */
 			static bool checkMode(Channel channel) {
 				if (PushPullDriver::s_mode[static_cast<u8>(channel)] != Mode::Servo) {
 					if (bsp::TimerD::getPwmFrequency() != 50) {
@@ -122,12 +141,24 @@ namespace bsp::ygg::prph {
 			}
 		};
 
+		/**
+		 * @brief Pwm driver
+		 * @note When using the Servo port, the PWM frequency for all channels will be set to 50Hz
+		 * @warning Changing the pwm frequency will not be possible when one channel is used as servo port
+		 */
 		class PWM{
 		public:
 			PWM() = delete;
 
+			/*
+			 * @brief Set the duty cycle
+			 *
+			 * @param channel Channel which should be changed
+			 * @param dutyCycle Duty cycle
+			 */
 			static void setDuty(Channel channel, float dutyCycle) {
 				if(PushPullDriver::s_mode[enumValue(channel)] != Mode::PWM){
+					// Set to high active state and start the pwm for the used channel
 					switch(channel){
 					case Channel::A:
 						bsp::TimerDCHA.startPwm();
@@ -149,6 +180,7 @@ namespace bsp::ygg::prph {
 					PushPullDriver::s_mode[enumValue(channel)] = Mode::PWM;
 				}
 
+				// Set the duty cycle for the used channel
 				switch(channel){
 				case Channel::A:
 					bsp::TimerDCHA.setDutyCycle(dutyCycle);
@@ -170,6 +202,7 @@ namespace bsp::ygg::prph {
 			 * @brief Set the pwm frequency and (optional) the maximal ticks within on cycle for all channels
 			 * @note The actual duty cycle for all channels will be restored after the changes
 			 * @note Implement a proper error handling, the function does not guarantee to be successful
+			 * @warning When one channel is used as servo port, the frequency can not be changed
 			 *
 			 * @param f_hz new frequency in hz
 			 * @param resolution of the pwm, for 0 the actual value will be used
@@ -195,13 +228,24 @@ namespace bsp::ygg::prph {
 
 		};
 
+
+		/**
+		 * @brief GPIO driver
+		 */
 		class Out{
 		public:
 			Out() = delete;
 
+			/**
+			 * @brief set the push pull pin state
+			 *
+			 * @param channel Channel to set
+			 * @param state Pin state
+			 */
 			static void set(Channel channel, bool state) {
 				if(PushPullDriver::s_mode[enumValue(channel)] != Mode::GPIO) {
 
+					// Enable the pwm and set the duty cycle to 0
 					switch(channel){
 					case Channel::A:
 						bsp::TimerDCHA.startPwm();
@@ -224,7 +268,8 @@ namespace bsp::ygg::prph {
 					PushPullDriver::s_mode[enumValue(channel)] = Mode::GPIO;
 				}
 
-
+				// Set the pwm polarity according to the state. Since the duty cycle is 0 this action will result in a always low
+				// or always high. A duty of 100% usually is not really 100%
 				switch(channel){
 				case Channel::A:
 					bsp::TimerDCHA.setPolarityHigh(!state);
