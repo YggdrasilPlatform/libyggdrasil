@@ -1,4 +1,4 @@
-/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   *  _____.___.                 .___                    .__.__      *
   *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
   *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
@@ -6,13 +6,6 @@
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Common -                             *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file common/types.hpp                                         *
-  *  @ingroup common                                                *
-  *  @author Fabian Weber, Nikolaij Saegesser						*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief Commonly used type definitions, helper templates and    *
-  *  constants.                                                     *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -22,7 +15,13 @@
   *                                                                 *
   * Copyright &copy; 2021, Bern University of Applied Sciences.     *
   * All rights reserved.                                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+  *  @file common/types.hpp
+  *  @ingroup common
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief Commonly used type definitions and helper templates
+  */
 
 #pragma once
 
@@ -79,8 +78,8 @@ namespace bsp {
 	/**
 	 * @brief Creates a new, type-safe integral type
 	 *
+	 * Example use: using TypeSafeU16 = TYPESAFE(u16);
 	 * @param T Type
-	 * @example using TypeSafeU16 = TYPESAFE(u16);
 	 */
 	#define TYPESAFE(T) struct : public ::bsp::TypeSafe<int>{ using TypeSafe::TypeSafe; }
 

@@ -1,4 +1,4 @@
-/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   *  _____.___.                 .___                    .__.__      *
   *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
   *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
@@ -6,13 +6,6 @@
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Midgard -                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file midgard/driver/rng.hpp                                   *
-  *  @ingroup midgard                                               *
-  *  @author Fabian Weber, Nikolaij Saegesser						*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief RNG abstraction implementation for Midgard 				*
-  *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -22,7 +15,13 @@
   *                                                                 *
   * Copyright &copy; 2021, Bern University of Applied Sciences.     *
   * All rights reserved.                                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+  *  @file midgard/driver/rng.hpp
+  *  @ingroup midgard
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief RNG abstraction implementation for Midgard
+  */
 
 #pragma once
 

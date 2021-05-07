@@ -53,22 +53,22 @@ namespace bsp {
 	/**
 	 * @brief Scope Guard for executing code when exiting the current scope with the ability to release it.
 	 *
-	 * @example auto cleanup = SCOPE_GUARD { doCleanup(); };
+	 * Example use: auto cleanup = SCOPE_GUARD { doCleanup(); };
 	 */
 	#define SCOPE_GUARD ::bsp::scope_guard::ScopeGuardOnExit() + [&]()
 
 	/**
 	 * @brief Scope Guard for always executing code when exiting the current scope
 	 *
-	 * @example ON_SCOPE_EXIT { doCleanup(); };
+	 * Example use: ON_SCOPE_EXIT { doCleanup(); };
 	 */
 	#define ON_SCOPE_EXIT auto ANONYMOUS_VARIABLE(SCOPE_EXIT_) = SCOPE_GUARD
 
-	/**
-	 * @brief Scope Guard implementation
-	 */
 	namespace scope_guard {
 
+		/**
+		 * @brief Scope Guard implementation
+		 */
 		template<class F>
 		class ScopeGuardImpl {
 		private:

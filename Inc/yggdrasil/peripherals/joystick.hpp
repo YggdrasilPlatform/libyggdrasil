@@ -1,19 +1,11 @@
-/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   *  _____.___.                 .___                    .__.__      *
   *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
   *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Yggdrasil - 	                        *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file yggdrasil/peripherals/rtc.hpp                			*
-  *  @ingroup Peripherals                                           *
-  *  @author Fabian Weber, Nikolaij Saegesser						*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief API to use the Joysticks using the external 	        *
-  *  TLA2024IRUGT ADC.
-  *  			                                                    *
+  *                         - Yggdrasil -                           *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -23,7 +15,13 @@
   *                                                                 *
   * Copyright &copy; 2021, Bern University of Applied Sciences.     *
   * All rights reserved.                                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+  *  @file yggdrasil/peripherals/joystick.hpp
+  *  @ingroup yggdrasil
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief Driver to use the Joysticks using the external TLA2024IRUGT ADC
+  */
 
 #pragma once
 

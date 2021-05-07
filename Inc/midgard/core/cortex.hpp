@@ -1,4 +1,4 @@
-/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   *  _____.___.                 .___                    .__.__      *
   *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
   *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
@@ -6,13 +6,6 @@
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Midgard -                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file midgard/core/core.hpp                                    *
-  *  @ingroup midgard                                               *
-  *  @author Fabian Weber, Nikolaij Saegesser						*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief Core control functions							  		*
-  *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -22,7 +15,13 @@
   *                                                                 *
   * Copyright &copy; 2021, Bern University of Applied Sciences.     *
   * All rights reserved.                                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+  *  @file midgard/core/cortex.hpp
+  *  @ingroup midgard
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief Core control functions
+  */
 
 #pragma once
 
@@ -35,19 +34,33 @@
 
 namespace bsp::core {
 
-	ALWAYS_INLINE static void disableInterrupts() {
+	/**
+	 * @brief Disables all interrupts
+	 */
+	ALWAYS_INLINE void disableInterrupts() {
 		asm volatile ("cpsid i" : : : "memory");
 	}
 
-	ALWAYS_INLINE static void enableInterrupts() {
+	/**
+	 * @brief Enables all interrupts
+	 */
+	ALWAYS_INLINE void enableInterrupts() {
 		asm volatile ("cpsie i" : : : "memory");
 	}
 
-	ALWAYS_INLINE static void setInterruptVectorBase(addr_t address) {
+	/**
+	 * @brief Sets the base address of the interrupt vector table
+	 * @param address Base address
+	 */
+	ALWAYS_INLINE void setInterruptVectorBase(addr_t address) {
 		SCB->VTOR = address;
 	}
 
-	ALWAYS_INLINE static void delay(u32 ms) {
+	/**
+	 * @brief Delays execution by a certain number of milliseconds
+	 * @param ms Number of milliseconds to wait
+	 */
+	ALWAYS_INLINE void delay(u32 ms) {
 		u32 startTime = HAL_GetTick();
 
 		while (HAL_GetTick() < startTime + ms)

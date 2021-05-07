@@ -1,18 +1,11 @@
-/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   *  _____.___.                 .___                    .__.__      *
   *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
   *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Peripherals -                        *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file yggdrasil/peripherals/push_pull_driver.hpp   	        *
-  *  @ingroup Peripherals                                           *
-  *  @author Fabian Weber, Nikolaij Saegesser						*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief API to use the 4 push pull driver						*
-  *  			                                                    *
+  *                         - Yggdrasil -                           *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -22,7 +15,13 @@
   *                                                                 *
   * Copyright &copy; 2021, Bern University of Applied Sciences.     *
   * All rights reserved.                                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+  *  @file yggdrasil/peripherals/push_pull_driver.hpp
+  *  @ingroup yggdrasil
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief Driver to use the IX4310T push-pull drivers
+  */
 
 #pragma once
 
@@ -31,8 +30,6 @@
 #include <common/utils.hpp>
 
 namespace bsp::ygg::prph {
-
-
 
 
 	class PushPullDriver {

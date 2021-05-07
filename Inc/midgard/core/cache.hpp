@@ -1,4 +1,4 @@
-/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   *  _____.___.                 .___                    .__.__      *
   *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
   *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
@@ -6,13 +6,6 @@
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
   *                          - Midgard -                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @file midgard/core/cache.hpp                                   *
-  *  @ingroup midgard                                               *
-  *  @author Fabian Weber, Nikolaij Saegesser						*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  *  @brief Cache related constants and functions			  		*
-  *  			                                                    *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -22,7 +15,13 @@
   *                                                                 *
   * Copyright &copy; 2021, Bern University of Applied Sciences.     *
   * All rights reserved.                                            *
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+  *  @file midgard/core/cache.hpp
+  *  @ingroup midgard
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief Cache related constants and functions
+  */
 
 #pragma once
 
@@ -35,13 +34,13 @@
 
 namespace bsp::core {
 
-	constexpr static auto DCacheLineSize = 32; ///< Size of one Data Cache Line
-	constexpr static auto ICacheLineSize = 32; ///< Size of one Instruction Cache Line
+	constexpr auto DCacheLineSize = 32; ///< Size of one Data Cache Line
+	constexpr auto ICacheLineSize = 32; ///< Size of one Instruction Cache Line
 
 	/**
 	 * @brief Invalidates the entire ICache
 	 */
-	ALWAYS_INLINE static void invalidateICache() {
+	ALWAYS_INLINE void invalidateICache() {
 		DSB();
 		ISB();
 
@@ -56,7 +55,7 @@ namespace bsp::core {
 	 * @param address Start address of the region
 	 * @param size Size of the region
 	 */
-	ALWAYS_INLINE static void invalidateICache(void *address, size_t size) {
+	ALWAYS_INLINE void invalidateICache(void *address, size_t size) {
 		if (size > 0) {
 			addr_t invalidateAddress = reinterpret_cast<addr_t>(address);
 			ssize_t invalidateSize = size + (invalidateAddress & (ICacheLineSize - 1));
