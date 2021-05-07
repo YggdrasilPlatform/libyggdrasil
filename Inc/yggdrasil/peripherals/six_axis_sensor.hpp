@@ -81,35 +81,35 @@ namespace bsp::ygg::prph {
 	     * @brief Accelerometer data rate
 	     */
 		enum class AccelOutputDataRange : u8 {
-			_8000Hz   = 0x03,
-			_4000Hz   = 0x04,
-			_2000Hz   = 0x05,
-			_1000Hz   = 0x06,
-			_200Hz    = 0x07,
-			_100Hz    = 0x08,
-			_50Hz     = 0x09,
-			_25Hz     = 0x0A,
-			_12_5Hz   = 0x0B,
-			_6_25Hz   = 0x0C,
-			_3_125Hz  = 0x0D,
-			_1_5625Hz = 0x0E,
-			_500Hz    = 0x0F
+			_8000Hz   = 0x03,	///< 8000 measurements per second
+			_4000Hz   = 0x04,	///< 4000 measurements per second
+			_2000Hz   = 0x05,	///< 2000 measurements per second
+			_1000Hz   = 0x06,	///< 1000 measurements per second
+			_500Hz    = 0x0F,	///< 500 measurements per second
+			_200Hz    = 0x07,	///< 200 measurements per second
+			_100Hz    = 0x08,	///< 100 measurements per second
+			_50Hz     = 0x09,	///< 50 measurements per second
+			_25Hz     = 0x0A,	///< 25 measurements per second
+			_12_5Hz   = 0x0B,	///< 12.5 measurements per second
+			_6_25Hz   = 0x0C,	///< 6.25 measurements per second
+			_3_125Hz  = 0x0D,	///< 3.125 measurements per second
+			_1_5625Hz = 0x0E	///< 1.5625 measurements per second
 		};
 
 	    /**
 	     * @brief Gyroscope data rate
 	     */
 		enum class GyroOutputDataRange : u8 {
-			_8000Hz = 0x03,
-			_4000Hz = 0x04,
-			_2000Hz = 0x05,
-			_1000Hz = 0x06,
-			_200Hz  = 0x07,
-			_100Hz  = 0x08,
-			_50Hz   = 0x09,
-			_25Hz   = 0x0A,
-			_12_5Hz = 0x0B,
-			_500Hz  = 0x0F
+			_8000Hz   = 0x03,	///< 8000 measurements per second
+			_4000Hz   = 0x04,	///< 4000 measurements per second
+			_2000Hz   = 0x05,	///< 2000 measurements per second
+			_1000Hz   = 0x06,	///< 1000 measurements per second
+			_500Hz    = 0x0F,	///< 500 measurements per second
+			_200Hz    = 0x07,	///< 200 measurements per second
+			_100Hz    = 0x08,	///< 100 measurements per second
+			_50Hz     = 0x09,	///< 50 measurements per second
+			_25Hz     = 0x0A,	///< 25 measurements per second
+			_12_5Hz   = 0x0B,	///< 12.5 measurements per second
 		};
 
 		SixAxisSensor() = delete;

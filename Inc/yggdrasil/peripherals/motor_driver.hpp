@@ -46,8 +46,8 @@ namespace bsp::ygg::prph {
 		 * @brief Channels
 		 */
 		enum class Channel : u8 {
-			A = 0,
-			B = 1,
+			A = 0,		///< Channel A
+			B = 1,		///< Channel B
 		};
 
 		/**

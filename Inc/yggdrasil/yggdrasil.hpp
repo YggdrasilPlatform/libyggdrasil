@@ -31,7 +31,7 @@
 
 	namespace bsp::ygg {
 
-		constexpr static inline auto NoData = std::array<u8, 0>{ };
+		constexpr auto NoData = std::array<u8, 0>{ };		///< Value to signal certain drivers to not send any data
 
 	}
 

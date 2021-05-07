@@ -43,8 +43,8 @@ namespace bsp::ygg::prph {
 		 * @brief Signed position data
 		 */
 		struct Position {
-		  i16 x;
-		  i16 y;
+		  i16 x;		///< X Axis
+		  i16 y;		///< Y Axis
 		};
 
 		/**

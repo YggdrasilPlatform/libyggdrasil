@@ -164,13 +164,13 @@ namespace bsp::ygg::prph {
 		 * @brief Raw RTC data
 		 */
 		struct RawData {
-			u8 sec;
-			u8 min;
-			u8 hrs;
-			u8 weekday;
-			u8 date;
-			u8 month;
-			u8 year;
+			u8 sec;		///< Seconds in BCD
+			u8 min;		///< Minutes in BCD
+			u8 hrs;		///< Hours in BCD
+			u8 weekday; ///< Weekday
+			u8 date;	///< Day of the month in BCD
+			u8 month;	///< Month in BCD
+			u8 year;	///< Year in BCD
 		};
 
 	};

@@ -121,8 +121,8 @@ namespace bsp::ygg::prph {
 		 * @brief Sensor data
 		 */
 		struct SensorData {
-			float pressure;
-			float sensorTemperature;
+			float pressure;				///< Pressure value
+			float sensorTemperature;	///< Temperature value
 		};
 
 		constexpr static inline u8 RequestResponse = 0x80;		///< Requests a write from the sensor on the following clocks

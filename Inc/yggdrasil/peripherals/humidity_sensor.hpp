@@ -48,14 +48,15 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Heater commands for the SHT40-AD1B-R2 sensor
+		 * @warning Do not use heater for extended periods of time. The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
 		 */
 		enum class Heat : u8 {
-			_200mWFor1s	 	= 0x39,		///< activate Highest heater power & High precis. meas. (typ. 200mW @ 3.3V) for 1s
-			_200mWFor0p1s 	= 0x32,		///< activate Highest heater power & High precis. meas. (typ. 200mW @ 3.3V) for 0.1s
-			_110mWFor1s	 	= 0x2F,		///< activate Highest heater power & High precis. meas. (typ. 110mW @ 3.3V) for 1s
-			_110mWFor0p1s 	= 0x24,		///< activate Highest heater power & High precis. meas. (typ. 110mW @ 3.3V) for 0.1s
-			_20mWFor1s	 	= 0x1E,		///< activate Highest heater power & High precis. meas. (typ. 20mW @ 3.3V) for 1s
-			_20mWFor0p1s	= 0x15,		///< activate Highest heater power & High precis. meas. (typ. 20mW @ 3.3V) for 0.1s
+			_200mWFor1s	 	= 0x39,		///< 200mW @ 3.3V for 1s
+			_200mWFor0p1s 	= 0x32,		///< 200mW @ 3.3V for 0.1s
+			_110mWFor1s	 	= 0x2F,		///< 110mW @ 3.3V for 1s
+			_110mWFor0p1s 	= 0x24,		///< 110mW @ 3.3V for 0.1s
+			_20mWFor1s	 	= 0x1E,		///< 20mW @ 3.3V for 1s
+			_20mWFor0p1s	= 0x15,		///< 20mW @ 3.3V for 0.1s
 		};
 
 		enum class Precision : u8 {
@@ -113,12 +114,12 @@ namespace bsp::ygg::prph {
 		 * @brief Raw sensor data
 		 */
 		struct SensorDataRaw {
-			u8 th;
-			u8 tl;
-			u8 tcrc8;
-			u8 rhh;
-			u8 rhl;
-			u8 rhcrc8;
+			u8 th;			///< Temperature high byte
+			u8 tl;			///< Temperature low byte
+			u8 tcrc8;		///< Temperature crc8 checksum
+			u8 rhh;			///< Relative humidity high byte
+			u8 rhl;			///< Relative humidity low byte
+			u8 rhcrc8;		///< Relative humidity crc8 checksum
 		};
 
 		/**
