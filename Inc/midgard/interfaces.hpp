@@ -36,10 +36,13 @@
 #include <midgard/driver/timer.hpp>
 #include <midgard/driver/rng.hpp>
 #include <midgard/driver/hash.hpp>
+#include <midgard/driver/display.hpp>
 
 #include <midgard/core/cache.hpp>
 #include <midgard/core/cortex.hpp>
 #include <midgard/core/instructions.hpp>
+
+#include <tuple>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
@@ -67,9 +70,9 @@
 
 		DAC_HandleTypeDef hdac;
 
-		UART_HandleTypeDef huart4;
-		UART_HandleTypeDef huart8;
-		UART_HandleTypeDef huart2;
+		LTDC_HandleTypeDef  hltdc;
+		DSI_HandleTypeDef   hdsi;
+		DMA2D_HandleTypeDef hdma2d;
 
 	}
 
@@ -131,11 +134,12 @@
 		using ADConverter2 = bsp::drv::ADConverter<&hadc2, bsp::mid::drv::ADCChannel>;
 		using ADConverter3 = bsp::drv::ADConverter<&hadc3, bsp::mid::drv::ADCChannel>;
 
-		static constexpr auto& ADCA 			= ADConverter1::Channel<3>;
-		static constexpr auto& ADCB 			= ADConverter1::Channel<10>;
-		static constexpr auto& ADCC 			= ADConverter3::Channel<14>;
-		static constexpr auto& ADCD 			= ADConverter3::Channel<15>;
-		static constexpr auto& Potentiometer 	= ADConverter2::Channel<13>;
+		static constexpr auto& ADCA 				= ADConverter1::Channel<3>;
+		static constexpr auto& ADCB 				= ADConverter1::Channel<10>;
+		static constexpr auto& ADCC 				= ADConverter3::Channel<14>;
+		static constexpr auto& ADCD 				= ADConverter3::Channel<15>;
+		static constexpr auto& ADCPotentiometer 	= ADConverter2::Channel<13>;
+		static constexpr auto& ADCTemperature 		= ADConverter1::Channel<18>;
 
 		using DAConverter = bsp::drv::DAConverter<&hdac, bsp::mid::drv::DACChannel>;
 
@@ -217,6 +221,8 @@
 		using UARTA = bsp::drv::UART<0x4000'4400, bsp::mid::drv::UART>;	 	// USART 2
 		using UARTB = bsp::drv::UART<0x4000'7C00, bsp::mid::drv::UART>;		// UART 8
 		using UARTC = bsp::drv::UART<0x4000'4C00, bsp::mid::drv::UART>;		// UART 4
+
+		using Display = bsp::drv::Display<std::make_tuple(&hltdc, &hdsi, &hdma2d), bsp::mid::drv::Display>;
 
 	}
 

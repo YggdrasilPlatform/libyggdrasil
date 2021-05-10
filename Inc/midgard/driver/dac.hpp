@@ -45,6 +45,8 @@ namespace bsp::mid::drv {
 		DACChannel(const DACChannel&) = delete;
 		auto operator=(const DACChannel&) = delete;
 
+		constexpr static auto ReferenceVoltage = 3.3;
+
 		/**
 		 * @brief Set the current DAC value
 		 *
