@@ -64,7 +64,7 @@ namespace bsp::math {
 	 */
 	template<typename T>
 	constexpr T clamp(T value, T min, T max) {
-		return std::max(std::min(value, min), max);
+		return std::min(std::max(value, min), max);
 	}
 
 	/**

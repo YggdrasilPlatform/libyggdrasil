@@ -45,6 +45,8 @@ namespace bsp::mid::drv {
 		ADCChannel(const ADCChannel&) = delete;
 		auto operator=(const ADCChannel&) = delete;
 
+		constexpr static auto ReferenceVoltage = 3.3;
+
 		/**
 		 * @brief Get the current ADC value
 		 * @note This function polls the result
