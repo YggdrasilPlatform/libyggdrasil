@@ -4,13 +4,14 @@ Asgard
 Resources
 ---------
 
-* `MPU STM32MP157C Datasheet <_static/datasheets/asgard/STM32MP157C/datasheet.pdf>`_ 
-* `MPU STM32MP157C Reference manual <_static/datasheets/asgard/STM32MP157C/reference_manual.pdf>`_ 
-* `MPU Arm Cortex M4 Reference manual <_static/datasheets/asgard/STM32MP157C/coreM4_reference_manual.pdf>`_ 
-* `MPU Arm Cortex A7 Reference manual <_static/datasheets/asgard/STM32MP157C/coreA7_reference_manual.pdf>`_ 
-* `PMIC STPMIC1 Datasheet <_static/datasheets/asgard/STPMIC1/datasheet.pdf>`_ 
-* `Ethernet Phy DP83867 Datasheet <_static/datasheets/asgard/DP83867/datasheet.pdf>`_ 
-* `DDR3L SDRAM MT41K256M16TW Datasheet <_static/datasheets/asgard/DDR3LSDRAM/datasheet.pdf>`_ 
+.. seealso::
+    * `MPU STM32MP157C Datasheet <_static/datasheets/asgard/STM32MP157C/datasheet.pdf>`_ 
+    * `MPU STM32MP157C Reference manual <_static/datasheets/asgard/STM32MP157C/reference_manual.pdf>`_ 
+    * `MPU Arm Cortex M4 Reference manual <_static/datasheets/asgard/STM32MP157C/coreM4_reference_manual.pdf>`_ 
+    * `MPU Arm Cortex A7 Reference manual <_static/datasheets/asgard/STM32MP157C/coreA7_reference_manual.pdf>`_ 
+    * `PMIC STPMIC1 Datasheet <_static/datasheets/asgard/STPMIC1/datasheet.pdf>`_ 
+    * `Ethernet Phy DP83867 Datasheet <_static/datasheets/asgard/DP83867/datasheet.pdf>`_ 
+    * `DDR3L SDRAM MT41K256M16TW Datasheet <_static/datasheets/asgard/DDR3LSDRAM/datasheet.pdf>`_ 
 
 
 Peripherals

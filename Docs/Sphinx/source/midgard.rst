@@ -1,13 +1,16 @@
 Midgard
 =======
 
+
+
 Resources
 ---------
 
-* `MCU STM32F769 Datasheet <_static/datasheets/midgard/STM32F769/datasheet.pdf>`_ 
-* `MCU STM32F769 Reference manual <_static/datasheets/midgard/STM32F769/reference_manual.pdf>`_ 
-* `MCU Arm Cortex M7 Reference manual <_static/datasheets/midgard/STM32F769/core_reference_manual.pdf>`_ 
-* `Ethernet Phy DP83620 Datasheet <_static/datasheets/midgard/DP83620/datasheet.pdf>`_ 
+.. seealso::
+    * `MCU STM32F769 Datasheet <_static/datasheets/midgard/STM32F769/datasheet.pdf>`_ 
+    * `MCU STM32F769 Reference manual <_static/datasheets/midgard/STM32F769/reference_manual.pdf>`_ 
+    * `MCU Arm Cortex M7 Reference manual <_static/datasheets/midgard/STM32F769/core_reference_manual.pdf>`_ 
+    * `Ethernet Phy DP83620 Datasheet <_static/datasheets/midgard/DP83620/datasheet.pdf>`_ 
 
 Peripherals
 -----------
@@ -37,8 +40,8 @@ Low-power
 * Sleep, Stop and Standby modes
 * VBAT supply for RTC, 32×32 bit backup registers + 4 Kbytes backup SRAM
 
-Peripherals
-"""""""""""
+Interfaces
+""""""""""
 * 3×12-bit, 2.4 MSPS ADC: up to 24 channels
 * Digital filters for sigma delta modulator (DFSDM), 8 channels / 4 filters
 * 2×12-bit D/A converters
