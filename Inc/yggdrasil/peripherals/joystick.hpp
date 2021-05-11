@@ -86,8 +86,8 @@ namespace bsp::ygg::prph {
 		static JoystickData getRight() {
 			JoystickData data = { 0 };
 
-			data.pos.x = transformInputData(getADCValue(MUX::SingleEnded_AIN2));		// Get ADC Value
-			data.pos.y = transformInputData(getADCValue(MUX::SingleEnded_AIN3));		// Get ADC Value
+			data.pos.x = -transformInputData(getADCValue(MUX::SingleEnded_AIN2));		// Get ADC Value
+			data.pos.y = -transformInputData(getADCValue(MUX::SingleEnded_AIN3));		// Get ADC Value
 			data.mag = sqrt(data.pos.x * data.pos.x + data.pos.y * data.pos.y);
 			data.pressed = RightJoyStickButton;											// Read the button state
 
