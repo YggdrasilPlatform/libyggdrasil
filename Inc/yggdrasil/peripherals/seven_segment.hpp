@@ -204,7 +204,17 @@ namespace bsp::ygg::prph {
 				case 1:		seven_segment::SelectAll = 0x02; break;
 				case 2:		seven_segment::SelectAll = 0x04; break;
 				case 3:		seven_segment::SelectAll = 0x08; break;
+				default:	seven_segment::SelectAll = 0x00; break;
 			}
+		}
+
+		/**
+		 * @brief Disable all segments
+		 *
+		 */
+		static void disable(){
+			setDigit(' ');
+			enableDigit(0xFF);
 		}
 
 	};
