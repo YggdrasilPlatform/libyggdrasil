@@ -41,17 +41,22 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Initializes the LPS22HBTR pressure sensor
+		 *
+		 * @return True when the connected device matched the device id, false when not
 		 */
-		static void init() {
+		static bool init() {
+			u8 retries = 0;
 			u8 id = 0;
 			do {
 				bsp::SPIACE = true;
 				bsp::SPIA::write<u8>(enumValue(Register::WHO_AM_I) | RequestResponse);
 				id = bsp::SPIA::read<u8>();
 				bsp::SPIACE = false;
-
+				if(id == DeviceID) return true;
+				retries++;
+				if(retries > 10) return false;
 				core::delay(1);
-			} while(id != DeviceID);
+			} while(true);
 
 		}
 

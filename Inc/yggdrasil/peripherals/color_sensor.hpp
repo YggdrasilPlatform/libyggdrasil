@@ -69,9 +69,20 @@ namespace bsp::ygg::prph {
 		 */
 
 		static bool init() {
-			while (bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::ID)) != DeviceID) {		// Check device id
-				core::delay(1);
+			u8 retries = 0;
+			do{
+				if(bsp::I2CA::read<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::ID)) != DeviceID){  // Check device id
+					core::delay(1);
+					retries++;
+					if(retries > 10) return false;
+				}
+				else{
+					break;
+				}
 			}
+			while(true);
+
+
 
 			setIntergrationTime(IntegrationTime::_2_4ms);			// Set integration time
 			setGain(Gain::_1x);										// Set gain

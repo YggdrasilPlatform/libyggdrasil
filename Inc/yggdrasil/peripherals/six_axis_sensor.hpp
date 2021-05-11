@@ -121,8 +121,10 @@ namespace bsp::ygg::prph {
 		 * @param gyroScale Scaling factor of the Gyroscope
 		 * @param accelOdr Output data rate of the Accelerometer
 		 * @param gyroOdr Output data rate of the Gyroscope
+		 *
+		 * @return True when the connected device matched the device id, false when not
 		 */
-		static void init(AccelFullScaleRange accelScale = AccelFullScaleRange::_2G ,
+		static bool init(AccelFullScaleRange accelScale = AccelFullScaleRange::_2G ,
 				GyroFullScaleRange gyroScale = GyroFullScaleRange::_250DPS ,
 				AccelOutputDataRange accelOdr = AccelOutputDataRange::_1000Hz,
 				GyroOutputDataRange gyroOdr = GyroOutputDataRange::_1000Hz) {
@@ -132,10 +134,16 @@ namespace bsp::ygg::prph {
 			selectBank(0);
 
 			{
-				u8 id;
+				u8 retries = 0;
 				do {
-					id = bsp::I2CA::read<u8>(DeviceAddress, enumValue(RegisterBank0::WHO_AM_I));
-				} while (id != DeviceID);
+					if( bsp::I2CA::read<u8>(DeviceAddress, enumValue(RegisterBank0::WHO_AM_I)) == DeviceID){
+						break;
+					}
+					else {
+						retries++;
+						if(retries > 10) return false;
+					}
+				} while (true);
 			}
 
 			{
@@ -179,6 +187,8 @@ namespace bsp::ygg::prph {
 
 				selectBank(0);
 			}
+
+			return true;
 		}
 
 		/**
