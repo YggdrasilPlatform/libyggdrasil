@@ -33,6 +33,7 @@
 #include <midgard/driver/uart.hpp>
 #include <midgard/driver/i2c.hpp>
 #include <midgard/driver/spi.hpp>
+#include <midgard/driver/can.hpp>
 #include <midgard/driver/timer.hpp>
 #include <midgard/driver/rng.hpp>
 #include <midgard/driver/hash.hpp>
@@ -48,31 +49,34 @@
 
 	extern "C" {
 
-		I2C_HandleTypeDef hi2c1;
-		I2C_HandleTypeDef hi2c2;
-		I2C_HandleTypeDef hi2c3;
-		I2C_HandleTypeDef hi2c4;
+		extern I2C_HandleTypeDef hi2c1;
+		extern I2C_HandleTypeDef hi2c2;
+		extern I2C_HandleTypeDef hi2c3;
+		extern I2C_HandleTypeDef hi2c4;
 
-		SPI_HandleTypeDef hspi2;
-		SPI_HandleTypeDef hspi4;
-		SPI_HandleTypeDef hspi5;
+		extern SPI_HandleTypeDef hspi2;
+		extern SPI_HandleTypeDef hspi4;
+		extern SPI_HandleTypeDef hspi5;
 
-		TIM_HandleTypeDef htim3;
-		TIM_HandleTypeDef htim4;
-		TIM_HandleTypeDef htim5;
-		TIM_HandleTypeDef htim8;
-		TIM_HandleTypeDef htim11;
-		TIM_HandleTypeDef htim12;
+		extern TIM_HandleTypeDef htim3;
+		extern TIM_HandleTypeDef htim4;
+		extern TIM_HandleTypeDef htim5;
+		extern TIM_HandleTypeDef htim8;
+		extern TIM_HandleTypeDef htim11;
+		extern TIM_HandleTypeDef htim12;
 
-		ADC_HandleTypeDef hadc1;
-		ADC_HandleTypeDef hadc2;
-		ADC_HandleTypeDef hadc3;
+		extern ADC_HandleTypeDef hadc1;
+		extern ADC_HandleTypeDef hadc2;
+		extern ADC_HandleTypeDef hadc3;
 
-		DAC_HandleTypeDef hdac;
+		extern DAC_HandleTypeDef hdac;
 
-		LTDC_HandleTypeDef  hltdc;
-		DSI_HandleTypeDef   hdsi;
-		DMA2D_HandleTypeDef hdma2d;
+		extern LTDC_HandleTypeDef  hltdc;
+		extern DSI_HandleTypeDef   hdsi;
+		extern DMA2D_HandleTypeDef hdma2d;
+
+		extern CAN_HandleTypeDef hcan1;
+		extern CAN_HandleTypeDef hcan2;
 
 	}
 
@@ -182,6 +186,9 @@
 		using SPIA = bsp::drv::SPI<&hspi2, bsp::mid::drv::SPI>;
 		using SPIB = bsp::drv::SPI<&hspi4, bsp::mid::drv::SPI>;
 		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
+
+		using CANA = bsp::drv::CAN<&hcan1, bsp::mid::drv::CAN>;
+		using CANB = bsp::drv::CAN<&hcan2, bsp::mid::drv::CAN>;
 
 		static constexpr auto& SPIACE = GPIOPortI::Pin<0, drv::Active::Low>;
 
