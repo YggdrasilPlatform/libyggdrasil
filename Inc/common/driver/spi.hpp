@@ -63,7 +63,7 @@ namespace bsp::drv {
 	    /**
 	     * @brief SPI write function
 	     *
-	     * @tparam T type to read
+	     * @tparam T type to write
 	     * @param value Data to write
 	     */
 		template<typename T>
