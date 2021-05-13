@@ -181,4 +181,9 @@ namespace bsp {
 		}
 	}
 
+
+	template<typename T>
+	ALWAYS_INLINE void doNotOptimize(T const& value) {
+	  asm volatile("" : : "r,m"(value) : "memory");
+	}
 }
