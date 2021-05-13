@@ -33,6 +33,24 @@
 
 namespace bsp::drv {
 
+	enum class Color:u8{
+		Black 	= 0b000'000'00,
+		Navy 	= 0b000'000'10,
+		Blue	= 0b000'000'11,
+		Green	= 0b000'011'00,
+		Teal	= 0b000'010'01,
+		Lime	= 0b000'111'00,
+		Aqua	= 0b000'111'11,
+		Maroon	= 0b011'000'00,
+		Purple	= 0b011'000'11,
+		Olive	= 0b011'011'00,
+		Gray	= 0b010'010'01,
+		Red		= 0b111'000'00,
+		Fuchsia	= 0b111'000'11,
+		Yellow	= 0b111'111'00,
+		Orange	= 0b111'100'00,
+		White	= 0b111'111'11,
+	};
 	/**
 	 * @brief Base class for DAC abstraction
 	 *
@@ -75,23 +93,23 @@ namespace bsp::drv {
 			Impl::clear(colorIndex);
 		}
 
-		static void drawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex) {
+		static void drawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, auto colorIndex) {
 			x1 = math::clamp<u16>(x1, 0, Display::getWidth() - 1);
 			y1 = math::clamp<u16>(y1, 0, Display::getHeight() - 1);
 			x2 = math::clamp<u16>(x2, 0, Display::getWidth() - 1);
 			y2 = math::clamp<u16>(y2, 0, Display::getHeight() - 1);
 
 			for (u16 x = x1; x < x2; x++)
-				Impl::setPixel(x, y1, colorIndex);
+				Display::drawPixel(x, y1, colorIndex);
 			for (u16 x = x1; x < x2; x++)
-				Impl::setPixel(x, y2, colorIndex);
+				Display::drawPixel(x, y2, colorIndex);
 			for (u16 y = y1; y < y2; y++)
-				Impl::setPixel(x1, y, colorIndex);
+				Display::drawPixel(x1, y, colorIndex);
 			for (u16 y = y1; y < y2; y++)
-				Impl::setPixel(x2, y, colorIndex);
+				Display::drawPixel(x2, y, colorIndex);
 		}
 
-		static void fillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex) {
+		static void fillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, auto colorIndex) {
 			x1 = math::clamp<u16>(x1, 0, Display::getWidth() - 1);
 			y1 = math::clamp<u16>(y1, 0, Display::getHeight() - 1);
 			x2 = math::clamp<u16>(x2, 0, Display::getWidth() - 1);
@@ -99,14 +117,15 @@ namespace bsp::drv {
 
 			for (u16 x = x1; x < x2; x++)
 				for (u16 y = y1; y < y2; y++)
-					Impl::setPixel(x, y, colorIndex);
+					Display::drawPixel(x, y, colorIndex);
 		}
 
-		static void drawPixel(u16 x, u16 y, u8 colorIndex) {
-			Impl::setPixel(x, y, colorIndex);
+		static void drawPixel(u16 x, u16 y, auto colorIndex) {
+			u8 colorValue = static_cast<u8>(colorIndex);
+			Impl::setPixel(x, y, colorValue);
 		}
 
-		static void drawLine(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex) {
+		static void drawLine(u16 x1, u16 y1, u16 x2, u16 y2, auto colorIndex) {
 			x1 = math::clamp<u16>(x1, 0, Display::getWidth() - 1);
 			y1 = math::clamp<u16>(y1, 0, Display::getHeight() - 1);
 			x2 = math::clamp<u16>(x2, 0, Display::getWidth() - 1);
@@ -120,7 +139,7 @@ namespace bsp::drv {
 			i16 error = deltaX + deltaY;
 
 			while (!(x1 == x2 && y1 == y2)) {
-				Impl::setPixel(x1, y1, colorIndex);
+				Display::drawPixel(x1, y1, colorIndex);
 
 				if ((error * 2) > deltaY) {
 					error += deltaY;
@@ -133,16 +152,16 @@ namespace bsp::drv {
 			}
 		}
 
-		static void drawCircle(i16 centerX, i16 centerY, i16 radius, u8 colorIndex) {
+		static void drawCircle(i16 centerX, i16 centerY, i16 radius, auto colorIndex) {
 			auto setPixels = [](i16 centerX, i16 centerY, i16  x, i16 y, u8 colorIndex) {
-				Impl::setPixel(centerX+x, centerY+y, colorIndex);
-				Impl::setPixel(centerX-x, centerY+y, colorIndex);
-				Impl::setPixel(centerX+x, centerY-y, colorIndex);
-				Impl::setPixel(centerX-x, centerY-y, colorIndex);
-				Impl::setPixel(centerX+y, centerY+x, colorIndex);
-				Impl::setPixel(centerX-y, centerY+x, colorIndex);
-				Impl::setPixel(centerX+y, centerY-x, colorIndex);
-			    Impl::setPixel(centerX-y, centerY-x, colorIndex);
+				Display::drawPixel(centerX+x, centerY+y, colorIndex);
+				Display::drawPixel(centerX-x, centerY+y, colorIndex);
+				Display::drawPixel(centerX+x, centerY-y, colorIndex);
+				Display::drawPixel(centerX-x, centerY-y, colorIndex);
+				Display::drawPixel(centerX+y, centerY+x, colorIndex);
+				Display::drawPixel(centerX-y, centerY+x, colorIndex);
+				Display::drawPixel(centerX+y, centerY-x, colorIndex);
+			    Display::drawPixel(centerX-y, centerY-x, colorIndex);
 			};
 
 		    i16 x = 0, y = radius;
@@ -162,7 +181,7 @@ namespace bsp::drv {
 		    }
 		}
 
-		static void fillCircle(u16 centerX, u16 centerY, u16 radius, u8 colorIndex) {
+		static void fillCircle(u16 centerX, u16 centerY, u16 radius, auto colorIndex) {
 			i16 x = radius;
 			i16 y = 0;
 			i16 radiusError = 0;
@@ -179,8 +198,8 @@ namespace bsp::drv {
 					y2 = math::clamp<u16>(y2, 0, Display::getHeight() - 1);
 					x1 = math::clamp<u16>(x1, 0, Display::getWidth() -1 );
 
-					Impl::setPixel(x1, y1, colorIndex);
-					Impl::setPixel(x1, y2, colorIndex);
+					Display::drawPixel(x1, y1, colorIndex);
+					Display::drawPixel(x1, y2, colorIndex);
 
 				}
 
@@ -193,8 +212,8 @@ namespace bsp::drv {
 					y2 = math::clamp<u16>(y2, 0, Display::getHeight() - 1);
 					x1 = math::clamp<u16>(x1, 0, Display::getWidth() -1 );
 
-					Impl::setPixel(x1, y1, colorIndex);
-					Impl::setPixel(x1, y2, colorIndex);
+					Display::drawPixel(x1, y1, colorIndex);
+					Display::drawPixel(x1, y2, colorIndex);
 				}
 
 				y++;
@@ -208,7 +227,7 @@ namespace bsp::drv {
 			}
 		}
 
-		static void drawCharacter(u16 x, u16 y, char c, u8 colorIndex, Font &font) {
+		static void drawCharacter(u16 x, u16 y, char c, auto colorIndex, Font &font) {
 			x = math::clamp<u16>(x, 0, Display::getWidth() - 1);
 			y = math::clamp<u16>(y, 0, Display::getHeight() - 1);
 
@@ -245,7 +264,7 @@ namespace bsp::drv {
 			}
 		}
 
-		static void drawString(u16 x, u16 y, std::string_view string, u8 colorIndex, Font& font) {
+		static void drawString(u16 x, u16 y, std::string_view string, auto colorIndex, Font& font) {
 			for (char c : string) {
 				Display::drawCharacter(x, y, c, colorIndex, font);
 				x += font.Width;
