@@ -57,6 +57,15 @@ namespace bsp::drv {
 
 		using Impl = CanImpl<Context>;
 
+		static bool enable() {
+			return Impl::enable();
+		}
+
+		static bool disable() {
+			return Impl::disable();
+		}
+
+
 	    /**
 	     * @brief CAN read function
 	     *
@@ -99,6 +108,18 @@ namespace bsp::drv {
 			packet.data = data;
 			return Impl::write(packet);
 
+		}
+
+		static bool setStdFilter(u8 bank, u16 id, u16 mask = 0x7FF) {
+			return Impl::setStdFilter(bank, id, mask);
+		}
+
+		static bool setExtFilter(u8 bank, u32 id, u32 mask = 0x1FFF'FFFF) {
+			return Impl::setExtFilter(bank, id, mask);
+		}
+
+		static bool disableFilter(u8 bank) {
+			return Impl::disableFilter(bank);
 		}
 	};
 }
