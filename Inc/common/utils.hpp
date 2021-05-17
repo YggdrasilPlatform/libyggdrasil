@@ -104,7 +104,7 @@ namespace bsp {
 	 * @param src Value to bit-cast to type of To
 	 */
 	template <typename To, typename From>
-	constexpr To bit_cast(From& src) noexcept {
+	To bit_cast(From& src) noexcept {
 		return *reinterpret_cast<To*>(&src);
 	}
 
