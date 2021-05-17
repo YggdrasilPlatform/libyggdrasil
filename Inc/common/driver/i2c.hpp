@@ -80,12 +80,14 @@ namespace bsp::drv {
 	    /**
 	     * @brief I2C write function
 	     *
+	     * @tparam T type to write
 	     * @param address Device address
 	     * @param value Data to write
 	     */
-		static void write(u8 address, auto value) {
-			std::array<u8, sizeof(value)> data;
-			std::memcpy(data.data(), &value, sizeof(value));
+		template<typename T>
+		static void write(u8 address, T value) {
+			std::array<u8, sizeof(T)> data;
+			std::memcpy(data.data(), &value, sizeof(T));
 
 			Impl::write(address, data);
 		}
@@ -93,14 +95,16 @@ namespace bsp::drv {
 	    /**
 	     * @brief I2C write function
 	     *
+	     * @tparam T type to write
 	     * @param address Device address
 	     * @param reg Register address
 	     * @param value Data to write
 	     */
-		static void write(u8 address, u8 reg, auto value) {
-			std::array<u8, sizeof(value) + 1> data;
+		template<typename T>
+		static void write(u8 address, u8 reg, T value) {
+			std::array<u8, sizeof(T) + 1> data;
 			data[0] = reg;
-			std::memcpy(data.data() + 1, &value, sizeof(value));
+			std::memcpy(data.data() + 1, &value, sizeof(T));
 
 			Impl::write(address, data);
 		}
