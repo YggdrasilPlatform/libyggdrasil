@@ -58,6 +58,12 @@ namespace bsp::mid::drv {
 			HAL_DAC_Start(Context, Channel);
 		}
 
+		operator float() const noexcept {
+			constexpr auto Channel = getHALChannel();
+
+			return float(HAL_DAC_GetValue(Context, Channel) + Offset, 0) / MaxValue;
+		}
+
 	private:
 		DACChannel() = default;
 
