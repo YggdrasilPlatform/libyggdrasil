@@ -8,9 +8,9 @@ DAC Interface
 Simple Usage
 ------------
 
-DACs in libyggdrasil can be used as if they were write-only variables.
+DACs in libyggdrasil can be used as if they were normal variables.
 Writing a floating point value between 0 and 1 to it will cause a voltage between 0V and the reference voltage to be applied to the DAC pin.
-Reading  is not possible.
+Reading will read back the current value stored in the DAC.
 
 The following code will apply 2V to the DAC A header.
 
@@ -47,4 +47,4 @@ and then used like all other DACs.
 
 .. code-block:: cpp
 
-    MyDAC = 0.5;
+    MyDAC = 0.5 / ReferenceVoltage;

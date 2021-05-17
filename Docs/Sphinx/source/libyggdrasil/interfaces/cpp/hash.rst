@@ -9,7 +9,7 @@ Hashing Hardware
 Simple Usage
 ------------
 
-Currently, implementations for the following algorithms are available:
+Implementations for the following algorithms are available:
 
 * CRC8
     * Default Init Value: 0x00
@@ -50,5 +50,7 @@ To use different settings, they can be provided as additional arguments.
 
 .. note::
     The initial value sets what value the calculation should start on. For many hash algorithms, this can be used to add more data to a previously calculated hash.
+    
     The polynomial is used for the calculation and differs between different "flavours" of the same CRC.
-    The XorOut value specifies what bits to invert after the calculation is done. ( Result = Result ^ XorOut )
+    
+    The XorOut value specifies what bits to invert after the calculation is done. ``( Result = Result ^ XorOut )``

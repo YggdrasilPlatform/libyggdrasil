@@ -2,19 +2,19 @@ I2C Interface
 =============
 
 .. note::
-    I2C a serial interface mainly used to talk to Sensors and ICs located on the same circuit board as the microcontroller.
-    On Yggdrasil, almost all Sensors are connected to it with the ability to connect extra sensors through the Seeed or PMod connectors.
+    I2C a serial interface mainly used to talk to sensors, peripherals and ICs located on the same circuit board as the microcontroller.
+    On Yggdrasil, almost all sensors are connected to it with the ability to connect extra peripherals through the Seeed or PMod connectors.
 
 
 Simple Usage
 ------------
 
-Reading from and writing to a I2C device is as simple as calling the `read` and `write` functions of the relevant 
-I2C interface. For example, for a Sensor connected to the Grove A connector, the following code can be used to read data:
+Reading from and writing to a I2C device is as simple as calling the ``read`` and ``write`` functions of the relevant 
+I2C interface. For example, for a sensor connected to the Grove A connector, the following code can be used to read data:
 
 .. code-block:: cpp
 
-    constexpr u8 DeviceAddress = 0x69;
+    constexpr u8 DeviceAddress = 0x42;
 
     // Read data directly
     auto value = bsp::I2CA::read<u8>(DeviceAddress);
@@ -28,7 +28,7 @@ And this code to write data:
 
 .. code-block:: cpp
 
-    constexpr u8 DeviceAddress = 0x69;
+    constexpr u8 DeviceAddress = 0x42;
 
     // Write 0xFF directly
     bsp::I2CA::write<u8>(DeviceAddress, 0xFF);
@@ -40,7 +40,7 @@ And this code to write data:
 
 
 .. important::
-    All I2C interfaces are configured to 100kHz Standard mode. This is the default and works for all on-board peripherals as well as most external Sensors.
+    All I2C interfaces are configured to 100kHz Standard mode. This is the default and works for all on-board peripherals as well as most external peripherals.
     If a connected peripheral requires a different speed or faster communication is desired, the speed may be changed in the projects .ioc file. However, this can cause
     the onboard peripherals to no longer be usable.
 
@@ -68,7 +68,7 @@ Available peripherals
 +---------------+-------------------+---------+
 | RTC           | I2CA              | 0xA4    |
 +---------------+-------------------+---------+
-| Joystick      | I2CA              | 0x90    |
+| Joystick ADC  | I2CA              | 0x90    |
 +---------------+-------------------+---------+
 | Codec         | I2CD              | 0x40    |
 +---------------+-------------------+---------+

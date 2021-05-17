@@ -21,3 +21,4 @@ To start using libyggdrasil on Midgard, first include it and specify what board 
     :code:`YGGDRASIL_PERIPHERAL_DEFS` may only be used with the default Midgard template. If any existing peripherals are disabled,
     or configurations are changed, this may no longer work or even compile!
     Instead you need to define your own peripheral definitions as seen in :code:`libyggdrasil/midgard/interfaces.hpp`
+

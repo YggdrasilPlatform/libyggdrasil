@@ -9,13 +9,13 @@ UART Interface
 Simple Usage
 ------------
 
-Reading from and writing to a UART port is as simple as calling the `read` and `write` functions of the relevant 
+Reading from and writing to a UART port is as simple as calling the ``read`` and ``write`` functions of the relevant 
 UART interface.
 
 There's two versions available: Binary and ASCII transmissions.
 
 If binary data is read or written, the interface reads as many bytes as requested or writes as many bytes as given. It doesn't stop until everything is done.
-If ASCII data is read or written, the interface reads until it hits a Line Feed (\n, 0x0A) or a Carriage Return (\r, 0x0D). It sends data until it hits a string Null Terminator (\0, 0x00).
+If ASCII data is read or written, the interface reads until it hits a ``Line Feed [ \n, 0x0A ]`` or a ``Carriage Return [ \r, 0x0D ]``. It sends data until it hits a string ``Null Terminator [ \0, 0x00 ]``.
 
 .. code-block:: cpp
 
