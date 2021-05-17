@@ -30,7 +30,7 @@
 #define MIDGARD 	2
 
 // C++ headers
-#if defined(__cplusplus)
+#if defined(__cplusplus) && !defined(YGGDRASIL_USE_C_INTERFACE)
 
 	#include <common/attributes.hpp>
 	#include <common/registers.hpp>
