@@ -34,6 +34,13 @@
 
 namespace bsp::drv {
 
+	enum class SPIMode:u8 {
+		_0 = 0b00,  	///< CPOL = 0  |  CPHA = 0
+		_1 = 0b01,		///< CPOL = 0  |  CPHA = 1
+		_2 = 0b10,		///< CPOL = 1  |  CPHA = 0
+		_3 = 0b11,		///< CPOL = 1  |  CPHA = 1
+	};
+
 	/**
 	 * @brief Base class for SPI abstraction
 	 *
@@ -43,6 +50,10 @@ namespace bsp::drv {
 	template<auto Context, template<auto> typename SPIImpl>
 	struct SPI {
 		SPI() = delete;
+
+
+
+
 
 		using Impl = SPIImpl<Context>;
 
@@ -82,6 +93,10 @@ namespace bsp::drv {
 				Impl::write(data);
 			}
 
+		}
+
+		static void setMode(SPIMode mode) {
+			Impl::setMode(mode);
 		}
 	};
 }

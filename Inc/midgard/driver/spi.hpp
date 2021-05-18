@@ -63,6 +63,16 @@ namespace bsp::mid::drv {
 		ALWAYS_INLINE static void write(const std::array<u8, N> &data) {
 			HAL_SPI_Transmit(Context, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
 		}
+
+
+		/**
+		 *
+		 */
+		static void setMode(bsp::drv::SPIMode mode) {
+			while(Context->Instance->SR & SPI_SR_BSY);					// Wait until SPI is not busy
+			Context->Instance->CR1 &= ~(SPI_CR1_CPOL | SPI_CR1_CPHA);	// Clear previous mode
+			Context->Instance->CR1 |= enumValue(mode);					// Set the new mode
+		}
 	private:
 
 	};
