@@ -196,31 +196,31 @@
 		static constexpr auto& SPIACE = GPIOPortI::Pin<0, drv::Active::Low>;
 
 
-		using TimerA = bsp::drv::Timer<&htim12, bsp::mid::drv::Timer, u16>;
-		using TimerB = bsp::drv::Timer<&htim4, bsp::mid::drv::Timer, u16>;
-		using TimerC = bsp::drv::Timer<&htim5, bsp::mid::drv::Timer, u32>;
-		using TimerD = bsp::drv::Timer<&htim3, bsp::mid::drv::Timer, u16>;
-		using TimerE = bsp::drv::Timer<&htim11, bsp::mid::drv::Timer, u16>;
-		using TimerF = bsp::drv::Timer<&htim8, bsp::mid::drv::Timer, u16>;
-		using TimerG = bsp::drv::Timer<&htim2, bsp::mid::drv::Timer, u32>;		// Profile Counter
+		using TimerA = bsp::drv::Timer<&htim12, bsp::mid::drv::Timer, u16>;		///< PWM on Raspberry / PMOD
+		using TimerB = bsp::drv::Timer<&htim4, bsp::mid::drv::Timer, u16>;		///< PWM on Motor Driver / Raspberry / PMOD
+		using TimerC = bsp::drv::Timer<&htim5, bsp::mid::drv::Timer, u32>;		///< PWM on Raspberry / PMOD
+		using TimerD = bsp::drv::Timer<&htim3, bsp::mid::drv::Timer, u16>;		///< PWM on PushPull Driver
+		using TimerE = bsp::drv::Timer<&htim11, bsp::mid::drv::Timer, u16>;		///< PWM for LCD Backlight Control
+		using TimerF = bsp::drv::Timer<&htim8, bsp::mid::drv::Timer, u16>;		///< Encoder
+		using TimerG = bsp::drv::Timer<&htim2, bsp::mid::drv::Timer, u32>;		///< Profile Counter
 
-		static constexpr auto& TimerACHA = TimerA::Channel<1>;
-
-
-		static constexpr auto& TimerBCHB = TimerB::Channel<2>;
-		static constexpr auto& TimerBCHC = TimerB::Channel<3>;
+		static constexpr auto& TimerACHA = TimerA::Channel<1>;					///< PMOD A Pin 2 / Raspberry Pin 33
 
 
-		static constexpr auto& TimerCCHA = TimerC::Channel<1>;
+		static constexpr auto& TimerBCHB = TimerB::Channel<2>;					///< Raspberry Pin 28
+		static constexpr auto& TimerBCHC = TimerB::Channel<3>;					///< PMOD B Pin 2 / Raspberry Pin 32
 
-		static constexpr auto& TimerDCHA = TimerD::Channel<2>;
-		static constexpr auto& TimerDCHB = TimerD::Channel<1>;
-		static constexpr auto& TimerDCHC = TimerD::Channel<3>;
-		static constexpr auto& TimerDCHD = TimerD::Channel<4>;
 
-		static constexpr auto& Encoder = TimerF::Encoder;
+		static constexpr auto& TimerCCHA = TimerC::Channel<1>;					///< PMOD A Pin 4 / Raspberry Pin 27
 
-		static constexpr auto& ProfileCounter = TimerG::ProfileCounter;
+		static constexpr auto& TimerDCHA = TimerD::Channel<2>;					///< Push pull driver A
+		static constexpr auto& TimerDCHB = TimerD::Channel<1>;					///< Push pull driver B
+		static constexpr auto& TimerDCHC = TimerD::Channel<3>;					///< Push pull driver C
+		static constexpr auto& TimerDCHD = TimerD::Channel<4>;					///< Push pull driver D
+
+		static constexpr auto& Encoder = TimerF::Encoder;						///< Encoder
+
+		static constexpr auto& ProfileCounter = TimerG::ProfileCounter;			///< Profilecounter
 
 		static constexpr auto& TC78Mode = GPIOPortI::Pin<12>;
 		static constexpr auto& TC78Err  = GPIOPortI::Pin<13>;

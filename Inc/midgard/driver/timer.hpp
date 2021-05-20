@@ -436,6 +436,22 @@ namespace bsp::mid::drv {
 	     */
 		static constexpr auto ProfileCounter = TimerProfileCounter<Context, Size>();
 
+
+		/**
+		 * @brief Enable the counter
+		 */
+		static void enable() {
+			Context->Instance->CR1 = TIM_CR1_CEN;	// Enable the timer
+		}
+
+		/**
+		 * @brief Disable the counter
+		 */
+		static void disable() {
+			Context->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the timer
+		}
+
+
 	    /**
 	     * @brief Get the counter value
 	     *
@@ -497,7 +513,7 @@ namespace bsp::mid::drv {
 			u32 pclk1 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
 			u32 pclk2 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
 			u32 timerFrequency;							// Timerfrequency depending on the RCC configuration
-			u32 psc = 0;								// Note: prescaler is always 16 bit wide, but should not have an overflow
+			u32 psc = 0;
 			Size arr = 0;
 
 			std::array<float, 4> dutyCycle;				// Save the actual duty cycle for each channel
@@ -527,7 +543,7 @@ namespace bsp::mid::drv {
 				else timerFrequency = 2 * pclk1;								// Pwm frequency when APB1 prescaler > 1
 			}
 
-			if(f_hz > timerFrequency) return false; 	// Check if the timer frequency is not to low
+			if((f_hz * arr) > timerFrequency) return false; 	// Check if the timer frequency is not to low
 
 			psc = timerFrequency / (f_hz * arr);		// Calculate the prescaler
 

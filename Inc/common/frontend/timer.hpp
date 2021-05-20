@@ -64,6 +64,22 @@ namespace bsp::drv {
 
 	    using Impl = TimerImpl<Context, Size>;
 
+
+		/**
+		 * @brief Enable the counter
+		 */
+	    static inline void enable() {
+	    	Impl::enable();
+	    }
+
+		/**
+		 * @brief Disable the counter
+		 */
+	    static inline void disable() {
+	    	Impl::disable();
+	    }
+
+
 	    /**
 	     * @brief Get the counter value
 	     *
