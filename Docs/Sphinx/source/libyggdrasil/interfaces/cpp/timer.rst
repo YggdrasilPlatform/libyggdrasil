@@ -84,8 +84,25 @@ Using a 32 Bit timer, the profile counter is able to get you high resolution lon
     // Reset the counter value 
     ProfileCounter.reset();
 
+There is also a function to get the time to an overflow regarding the configured timer clock frequency. 
 
-There is also a function to get the time to an overflow regarding the configured timer clock frequency.
+Custom Profile Counter
+^^^^^^^^^^^^^^^^^^^^^^ 
+
+If you want to use an additional profile counter, it needs to be properly configured through the project's .ioc file. 
+Once this is done, the profile counter, in this case timer 10, can be defined like this:
+
+.. code-block:: cpp
+
+    using MyProfileTimer = bsp::drv::Timer<&htim10, bsp::mid::drv::Timer, u16>;
+    static constexpr auto& MyProfileCounter = MyProfileTimer::ProfileCounter;
+
+After this declaration, the profile counter can be used as in the examples above.
+
+.. note::
+
+    Note that 16 bit timer, possibly on high frequency bus reaches an overflow faster than expected.
+
 
 .. code-block:: cpp
 
@@ -102,8 +119,8 @@ Encoder
 -------
 
 The encoder can be used in two different modes. These modes determine how many steps per turn are counted.
-Default setting is, that the encoder module counts 96 steps each turn. This can be change to 48 if needed.
-The encoder also has a button
+Default setting is, that the encoder module counts 96 steps each turn. This can be change to 48 steps if needed.
+The encoder also has a button which can be used as a gpio.
 
 .. code-block:: cpp
 
@@ -122,6 +139,8 @@ The encoder also has a button
     // Set the count to a desired value
     bsp::Encoder.setCount(1000);
 
+    auto buttonState = bsp::EncoderButton;
+
     // Disable the encoder
     bsp::Encoder.disable();
 
@@ -130,14 +149,14 @@ Custom Encoder
 ^^^^^^^^^^^^^^
 
 If you want to use an additional encoder, it needs to be properly configured through the project's .ioc file. 
-Once this is done, the new encoder, in this case using timer 1, can be defined like this:
+Once this is done, the new encoder, in this case timer 1, can be defined like this:
 
 .. code-block:: cpp
 
     using MyEncoderTimer = bsp::drv::Timer<&htim1, bsp::mid::drv::Timer, u16>;
     static constexpr auto& MyEncoder = MyEncoderTimer::Encoder;	
 
-
+After this declaration, the added encoder can be used as in the examples above.
 
 PWM Generation
 --------------
@@ -158,9 +177,9 @@ Some timer have an integrated multichannel PWM generation module. These channels
     // Disable the pwm
     bsp::TimerDCHA.stopPwm();
 
-For the multichannel PWM modules, the frequency for each channel is the same. To adjust the frequency the best way is to change this in the .ioc file.
-There is also a function provided to change the PWM frequency, but there is no guarantee that the function is able to change the frequency. 
-In order to change the frequency of timer A channel A, the frequency of the timer A must be changed.
+For the multichannel PWM modules, the frequency for each channel is the same. To adjust the frequency the best way is to change this in the project's .ioc file.
+There is also a function provided to change the PWM frequency, but there is no guarantee that the function is able to change it. 
+In order to change the frequency of timer A channel A, the frequency of the timer A must be changed. The frequency for all channels in one timer is the same.
 
 .. code-block:: cpp
 
@@ -169,13 +188,28 @@ In order to change the frequency of timer A channel A, the frequency of the time
         // Frequency could not be changed
         // Error handling
     }
-
-    // To be sure that the frequency 
+ 
 
 In the example above, the frequency will be set 50Hz with a resolution of 1000 steps. 
 The function might not be able to adjust the frequency when:
 
 * The desired frequency is equal or higher as the timer frequency
 * The resolution is to high
+* The timer frequency is to high (only for very slow pwm signals)
 
-There are more possibilities that the adjustment can fail, for example the the 
+Custom PWm Generation
+^^^^^^^^^^^^^^
+
+To add an other timer with a pwm module, the timer as is must be declared.
+
+.. code-block:: cpp
+
+    using MyPwmTimer = bsp::drv::Timer<&htim10, bsp::mid::drv::Timer, u16>;
+
+Then the actual channel can be declared.
+
+.. code-block:: cpp
+
+    static constexpr auto& MyPwmChannel = MyPwmTimer::Channel<1>;
+
+After this declaration, the added pwm channel can be used as in the examples above.
