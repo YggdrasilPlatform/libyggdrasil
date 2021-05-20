@@ -28,44 +28,23 @@
 #include <common/types.hpp>
 #include <common/attributes.hpp>
 
-#include <midgard/core/instructions.hpp>
-
-#include <core_cm4.h>
+#include <time.h>
 
 namespace bsp::core {
-
-
-	/**
-	 * @brief Disables all interrupts
-	 */
-	ALWAYS_INLINE void disableInterrupts() {
-		asm volatile ("cpsid i" : : : "memory");
-	}
-
-	/**
-	 * @brief Enables all interrupts
-	 */
-	ALWAYS_INLINE void enableInterrupts() {
-		asm volatile ("cpsie i" : : : "memory");
-	}
-
-	/**
-	 * @brief Sets the base address of the interrupt vector table
-	 * @param address Base address
-	 */
-	ALWAYS_INLINE void setInterruptVectorBase(addr_t address) {
-		SCB->VTOR = address;
-	}
 
 	/**
 	 * @brief Delays execution by a certain number of milliseconds
 	 * @param ms Number of milliseconds to wait
 	 */
 	ALWAYS_INLINE void delay(u32 ms) {
-		u32 startTime = HAL_GetTick();
+        struct timespec ts;
+        ts.tv_sec = ms / 1'000;
+        ts.tv_nsec = (ms % 1'000) * 1'000'000;
 
-		while (HAL_GetTick() < startTime + ms)
-			NOP();
+        int res;
+        do {
+            res = nanosleep(&ts, &ts);
+        } while (res);
 	}
 
 }

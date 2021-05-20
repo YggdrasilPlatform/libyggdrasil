@@ -25,8 +25,6 @@
 
 #pragma once
 
-#include <stm32mp1xx_hal.h>
-
 #include <asgard/interfaces.hpp>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
