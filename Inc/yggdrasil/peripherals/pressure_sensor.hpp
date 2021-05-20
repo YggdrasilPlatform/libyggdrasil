@@ -47,6 +47,7 @@ namespace bsp::ygg::prph {
 		static bool init() {
 			u8 retries = 0;
 			u8 id = 0;
+			bsp::SPIA::setMode(bsp::drv::SPIMode::_3);
 			do {
 				bsp::SPIACE = true;
 				bsp::SPIA::write<u8>(enumValue(Register::WHO_AM_I) | RequestResponse);
