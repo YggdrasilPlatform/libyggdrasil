@@ -143,8 +143,8 @@ namespace bsp::mid::drv {
 		static inline auto TXE 	= typename ISR::template Field<7, 7>();		///< Transmit data register empty
 		static inline auto TC 	= typename ISR::template Field<6, 6>();		///< Transmission complete
 
-		static inline auto RECV = typename RDR::template Field<0, 8>();		///< Receive data value
-		static inline auto TRNS = typename TDR::template Field<0, 8>();		///< Transmit data value
+		static inline auto RECV = typename RDR::template Field<0, 7>();		///< Receive data value
+		static inline auto TRNS = typename TDR::template Field<0, 7>();		///< Transmit data value
 	};
 
 }
