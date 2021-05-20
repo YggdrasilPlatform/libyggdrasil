@@ -58,6 +58,7 @@
 		extern SPI_HandleTypeDef hspi4;
 		extern SPI_HandleTypeDef hspi5;
 
+		extern TIM_HandleTypeDef htim2;
 		extern TIM_HandleTypeDef htim3;
 		extern TIM_HandleTypeDef htim4;
 		extern TIM_HandleTypeDef htim5;
@@ -201,6 +202,7 @@
 		using TimerD = bsp::drv::Timer<&htim3, bsp::mid::drv::Timer, u16>;
 		using TimerE = bsp::drv::Timer<&htim11, bsp::mid::drv::Timer, u16>;
 		using TimerF = bsp::drv::Timer<&htim8, bsp::mid::drv::Timer, u16>;
+		using TimerG = bsp::drv::Timer<&htim2, bsp::mid::drv::Timer, u32>;		// Profile Counter
 
 		static constexpr auto& TimerACHA = TimerA::Channel<1>;
 
@@ -217,6 +219,8 @@
 		static constexpr auto& TimerDCHD = TimerD::Channel<4>;
 
 		static constexpr auto& Encoder = TimerF::Encoder;
+
+		static constexpr auto& ProfileCounter = TimerG::ProfileCounter;
 
 		static constexpr auto& TC78Mode = GPIOPortI::Pin<12>;
 		static constexpr auto& TC78Err  = GPIOPortI::Pin<13>;

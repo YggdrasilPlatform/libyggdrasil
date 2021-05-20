@@ -34,8 +34,9 @@
 #include <cstdlib>
 
 #include <cmsis_gcc.h>
-
-
+#include <limits>
+#include <cstdio>
+#include <stdio.h>
 
 namespace bsp::mid::drv {
 
@@ -289,6 +290,125 @@ namespace bsp::mid::drv {
 	};
 
 	/**
+	 * @brief Profile counter implementation for Midgard
+	 * @warning Do not use this on its own!
+	 *
+	 * @tparam Context Timer context
+	 * @tparam Size Timer width (16 bit or 32 bit)
+	 */
+	template<auto Context, typename Size>
+	struct TimerProfileCounter {
+
+
+		/**
+		 * @brief Start the counter
+		 */
+		ALWAYS_INLINE void start() const noexcept {
+			Context->Instance->CR1 = TIM_CR1_CEN;	// Enable the timer
+		}
+
+		/**
+		 * @brief Stop the counter
+		 */
+		ALWAYS_INLINE void stop() const noexcept {
+			Context->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the timer
+		}
+
+		/**
+		 * @brief Reset the counter to 0
+		 */
+		ALWAYS_INLINE void reset() const noexcept {
+			Context->Instance->CNT = 0;
+		}
+
+		/**
+		 * @brief Get the time to an overflow
+		 *
+		 * @return Time to an overflow in a u64
+		 */
+		u64 getTimeToOverflow() const noexcept {
+			return cntToNanoSeconds(std::numeric_limits<Size>::max());
+		}
+
+		/**
+		 * @brief Get the time to an overflow
+		 *
+		 * @return Time to an overflow formatted as a string
+		 */
+		std::string getFormattedTimeToOverflow() const noexcept {
+			return formatToString(cntToNanoSeconds(std::numeric_limits<Size>::max()));
+		}
+
+		/**
+		 * @brief Get the time passed time since the start
+		 *
+		 * @return Passed time in a u64
+		 */
+		u64 getPassedTime() const noexcept {
+			return cntToNanoSeconds(Context->Instance->CNT);
+		}
+
+		/**
+		 * @brief Get the time passed time since the start
+		 *
+		 * @return Passed time formatted as a string
+		 */
+		std::string getFormattedPassedTime() const noexcept {
+			return formatToString(cntToNanoSeconds(Context->Instance->CNT));
+		}
+
+		/**
+		 * @brief Formats the passed tim ein ns to a string
+		 *
+		 * @param passedTime Passed time in nanoseconds
+		 * @return Time passed formatted as a string
+		 */
+		std::string formatToString(u64 passedTime) const noexcept {
+			std::string buffer(0xFF, 0x00);
+			u32 s = passedTime / 1E9;
+			u16 ms = static_cast<u32>(passedTime / 1E6) % 1000;
+			u16 us =  static_cast<u32>(passedTime / 1E3) % 1000;
+			u16 ns = passedTime % 1000;
+
+			snprintf(buffer.data(), buffer.size(), "%lus %dms %dus %dns", s, ms, us, ns);
+
+			return buffer;
+		}
+
+
+	private:
+
+		/**
+		 * @brief Get the counter value transformed to a time
+		 *
+		 * @param cntValue Value of the counter
+		 * @return Time passed in nano seconds
+		 */
+		u64 cntToNanoSeconds(Size cntValue) const noexcept {
+			float pclk1 = static_cast<float>(SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
+			float pclk2 = static_cast<float>(SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
+			float timerFrequency;
+
+			if ((Context->Instance == TIM1) ||			// Get the timerFrequency before prescaler
+					(Context->Instance == TIM9) ||		// this is depending on the APBx bus different
+					(Context->Instance == TIM10) ||
+					(Context->Instance == TIM11)) {
+				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Timer frequency when APB2 prescaler = 1
+				else timerFrequency = 2 * pclk2;								// Timer frequency when APB2 prescaler > 1
+
+			}
+			else {
+				if ((RCC->CFGR & RCC_CFGR_PPRE1) == 0) timerFrequency = pclk1;	// Timer frequency when APB1 prescaler = 1
+				else timerFrequency = 2 * pclk1;								// Timer frequency when APB1 prescaler > 1
+			}
+
+			return static_cast<u64>(((cntValue) / timerFrequency) * 1E9);		// Calculate the passed time in ns
+		}
+
+
+	};
+
+	/**
 	 * @brief Timer implementation for Midgard
 	 * @warning Do not use this on its own!
 	 *
@@ -310,6 +430,11 @@ namespace bsp::mid::drv {
 	     * @brief Timer in encoder mode
 	     */
 		static constexpr auto Encoder = TimerEncoder<Context, Size>();
+
+	    /**
+	     * @brief Timer used as profile counter
+	     */
+		static constexpr auto ProfileCounter = TimerProfileCounter<Context, Size>();
 
 	    /**
 	     * @brief Get the counter value
@@ -393,13 +518,13 @@ namespace bsp::mid::drv {
 					(Context->Instance == TIM9) ||		// this is depending on the APBx bus different
 					(Context->Instance == TIM10) ||
 					(Context->Instance == TIM11)) {
-				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Return the pwm frequency when APB2 prescaler = 1
-				else timerFrequency = 2 * pclk2;								// Return the pwm frequency when APB2 prescaler > 1
+				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Pwm frequency when APB2 prescaler = 1
+				else timerFrequency = 2 * pclk2;								// Pwm frequency when APB2 prescaler > 1
 
 			}
 			else {
-				if ((RCC->CFGR & RCC_CFGR_PPRE1) == 0) timerFrequency = pclk1;	// Return the pwm frequency when APB1 prescaler = 1
-				else timerFrequency = 2 * pclk1;								// Return the pwm frequency when APB1 prescaler > 1
+				if ((RCC->CFGR & RCC_CFGR_PPRE1) == 0) timerFrequency = pclk1;	// Pwm frequency when APB1 prescaler = 1
+				else timerFrequency = 2 * pclk1;								// Pwm frequency when APB1 prescaler > 1
 			}
 
 			if(f_hz > timerFrequency) return false; 	// Check if the timer frequency is not to low

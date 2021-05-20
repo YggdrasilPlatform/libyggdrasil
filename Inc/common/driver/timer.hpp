@@ -56,6 +56,11 @@ namespace bsp::drv {
 	     */
 	    static inline auto& Encoder = TimerImpl<Context, Size>::Encoder;
 
+	    /**
+		 * @brief Timer used as profile counter
+		 */
+		static inline auto& ProfileCounter = TimerImpl<Context, Size>::ProfileCounter;
+
 
 	    using Impl = TimerImpl<Context, Size>;
 
