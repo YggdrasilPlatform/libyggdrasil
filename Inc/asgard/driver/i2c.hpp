@@ -46,6 +46,11 @@ namespace bsp::asg::drv {
 	 */
 	template<u16 InterfaceNumber>
 	struct I2C {
+
+		static void init() {
+			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(InterfaceNumber)).c_str(), O_RDWR);
+		}
+
 		/**
 		 * @brief I2C receive
 		 *
@@ -55,9 +60,6 @@ namespace bsp::asg::drv {
 		 */
 		template<size_t N>
 		static void read(u8 address, std::array<u8, N> &data) {
-			if (I2C::s_fileHandle == -1)
-				I2C::init();
-
 			::ioctl(I2C::s_fileHandle, I2C_SLAVE, address >> 1);
 			::read(I2C::s_fileHandle, data.data(), N);
 		}
@@ -71,19 +73,12 @@ namespace bsp::asg::drv {
 		 */
 		template<size_t N>
 		static void write(u8 address, const std::array<u8, N> &data) {
-			if (I2C::s_fileHandle == -1)
-				I2C::init();
-
 			::ioctl(I2C::s_fileHandle, I2C_SLAVE, address >> 1);
 			::write(I2C::s_fileHandle, data.data(), N);
 		}
 
 	private:
 		static inline int s_fileHandle = -1;
-
-		static void init() {
-			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(InterfaceNumber)).c_str(), O_RDWR);
-		}
 	};
 
 }
