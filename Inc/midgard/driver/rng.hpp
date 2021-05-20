@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/rng.hpp>
+#include <common/frontend/rng.hpp>
 
 #include <common/registers.hpp>
 #include <common/attributes.hpp>

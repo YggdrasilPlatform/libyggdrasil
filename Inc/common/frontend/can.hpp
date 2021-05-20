@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/CAN.hpp
+  *  @file common/frontend/CAN.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Frontend for the CAN abstraction

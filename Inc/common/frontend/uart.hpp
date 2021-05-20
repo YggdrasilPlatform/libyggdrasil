@@ -17,38 +17,78 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/adc.hpp
+  *  @file common/frontend/uart.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Frontend for the ADC abstraction
+  *  @brief Frontend for the UART abstraction
   */
 
 #pragma once
 
 #include <common/registers.hpp>
 #include <common/attributes.hpp>
+#include <common/utils.hpp>
+
+#include <array>
 
 namespace bsp::drv {
 
 	/**
-	 * @brief Base class for ADC abstraction
-	 * @tparam BaseAddress ADC port bank base address
-	 * @tparam ADCChannel ADCChannel implementation
+	 * @brief Base class for UART abstraction
+	 *
+	 * @tparam Context UART context
+	 * @tparam UARTImpl UART implementation
 	 */
-	template<auto Context, template<auto, u8, u32, u32> typename ADCChannelImpl>
-	struct ADConverter {
-		ADConverter() = delete;
-		ADConverter(const ADConverter&) = delete;
-		ADConverter(ADConverter &&) = delete;
+	template<auto Context, template<auto> typename UARTImpl>
+	struct UART {
+		UART() = delete;
 
-		/**
-		 * @brief Channel implementation
-		 * @tparam Index ChannelID
-		 * @tparam Offset Calibration offset
-		 * @tparam MaxValue Maximum value reported
-		 */
-		template<u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
-		static inline auto Channel = ADCChannelImpl<Context, Index, Offset, MaxValue>();
+		using Impl = UARTImpl<Context>;
+
+	    /**
+	     * @brief UART read string function
+	     *
+	     * @return Read string
+	     */
+		static std::string readString() {
+			std::string data;
+			Impl::receive(data);
+
+			return data;
+		}
+
+	    /**
+	     * @brief UART read function
+	     *
+	     * @tparam N Size to read
+	     * @return Read data
+	     */
+		template<size_t N>
+		static std::array<u8, N> read() {
+			std::array<u8, N> data;
+			Impl::receive(data);
+
+			return data;
+		}
+
+	    /**
+	     * @brief UART write string function
+	     *
+	     * @param data String to write
+	     */
+		static void write(std::string_view data) {
+			Impl::transmit(data);
+		}
+
+	    /**
+	     * @brief UART write string function
+	     *
+	     * @tparam N Size to write
+	     * @param data Data to write
+	     */
+		template<size_t N>
+		static void write(const std::array<u8, N> &data) {
+			Impl::transmit(data);
+		}
 	};
-
 }

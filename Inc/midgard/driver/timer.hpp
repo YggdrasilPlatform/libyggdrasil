@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/timer.hpp>
+#include <common/frontend/timer.hpp>
 
 #include <string>
 #include <string_view>

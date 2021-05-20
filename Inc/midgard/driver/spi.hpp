@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/spi.hpp>
+#include <common/frontend/spi.hpp>
 
 #include <string>
 #include <string_view>

@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/gpio.hpp>
+#include <common/frontend/gpio.hpp>
 
 namespace bsp::mid::drv {
 

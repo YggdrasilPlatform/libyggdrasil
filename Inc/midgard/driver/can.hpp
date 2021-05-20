@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/can.hpp>
+#include <common/frontend/can.hpp>
 
 #include <string>
 #include <string_view>

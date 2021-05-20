@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Midgard -                            *
+  *                          - Common -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,54 +17,59 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/i2c.hpp
-  *  @ingroup midgard
+  *  @file common/frontend/gpio.hpp
+  *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief I2C abstraction implementation for Midgard
+  *  @brief Frontend for the GPIO abstraction
   */
 
 #pragma once
 
-#include <common/frontend/i2c.hpp>
+#include <common/registers.hpp>
+#include <common/attributes.hpp>
 
-#include <string>
-#include <string_view>
-#include <array>
+namespace bsp::drv {
 
-namespace bsp::mid::drv {
+	enum class Active {
+		Low,
+		High
+	};
 
 	/**
-	 * @brief I2C implementation for Midgard
-	 * @warning Do not use this on its own!
+	 * @brief Base class for GPIO port abstraction
 	 *
-	 * @tparam Context I2C context
+	 * @tparam Context GPIO context
+	 * @tparam GPIOPin GPIOPin implementation
 	 */
-	template<auto Context>
-	struct I2C {
+	template<auto Context, template<addr_t> typename GPIOImpl>
+	struct GPIOPort {
+	    GPIOPort() = delete;
+	    GPIOPort(const GPIOPort&) = delete;
+	    GPIOPort(GPIOPort &&) = delete;
 
-		/**
-		 * @brief I2C receive
-		 *
-		 * @tparam N Data size
-		 * @param address Device address
-	     * @param data Array for the read data
-		 */
-		template<size_t N>
-		ALWAYS_INLINE static void read(u8 address, std::array<u8, N> &data) {
-			HAL_I2C_Master_Receive(Context, address, data.data(), data.size(), HAL_MAX_DELAY);
-		}
+	    /**
+	     * @brief GPIO Pin
+	     *
+	     * @tparam Number Pin number
+	     */
+	    template<u8 Number, Active LogicActive = Active::High>
+	    static inline auto& Pin = GPIOImpl<Context>::template Pin<Number, LogicActive>;
 
-		/**
-		 * @brief I2C write
-		 *
-		 * @tparam N Data size
-		 * @param address Device address
-	     * @param data Array to send
-		 */
-		template<size_t N>
-		ALWAYS_INLINE static void write(u8 address, const std::array<u8, N> &data) {
-			HAL_I2C_Master_Transmit(Context, address, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
-		}
+	    /**
+	     * @brief Input bitfield
+	     *
+	     * @tparam Number Pin number
+	     */
+	    template<u8 From, u8 To>
+	    static inline auto& In = GPIOImpl<Context>::template In<From, To>;
+
+	    /**
+	     * @brief Output bitfield
+	     *
+	     * @tparam Number Pin number
+	     */
+	    template<u8 From, u8 To>
+	    static inline auto& Out = GPIOImpl<Context>::template Out<From, To>;
 	};
 
 }

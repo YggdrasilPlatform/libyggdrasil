@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/timer.hpp
+  *  @file common/frontend/timer.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Frontend for the Timer abstraction

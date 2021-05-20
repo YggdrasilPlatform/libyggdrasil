@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/dac.hpp>
+#include <common/frontend/dac.hpp>
 
 #include <cmath>
 

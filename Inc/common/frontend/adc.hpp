@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/rng.hpp
+  *  @file common/frontend/adc.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Frontend for the RNG abstraction
+  *  @brief Frontend for the ADC abstraction
   */
 
 #pragma once
@@ -28,34 +28,27 @@
 #include <common/registers.hpp>
 #include <common/attributes.hpp>
 
-#include <array>
-
 namespace bsp::drv {
 
 	/**
-	 * @brief Base class for the RNG abstraction
-	 *
-	 * @tparam BaseAddress RNG Peripheral Base address
-	 * @tparam RandomImpl Random Implementation
+	 * @brief Base class for ADC abstraction
+	 * @tparam Context ADC context
+	 * @tparam ADCChannel ADCChannel implementation
 	 */
-	template<addr_t BaseAddress, template<addr_t> typename RandomImpl>
-	struct Random {
-		Random() = delete;
-		Random(const Random&) = delete;
-		auto operator=(const Random&) = delete;
-
-		using Impl = RandomImpl<BaseAddress>;
+	template<auto Context, template<auto, u8, u32, u32> typename ADCChannelImpl>
+	struct ADConverter {
+		ADConverter() = delete;
+		ADConverter(const ADConverter&) = delete;
+		ADConverter(ADConverter &&) = delete;
 
 		/**
-		 * @brief Get random values seeded by true entropy
-		 *
-		 * @tparam T Type of data to get. Must be default and trivially constructible
+		 * @brief Channel implementation
+		 * @tparam Index ChannelID
+		 * @tparam Offset Calibration offset
+		 * @tparam MaxValue Maximum value reported
 		 */
-		template<typename T>
-		static T get() {
-			return Impl::template get<T>();
-		}
-
+		template<u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
+		static inline auto Channel = ADCChannelImpl<Context, Index, Offset, MaxValue>();
 	};
 
 }

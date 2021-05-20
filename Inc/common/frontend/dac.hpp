@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/gpio.hpp
+  *  @file common/frontend/dac.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Frontend for the GPIO abstraction
+  *  @brief Frontend for the DAC abstraction
   */
 
 #pragma once
@@ -30,46 +30,27 @@
 
 namespace bsp::drv {
 
-	enum class Active {
-		Low,
-		High
-	};
-
 	/**
-	 * @brief Base class for GPIO port abstraction
+	 * @brief Base class for DAC abstraction
 	 *
-	 * @tparam BaseAddress GPIO port bank base address
-	 * @tparam GPIOPin GPIOPin implementation
+	 * @tparam Context DAC context
+	 * @tparam DACChannelImpl DACChannel implementation
 	 */
-	template<addr_t BaseAddress, template<addr_t> typename GPIOImpl>
-	struct GPIOPort {
-	    GPIOPort() = delete;
-	    GPIOPort(const GPIOPort&) = delete;
-	    GPIOPort(GPIOPort &&) = delete;
+	template<auto Context, template<auto, u8, u32, u32> typename DACChannelImpl>
+	struct DAConverter {
+		DAConverter() = delete;
+		DAConverter(const DAConverter&) = delete;
+		DAConverter(DAConverter &&) = delete;
 
-	    /**
-	     * @brief GPIO Pin
-	     *
-	     * @tparam Number Pin number
-	     */
-	    template<u8 Number, Active LogicActive = Active::High>
-	    static inline auto& Pin = GPIOImpl<BaseAddress>::template Pin<Number, LogicActive>;
-
-	    /**
-	     * @brief Input bitfield
-	     *
-	     * @tparam Number Pin number
-	     */
-	    template<u8 From, u8 To>
-	    static inline auto& In = GPIOImpl<BaseAddress>::template In<From, To>;
-
-	    /**
-	     * @brief Output bitfield
-	     *
-	     * @tparam Number Pin number
-	     */
-	    template<u8 From, u8 To>
-	    static inline auto& Out = GPIOImpl<BaseAddress>::template Out<From, To>;
+		/**
+		 * @brief Channel implementation
+		 *
+		 * @tparam Index ChannelID
+		 * @tparam Offset Calibration offset
+		 * @tparam MaxValue Maximum value used
+		 */
+		template<u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
+		static inline auto Channel = DACChannelImpl<Context, Index, Offset, MaxValue>();
 	};
 
 }

@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/i2c.hpp>
+#include <common/frontend/i2c.hpp>
 
 #include <string>
 #include <array>
@@ -39,12 +39,12 @@
 namespace bsp::asg::drv {
 
 	/**
-	 * @brief I2C implementation for Midgard
+	 * @brief I2C implementation for Asgard
 	 * @warning Do not use this on its own!
 	 *
-	 * @tparam Context I2C context
+	 * @tparam InterfaceNumber I2C interface number
 	 */
-	template<auto Context>
+	template<u16 InterfaceNumber>
 	struct I2C {
 		/**
 		 * @brief I2C receive
@@ -82,7 +82,7 @@ namespace bsp::asg::drv {
 		static inline int s_fileHandle = -1;
 
 		static void init() {
-			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(Context)).c_str(), O_RDWR);
+			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(InterfaceNumber)).c_str(), O_RDWR);
 		}
 	};
 

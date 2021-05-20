@@ -27,7 +27,7 @@
 
 #include <midgard/core/cortex.hpp>
 #include <midgard/driver/gpio.hpp>
-#include <common/driver/display.hpp>
+#include <common/frontend/display.hpp>
 
 #include <midgard/st/otm8009a.h>
 

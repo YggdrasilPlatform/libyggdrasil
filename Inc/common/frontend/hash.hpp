@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/hash.hpp
+  *  @file common/frontend/hash.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Frontend for the HASH abstraction
@@ -34,16 +34,16 @@ namespace bsp::drv {
 
 	/**
 	 * @brief Base class for the Hash abstraction
-	 * @tparam BaseAddress Hash Peripheral Base address
+	 * @tparam Context Hash context
 	 * @tparam HashImpl Hash Implementation
 	 */
-	template<addr_t BaseAddress, template<addr_t> typename HashImpl>
+	template<auto Context, template<addr_t> typename HashImpl>
 	struct Hash {
 		Hash() = delete;
 		Hash(const Hash&) = delete;
 		auto operator=(const Hash&) = delete;
 
-		using Impl = HashImpl<BaseAddress>;
+		using Impl = HashImpl<Context>;
 
 		/**
 		 * @brief Hardware accelerated CRC8 caluclation

@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/hash.hpp>
+#include <common/frontend/hash.hpp>
 
 #include <common/registers.hpp>
 #include <common/attributes.hpp>

@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/adc.hpp>
+#include <common/frontend/adc.hpp>
 
 #include <cmath>
 

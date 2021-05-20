@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include <common/driver/uart.hpp>
+#include <common/frontend/uart.hpp>
 
 #include <string>
 #include <string_view>

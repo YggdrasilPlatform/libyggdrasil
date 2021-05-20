@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/dac.hpp
+  *  @file common/frontend/rng.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Frontend for the DAC abstraction
+  *  @brief Frontend for the RNG abstraction
   */
 
 #pragma once
@@ -28,29 +28,34 @@
 #include <common/registers.hpp>
 #include <common/attributes.hpp>
 
+#include <array>
+
 namespace bsp::drv {
 
 	/**
-	 * @brief Base class for DAC abstraction
+	 * @brief Base class for the RNG abstraction
 	 *
-	 * @tparam Context DAC context
-	 * @tparam DACChannelImpl DACChannel implementation
+	 * @tparam Context RNG context
+	 * @tparam RandomImpl Random Implementation
 	 */
-	template<auto Context, template<auto, u8, u32, u32> typename DACChannelImpl>
-	struct DAConverter {
-		DAConverter() = delete;
-		DAConverter(const DAConverter&) = delete;
-		DAConverter(DAConverter &&) = delete;
+	template<auto Context, template<addr_t> typename RandomImpl>
+	struct Random {
+		Random() = delete;
+		Random(const Random&) = delete;
+		auto operator=(const Random&) = delete;
+
+		using Impl = RandomImpl<Context>;
 
 		/**
-		 * @brief Channel implementation
+		 * @brief Get random values seeded by true entropy
 		 *
-		 * @tparam Index ChannelID
-		 * @tparam Offset Calibration offset
-		 * @tparam MaxValue Maximum value used
+		 * @tparam T Type of data to get. Must be default and trivially constructible
 		 */
-		template<u8 Index, u32 Offset = 0, u32 MaxValue = (1 << 12) - 1>
-		static inline auto Channel = DACChannelImpl<Context, Index, Offset, MaxValue>();
+		template<typename T>
+		static T get() {
+			return Impl::template get<T>();
+		}
+
 	};
 
 }

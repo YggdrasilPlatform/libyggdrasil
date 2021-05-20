@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/i2c.hpp
+  *  @file common/frontend/i2c.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Frontend for the I2C abstraction

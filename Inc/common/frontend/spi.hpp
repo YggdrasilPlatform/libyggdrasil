@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/uart.hpp
+  *  @file common/frontend/spi.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Frontend for the UART abstraction
+  *  @brief Frontend for the SPI abstraction
   */
 
 #pragma once
@@ -30,65 +30,75 @@
 #include <common/utils.hpp>
 
 #include <array>
+#include <type_traits>
 
 namespace bsp::drv {
 
+	enum class SPIMode:u8 {
+		_0 = 0b00,  	///< CPOL = 0  |  CPHA = 0
+		_1 = 0b01,		///< CPOL = 0  |  CPHA = 1
+		_2 = 0b10,		///< CPOL = 1  |  CPHA = 0
+		_3 = 0b11,		///< CPOL = 1  |  CPHA = 1
+	};
+
 	/**
-	 * @brief Base class for UART abstraction
+	 * @brief Base class for SPI abstraction
 	 *
-	 * @tparam Context UART context
-	 * @tparam UARTImpl UART implementation
+	 * @tparam Context SPI context
+	 * @tparam SPIImpl SPI implementation
 	 */
-	template<addr_t BaseAddress, template<auto> typename UARTImpl>
-	struct UART {
-		UART() = delete;
+	template<auto Context, template<auto> typename SPIImpl>
+	struct SPI {
+		SPI() = delete;
 
-		using Impl = UARTImpl<BaseAddress>;
-
-	    /**
-	     * @brief UART read string function
-	     *
-	     * @return Read string
-	     */
-		static std::string readString() {
-			std::string data;
-			Impl::receive(data);
-
-			return data;
-		}
+		using Impl = SPIImpl<Context>;
 
 	    /**
-	     * @brief UART read function
+	     * @brief SPI read function
 	     *
-	     * @tparam N Size to read
+	     * @tparam T type to read
 	     * @return Read data
 	     */
-		template<size_t N>
-		static std::array<u8, N> read() {
-			std::array<u8, N> data;
-			Impl::receive(data);
+		template<typename T>
+		static T read() {
+			std::array<u8, sizeof(T)> data;
+			Impl::read(data);
 
-			return data;
+			return bit_cast<T>(data);
 		}
 
 	    /**
-	     * @brief UART write string function
+	     * @brief SPI write function
 	     *
-	     * @param data String to write
+	     * @tparam T type to write
+	     * @param value Data to write
 	     */
-		static void write(std::string_view data) {
-			Impl::transmit(data);
+		template<typename T>
+		static void write(const T &value) {
+			if constexpr (std::is_pointer<T>::value) {
+				constexpr size_t Size = sizeof(std::remove_pointer<T>);
+
+				std::array<u8, Size> data;
+				std::memcpy(data.data(), value, Size);
+				Impl::write(data);
+			} else {
+				constexpr size_t Size = sizeof(T);
+
+				std::array<u8, Size> data;
+				std::memcpy(data.data(), &value, Size);
+				Impl::write(data);
+			}
+
 		}
 
-	    /**
-	     * @brief UART write string function
-	     *
-	     * @tparam N Size to write
-	     * @param data Data to write
-	     */
-		template<size_t N>
-		static void write(const std::array<u8, N> &data) {
-			Impl::transmit(data);
+		/**
+		 * @brief Set the spi mode (CPOL and CPHA)
+		 *
+		 * @param mode SPI mode
+		 * @note This function wait until the SPI is not busy anymore and then the mode change will take place
+		 */
+		static void setMode(SPIMode mode) {
+			Impl::setMode(mode);
 		}
 	};
 }

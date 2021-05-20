@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/driver/display.hpp
+  *  @file common/frontend/display.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Frontend for the Display abstraction
@@ -52,10 +52,10 @@ namespace bsp::drv {
 		White	= 0b111'111'11,
 	};
 	/**
-	 * @brief Base class for DAC abstraction
+	 * @brief Base class for Display abstraction
 	 *
-	 * @tparam Context DAC context
-	 * @tparam DACChannelImpl DACChannel implementation
+	 * @tparam Context Display context
+	 * @tparam DisplayImpl Display implementation
 	 */
 	template<auto Context, template<auto> typename DisplayImpl>
 	struct Display {
