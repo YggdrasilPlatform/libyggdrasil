@@ -27,3 +27,4 @@ It's possible to use libyggdrasil in the following scenarios:
    
    midgard/getting_started
    interfaces/cpp/cpp
+   peripherals/cpp/cpp

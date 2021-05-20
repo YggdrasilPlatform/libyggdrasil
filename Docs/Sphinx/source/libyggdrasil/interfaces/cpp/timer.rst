@@ -197,8 +197,8 @@ The function might not be able to adjust the frequency when:
 * The resolution is to high
 * The timer frequency is to high (only for very slow pwm signals)
 
-Custom PWm Generation
-^^^^^^^^^^^^^^
+Custom PWM Generation
+^^^^^^^^^^^^^^^^^^^^^
 
 To add an other timer with a pwm module, the timer as is must be declared.
 
