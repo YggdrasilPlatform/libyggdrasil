@@ -42,6 +42,10 @@ namespace bsp::mid::drv {
 	template<auto Context>
 	struct CAN {
 
+		static bool init() {
+			return true;
+		}
+
 		static bool enable() {
 			return HAL_CAN_Start(Context) == HAL_OK;
 		}

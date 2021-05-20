@@ -436,6 +436,10 @@ namespace bsp::mid::drv {
 	     */
 		static constexpr auto ProfileCounter = TimerProfileCounter<Context, Size>();
 
+		static bool init() {
+			return true;
+		}
+
 
 		/**
 		 * @brief Enable the counter

@@ -42,6 +42,10 @@ namespace bsp::mid::drv {
 	template<auto Context>
 	struct I2C {
 
+		static bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief I2C receive
 		 *

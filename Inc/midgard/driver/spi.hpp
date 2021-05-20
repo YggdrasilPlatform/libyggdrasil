@@ -42,6 +42,10 @@ namespace bsp::mid::drv {
 	template<addr_t BaseAddress>
 	struct SPI {
 
+		static bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief SPI receive
 		 *

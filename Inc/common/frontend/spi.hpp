@@ -53,6 +53,10 @@ namespace bsp::drv {
 
 		using Impl = SPIImpl<Context>;
 
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
+
 	    /**
 	     * @brief SPI read function
 	     *

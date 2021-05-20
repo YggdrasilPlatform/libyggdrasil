@@ -123,6 +123,10 @@ namespace bsp::mid::drv {
 		GPIOPort(const GPIOPort&) = delete;
 		GPIOPort(GPIOPort&&) = delete;
 
+		bool init() {
+			return true;
+		}
+
 	    /**
 	     * @brief GPIO Pin
 	     *

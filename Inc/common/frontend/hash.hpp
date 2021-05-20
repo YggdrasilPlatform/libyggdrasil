@@ -45,6 +45,10 @@ namespace bsp::drv {
 
 		using Impl = HashImpl<Context>;
 
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
+
 		/**
 		 * @brief Hardware accelerated CRC8 caluclation
 		 * @param data Data to calculate CRC of

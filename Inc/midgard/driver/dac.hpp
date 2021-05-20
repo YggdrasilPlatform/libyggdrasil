@@ -47,6 +47,10 @@ namespace bsp::mid::drv {
 
 		constexpr static auto ReferenceVoltage = 3.3;
 
+		bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief Set the current DAC value
 		 *

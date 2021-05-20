@@ -47,6 +47,10 @@ namespace bsp::mid::drv {
 
 		constexpr static auto ReferenceVoltage = 3.3;
 
+		bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief Get the current ADC value
 		 * @note This function polls the result

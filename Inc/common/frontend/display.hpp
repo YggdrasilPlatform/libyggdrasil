@@ -65,8 +65,8 @@ namespace bsp::drv {
 
 		using Impl = DisplayImpl<Context>;
 
-		static void init() {
-			Impl::init();
+		static bool init(auto ... args) {
+			return Impl::init(args...);
 		}
 
 		static void reset() {

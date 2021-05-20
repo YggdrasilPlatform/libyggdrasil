@@ -45,6 +45,10 @@ namespace bsp::drv {
 
 		using Impl = I2CImpl<Context>;
 
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
+
 	    /**
 	     * @brief I2C read function
 	     *

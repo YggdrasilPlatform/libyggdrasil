@@ -47,13 +47,19 @@ namespace bsp::drv {
 	    GPIOPort(const GPIOPort&) = delete;
 	    GPIOPort(GPIOPort &&) = delete;
 
+		using Impl = GPIOImpl<Context>;
+
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
+
 	    /**
 	     * @brief GPIO Pin
 	     *
 	     * @tparam Number Pin number
 	     */
 	    template<u8 Number, Active LogicActive = Active::High>
-	    static inline auto& Pin = GPIOImpl<Context>::template Pin<Number, LogicActive>;
+	    static inline auto& Pin = Impl::template Pin<Number, LogicActive>;
 
 	    /**
 	     * @brief Input bitfield
@@ -61,7 +67,7 @@ namespace bsp::drv {
 	     * @tparam Number Pin number
 	     */
 	    template<u8 From, u8 To>
-	    static inline auto& In = GPIOImpl<Context>::template In<From, To>;
+	    static inline auto& In = Impl::template In<From, To>;
 
 	    /**
 	     * @brief Output bitfield
@@ -69,7 +75,7 @@ namespace bsp::drv {
 	     * @tparam Number Pin number
 	     */
 	    template<u8 From, u8 To>
-	    static inline auto& Out = GPIOImpl<Context>::template Out<From, To>;
+	    static inline auto& Out = Impl::template Out<From, To>;
 	};
 
 }

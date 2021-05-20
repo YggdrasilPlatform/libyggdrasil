@@ -47,6 +47,10 @@ namespace bsp::mid::drv {
 		Hash(const Hash&) = delete;
 		auto operator=(const Hash&) = delete;
 
+		static bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief Hardware accelerated CRC8 caluclation
 		 *

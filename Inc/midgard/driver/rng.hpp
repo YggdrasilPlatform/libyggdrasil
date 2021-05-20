@@ -47,6 +47,10 @@ namespace bsp::mid::drv {
 		Random(const Random&) = delete;
 		auto operator=(const Random&) = delete;
 
+		static bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief Get random values seeded by true entropy
 		 *

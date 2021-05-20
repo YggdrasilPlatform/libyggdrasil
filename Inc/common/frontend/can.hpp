@@ -53,9 +53,11 @@ namespace bsp::drv {
 	struct CAN {
 		CAN() = delete;
 
-
-
 		using Impl = CanImpl<Context>;
+
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
 
 		static bool enable() {
 			return Impl::enable();

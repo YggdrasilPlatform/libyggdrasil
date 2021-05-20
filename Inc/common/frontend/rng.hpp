@@ -46,6 +46,10 @@ namespace bsp::drv {
 
 		using Impl = RandomImpl<Context>;
 
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
+
 		/**
 		 * @brief Get random values seeded by true entropy
 		 *

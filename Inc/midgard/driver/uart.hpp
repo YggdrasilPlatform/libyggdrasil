@@ -42,6 +42,10 @@ namespace bsp::mid::drv {
 	template<addr_t BaseAddress>
 	struct UART {
 
+		static bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief UART receive string
 		 * @note The function receives until a '\n' or a '\r'

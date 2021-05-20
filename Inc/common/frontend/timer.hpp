@@ -43,26 +43,28 @@ namespace bsp::drv {
 		Timer(const Timer&) = delete;
 		Timer(Timer &&) = delete;
 
+		using Impl = TimerImpl<Context, Size>;
 	    /**
 	     * @brief Timer channel
 	     *
 	     * @tparam Number Channel number
 	     */
 	    template<u8 Number>
-	    static inline auto& Channel = TimerImpl<Context, Size>::template Channel<Number>;
+	    static inline auto& Channel = Impl::template Channel<Number>;
 
 	    /**
 	     * @brief Timer in encoder mode
 	     */
-	    static inline auto& Encoder = TimerImpl<Context, Size>::Encoder;
+	    static inline auto& Encoder = Impl::Encoder;
 
 	    /**
 		 * @brief Timer used as profile counter
 		 */
-		static inline auto& ProfileCounter = TimerImpl<Context, Size>::ProfileCounter;
+		static inline auto& ProfileCounter = Impl::ProfileCounter;
 
-
-	    using Impl = TimerImpl<Context, Size>;
+		static bool init(auto ... args) {
+			return Impl::init(args...);
+		}
 
 
 		/**
