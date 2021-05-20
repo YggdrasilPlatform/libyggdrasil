@@ -27,25 +27,63 @@
 
 #include <common/driver/i2c.hpp>
 
+#include <string>
 #include <array>
 
-#include <stm32mp1xx_hal.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <linux/i2c-dev.h>
 
 namespace bsp::asg::drv {
 
+	/**
+	 * @brief I2C implementation for Midgard
+	 * @warning Do not use this on its own!
+	 *
+	 * @tparam Context I2C context
+	 */
 	template<auto Context>
 	struct I2C {
-
+		/**
+		 * @brief I2C receive
+		 *
+		 * @tparam N Data size
+		 * @param address Device address
+	     * @param data Array for the read data
+		 */
 		template<size_t N>
-		ALWAYS_INLINE static void read(u8 address, std::array<u8, N> &data) {
-			HAL_I2C_Master_Receive(Context, address, data.data(), data.size(), HAL_MAX_DELAY);
+		static void read(u8 address, std::array<u8, N> &data) {
+			if (I2C::s_fileHandle == -1)
+				I2C::init();
+
+			::ioctl(I2C::s_fileHandle, I2C_SLAVE, address >> 1);
+			::read(I2C::s_fileHandle, data.data(), N);
 		}
 
+		/**
+		 * @brief I2C write
+		 *
+		 * @tparam N Data size
+		 * @param address Device address
+	     * @param data Array to send
+		 */
 		template<size_t N>
-		ALWAYS_INLINE static void write(u8 address, const std::array<u8, N> &data) {
-			HAL_I2C_Master_Transmit(Context, address, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
+		static void write(u8 address, const std::array<u8, N> &data) {
+			if (I2C::s_fileHandle == -1)
+				I2C::init();
+
+			::ioctl(I2C::s_fileHandle, I2C_SLAVE, address >> 1);
+			::write(I2C::s_fileHandle, data.data(), N);
 		}
 
+	private:
+		static inline int s_fileHandle = -1;
+
+		static void init() {
+			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(Context)).c_str(), O_RDWR);
+		}
 	};
 
 }
