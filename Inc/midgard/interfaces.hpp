@@ -54,7 +54,7 @@
 		extern I2C_HandleTypeDef hi2c3;
 		extern I2C_HandleTypeDef hi2c4;
 
-		extern SPI_HandleTypeDef hspi2;
+
 		extern SPI_HandleTypeDef hspi4;
 		extern SPI_HandleTypeDef hspi5;
 
@@ -185,9 +185,9 @@
 		/** @} */
 
 
-		using SPIA = bsp::drv::SPI<&hspi2, bsp::mid::drv::SPI>;
-		using SPIB = bsp::drv::SPI<&hspi4, bsp::mid::drv::SPI>;
-		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
+		using SPIA = bsp::drv::SPI<0x4000'3800, bsp::mid::drv::SPI>;
+		using SPIB = bsp::drv::SPI<0x4001'3400 , bsp::mid::drv::SPI>;
+		using SPIC = bsp::drv::SPI<0x4001'5000, bsp::mid::drv::SPI>;
 
 		using CANA = bsp::drv::CAN<&hcan1, bsp::mid::drv::CAN>;
 		using CANB = bsp::drv::CAN<&hcan2, bsp::mid::drv::CAN>;

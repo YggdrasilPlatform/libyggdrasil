@@ -47,15 +47,11 @@ namespace bsp::drv {
 	 * @tparam Context SPI context
 	 * @tparam SPIImpl SPI implementation
 	 */
-	template<auto Context, template<auto> typename SPIImpl>
+	template<addr_t BaseAddress, template<auto> typename SPIImpl>
 	struct SPI {
 		SPI() = delete;
 
-
-
-
-
-		using Impl = SPIImpl<Context>;
+		using Impl = SPIImpl<BaseAddress>;
 
 	    /**
 	     * @brief SPI read function
@@ -95,6 +91,12 @@ namespace bsp::drv {
 
 		}
 
+		/**
+		 * @brief Set the spi mode (CPOL and CPHA)
+		 *
+		 * @param mode SPI mode
+		 * @note This function wait until the SPI is not busy anymore and then the mode change will take place
+		 */
 		static void setMode(SPIMode mode) {
 			Impl::setMode(mode);
 		}
