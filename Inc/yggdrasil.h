@@ -25,56 +25,55 @@
 
 #pragma once
 
-#define YGGDRASIL	0
 #define ASGARD 		1
 #define MIDGARD 	2
 
 // C++ headers
 #if defined(__cplusplus) && !defined(YGGDRASIL_USE_C_INTERFACE)
 
-	#include <common/attributes.hpp>
-	#include <common/registers.hpp>
-	#include <common/types.hpp>
-	#include <common/utils.hpp>
-	#include <common/math.hpp>
+	#include <cpp/common/attributes.hpp>
+	#include <cpp/common/registers.hpp>
+	#include <cpp/common/types.hpp>
+	#include <cpp/common/utils.hpp>
+	#include <cpp/common/math.hpp>
 
 	#if BOARD == ASGARD
-		#include <asgard/asgard.hpp>
+		#include <cpp/asgard/asgard.hpp>
 	#elif BOARD == MIDGARD
-		#include <midgard/midgard.hpp>
+		#include <cpp/midgard/midgard.hpp>
 	#else
 		#error "No board selected. Choose one with '#define BOARD <BOARD_NAME>' before '#include <yggdrasil.h>'!"
 	#endif
 
-	#include <yggdrasil/yggdrasil.hpp>
+	#include <cpp/yggdrasil/yggdrasil.hpp>
 
 // C headers
 #else
 
 	#if BOARD == ASGARD
-		#include <asgard/asgard.h>
+		#include <c/asgard/asgard.h>
 	#elif BOARD == MIDGARD
-		#include <midgard/midgard.h>
+		#include <c/midgard/midgard.h>
 	#else
 		#error "No board selected. Choose one with '#define BOARD <BOARD_NAME>' before '#include <yggdrasil.h>'!"
 	#endif
 
-	#include <yggdrasil/yggdrasil.h>
+	#include <c/yggdrasil/yggdrasil.h>
 
 #endif
 
 // CMSIS DSP Library headers
 #if defined(YGGDRASIL_USE_CMSIS_DSP)
 
-	#include <common/cmsis/dsp/arm_common_tables.h>
-	#include <common/cmsis/dsp/arm_const_structs.h>
-	#include <common/cmsis/dsp/arm_helium_utils.h>
-	#include <common/cmsis/dsp/arm_math.h>
-	#include <common/cmsis/dsp/arm_mve_tables.h>
-	#include <common/cmsis/dsp/arm_sorting.h>
-	#include <common/cmsis/dsp/arm_vec_fft.h>
-	#include <common/cmsis/dsp/arm_vec_filtering.h>
-	#include <common/cmsis/dsp/arm_vec_math.h>
+	#include <c/cmsis/dsp/arm_common_tables.h>
+	#include <c/cmsis/dsp/arm_const_structs.h>
+	#include <c/cmsis/dsp/arm_helium_utils.h>
+	#include <c/cmsis/dsp/arm_math.h>
+	#include <c/cmsis/dsp/arm_mve_tables.h>
+	#include <c/cmsis/dsp/arm_sorting.h>
+	#include <c/cmsis/dsp/arm_vec_fft.h>
+	#include <c/cmsis/dsp/arm_vec_filtering.h>
+	#include <c/cmsis/dsp/arm_vec_math.h>
 
 #endif
 
