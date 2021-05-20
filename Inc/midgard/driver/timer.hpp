@@ -390,7 +390,8 @@ namespace bsp::mid::drv {
 			float timerFrequency;
 
 			if ((Context->Instance == TIM1) ||			// Get the timerFrequency before prescaler
-					(Context->Instance == TIM9) ||		// this is depending on the APBx bus different
+					(Context->Instance == TIM8) ||		// this is depending on the APBx bus different
+					(Context->Instance == TIM9) ||
 					(Context->Instance == TIM10) ||
 					(Context->Instance == TIM11)) {
 				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Timer frequency when APB2 prescaler = 1
@@ -486,6 +487,7 @@ namespace bsp::mid::drv {
 			if(psc == 0) psc = 1;
 
 			if ((Context->Instance == TIM1) ||
+					(Context->Instance == TIM8) ||
 					(Context->Instance == TIM9) ||
 					(Context->Instance == TIM10) ||
 					(Context->Instance == TIM11)) {
@@ -535,7 +537,8 @@ namespace bsp::mid::drv {
 			arr = Context->Instance->ARR;				// Get the auto reload register
 
 			if ((Context->Instance == TIM1) ||			// Get the timerFrequency before prescaler
-					(Context->Instance == TIM9) ||		// this is depending on the APBx bus different
+					(Context->Instance == TIM8) ||		// this is depending on the APBx bus different
+					(Context->Instance == TIM9) ||
 					(Context->Instance == TIM10) ||
 					(Context->Instance == TIM11)) {
 				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Pwm frequency when APB2 prescaler = 1
