@@ -39,14 +39,6 @@ namespace bsp::ygg::prph {
 		HumiditySensor() = delete;
 
 		/**
-		 * @brief Sensor data
-		 */
-		struct SensorData{
-			float humidity;				///< Humidity sensor value
-			float sensorTemperature;	///< Temperature of the sensor
-		};
-
-		/**
 		 * @brief Heater commands for the SHT40-AD1B-R2 sensor
 		 * @warning Do not use heater for extended periods of time. The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
 		 */
@@ -75,6 +67,48 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
+		 * @brief Get the temperature without using the heater
+		 * @note The measurement takes about 10ms
+		 *
+		 * @param precision Precision for the conversion
+		 * @return Temperature sensor temperature
+		 */
+		static float getTemperature(Precision precision = Precision::High){
+			return getSensorData(precision).sensorTemperature;
+		}
+
+		/**
+		 * @brief Get the temperature without using the heater
+		 * @note The measurement takes about 10ms
+		 *
+		 * @param precision Precision for the conversion
+		 * @return Temperature sensor temperature
+		 */
+		static float getHumidity(Precision precision = Precision::High){
+			return getSensorData(precision).humidity;
+		}
+
+		/**
+		 * @brief Enable the heater module on the sensor
+		 * @warning The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
+		 *
+		 * @param level Power and duration command
+		 */
+		static void enableHeater(Heat level) {
+			bsp::I2CA::write(DeviceAddress, enumValue(level));
+		}
+
+	private:
+
+		/**
+		 * @brief Sensor data
+		 */
+		struct SensorData{
+			float humidity;				///< Humidity sensor value
+			float sensorTemperature;	///< Temperature of the sensor
+		};
+
+		/**
 		 * @brief Get a measurement without using the heater
 		 * @note The measurement takes about 10ms
 		 *
@@ -82,8 +116,8 @@ namespace bsp::ygg::prph {
 		 * @return SensorData struct containing the humidity value in % and the sensor temperature
 		 */
 		static SensorData getSensorData(Precision precision = Precision::High) {
-			bsp::I2CA::write(DeviceAddress, enumValue(precision));	// Try to read directly without the delay
-			core::delay(10);
+			bsp::I2CA::write(DeviceAddress, enumValue(precision));
+			core::delay(10);										// Delay until the measurement is done, there is no other option
 
 			auto rawData = bsp::I2CA::read<SensorDataRaw>(DeviceAddress);
 
@@ -97,18 +131,6 @@ namespace bsp::ygg::prph {
 			return data;
 
 		}
-
-		/**
-		 * @brief Enable the heater module on the sensor
-		 * @warning The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
-		 *
-		 * @param level Power and duration command
-		 */
-		static inline void enableHeater(Heat level) {
-			bsp::I2CA::write(DeviceAddress, enumValue(level));
-		}
-
-	private:
 
 		/**
 		 * @brief Raw sensor data
