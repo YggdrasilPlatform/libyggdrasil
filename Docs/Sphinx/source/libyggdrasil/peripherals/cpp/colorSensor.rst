@@ -24,13 +24,13 @@ The sensor will be initialized through the BSP. These default values will be set
 * Gain to 1x
 
 
-The initialization starts the first conversion with the given parameters. If those are suitable, the sensor data can be read as shown in the example. 
+The initialization starts the first conversion with the given parameters. If those are suitable, the sensor data can be used as shown in the example. 
 
 .. code-block:: cpp
     
     // Read the 16 bit converted color values and start a new conversion
     auto color = bsp::ygg::prph::ColorSensor::getColor16(true);
-
+	printf("Color RGBA16: %d, %d, %d, %d \n", color.r, color.g, color.b, color.a);
 
 When the Integration time and the gain must be changed, a new conversion must be started.
 

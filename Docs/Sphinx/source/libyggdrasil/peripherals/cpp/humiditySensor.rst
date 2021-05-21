@@ -22,3 +22,19 @@ thus enabling sensor operation in demanding environments.
 
 Usage
 -----
+
+The sensor will be initialized through the BSP. These default settings are high precision measurements.
+A measurement takes about 10ms. 
+
+.. code-block:: cpp
+
+    // Read the humidity
+    auto humidity = bsp::ygg::prph::HumiditySensor::getHumidity();
+    printf("Humidity: %f%RH \n", humidity);
+    
+
+.. code-block:: cpp
+
+    // Read the temperature of the sensor
+    auto temp = bsp::ygg::prph::HumiditySensor::getTemperature();
+    printf("Temperature: %fC \n", temp);
