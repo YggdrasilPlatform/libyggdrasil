@@ -227,7 +227,7 @@ namespace bsp::ygg::prph {
 		 * @return Temperature value
 		 */
 		static float getTemperature() {
-			auto data = bsp::I2CA::read<ByteSwapped<u16>>(DeviceAddress, enumValue(RegisterBank0::TEMP_DATA1));
+			auto data = bsp::I2CA::read<ByteSwapped<i16>>(DeviceAddress, enumValue(RegisterBank0::TEMP_DATA1));
 
 			return (float(data) / 132.48F) + 25;
 		}
