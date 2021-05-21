@@ -16,5 +16,11 @@ The interface allows reading of an arbitrary amount of random data into any defa
     auto random512Bytes = bsp::RNG::get<std::array<u8, 512>>();
 
 .. important::
-    Important to note is, the hardware generates 4 random bytes at once.
+    The hardware generates 4 random bytes at once every 42 cycles of the RNG clock.
     If more than 4 bytes are requested, the core will wait until enough data has been generated.
+
+.. note::
+    The RNG hardware's noise source consists of three free-running ring oscillators XORed together.
+    If more than 64 consecutive ``0`` or ``1`` or more than 32 consecutive ``01`` or ``10`` are generated,
+    the RNG hardware will set a error flag and halt to prevent non-random output being read. If this happens,
+    the RNG hardware needs to be restarted in order to work again.
