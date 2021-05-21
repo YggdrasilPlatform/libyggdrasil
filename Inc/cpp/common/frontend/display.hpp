@@ -33,7 +33,7 @@
 
 namespace bsp::drv {
 
-	enum class Color:u8{
+	enum class Color : u8 {
 		Black 	= 0b000'000'00,
 		Navy 	= 0b000'000'10,
 		Blue	= 0b000'000'11,
@@ -51,6 +51,9 @@ namespace bsp::drv {
 		Orange	= 0b111'100'00,
 		White	= 0b111'111'11,
 	};
+
+	using Palette = std::array<u32, 256>;
+
 	/**
 	 * @brief Base class for Display abstraction
 	 *
@@ -79,6 +82,18 @@ namespace bsp::drv {
 
 		static auto getHeight() {
 			return Impl::getHeight();
+		}
+
+		static Palette getDefaultPalette() {
+			return Impl::getDefaultPalette();
+		}
+
+		static void* getFramebufferAddress() {
+			return Impl::getFramebufferAddress();
+		}
+
+		static void setPalette(const Palette &palette) {
+			Impl::setPalette(palette);
 		}
 
 		static void turnOn() {

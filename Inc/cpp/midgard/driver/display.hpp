@@ -44,8 +44,6 @@ namespace bsp::mid::drv {
 			Landscape	= 0x01
 		};
 
-		constexpr static auto FramebufferAddress = 0x2002'0000;
-
 
 		static bool init(Orientation orientation = Orientation::Portrait) noexcept {
 			auto [hltdc, hdsi, hdma2d] = Context;
@@ -253,6 +251,10 @@ namespace bsp::mid::drv {
 			};
 		}
 
+		ALWAYS_INLINE static void* getFramebufferAddress() {
+			return reinterpret_cast<void*>(FramebufferAddress);
+		}
+
 		ALWAYS_INLINE static void setPixel(u16 x, u16 y, u8 paletteIndex) {
 			reinterpret_cast<u8*>(FramebufferAddress)[y * Display::s_xSize + x] = paletteIndex;
 		}
@@ -277,6 +279,8 @@ namespace bsp::mid::drv {
 
 	private:
 		Display() = default;
+
+		constexpr static u32 FramebufferAddress = 0x2002'0000;
 
 		static inline u16 s_xSize, s_ySize;
 		static inline DSI_VidCfgTypeDef s_hdsiVideo;
