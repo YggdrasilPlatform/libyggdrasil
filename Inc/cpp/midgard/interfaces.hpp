@@ -206,9 +206,10 @@
 
 		static constexpr auto& TimerACHA = TimerA::Channel<1>;					///< PMOD A Pin 2 / Raspberry Pin 33
 
-
-		static constexpr auto& TimerBCHB = TimerB::Channel<2>;					///< Raspberry Pin 28
-		static constexpr auto& TimerBCHC = TimerB::Channel<3>;					///< PMOD B Pin 2 / Raspberry Pin 32
+		static constexpr auto& TimerBCHA = TimerB::Channel<1>;					///< Motor Driver / Raspberry Pin 26
+		static constexpr auto& TimerBCHB = TimerB::Channel<2>;					///< Motor Driver / Raspberry Pin 28
+		static constexpr auto& TimerBCHC = TimerB::Channel<3>;					///< Motor Driver / PMOD B Pin 2 / Raspberry Pin 32
+		static constexpr auto& TimerBCHD = TimerB::Channel<4>;					///< Motor Driver / Raspberry Pin 36
 
 
 		static constexpr auto& TimerCCHA = TimerC::Channel<1>;					///< PMOD A Pin 4 / Raspberry Pin 27
@@ -223,10 +224,9 @@
 		static constexpr auto& ProfileCounter = TimerG::ProfileCounter;			///< Profilecounter
 
 		static constexpr auto& TC78Mode = GPIOPortI::Pin<12>;
-		static constexpr auto& TC78Err  = GPIOPortI::Pin<13>;
-		static constexpr auto& TC78Stby = GPIOPortI::Pin<14>;
-		static constexpr auto& PhaseA = GPIOPortD::Pin<15>;
-		static constexpr auto& PhaseB = GPIOPortD::Pin<12>;
+		static constexpr auto& TC78Err  = GPIOPortI::Pin<13, drv::Active::Low>;
+		static constexpr auto& TC78Stby = GPIOPortI::Pin<14, drv::Active::Low>;
+
 
 		using Random = bsp::drv::Random<0x5006'0800, bsp::mid::drv::Random>;
 		using Hash	 = bsp::drv::Hash<0x4002'3000, bsp::mid::drv::Hash>;

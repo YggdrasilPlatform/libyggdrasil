@@ -57,10 +57,12 @@ namespace bsp::ygg::prph {
 		static void init() {
 			TC78Mode = true;	// Set the mode as dual DC motor driver
 			core::delay(1);
-			TC78Stby = true;	// Enables the motor driver
+			TC78Stby = false;	// Enables the motor driver
 
+			bsp::TimerBCHA.startPwm();
 			bsp::TimerBCHB.startPwm();
 			bsp::TimerBCHC.startPwm();
+			bsp::TimerBCHD.startPwm();
 		}
 
 		/**
@@ -70,16 +72,20 @@ namespace bsp::ygg::prph {
 		 */
 		static void standby(bool stby) {
 			if(stby) {
-				TC78Stby = false;				// Set the driver to standby
+				TC78Stby = true;				// Set the driver to standby
 
+				bsp::TimerBCHA.stopPwm();
 				bsp::TimerBCHB.stopPwm();
 				bsp::TimerBCHC.stopPwm();
+				bsp::TimerBCHD.stopPwm();
 			}
 			else {
-				TC78Stby = true;				// Enables the motor driver
+				TC78Stby = false;				// Wake the motor driver
 
+				bsp::TimerBCHA.startPwm();
 				bsp::TimerBCHB.startPwm();
 				bsp::TimerBCHC.startPwm();
+				bsp::TimerBCHD.startPwm();
 			}
 		}
 
@@ -96,12 +102,12 @@ namespace bsp::ygg::prph {
 
 			switch(ch){
 			case Channel::A:
-				PhaseA = rotation;				// Set the rotation fpr channel A
-				TimerBCHB.setDutyCycle(speed);	// Set the pwm for channel A
+				TimerBCHD.setPolarityHigh(rotation);	// Set the rotation fpr channel A
+				TimerBCHB.setDutyCycle(speed);			// Set the pwm for channel A
 				break;
 			case Channel::B:
-				PhaseB = rotation;				// Set the rotation fpr channel B
-				TimerBCHC.setDutyCycle(speed);	// Set the pwm for channel B
+				TimerBCHA.setPolarityHigh(rotation);	// Set the rotation fpr channel A
+				TimerBCHC.setDutyCycle(speed);			// Set the pwm for channel B
 				break;
 
 			}
@@ -112,7 +118,7 @@ namespace bsp::ygg::prph {
 		 *
 		 * @return false when no error occurring, true when in thermal shutdown (TSD) or over current (ISD)
 		 */
-		static bool hasError() {
+		static bool getError() {
 			return TC78Err;
 		}
 
