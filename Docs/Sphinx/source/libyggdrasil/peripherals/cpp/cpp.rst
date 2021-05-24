@@ -21,8 +21,10 @@ In a .cpp file, libyggdrasil will automatically be put into C++ mode. It's encou
     pressureSensor
     sixAxisSensor
     rtc
-    joystick
     sevenSegment
     motorDriver
     rgbMatrix
     pushPullDriver
+    joystick
+    encoder
+    potentiometer
