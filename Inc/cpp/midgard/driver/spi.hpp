@@ -54,29 +54,40 @@ namespace bsp::mid::drv {
 		 */
 		template<size_t N>
 		static void read(std::array<u8, N> &data) {
-			FRXTH = true; 	// RXNE event is generated if the FIFO level is greater than or equal to 1/4 (8-bit)
-			SPE = true;		// Enable SPI
+			u16 bytesToRead = data.size();
 
+			FRXTH = (bytesToRead <= 1);
 
-			u16 bytesRead = 0;
-			do {
-				Data8 = 0;
+			if (!SPE)
+				SPE = true;
+
+			while (bytesToRead > 0) {
+				u16 currOffset = data.size() - bytesToRead;
 				while (!TXE);
+
+				if (bytesToRead > 1)
+					Data16 = 0x0000;
+				else
+					Data8 = 0x00;
+
 				while (!RXNE);
-				if (data.size() - bytesRead > 1) {
-					data[bytesRead] = (Data16 >> 8);
-					data[bytesRead + 1] = (Data16 & 0xFF);
-					bytesRead += 2;
+
+				if (bytesToRead > 1) {
+					u16 readData = Data16;
+					data[currOffset] = readData >> 8;
+					data[currOffset + 1] = readData & 0xFF;
+
+					bytesToRead -= 2;
+
+					if (bytesToRead <= 1)
+						FRXTH = true;
 				}
 				else {
-					data[bytesRead] = (Data16 >> 8);
-					bytesRead++;
+					data[currOffset] = Data8;
+
+					bytesToRead -= 1;
 				}
-
-
-			} while (bytesRead < data.size());
-
-			//HAL_SPI_Receive(&hspi2, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
+			}
 		}
 
 		/**
@@ -87,19 +98,23 @@ namespace bsp::mid::drv {
 		 */
 		template<size_t N>
 		static void write(const std::array<u8, N> &data) {
-			SPE = true;		// Enable SPI
+			if (!SPE)
+				SPE = true;
 
-			u16 bytesToSend = 0;
+			u16 bytesToSend = data.size();
 
-			do {
+			while (bytesToSend > 0) {
+				u16 currOffset = data.size() - bytesToSend;
 				while (!TXE);
-				Data8 = data[bytesToSend];
-				bytesToSend++;
-			} while (bytesToSend < data.size());
 
-			//Context->Instance->CR1 &= ~SPI_CR1_SPE;
-
-			//HAL_SPI_Transmit(Context, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
+				if (bytesToSend > 1) {
+					Data16 = data[currOffset] << 8 | data[currOffset + 1];
+					bytesToSend -= 2;
+				} else {
+					Data8 = data[currOffset];
+					bytesToSend -= 1;
+				}
+			}
 		}
 
 
@@ -138,7 +153,6 @@ namespace bsp::mid::drv {
 		static inline auto SPE	= typename CR1::template Field<6, 6>();		///< SPI enable
 
 		static inline auto FRXTH = typename CR2::template Field<12, 12>();	///< FIFO reception threshold
-
 
 		static inline auto RXNE	= typename SR::template Field<0, 0>();		///< Receive buffer not empty
 		static inline auto TXE 	= typename SR::template Field<1, 1>();		///< Transmit buffer empty
