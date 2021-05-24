@@ -46,9 +46,17 @@ When the time should be printed, the example below shows an easy way.
 .. code-block:: cpp
 
     std::string buffer(0xFF, 0x00);
-    time_t rtcTime = RealTimeClock::getTime();
     tm * time;
-    time = gmtime(&rtcTime);
-    strftime(buffer.data(), buffer.size(), "%H:%M:%S", time);
-    printf(")
 
+    // Read the time as a time_t
+    time_t rtcTime = bsp::ygg::prph::RealTimeClock::getTime();
+
+    // Transform to a tm struct
+    time = gmtime(&rtcTime);
+    // Get the time formatted
+    strftime(buffer.data(), buffer.size(), "%c", time);
+    printf("Time: %s \n", buffer.data());
+
+.. seealso::
+    * `strftime <https://www.cplusplus.com/reference/ctime/strftime/>`_ 
+    * `tm struct <https://www.cplusplus.com/reference/ctime/tm//>`_ 

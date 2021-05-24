@@ -42,7 +42,7 @@ If those are suitable, the sensor data can be used as shown in the following exa
 .. code-block:: cpp
 
     auto temp = bsp::ygg::prph::SixAxisSensor::getTemperature();
-    printf("Temperature: %f \n", temp);
+    printf("Temperature: %fC \n", temp);
 
 There is also a function providing the absolute board roll an pitch. 
 This is calculated using the accelerometer's data.
@@ -51,4 +51,4 @@ This is calculated using the accelerometer's data.
 
     // Get the board orientation
     auto [roll, pitch] = bsp::ygg::prph::SixAxisSensor::getBoardOrientation();
-    printf("Roll: %f, Pitch  %fC \n", roll, pitch);
+    printf("Roll: %f, Pitch  %f \n", roll, pitch);
