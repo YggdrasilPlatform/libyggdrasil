@@ -45,22 +45,7 @@ namespace bsp::ygg::prph {
 		 * @return Time saved in the RTC
 		 */
 		static time_t getTime() {
-			RawData rawData = { 0 };
-			tm time;
-			rawData = bsp::I2CA::read<RawData>(DeviceAddress, enumValue(RegisterID::Seconds));
-
-			time.tm_sec 	= math::bcdToBinary(rawData.sec);
-			time.tm_min 	= math::bcdToBinary(rawData.min);
-			time.tm_hour 	= math::bcdToBinary(rawData.hrs);
-		    time.tm_mday 	= math::bcdToBinary(rawData.weekday);
-		    time.tm_mon 	= math::bcdToBinary(rawData.month);
-		    time.tm_year 	= math::bcdToBinary(rawData.year) + 100; // Add 100 to set the years since 1900
-		    time.tm_wday 	= math::bcdToBinary(rawData.weekday);
-		    time.tm_yday 	= 0;
-		    time.tm_isdst 	= false;
-
-		    return mktime(&time);
-
+			return bsp::I2CA::read<ByteSwapped<time_t>>(DeviceAddress, enumValue(RegisterID::UnixTime0));
 		}
 
 		/**
@@ -69,22 +54,7 @@ namespace bsp::ygg::prph {
 		 * @param time Time to save in the RTC
 		 */
 		static void setTime(time_t time) {
-			RawData rawData = { 0 };
-			tm *utc = gmtime(&time);
-
-			rawData.sec 		= math::binaryToBcd(utc->tm_sec);
-			rawData.min 		= math::binaryToBcd(utc->tm_min);
-			rawData.hrs 		= math::binaryToBcd(utc->tm_hour);
-			rawData.weekday 	= math::binaryToBcd(utc->tm_mday);
-			rawData.month 		= math::binaryToBcd(utc->tm_mon);
-			rawData.weekday 	= math::binaryToBcd(utc->tm_wday);
-
-			utc->tm_year %= 100;	// get the year in range 0 to 99
-
-			rawData.year = math::binaryToBcd(utc->tm_year) + 100;
-
-		    bsp::I2CA::write<RawData>(DeviceAddress, enumValue(RegisterID::Seconds), rawData);
-
+			bsp::I2CA::write<ByteSwapped<time_t>>(DeviceAddress, enumValue(RegisterID::UnixTime0), time);
 		}
 
 	private:

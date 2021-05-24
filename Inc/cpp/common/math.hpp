@@ -197,7 +197,7 @@ namespace bsp::math {
      * @return Binary representation
      */
 	ALWAYS_INLINE constexpr u8 bcdToBinary(u8 bcd) {
-	    return (bcd & 0xF) + 10 * ((bcd >> 4) & 0xF);
+	    return (bcd & 0x0F) + 10 * ((bcd >> 4) & 0x0F);
 	}
 
     /**
@@ -207,7 +207,7 @@ namespace bsp::math {
      * @return BCD representation
      */
 	ALWAYS_INLINE constexpr u8 binaryToBcd(u8 bin) {
-	    return (bin < 100) ? ((bin / 10) << 4) + (bin % 10) : 0;
+	    return (bin % 10) | ((bin / 10) << 4);
 	}
 
 }
