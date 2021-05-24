@@ -23,8 +23,6 @@ The floating point representation changed the decimal point according to the val
 Usage
 -----
 
-
-
 .. note:: 
     When the function is called in a while loop with no delay, the multiplexing will have some errors due to switching delays. 
 
