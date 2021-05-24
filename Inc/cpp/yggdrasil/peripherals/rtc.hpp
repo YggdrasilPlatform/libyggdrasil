@@ -45,7 +45,7 @@ namespace bsp::ygg::prph {
 		 * @return Time saved in the RTC
 		 */
 		static time_t getTime() {
-			return bsp::I2CA::read<ByteSwapped<time_t>>(DeviceAddress, enumValue(RegisterID::UnixTime0));
+			return bsp::I2CA::read<time_t>(DeviceAddress, enumValue(RegisterID::UnixTime0));
 		}
 
 		/**
@@ -54,7 +54,7 @@ namespace bsp::ygg::prph {
 		 * @param time Time to save in the RTC
 		 */
 		static void setTime(time_t time) {
-			bsp::I2CA::write<ByteSwapped<time_t>>(DeviceAddress, enumValue(RegisterID::UnixTime0), time);
+			bsp::I2CA::write<time_t>(DeviceAddress, enumValue(RegisterID::UnixTime0), time);
 		}
 
 	private:
