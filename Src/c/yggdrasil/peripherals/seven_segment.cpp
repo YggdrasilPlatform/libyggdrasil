@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/color_sensor.cpp
+  *  @file yggdrasil/peripherals/pressure_sensor.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Driver to use the TCS3472 color sensor
+  *  @brief Driver to use the RV-3028-C7 RTC
   */
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
@@ -29,57 +29,38 @@
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-
+	#include <c/yggdrasil/peripherals/seven_segment.h>
 	#include <yggdrasil.h>
 
 
-	using ColorSensor = bsp::ygg::prph::ColorSensor;
+	using SevenSegment = bsp::ygg::prph::SevenSegment;
 
-	C_LINKAGE bool yggdrasil_ColorSensor_Init(void) {
-		return ColorSensor::init();
+	C_LINKAGE void yggdrasil_SevenSegment_SetUnsigned(u16 value) {
+		SevenSegment::setUnsigned(value);
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_SetIntegrationTime(ColorSensorIntegrationTime integrationTime) {
-		ColorSensor::setIntergrationTime(static_cast<ColorSensor::IntegrationTime>(integrationTime));
+	C_LINKAGE void yggdrasil_SevenSegment_SetSigned(i16 value) {
+		SevenSegment::setSigned(value);
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_SetGain(ColorSensorGain gain) {
-		return ColorSensor::setGain(static_cast<ColorSensor::Gain>(gain));
+	C_LINKAGE void yggdrasil_SevenSegment_SetHexadecimal(u16 value) {
+		SevenSegment::setHexadecimal(value);
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_Enable(void) {
-		ColorSensor::enable();
+	C_LINKAGE void yggdrasil_SevenSegment_SetFloatingPoint(float value) {
+		SevenSegment::setFloatingPoint(value);
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_Disable(void) {
-		ColorSensor::disable();
+	C_LINKAGE void yggdrasil_SevenSegment_SetDigit(char value) {
+		SevenSegment::setDigit(value);
 	}
 
-	C_LINKAGE u16 yggdrasil_ColorSensor_StartConversion(void) {
-		return ColorSensor::startConversion();
+	C_LINKAGE void yggdrasil_SevenSegment_EnableDigit(u8 number) {
+		SevenSegment::enableDigit(number);
 	}
 
-	C_LINKAGE bool yggdrasil_ColorSensor_IsDone(void) {
-		return ColorSensor::isDone();
-	}
-
-	C_LINKAGE RGBA8 yggdrasil_ColorSensor_GetColor8(bool restartConversion) {
-		RGBA8 ret;
-		auto color = ColorSensor::getColor8(restartConversion);
-
-		ret.rgba = color.rgba;
-
-		return ret;
-	}
-
-	C_LINKAGE RGBA16 yggdrasil_ColorSensor_GetColor16(bool restartConversion) {
-		RGBA16 ret;
-		auto color = ColorSensor::getColor16(restartConversion);
-
-		ret.rgba = color.rgba;
-
-		return ret;
+	C_LINKAGE void yggdrasil_SevenSegment_Disable() {
+		SevenSegment::disable();
 	}
 
 #endif

@@ -53,7 +53,7 @@ namespace bsp::ygg::prph {
 		 * @brief Servo driver
 		 * @note When using the Servo port, the PWM frequency for all channels will be set to 50Hz
 		 */
-		class Servo{
+		class Servo {
 		public:
 			Servo() = delete;
 
@@ -209,11 +209,11 @@ namespace bsp::ygg::prph {
 			 *
 			 * @return True when the adjustment was possible, false when the parameter did not match
 			 */
-			static bool setFrequency(u32 f_hz, u16 resolution = 0) {
+			static bool setFrequency(u32 frequency, u16 resolution = 0) {
 				for(auto mode : s_mode){
 					if(mode == Mode::Servo) return false;
 				}
-				return bsp::TimerD::setPwmFrequency(f_hz, resolution);
+				return bsp::TimerD::setPwmFrequency(frequency, resolution);
 			}
 
 		    /**

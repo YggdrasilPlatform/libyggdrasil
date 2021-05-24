@@ -20,7 +20,7 @@
   *  @file cpp/yggdrasil/peripherals/pressure_sensor.hpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief API to use the LPS22HBTR pressure sensor
+  *  @brief Driver to use the LPS22HBTR pressure sensor
   */
 
 #pragma once

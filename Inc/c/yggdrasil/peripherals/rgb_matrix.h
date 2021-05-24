@@ -17,27 +17,21 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/yggdrasil.hpp
+  *  @file c/yggdrasil/peripherals/rgb_matrix.h
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Top-level include file for yggdrasil
+  *  @brief Driver to use the LPS22HBTR pressure sensor
   */
 
 #pragma once
 
 #include <c/yggdrasil/types.h>
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS)
-
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-	#include <c/yggdrasil/peripherals/humidity_sensor.h>
-	#include <c/yggdrasil/peripherals/joystick.h>
-	#include <c/yggdrasil/peripherals/motor_driver.h>
-	#include <c/yggdrasil/peripherals/pressure_sensor.h>
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
-	#include <c/yggdrasil/peripherals/rgb_matrix.h>
-	#include <c/yggdrasil/peripherals/rtc.h>
-	#include <c/yggdrasil/peripherals/seven_segment.h>
-	#include <c/yggdrasil/peripherals/six_axis_sensor.h>
-
-#endif
+C_LINKAGE void yggdrasil_RGBMatrix_Enable();
+C_LINKAGE void yggdrasil_RGBMatrix_Disable();
+C_LINKAGE void yggdrasil_RGBMatrix_Clear();
+C_LINKAGE void yggdrasil_RGBMatrix_SetLed(u8 index, RGBA8 color);
+C_LINKAGE void yggdrasil_RGBMatrix_SetLeds(u8 leds[9], RGBA8 color);
+C_LINKAGE void yggdrasil_RGBMatrix_SetLedMasked(u16 enableMask, RGBA8 color);
+C_LINKAGE void yggdrasil_RGBMatrix_Dice(u8 number, RGBA8 color);
+C_LINKAGE void yggdrasil_RGBMatrix_Flush();

@@ -17,27 +17,32 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/yggdrasil.hpp
+  *  @file c/yggdrasil/peripherals/push_pull_driver.h
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Top-level include file for yggdrasil
+  *  @brief Driver to use the IX4310T push-pull drivers
   */
 
 #pragma once
 
 #include <c/yggdrasil/types.h>
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS)
+/**
+ * @brief Push Pull Driver Timer Channels
+ */
+enum PushPullDriverChannel {
+	PushPullDriverChannel_A = 0,		///< Timer channel A
+	PushPullDriverChannel_B = 1,		///< Timer channel B
+	PushPullDriverChannel_C = 2,		///< Timer channel C
+	PushPullDriverChannel_D = 3,		///< Timer channel D
+};
 
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-	#include <c/yggdrasil/peripherals/humidity_sensor.h>
-	#include <c/yggdrasil/peripherals/joystick.h>
-	#include <c/yggdrasil/peripherals/motor_driver.h>
-	#include <c/yggdrasil/peripherals/pressure_sensor.h>
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
-	#include <c/yggdrasil/peripherals/rgb_matrix.h>
-	#include <c/yggdrasil/peripherals/rtc.h>
-	#include <c/yggdrasil/peripherals/seven_segment.h>
-	#include <c/yggdrasil/peripherals/six_axis_sensor.h>
+C_LINKAGE void yggdrasil_PushPullDriver_Servo_Set(PushPullDriverChannel channel, float percent);
+C_LINKAGE void yggdrasil_PushPullDriver_Servo_SetDeltaHighTime(PushPullDriverChannel channel, u16 delta);
 
-#endif
+C_LINKAGE void yggdrasil_PushPullDriver_PWM_SetDuty(PushPullDriverChannel channel, float dutyCycle);
+C_LINKAGE bool yggdrasil_PushPullDriver_PWM_SetFrequency(u32 frequency, u16 resolution);
+C_LINKAGE u32 yggdrasil_PushPullDriver_PWM_GetFrequency();
+
+C_LINKAGE void yggdrasil_PushPullDriver_Out_Set(PushPullDriverChannel channel, bool state);
+

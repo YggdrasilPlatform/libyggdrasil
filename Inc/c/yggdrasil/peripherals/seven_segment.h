@@ -17,27 +17,20 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/yggdrasil.hpp
+  *  @file c/yggdrasil/peripherals/seven_segment.h
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Top-level include file for yggdrasil
+  *  @brief Driver to use the Seven segment display
   */
 
 #pragma once
 
 #include <c/yggdrasil/types.h>
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS)
-
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-	#include <c/yggdrasil/peripherals/humidity_sensor.h>
-	#include <c/yggdrasil/peripherals/joystick.h>
-	#include <c/yggdrasil/peripherals/motor_driver.h>
-	#include <c/yggdrasil/peripherals/pressure_sensor.h>
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
-	#include <c/yggdrasil/peripherals/rgb_matrix.h>
-	#include <c/yggdrasil/peripherals/rtc.h>
-	#include <c/yggdrasil/peripherals/seven_segment.h>
-	#include <c/yggdrasil/peripherals/six_axis_sensor.h>
-
-#endif
+C_LINKAGE void yggdrasil_SevenSegment_SetUnsigned(u16 value);
+C_LINKAGE void yggdrasil_SevenSegment_SetSigned(i16 value);
+C_LINKAGE void yggdrasil_SevenSegment_SetHexadecimal(u16 value);
+C_LINKAGE void yggdrasil_SevenSegment_SetFloatingPoint(float value);
+C_LINKAGE void yggdrasil_SevenSegment_SetDigit(char value);
+C_LINKAGE void yggdrasil_SevenSegment_EnableDigit(u8 number);
+C_LINKAGE void yggdrasil_SevenSegment_Disable();

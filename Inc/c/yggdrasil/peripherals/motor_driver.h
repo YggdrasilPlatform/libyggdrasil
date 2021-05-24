@@ -17,27 +17,27 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/yggdrasil.hpp
+  *  @file c/yggdrasil/peripherals/motor_driver.h
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Top-level include file for yggdrasil
+  *  @brief Driver to use the TC78H660FTG DC motor driver
   */
 
 #pragma once
 
 #include <c/yggdrasil/types.h>
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS)
+/**
+ * @brief Motor driver Channels
+ */
+enum class MotorDriverChannel : u8 {
+	MotorDriverChannel_A = 0,		///< Channel A
+	MotorDriverChannel_B = 1,		///< Channel B
+};
 
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-	#include <c/yggdrasil/peripherals/humidity_sensor.h>
-	#include <c/yggdrasil/peripherals/joystick.h>
-	#include <c/yggdrasil/peripherals/motor_driver.h>
-	#include <c/yggdrasil/peripherals/pressure_sensor.h>
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
-	#include <c/yggdrasil/peripherals/rgb_matrix.h>
-	#include <c/yggdrasil/peripherals/rtc.h>
-	#include <c/yggdrasil/peripherals/seven_segment.h>
-	#include <c/yggdrasil/peripherals/six_axis_sensor.h>
+C_LINKAGE void yggdrasil_MotorDriver_Init();
+C_LINKAGE void yggdrasil_MotorDriver_Standby(bool stby);
+C_LINKAGE void yggdrasil_MotorDriver_SetSpeed(MotorDriverChannel channel, float speed);
+C_LINKAGE bool yggdrasil_MotorDriver_GetError();
 
-#endif
+

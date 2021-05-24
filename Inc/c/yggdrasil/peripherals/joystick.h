@@ -17,27 +17,36 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/yggdrasil.hpp
+  *  @file c/yggdrasil/peripherals/humidity_sensor.h
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Top-level include file for yggdrasil
+  *  @brief Driver to use the SHT40-AD1B-R2 humidity sensor
   */
 
 #pragma once
 
 #include <c/yggdrasil/types.h>
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS)
+/**
+ * @brief Signed position data
+ */
+struct Position {
+  i16 x;		///< X Axis
+  i16 y;		///< Y Axis
+};
 
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-	#include <c/yggdrasil/peripherals/humidity_sensor.h>
-	#include <c/yggdrasil/peripherals/joystick.h>
-	#include <c/yggdrasil/peripherals/motor_driver.h>
-	#include <c/yggdrasil/peripherals/pressure_sensor.h>
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
-	#include <c/yggdrasil/peripherals/rgb_matrix.h>
-	#include <c/yggdrasil/peripherals/rtc.h>
-	#include <c/yggdrasil/peripherals/seven_segment.h>
-	#include <c/yggdrasil/peripherals/six_axis_sensor.h>
+/**
+ * @brief Joystick data
+ */
+struct JoystickData {
+  struct Position pos;		///< Position
+  u16 mag;			///< Magnitude / radius from the center
+  bool pressed;		///< State of the joystick button
+};
 
-#endif
+
+C_LINKAGE struct JoystickData yggdrasil_Joystick_GetLeft();
+C_LINKAGE struct JoystickData yggdrasil_Joystick_GetRight();
+C_LINKAGE void yggdrasil_Joystick_SetDeadzone(u8 deadzone);
+C_LINKAGE u8 yggdrasil_Joystick_GetDeadzone();
+

@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/color_sensor.cpp
+  *  @file yggdrasil/peripherals/pressure_sensor.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Driver to use the TCS3472 color sensor
+  *  @brief Driver to use the RV-3028-C7 RTC
   */
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
@@ -29,57 +29,34 @@
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-
+	#include <c/yggdrasil/peripherals/six_axis_sensor.h>
 	#include <yggdrasil.h>
 
 
-	using ColorSensor = bsp::ygg::prph::ColorSensor;
+	using SixAxisSensor = bsp::ygg::prph::SixAxisSensor;
 
-	C_LINKAGE bool yggdrasil_ColorSensor_Init(void) {
-		return ColorSensor::init();
+	C_LINKAGE bool yggdrasil_SixAxisSensor_Init(SixAxisSensorAccelFullScaleRange accelScale, SixAxisSensorGyroFullScaleRange gyroScale, SixAxisSensorAccelOutputDataRange accelOdr, SixAxisSensorGyroOutputDataRange gyroOdr) {
+		return SixAxisSensor::init(
+				static_cast<SixAxisSensor::AccelFullScaleRange>(accelScale),
+				static_cast<SixAxisSensor::GyroFullScaleRange>(gyroScale),
+				static_cast<SixAxisSensor::AccelOutputDataRange>(accelOdr),
+				static_cast<SixAxisSensor::GyroOutputDataRange>(gyroOdr));
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_SetIntegrationTime(ColorSensorIntegrationTime integrationTime) {
-		ColorSensor::setIntergrationTime(static_cast<ColorSensor::IntegrationTime>(integrationTime));
+	C_LINKAGE ::Coordinate yggdrasil_SixAxisSensor_GetRotation() {
+		return bsp::bit_cast<::Coordinate>(SixAxisSensor::getRotation());
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_SetGain(ColorSensorGain gain) {
-		return ColorSensor::setGain(static_cast<ColorSensor::Gain>(gain));
+	C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetAcceleration() {
+		return bsp::bit_cast<::Coordinate>(SixAxisSensor::getAcceleration());
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_Enable(void) {
-		ColorSensor::enable();
+	C_LINKAGE float yggdrasil_SixAxisSensor_GetTemperature() {
+		return SixAxisSensor::getTemperature();
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_Disable(void) {
-		ColorSensor::disable();
-	}
-
-	C_LINKAGE u16 yggdrasil_ColorSensor_StartConversion(void) {
-		return ColorSensor::startConversion();
-	}
-
-	C_LINKAGE bool yggdrasil_ColorSensor_IsDone(void) {
-		return ColorSensor::isDone();
-	}
-
-	C_LINKAGE RGBA8 yggdrasil_ColorSensor_GetColor8(bool restartConversion) {
-		RGBA8 ret;
-		auto color = ColorSensor::getColor8(restartConversion);
-
-		ret.rgba = color.rgba;
-
-		return ret;
-	}
-
-	C_LINKAGE RGBA16 yggdrasil_ColorSensor_GetColor16(bool restartConversion) {
-		RGBA16 ret;
-		auto color = ColorSensor::getColor16(restartConversion);
-
-		ret.rgba = color.rgba;
-
-		return ret;
+	C_LINKAGE ::Orientation yggdrasil_SixAxisSensor_GetBoardOrientation() {
+		return bsp::bit_cast<::Orientation>(SixAxisSensor::getBoardOrientation());
 	}
 
 #endif

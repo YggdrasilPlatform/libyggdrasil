@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/color_sensor.cpp
+  *  @file yggdrasil/peripherals/pressure_sensor.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Driver to use the TCS3472 color sensor
+  *  @brief Driver to use the LPS22HBTR pressure sensor
   */
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
@@ -29,57 +29,46 @@
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	#include <c/yggdrasil/peripherals/color_sensor.h>
-
+	#include <c/yggdrasil/peripherals/rgb_matrix.h>
 	#include <yggdrasil.h>
 
 
-	using ColorSensor = bsp::ygg::prph::ColorSensor;
+	using RGBMatrix = bsp::ygg::prph::RGBMatrix;
 
-	C_LINKAGE bool yggdrasil_ColorSensor_Init(void) {
-		return ColorSensor::init();
+	C_LINKAGE void yggdrasil_RGBMatrix_Enable() {
+		RGBMatrix::enable();
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_SetIntegrationTime(ColorSensorIntegrationTime integrationTime) {
-		ColorSensor::setIntergrationTime(static_cast<ColorSensor::IntegrationTime>(integrationTime));
+	C_LINKAGE void yggdrasil_RGBMatrix_Disable() {
+		RGBMatrix::disable();
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_SetGain(ColorSensorGain gain) {
-		return ColorSensor::setGain(static_cast<ColorSensor::Gain>(gain));
+	C_LINKAGE void yggdrasil_RGBMatrix_Clear() {
+		RGBMatrix::clear();
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_Enable(void) {
-		ColorSensor::enable();
+	C_LINKAGE void yggdrasil_RGBMatrix_SetLed(u8 index, RGBA8 color) {
+		RGBMatrix::setLed(index, bsp::bit_cast<bsp::ygg::RGBA8>(color));
 	}
 
-	C_LINKAGE void yggdrasil_ColorSensor_Disable(void) {
-		ColorSensor::disable();
+	C_LINKAGE void yggdrasil_RGBMatrix_SetLeds(u8 leds[9], RGBA8 color) {
+		std::array<u8, 9> cppLeds;
+		std::copy(leds, leds + 9, cppLeds.begin());
+
+		RGBMatrix::setLeds(cppLeds, bsp::bit_cast<bsp::ygg::RGBA8>(color));
 	}
 
-	C_LINKAGE u16 yggdrasil_ColorSensor_StartConversion(void) {
-		return ColorSensor::startConversion();
+	C_LINKAGE void yggdrasil_RGBMatrix_SetLedMasked(u16 enableMask, RGBA8 color) {
+		RGBMatrix::setLedMasked(enableMask, bsp::bit_cast<bsp::ygg::RGBA8>(color));
+
 	}
 
-	C_LINKAGE bool yggdrasil_ColorSensor_IsDone(void) {
-		return ColorSensor::isDone();
+	C_LINKAGE void yggdrasil_RGBMatrix_Dice(u8 number, RGBA8 color) {
+		RGBMatrix::dice(number, bsp::bit_cast<bsp::ygg::RGBA8>(color));
 	}
 
-	C_LINKAGE RGBA8 yggdrasil_ColorSensor_GetColor8(bool restartConversion) {
-		RGBA8 ret;
-		auto color = ColorSensor::getColor8(restartConversion);
-
-		ret.rgba = color.rgba;
-
-		return ret;
-	}
-
-	C_LINKAGE RGBA16 yggdrasil_ColorSensor_GetColor16(bool restartConversion) {
-		RGBA16 ret;
-		auto color = ColorSensor::getColor16(restartConversion);
-
-		ret.rgba = color.rgba;
-
-		return ret;
+	C_LINKAGE void yggdrasil_RGBMatrix_Flush() {
+		RGBMatrix::flush();
 	}
 
 #endif
