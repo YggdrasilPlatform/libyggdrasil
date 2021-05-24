@@ -1,3 +1,5 @@
+.. _GpioInterfaceCpp:
+
 GPIO Interface
 ==============
 

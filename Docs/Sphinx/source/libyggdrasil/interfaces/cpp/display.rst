@@ -1,3 +1,5 @@
+.. _DisplayInterfaceCpp:
+
 Display Interface
 =================
 
