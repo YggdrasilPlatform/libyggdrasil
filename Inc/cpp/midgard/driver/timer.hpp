@@ -36,6 +36,7 @@
 #include <cmsis_gcc.h>
 #include <limits>
 #include <cstdio>
+#include <cmath>
 #include <stdio.h>
 
 namespace bsp::mid::drv {
@@ -483,7 +484,7 @@ namespace bsp::mid::drv {
 	     */
 		static u32 getPwmFrequency() {
 			auto arr = Context->Instance->ARR;
-			auto psc = Context->Instance->PSC;
+			auto psc = (Context->Instance->PSC + 1);
 			if(psc == 0) psc = 1;
 
 			if ((Context->Instance == TIM1) ||
@@ -552,7 +553,7 @@ namespace bsp::mid::drv {
 
 			if((f_hz * arr) > timerFrequency) return false; 	// Check if the timer frequency is not to low
 
-			psc = timerFrequency / (f_hz * arr);		// Calculate the prescaler
+			psc = std::round((timerFrequency / (f_hz * arr)) - 1);	// Calculate the prescaler
 
 			if(psc > 0xFFFF) return false;				// Check if prescaler is in the possible range from u16
 			else{
