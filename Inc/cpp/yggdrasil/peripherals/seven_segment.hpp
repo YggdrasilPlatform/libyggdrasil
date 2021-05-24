@@ -214,7 +214,7 @@ namespace bsp::ygg::prph {
 		 */
 		static void disable(){
 			setDigit(' ');
-			enableDigit(0xFF);
+			enableDigit(0xFF);		// Some value higher than 3 will shut down all
 		}
 
 	};
