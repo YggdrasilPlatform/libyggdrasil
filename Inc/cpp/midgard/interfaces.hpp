@@ -47,39 +47,35 @@
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
-	extern "C" {
+	extern I2C_HandleTypeDef hi2c1;
+	extern I2C_HandleTypeDef hi2c2;
+	extern I2C_HandleTypeDef hi2c3;
+	extern I2C_HandleTypeDef hi2c4;
 
-		extern I2C_HandleTypeDef hi2c1;
-		extern I2C_HandleTypeDef hi2c2;
-		extern I2C_HandleTypeDef hi2c3;
-		extern I2C_HandleTypeDef hi2c4;
+	extern SPI_HandleTypeDef hspi2;
+	extern SPI_HandleTypeDef hspi4;
+	extern SPI_HandleTypeDef hspi5;
 
+	extern TIM_HandleTypeDef htim2;
+	extern TIM_HandleTypeDef htim3;
+	extern TIM_HandleTypeDef htim4;
+	extern TIM_HandleTypeDef htim5;
+	extern TIM_HandleTypeDef htim8;
+	extern TIM_HandleTypeDef htim11;
+	extern TIM_HandleTypeDef htim12;
 
-		extern SPI_HandleTypeDef hspi4;
-		extern SPI_HandleTypeDef hspi5;
+	extern ADC_HandleTypeDef hadc1;
+	extern ADC_HandleTypeDef hadc2;
+	extern ADC_HandleTypeDef hadc3;
 
-		extern TIM_HandleTypeDef htim2;
-		extern TIM_HandleTypeDef htim3;
-		extern TIM_HandleTypeDef htim4;
-		extern TIM_HandleTypeDef htim5;
-		extern TIM_HandleTypeDef htim8;
-		extern TIM_HandleTypeDef htim11;
-		extern TIM_HandleTypeDef htim12;
+	extern DAC_HandleTypeDef hdac;
 
-		extern ADC_HandleTypeDef hadc1;
-		extern ADC_HandleTypeDef hadc2;
-		extern ADC_HandleTypeDef hadc3;
+	extern LTDC_HandleTypeDef  hltdc;
+	extern DSI_HandleTypeDef   hdsi;
+	extern DMA2D_HandleTypeDef hdma2d;
 
-		extern DAC_HandleTypeDef hdac;
-
-		extern LTDC_HandleTypeDef  hltdc;
-		extern DSI_HandleTypeDef   hdsi;
-		extern DMA2D_HandleTypeDef hdma2d;
-
-		extern CAN_HandleTypeDef hcan1;
-		extern CAN_HandleTypeDef hcan2;
-
-	}
+	extern CAN_HandleTypeDef hcan1;
+	extern CAN_HandleTypeDef hcan2;
 
 	namespace bsp {
 
@@ -186,9 +182,9 @@
 		/** @} */
 
 
-		using SPIA = bsp::drv::SPI<0x4000'3800, bsp::mid::drv::SPI>;
-		using SPIB = bsp::drv::SPI<0x4001'3400 , bsp::mid::drv::SPI>;
-		using SPIC = bsp::drv::SPI<0x4001'5000, bsp::mid::drv::SPI>;
+		using SPIA = bsp::drv::SPI<&hspi2, bsp::mid::drv::SPI>;
+		using SPIB = bsp::drv::SPI<&hspi4 , bsp::mid::drv::SPI>;
+		using SPIC = bsp::drv::SPI<&hspi5, bsp::mid::drv::SPI>;
 
 		using CANA = bsp::drv::CAN<&hcan1, bsp::mid::drv::CAN>;
 		using CANB = bsp::drv::CAN<&hcan2, bsp::mid::drv::CAN>;
