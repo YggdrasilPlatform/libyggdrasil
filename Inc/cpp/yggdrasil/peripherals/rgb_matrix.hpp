@@ -52,9 +52,11 @@ namespace bsp::ygg::prph {
 			RGBA8 color = {0};
 			bsp::SPIA::setMode(bsp::drv::SPIMode::_3);
 			RGB_EN = 1;
-			for(u8 i = 1; i <= NumLEDs; i++){
+			for(u8 i = 0; i <= NumLEDs; i++){
 				setLed(i, color);
 			}
+
+			flush();
 		}
 
 		/**
@@ -69,7 +71,7 @@ namespace bsp::ygg::prph {
 		 */
 		static void clear() {
 			RGBA8 color = {0};
-			for(u8 i = 1; i <= NumLEDs; i++){
+			for(u8 i = 0; i <= NumLEDs; i++){
 				setLed(i, color);
 			}
 		}
@@ -87,18 +89,6 @@ namespace bsp::ygg::prph {
 				RGBMatrix::s_LEDs[index * 4 + 1] = color.b;
 				RGBMatrix::s_LEDs[index * 4 + 2] = color.g;
 				RGBMatrix::s_LEDs[index * 4 + 3] = color.r;
-			}
-		}
-
-		/**
-		 * @brief set multiple leds to RGBA8 color using an array with the led number
-		 *
-		 * @param led Array of index numbers
-		 * @param color RGBA8 color
-		 */
-		static void setLeds(std::array<u8, NumLEDs> leds, RGBA8 color) {
-			for(u8 cnt = 0; cnt < leds.size(); cnt++){
-				setLed(leds[cnt], color);
 			}
 		}
 

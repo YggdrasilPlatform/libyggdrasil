@@ -21,17 +21,17 @@ The example below shows how to set a new time. If the time is once set correctly
 .. code-block:: cpp
 
     tm setTime = {0};
-    // Fill up the tm struct for 21 / 05 / 2021 (Friday)
-    setTime.tm_year = 121;      // Year since 1900
-    setTime.tm_mon = 5;         // Months since january
-    setTime.tm_mday = 21;       // Day of the month
+    // Fill up the tm struct for 24 / 05 / 2021 (Monday)
+    setTime.tm_year = 121;      // Years since 1900
+    setTime.tm_mon = 4;         // Months since january
+    setTime.tm_mday = 24;       // Day of the month
     setTime.tm_hour = 10;       // Hour
     setTime.tm_min = 30;        // Minutes
     setTime.tm_sec = 00;        // Seconds
-    setTime.tm_wday = 5;        // Days since sunday
+    setTime.tm_wday = 1;        // Days since sunday
 
     // Send the new time to the rtc
-    RealTimeClock::setTime(mktime(&setTime));
+    bsp::ygg::prph::RealTimeClock::setTime(mktime(&setTime));
 
 
 To read the time from the rtc, this example shows how. 

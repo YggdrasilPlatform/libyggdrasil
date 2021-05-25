@@ -24,10 +24,15 @@ The sensor will be initialized through the BSP. The sensor data can be used as s
 
     // Get the pressure
     auto pressure = bsp::ygg::prph::PressureSensor::getPressure();
-      printf("Pressure: %fhPa \n", pressure);
+    printf("Pressure: %fhPa \n", pressure);
 
 .. code-block:: cpp
 
     // Get the temperature
     auto temp = bsp::ygg::prph::PressureSensor::getTemperature();
     printf("Temperature: %fC \n", temp);
+
+.. note::
+
+    When reading the pressure and the temperature, there must be a delay of at least 10ms between those read commands.
+

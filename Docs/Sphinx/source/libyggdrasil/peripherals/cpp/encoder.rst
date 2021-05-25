@@ -10,6 +10,7 @@ Description
 
 With the timer F (TIM8) in the encoder mode, the onboard encoder can be used. 
 
+
 Usage
 -----
 
