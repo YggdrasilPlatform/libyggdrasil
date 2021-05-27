@@ -1,7 +1,7 @@
-.. _asgard_a7_getting_started_cpp:
+.. _asgard_a7_getting_started:
 
-Asgard Linux
-============
+Linux
+=====
 
 Setup
 -----

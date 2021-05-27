@@ -1,3 +1,5 @@
+.. _peripherals:
+
 Peripheral Drivers
 ==================
 
