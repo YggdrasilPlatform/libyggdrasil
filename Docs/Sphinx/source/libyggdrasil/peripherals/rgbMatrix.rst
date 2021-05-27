@@ -23,70 +23,139 @@ Usage
 
 Example to set LED 1 and 7 
 
-.. code-block:: cpp 
+.. tabs::
 
-    bsp::ygg::RGBA8 color = {0x08, 0, 0, 0x04};
+    .. code-tab:: c 
 
-    // Enable the leds
-    bsp::ygg::prph::RGBMatrix::enable();
+        RGBA8 color = { 0x08, 0, 0, 0x04 };
 
-    // Set led 1 and 7
-    bsp::ygg::prph::RGBMatrix::setLed(1, color);
-    bsp::ygg::prph::RGBMatrix::setLed(7, color);
+        // Enable the leds
+        yggdrasil_RGBMatrix_Enable();
 
-    // Send the data to the leds
-    bsp::ygg::prph::RGBMatrix::flush();
+        // Set led 1 and 7
+        yggdrasil_RGBMatrix_SetLed(1, color);
+        yggdrasil_RGBMatrix_SetLed(7, color);
+
+        // Send the data to the leds
+        yggdrasil_RGBMatrix_Flush();
+
+    .. code-tab:: cpp 
+
+        bsp::ygg::RGBA8 color = { 0x08, 0, 0, 0x04 };
+
+        // Enable the leds
+        bsp::ygg::prph::RGBMatrix::enable();
+
+        // Set led 1 and 7
+        bsp::ygg::prph::RGBMatrix::setLed(1, color);
+        bsp::ygg::prph::RGBMatrix::setLed(7, color);
+
+        // Send the data to the leds
+        bsp::ygg::prph::RGBMatrix::flush();
 
 
 Example to set all LEDs at one. In this case LED 0, 2, 4, 6 and 8 will be set
 
-.. code-block:: cpp 
+.. tabs::
 
-    bsp::ygg::RGBA8 color = {0x08, 0, 0, 0x04};
+    .. code-tab:: c 
 
-    // Enable the leds
-    bsp::ygg::prph::RGBMatrix::enable();
+        RGBA8 color = { 0x08, 0, 0, 0x04 };
 
-    // Set led 0, 2, 4, 6 and 8
-    bsp::ygg::prph::RGBMatrix::setLedMasked(0b101'010'101, color);
+        // Enable the leds
+        yggdrasil_RGBMatrix_Enable();
 
-    // Send the data to the leds
-    bsp::ygg::prph::RGBMatrix::flush();
+        // Set led 0, 2, 4, 6 and 8
+        yggdrasil_RGBMatrix_SetLedMasked(0b101'010'101, color);
+
+        // Send the data to the leds
+        yggdrasil_RGBMatrix_Flush();
+
+    .. code-tab:: cpp 
+
+        bsp::ygg::RGBA8 color = { 0x08, 0, 0, 0x04 };
+
+        // Enable the leds
+        bsp::ygg::prph::RGBMatrix::enable();
+
+        // Set led 0, 2, 4, 6 and 8
+        bsp::ygg::prph::RGBMatrix::setLedMasked(0b101'010'101, color);
+
+        // Send the data to the leds
+        bsp::ygg::prph::RGBMatrix::flush();
 
 Example to use the dice function, which will display the number as a dice would show it.
 
-.. code-block:: cpp 
+.. tabs::
 
-    bsp::ygg::RGBA8 color = {0x08, 0, 0, 0x04};
+    .. code-tab:: c 
 
-    // Enable the leds
-    bsp::ygg::prph::RGBMatrix::enable();
+        RGBA8 color = { 0x08, 0, 0, 0x04 };
 
-    // Display number 6
-    bsp::ygg::prph::RGBMatrix::dice(6, color);
+        // Enable the leds
+        yggdrasil_RGBMatrix_Enable();
 
-    // Send the data to the leds
-    bsp::ygg::prph::RGBMatrix::flush();
+        // Display number 6
+        yggdrasil_RGBMatrix_Dice(6, color);
+
+        // Send the data to the leds
+        yggdrasil_RGBMatrix_Flush();
+
+    .. code-tab:: cpp 
+
+        bsp::ygg::RGBA8 color = { 0x08, 0, 0, 0x04 };
+
+        // Enable the leds
+        bsp::ygg::prph::RGBMatrix::enable();
+
+        // Display number 6
+        bsp::ygg::prph::RGBMatrix::dice(6, color);
+
+        // Send the data to the leds
+        bsp::ygg::prph::RGBMatrix::flush();
 
 Example to show all possible colors
 
-.. code-block:: cpp 
+.. tabs::
 
-    bsp::ygg::RGBA8 color = {0, 0, 0, 0x01};
-    float cnt = 0;
-    bsp::ygg::prph::RGBMatrix::enable();
+    .. code-tab:: c 
 
-    while(true) {
+        RGBA8 color = { 0, 0, 0, 0x01 };
+        float cnt = 0;
+        yggdrasil_RGBMatrix_Enable();
 
-        // Calculate the color value from 0 to 255 with a 120° phase shift
-        color.r = static_cast<u8>(((std::sin(cnt) + 1) * 255) / 2.0F);
-        color.g = static_cast<u8>(((std::sin(cnt + 2/3.0F * bsp::math::Pi<float>) + 1) * 255) / 2.0F);
-        color.b = static_cast<u8>(((std::sin(cnt + 4/3.0F * bsp::math::Pi<float>) + 1) * 255) / 2.0F);
+        while(1) {
+
+            // Calculate the color value from 0 to 255 with a 120° phase shift
+            color.r = (u8)(((sin(cnt) + 1) * 255) / 2.0F);
+            color.g = (u8)(((sin(cnt + 2/3.0F * M_PI) + 1) * 255) / 2.0F);
+            color.b = (u8)(((sin(cnt + 4/3.0F * M_PI) + 1) * 255) / 2.0F);
 
 
-        bsp::ygg::prph::RGBMatrix::setLedMasked(0b111'111'111, color);
-        bsp::ygg::prph::RGBMatrix::flush();
+            yggdrasil_RGBMatrix_SetLedMasked(0b111'111'111, color);
+            yggdrasil_RGBMatrix_Flush();
 
-        cnt += 0.01;
-        bsp::core::delay(10);
-    }
+            cnt += 0.01;
+            core_delay(10);
+        }
+
+    .. code-tab:: cpp 
+
+        bsp::ygg::RGBA8 color = {0, 0, 0, 0x01};
+        float cnt = 0;
+        bsp::ygg::prph::RGBMatrix::enable();
+
+        while(true) {
+
+            // Calculate the color value from 0 to 255 with a 120° phase shift
+            color.r = static_cast<u8>(((std::sin(cnt) + 1) * 255) / 2.0F);
+            color.g = static_cast<u8>(((std::sin(cnt + 2/3.0F * bsp::math::Pi<float>) + 1) * 255) / 2.0F);
+            color.b = static_cast<u8>(((std::sin(cnt + 4/3.0F * bsp::math::Pi<float>) + 1) * 255) / 2.0F);
+
+
+            bsp::ygg::prph::RGBMatrix::setLedMasked(0b111'111'111, color);
+            bsp::ygg::prph::RGBMatrix::flush();
+
+            cnt += 0.01;
+            bsp::core::delay(10);
+        }

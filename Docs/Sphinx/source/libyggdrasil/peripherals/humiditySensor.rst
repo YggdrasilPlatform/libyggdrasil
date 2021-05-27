@@ -27,15 +27,30 @@ Usage
 The sensor will be initialized through the BSP. These default settings are high precision measurements.
 A measurement takes about 10ms. 
 
-.. code-block:: cpp
+.. tabs::
 
-    // Read the humidity
-    auto humidity = bsp::ygg::prph::HumiditySensor::getHumidity();
-    printf("Humidity: %f%RH \n", humidity);
-    
+    .. code-tab:: c
 
-.. code-block:: cpp
+        // Read the humidity
+        float humidity = yggdrasil_HumiditySensor_GetHumidity(HumiditySensorPrecision_High);
+        printf("Humidity: %f%RH \n", humidity);
 
-    // Read the temperature of the sensor
-    auto temp = bsp::ygg::prph::HumiditySensor::getTemperature();
-    printf("Temperature: %fC \n", temp);
+    .. code-tab:: cpp
+
+        // Read the humidity
+        auto humidity = bsp::ygg::prph::HumiditySensor::getHumidity();
+        printf("Humidity: %f%RH \n", humidity);
+        
+.. tabs::
+
+    .. code-tab:: c
+
+        // Read the temperature of the sensor
+        float temp = yggdrasil_HumiditySensor_GetTemperature(HumiditySensorPrecision_High);
+        printf("Temperature: %fC \n", temp);
+
+    .. code-tab:: cpp
+
+        // Read the temperature of the sensor
+        auto temp = bsp::ygg::prph::HumiditySensor::getTemperature();
+        printf("Temperature: %fC \n", temp);

@@ -31,9 +31,23 @@ To shut down, the disable function can be used. This function will disable all s
 
 Example to display an unsigned integer
 
-.. code-block:: cpp
+.. tabs::
 
-	while(true) {
+    .. code-tab:: c
+
+        while(1) {
+
+            // Set the value
+            yggdrasil_SevenSegment_SetUnsigned(1234);
+
+            // Add a delay
+            core_delay(1);
+
+        }
+
+    .. code-tab:: cpp
+
+        while(true) {
 
             // Set the value
             bsp::ygg::prph::SevenSegment::setUnsigned(1234);
@@ -41,13 +55,27 @@ Example to display an unsigned integer
             // Add a delay
             bsp::core::delay(1);
 
-	}
+        }
     
 Example to display an unsigned integer in hexadecimal
 
-.. code-block:: cpp
+.. tabs::
 
-	while(true) {
+    .. code-tab:: c
+
+        while(1) {
+
+            // Set the value
+            yggdrasil_SevenSegment_SetHexadecimal(0xACDC);
+
+            // Add a delay
+            core_delay(1);
+
+        }
+
+    .. code-tab:: cpp
+
+        while(true) {
 
             // Set the value
             bsp::ygg::prph::SevenSegment::setHexadecimal(0xACDC);
@@ -55,13 +83,27 @@ Example to display an unsigned integer in hexadecimal
             // Add a delay
             bsp::core::delay(1);
 
-	}
+        }
 
 Example to display an signed integer
 
-.. code-block:: cpp
+.. tabs::
 
-	while(true) {
+    .. code-tab:: c
+
+        while(1) {
+
+            // Set the value
+            yggdrasil_SevenSegment_SetSigned(-123);
+
+            // Add a delay
+            core_delay(1);
+
+        }
+
+    .. code-tab:: cpp
+
+        while(true) {
 
             // Set the value
             bsp::ygg::prph::SevenSegment::setSigned(-123);
@@ -69,28 +111,59 @@ Example to display an signed integer
             // Add a delay
             bsp::core::delay(1);
 
-	}
+        }
 
 Example to display an floating point value
 
-.. code-block:: cpp
+.. tabs::
 
-	while(true) {
+    .. code-tab:: c
+
+        while(1) {
 
             // Set the value
-            bsp::ygg::prph::SevenSegment::setFloatingPoint(-1.23);
+            yggdrasil_SevenSegment_SetFloatingPoint(-3.14);
+
+            // Add a delay
+            core_delay(1);
+
+        }
+
+    .. code-tab:: cpp
+
+        while(true) {
+
+            // Set the value
+            bsp::ygg::prph::SevenSegment::setFloatingPoint(-3.14);
 
             // Add a delay
             bsp::core::delay(1);
 
-	}
+        }
 
 It is also possible to access the every digit on it own.
 The example below will print 6 to the second digit from the left.
 
-.. code-block:: cpp
+.. tabs::
 
-	while(true) {
+    .. code-tab:: c
+
+        while(1) {
+
+            // The value to display (accepts also hexadecimal)
+            yggdrasil_SevenSegment_SetDigit(6);
+
+            // Enable the digit. in this case the second from the left
+            yggdrasil_SevenSegment_EnableDigit(1);
+
+            // The delay is optional, since no multiplexing is done
+            core_delay(1);
+
+        }
+
+    .. code-tab:: cpp
+
+        while(true) {
 
             // The value to display (accepts also hexadecimal)
             bsp::ygg::prph::SevenSegment::setDigit(6);
@@ -101,4 +174,4 @@ The example below will print 6 to the second digit from the left.
             // The delay is optional, since no multiplexing is done
             bsp::core::delay(1);
 
-	}
+        }

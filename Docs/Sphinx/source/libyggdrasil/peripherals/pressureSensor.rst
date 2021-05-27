@@ -21,17 +21,33 @@ Usage
 
 The sensor will be initialized through the BSP. The sensor data can be used as shown in the example. 
 
-.. code-block:: cpp
+.. tabs::
 
-    // Get the pressure
-    auto pressure = bsp::ygg::prph::PressureSensor::getPressure();
-    printf("Pressure: %fhPa \n", pressure);
+    .. code-tab:: c
 
-.. code-block:: cpp
+        // Get the pressure
+        float pressure = yggdrasil_PressureSensor_GetPressure();
+        printf("Pressure: %fhPa \n", pressure);
 
-    // Get the temperature
-    auto temp = bsp::ygg::prph::PressureSensor::getTemperature();
-    printf("Temperature: %fC \n", temp);
+    .. code-tab:: cpp
+
+        // Get the pressure
+        auto pressure = bsp::ygg::prph::PressureSensor::getPressure();
+        printf("Pressure: %fhPa \n", pressure);
+
+.. tabs::
+
+    .. code-tab:: c
+
+        // Get the temperature
+        auto temp = yggdrasil_PressureSensor_GetTemperature();
+        printf("Temperature: %fC \n", temp);
+
+    .. code-tab:: cpp
+
+        // Get the temperature
+        auto temp = bsp::ygg::prph::PressureSensor::getTemperature();
+        printf("Temperature: %fC \n", temp);
 
 .. note::
 

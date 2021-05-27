@@ -23,16 +23,32 @@ Usage
 
 This example shows how to read the deadzone, set a new one and access the joystick data.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Get the deadzone 
-    auto deadZone = bsp::ygg::prph::Joystick::getDeadzone();
+    .. code-tab:: c
 
-    // Double the deadzone
-    bsp::ygg::prph::Joystick::setDeadzone(2*deadZone);
+        // Get the deadzone 
+        u8 deadzone = yggdrasil_Joystick_GetDeadzone();
 
-    // Get the left joystick data
-    auto data = bsp::ygg::prph::Joystick::getLeft();
-    printf("Left joystick X: %d, Y: %d, radius from center: %d, button: %d\n", data.pos.x, data.pos.y, data.mag, data.pressed);
+        // Double the deadzone
+        yggdrasil_Joystick_SetDeadzone(2 * deadzone);
+
+        // Get the left joystick data
+        struct JoystickData data = yggdrasil_Joystick_GetLeft();
+        printf("Left joystick X: %d, Y: %d, radius from center: %d, button: %d\n", 
+            data.pos.x, data.pos.y, data.mag, data.pressed);
+
+    .. code-tab:: cpp
+
+        // Get the deadzone 
+        auto deadzone = bsp::ygg::prph::Joystick::getDeadzone();
+
+        // Double the deadzone
+        bsp::ygg::prph::Joystick::setDeadzone(2 * deadzone);
+
+        // Get the left joystick data
+        auto data = bsp::ygg::prph::Joystick::getLeft();
+        printf("Left joystick X: %d, Y: %d, radius from center: %d, button: %d\n", 
+            data.pos.x, data.pos.y, data.mag, data.pressed);
 
 

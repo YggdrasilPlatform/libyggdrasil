@@ -30,6 +30,8 @@ release = '1.0.0'
 html_show_sourcelink = False
 html_show_sphinx = False
 
+sphinx_tabs_disable_tab_closing = True
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
