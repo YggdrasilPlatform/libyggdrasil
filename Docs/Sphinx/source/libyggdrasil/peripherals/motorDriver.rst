@@ -62,7 +62,7 @@ The example below is not suitable for a system without an rtos and may need some
             // Shut down the driver, set the driver to standby
             yggdrasil_MotorDriver_Standby(true);
             // Delay until restart
-            core_delay(100);
+            core_Delay(100);
 
             /* Your error handling */
 

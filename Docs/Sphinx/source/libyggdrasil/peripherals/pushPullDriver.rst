@@ -31,10 +31,17 @@ Usage as output
 
 The example below will use button A to control the state of the driver output.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Set channel D to the state of button A
-    bsp::ygg::prph::PushPullDriver::Out::set(bsp::ygg::prph::PushPullDriver::Channel::D, bsp::ButtonA);
+    .. code-tab:: c
+
+        // Set channel D to the state of button A
+        yggdrasil_PushPullDriver_Out_Set(PushPullDriverChannel_D, yggdrasil_GPIO_Read(ButtonA));
+
+    .. code-tab:: cpp
+
+        // Set channel D to the state of button A
+        bsp::ygg::prph::PushPullDriver::Out::set(bsp::ygg::prph::PushPullDriver::Channel::D, bsp::ButtonA);
 
 Usage as servo driver
 ---------------------
@@ -50,31 +57,58 @@ To set a new rotation, the function takes values from -100 to 100, where 100 equ
 
 The example below shows a sweep in ccw direction.
 
-.. code-block:: cpp
+.. tabs::
 
-    float sweep = 0;
+    .. code-tab:: c
 
-    while(true) {
+        float sweep = 0;
 
-        // Set the position value for channel D
-        bsp::ygg::prph::PushPullDriver::Servo::set(bsp::ygg::prph::PushPullDriver::Channel::D, sweep);
+        while(1) {
 
-        bsp::core::delay(10);
+            // Set the position value for channel D
+            yggdrasil_PushPullDriver_Servo_Set(PushPullDriverChannel_D, sweep);
 
-        // Increment the sweep variable
-        sweep++;
+            core_Delay(10);
 
-        // Reset the variable when the maximum is reached
-        if (sweep == 100) sweep = -100;
-    }
+            // Increment the sweep variable
+            sweep += 0.1F;
+
+            // Reset the variable when the maximum is reached
+            if (sweep == 100) sweep = -100;
+        }
+
+    .. code-tab:: cpp
+
+        float sweep = 0;
+
+        while(true) {
+
+            // Set the position value for channel D
+            bsp::ygg::prph::PushPullDriver::Servo::set(bsp::ygg::prph::PushPullDriver::Channel::D, sweep);
+
+            bsp::core::delay(10);
+
+            // Increment the sweep variable
+            sweep += 0.1F;
+
+            // Reset the variable when the maximum is reached
+            if (sweep == 100) sweep = -100;
+        }
 
 
 If the used servos need other high time differences form the 1.5ms idle high time, this can be adjusted as shown in the following example.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Change the high time difference to 750 ms
-    bsp::ygg::prph::PushPullDriver::Servo::setDeltaHighTime(bsp::ygg::prph::PushPullDriver::Channel::D, 750);
+    .. code-tab:: c
+
+        // Change the high time difference to 750 ms
+        yggdrasil_PushPullDriver_Servo_SetDeltaHighTime(PushPullDriverChannel_D, 750);
+
+    .. code-tab:: cpp
+
+        // Change the high time difference to 750 ms
+        bsp::ygg::prph::PushPullDriver::Servo::setDeltaHighTime(bsp::ygg::prph::PushPullDriver::Channel::D, 750);
 
 After this code line, -100% equals 0.75ms and 100% equals 2.25ms for channel D. The other channels will not be affected from this change.
 
@@ -90,25 +124,47 @@ Usage as PWM output
 
 The following example will set the pwm frequency to 1kHz with a resolution of 1000 steps which equals 1us. 
 
-.. code-block:: cpp
+.. tabs::
 
-    // Set the pwm frequency to 1kHz with a resolution of 1000 steps
-    if (bsp::ygg::prph::PushPullDriver::PWM::setFrequency(1E3, 1000)) {
-        printf("Frequency and resolution successfully changed!\n");
-    }
-    else {
-        printf("Frequency and resolution could not be changed!\n");
-        /*
-        * Error handling
-        */
-    }
+    .. code-tab:: c
 
-    // Get the set frequency 
-    f = bsp::ygg::prph::PushPullDriver::PWM::getFrequency();
-    printf("F = %luHz\n", f);
+        // Set the pwm frequency to 1kHz with a resolution of 1000 steps
+        if (yggdrasil_PushPullDriver_PWM_SetFrequency(1000, 1000)) {
+            printf("Frequency and resolution successfully changed!\n");
+        }
+        else {
+            printf("Frequency and resolution could not be changed!\n");
+            /*
+            * Error handling
+            */
+        }
 
-    // Set the duty to 25.5% (equals 255us high time with the settings above)
-    bsp::ygg::prph::PushPullDriver::PWM::setDuty(bsp::ygg::prph::PushPullDriver::Channel::D, 25.5);
+        // Get the set frequency 
+        f = yggdrasil_PushPullDriver_PWM_GetFrequency();
+        printf("F = %luHz\n", f);
+
+        // Set the duty to 25.5% (equals 255us high time with the settings above)
+        yggdrasil_PushPullDriver_PWM_SetDuty(PushPullDriverChannel_D, 25.5F);
+
+    .. code-tab:: cpp
+
+        // Set the pwm frequency to 1kHz with a resolution of 1000 steps
+        if (bsp::ygg::prph::PushPullDriver::PWM::setFrequency(1E3, 1000)) {
+            printf("Frequency and resolution successfully changed!\n");
+        }
+        else {
+            printf("Frequency and resolution could not be changed!\n");
+            /*
+            * Error handling
+            */
+        }
+
+        // Get the set frequency 
+        f = bsp::ygg::prph::PushPullDriver::PWM::getFrequency();
+        printf("F = %luHz\n", f);
+
+        // Set the duty to 25.5% (equals 255us high time with the settings above)
+        bsp::ygg::prph::PushPullDriver::PWM::setDuty(bsp::ygg::prph::PushPullDriver::Channel::D, 25.5F);
 
 What if the pwm can not be set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

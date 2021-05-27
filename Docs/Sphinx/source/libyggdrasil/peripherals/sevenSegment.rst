@@ -41,7 +41,7 @@ Example to display an unsigned integer
             yggdrasil_SevenSegment_SetUnsigned(1234);
 
             // Add a delay
-            core_delay(1);
+            core_Delay(1);
 
         }
 
@@ -69,7 +69,7 @@ Example to display an unsigned integer in hexadecimal
             yggdrasil_SevenSegment_SetHexadecimal(0xACDC);
 
             // Add a delay
-            core_delay(1);
+            core_Delay(1);
 
         }
 
@@ -97,7 +97,7 @@ Example to display an signed integer
             yggdrasil_SevenSegment_SetSigned(-123);
 
             // Add a delay
-            core_delay(1);
+            core_Delay(1);
 
         }
 
@@ -125,7 +125,7 @@ Example to display an floating point value
             yggdrasil_SevenSegment_SetFloatingPoint(-3.14);
 
             // Add a delay
-            core_delay(1);
+            core_Delay(1);
 
         }
 
@@ -157,7 +157,7 @@ The example below will print 6 to the second digit from the left.
             yggdrasil_SevenSegment_EnableDigit(1);
 
             // The delay is optional, since no multiplexing is done
-            core_delay(1);
+            core_Delay(1);
 
         }
 

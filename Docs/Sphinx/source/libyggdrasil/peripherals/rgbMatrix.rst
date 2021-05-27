@@ -136,7 +136,7 @@ Example to show all possible colors
             yggdrasil_RGBMatrix_Flush();
 
             cnt += 0.01;
-            core_delay(10);
+            core_Delay(10);
         }
 
     .. code-tab:: cpp 
