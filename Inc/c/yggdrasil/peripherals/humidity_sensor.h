@@ -50,6 +50,6 @@ enum HumiditySensorPrecision {
 };
 
 C_LINKAGE void yggdrasil_HumiditySensor_Init();
-C_LINKAGE float yggdrasil_HumiditySensor_GetTemperature(HumiditySensorPrecision precision);
-C_LINKAGE float yggdrasil_HumiditySensor_GetHumidity(HumiditySensorPrecision precision);
-C_LINKAGE void yggdrasil_HumiditySensor_EnableHeater(HumiditySensorHeat level);
+C_LINKAGE float yggdrasil_HumiditySensor_GetTemperature(enum HumiditySensorPrecision precision);
+C_LINKAGE float yggdrasil_HumiditySensor_GetHumidity(enum HumiditySensorPrecision precision);
+C_LINKAGE void yggdrasil_HumiditySensor_EnableHeater(enum HumiditySensorHeat level);

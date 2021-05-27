@@ -51,8 +51,8 @@ enum ColorSensorGain {
 };
 
 C_LINKAGE bool yggdrasil_ColorSensor_Init(void);
-C_LINKAGE void yggdrasil_ColorSensor_SetIntegrationTime(ColorSensorIntegrationTime integrationTime);
-C_LINKAGE void yggdrasil_ColorSensor_SetGain(ColorSensorGain gain);
+C_LINKAGE void yggdrasil_ColorSensor_SetIntegrationTime(enum ColorSensorIntegrationTime integrationTime);
+C_LINKAGE void yggdrasil_ColorSensor_SetGain(enum ColorSensorGain gain);
 C_LINKAGE void yggdrasil_ColorSensor_Enable(void);
 C_LINKAGE void yggdrasil_ColorSensor_Disable(void);
 C_LINKAGE u16  yggdrasil_ColorSensor_StartConversion(void);

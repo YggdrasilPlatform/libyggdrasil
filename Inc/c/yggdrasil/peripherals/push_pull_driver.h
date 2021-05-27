@@ -37,12 +37,12 @@ enum PushPullDriverChannel {
 	PushPullDriverChannel_D = 3,		///< Timer channel D
 };
 
-C_LINKAGE void yggdrasil_PushPullDriver_Servo_Set(PushPullDriverChannel channel, float percent);
-C_LINKAGE void yggdrasil_PushPullDriver_Servo_SetDeltaHighTime(PushPullDriverChannel channel, u16 delta);
+C_LINKAGE void yggdrasil_PushPullDriver_Servo_Set(enum PushPullDriverChannel channel, float percent);
+C_LINKAGE void yggdrasil_PushPullDriver_Servo_SetDeltaHighTime(enum PushPullDriverChannel channel, u16 delta);
 
-C_LINKAGE void yggdrasil_PushPullDriver_PWM_SetDuty(PushPullDriverChannel channel, float dutyCycle);
+C_LINKAGE void yggdrasil_PushPullDriver_PWM_SetDuty(enum PushPullDriverChannel channel, float dutyCycle);
 C_LINKAGE bool yggdrasil_PushPullDriver_PWM_SetFrequency(u32 frequency, u16 resolution);
-C_LINKAGE u32 yggdrasil_PushPullDriver_PWM_GetFrequency();
+C_LINKAGE u32  yggdrasil_PushPullDriver_PWM_GetFrequency();
 
-C_LINKAGE void yggdrasil_PushPullDriver_Out_Set(PushPullDriverChannel channel, bool state);
+C_LINKAGE void yggdrasil_PushPullDriver_Out_Set(enum PushPullDriverChannel channel, bool state);
 

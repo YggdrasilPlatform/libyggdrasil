@@ -65,7 +65,7 @@ namespace bsp::mid::drv {
 		operator float() const noexcept {
 			constexpr auto Channel = getHALChannel();
 
-			return float(HAL_DAC_GetValue(Context, Channel) + Offset, 0) / MaxValue;
+			return float(std::max(HAL_DAC_GetValue(Context, Channel) + Offset, 0)) / MaxValue;
 		}
 
 	private:

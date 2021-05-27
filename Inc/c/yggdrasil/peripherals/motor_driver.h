@@ -30,14 +30,14 @@
 /**
  * @brief Motor driver Channels
  */
-enum class MotorDriverChannel : u8 {
+enum MotorDriverChannel {
 	MotorDriverChannel_A = 0,		///< Channel A
 	MotorDriverChannel_B = 1,		///< Channel B
 };
 
 C_LINKAGE void yggdrasil_MotorDriver_Init();
 C_LINKAGE void yggdrasil_MotorDriver_Standby(bool stby);
-C_LINKAGE void yggdrasil_MotorDriver_SetSpeed(MotorDriverChannel channel, float speed);
+C_LINKAGE void yggdrasil_MotorDriver_SetSpeed(enum MotorDriverChannel channel, float speed);
 C_LINKAGE bool yggdrasil_MotorDriver_GetError();
 
 

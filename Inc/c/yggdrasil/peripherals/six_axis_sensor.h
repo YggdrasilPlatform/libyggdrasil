@@ -102,7 +102,7 @@ enum SixAxisSensorGyroOutputDataRange {
 	SixAxisSensorGyroOutputDataRange_12_5Hz   = 0x0B,	///< 12.5 measurements per second
 };
 
-C_LINKAGE bool yggdrasil_SixAxisSensor_Init(SixAxisSensorAccelFullScaleRange accelScale, SixAxisSensorGyroFullScaleRange gyroScale, SixAxisSensorAccelOutputDataRange accelOdr, SixAxisSensorGyroOutputDataRange gyroOdr);
+C_LINKAGE bool yggdrasil_SixAxisSensor_Init(enum SixAxisSensorAccelFullScaleRange accelScale, enum SixAxisSensorGyroFullScaleRange gyroScale, enum SixAxisSensorAccelOutputDataRange accelOdr, enum SixAxisSensorGyroOutputDataRange gyroOdr);
 C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetRotation();
 C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetAcceleration();
 C_LINKAGE float yggdrasil_SixAxisSensor_GetTemperature();
