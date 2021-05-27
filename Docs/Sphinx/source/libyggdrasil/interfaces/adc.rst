@@ -17,12 +17,21 @@ Writing to an ADC pin is not possible.
 
 The following code will read the current voltage after the Potentiometer.
 
-.. code-block:: cpp
+.. tabs::
 
-    constexpr auto ReferenceVoltage = 3.3;
+    .. code-tab:: c
 
-    float adcValue = bsp::ADCPotentiometer;
-    float voltage = adcValue * ReferenceVoltage;
+        const double ReferenceVoltage = 3.3;
+
+        float adcValue = yggdrasil_ADC_Read(ADCPotentiometer);
+        float voltage = adcValue * ReferenceVoltage;
+
+    .. code-tab:: cpp
+
+        constexpr auto ReferenceVoltage = 3.3;
+
+        float adcValue = bsp::ADCPotentiometer;
+        float voltage = adcValue * ReferenceVoltage;
 
 Available Pins
 --------------
@@ -49,14 +58,26 @@ Custom ADC
 In order to read the voltage of a ADC pin that has not been pre-defined by libyggdrasil, first it needs to be properly configured through the project's .ioc file. 
 Once this is done, the new ADC can be defined like this:
 
-.. code-block:: cpp
+.. tabs::
 
-    using ADConverter7 = bsp::drv::ADConverter<&hadc7, bsp::mid::drv::ADCChannel>;
+    .. code-tab:: c
 
-    static constexpr auto& MyADCChannel = ADConverter7::Channel<14>;
+        adc_t MyADCChannel = { &hadc7, 14 };
+
+    .. code-tab:: cpp
+
+        using ADConverter7 = bsp::drv::ADConverter<&hadc7, bsp::mid::drv::ADCChannel>;
+
+        static constexpr auto& MyADCChannel = ADConverter7::Channel<14>;
 
 and then used like all other ADCs.
 
-.. code-block:: cpp
+.. tabs::
 
-    float myADCValue = MyADCChannel;
+    .. code-tab:: c
+
+        float myADCValue = yggdrasil_ADC_Read(MyADCChannel);
+
+    .. code-tab:: cpp
+
+        float myADCValue = MyADCChannel;

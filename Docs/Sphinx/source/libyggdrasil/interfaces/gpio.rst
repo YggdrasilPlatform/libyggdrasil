@@ -10,23 +10,35 @@ GPIO Interface
 Simple Usage
 ------------
 
-GPIO pins in libyggdrasil can be used as if they were normal variables. Assigning true to them will turn the pin on, assigning false will turn it off.
-The current state of the pin can also be read back again.
-
 The following code will cause the blue User LED to light up, the yellow LED to turn off and the red LED to blink.
 
-.. code-block:: cpp
+.. tabs::
 
-    bsp::LedBlue = true;
-    bsp::LedYellow = false;
-    bsp::LedRed = !bsp::LedRed;
+    .. code-tab:: c
+
+        yggdrasil_GPIO_Set(LedBlue, true);
+        yggdrasil_GPIO_Set(LedYellow, false);
+        yggdrasil_GPIO_Toggle(LedRed);
+
+    .. code-tab:: cpp
+
+        bsp::LedBlue = true;
+        bsp::LedYellow = false;
+        bsp::LedRed = !bsp::LedRed;
 
 It's also possible to read and write multiple pins at once. For this use the following:
 
-.. code-block:: cpp
+.. tabs::
 
-    bsp::GPIOPortA::Out<0, 3> = 0b1010;
-    u8 bits = bsp::GPIOPortA::In<4, 7>;
+    .. code-tab:: c
+
+        yggdrasil_GPIO_SetMultiple(GPIOA, 0, 3, 0x0A);
+        u8 bits = yggdrasil_GPIO_GetMultiple(GPIOA, 4, 7);
+
+    .. code-tab:: cpp
+
+        bsp::GPIOPortA::Out<0, 3> = 0b1010;
+        u8 bits = bsp::GPIOPortA::In<4, 7>;
 
 This code turns Pin 1 and 3 of Port A on and Pin 0 and 2 off. Then it reads the values of pin 4 to 7 and stores the value into a variable.
 
@@ -76,13 +88,26 @@ Custom Pin
 In order to control a pin that has not been pre-defined by libyggdrasil, first it needs to be properly configured through the project's .ioc file. 
 Once this is done, the new pin, in this case the Port E Pin 7, can be defined like this:
 
-.. code-block:: cpp
+.. tabs::
 
-    auto& MyPin = bsp::GPIOPortE::Pin<7>;
+    .. code-tab:: c
+
+        gpio_t MyPin = { GPIOE, 7 };
+
+    .. code-tab:: cpp
+
+        auto& MyPin = bsp::GPIOPortE::Pin<7>;
 
 and then used like all other GPIO Pins.
 
-.. code-block:: cpp
+.. tabs::
 
-    if (MyPin == true)
-        LedGreen = true;
+    .. code-tab:: c
+
+        if (yggdrasil_GPIO_Get(MyPin))
+            LedGreen = true;
+
+    .. code-tab:: cpp
+
+        if (MyPin == true)
+            LedGreen = true;

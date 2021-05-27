@@ -16,11 +16,19 @@ Reading will read back the current value stored in the DAC.
 
 The following code will apply 2V to the DAC A header.
 
-.. code-block:: cpp
+.. tabs::
 
-    constexpr auto ReferenceVoltage = 3.3;
+    .. code-tab:: c
 
-    bsp::DACA = 2.0 / ReferenceVoltage;
+        const double ReferenceVoltage = 3.3;
+
+        yggdrasil_DAC_Write(DACA, 2.0 / ReferenceVoltage);
+
+    .. code-tab:: cpp
+
+        constexpr auto ReferenceVoltage = 3.3;
+
+        bsp::DACA = 2.0 / ReferenceVoltage;
 
 Available Pins
 --------------
@@ -39,14 +47,26 @@ Custom DAC
 In order to apply a voltage to a DAC pin that has not been pre-defined by libyggdrasil, first it needs to be properly configured through the project's .ioc file. 
 Once this is done, the new DAC can be defined like this:
 
-.. code-block:: cpp
+.. tabs::
 
-    using DAConverter2 = bsp::drv::DAConverter<&hdac2, bsp::mid::drv::DACChannel>;
+    .. code-tab:: c
 
-    static constexpr auto &MyDAC = DAConverter2::Channel<1>;
+        dac_t MyDAC = { &hdac, 1 };
+
+    .. code-tab:: cpp
+
+        using DAConverter2 = bsp::drv::DAConverter<&hdac2, bsp::mid::drv::DACChannel>;
+
+        static constexpr auto &MyDAC = DAConverter2::Channel<1>;
 
 and then used like all other DACs.
 
-.. code-block:: cpp
+.. tabs::
 
-    MyDAC = 0.5 / ReferenceVoltage;
+    .. code-tab:: cpp
+
+        yggdrasil_DAC_Write(MyDAC, 0.5 / ReferenceVoltage);
+
+    .. code-tab:: cpp
+
+        MyDAC = 0.5 / ReferenceVoltage;
