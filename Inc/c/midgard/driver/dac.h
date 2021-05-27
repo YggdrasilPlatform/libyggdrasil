@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Yggdrasil -                           *
+  *                          - Midgard -                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,30 +17,23 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/adc.h
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief ADC abstraction implementation for Midgard
   */
 
-#pragma once
+#include <c/common/types.h>
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
+#include <stm32f7xx_hal.h>
 
-/**
- * @brief RGBA16 color type
- */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+typedef struct {
+	DAC_HandleTypeDef *interface;
+	u8 channel;
+
+	u16 offset;
+	u16 maxValue;
+} dac_t;
+
+void yggdrasil_DAC_Write(dac_t dac, float value);
+float yggdrasil_DAC_Read(dac_t dac);

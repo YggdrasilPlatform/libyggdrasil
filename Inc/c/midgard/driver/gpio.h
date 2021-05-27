@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Yggdrasil -                           *
+  *                          - Midgard -                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,30 +17,31 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/gpio.h
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief GPIO Pin abstraction implementation for Midgard
   */
 
-#pragma once
+#include <c/common/types.h>
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
+#include <stm32f7xx_hal.h>
 
-/**
- * @brief RGBA16 color type
- */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+#define LOW_ACTIVE true
+#define HIGH_ACTIVE false
+
+typedef GPIO_TypeDef* port_t;
+typedef u8 pin_t;
+
+typedef struct {
+	port_t port;
+	pin_t pin;
+	bool lowActive;
+} gpio_t;
+
+bool yggdrasil_GPIO_Get(gpio_t gpio);
+void yggdrasil_GPIO_Set(gpio_t gpio, bool state);
+void yggdrasil_GPIO_Toggle(gpio_t gpio);
+
+u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to);
+void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value);

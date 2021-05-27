@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Yggdrasil -                           *
+  *                          - Common -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,30 +17,24 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
-  *  @ingroup yggdrasil
+  *  @file cpp/common/attributes.hpp
+  *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief Commonly used C++ and GNU attributes
   */
 
 #pragma once
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
+#define LIKELY 					__attribute__((likely))
+#define UNLIKELY 				__attribute__((unlikely))
+#define DEPRECTATED(reason) 	__attribute__((deprecated))
+#define NO_RETURN 				__attribute__((noreturn))
 
-/**
- * @brief RGBA16 color type
- */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+#define WEAK 					__attribute__((weak))
+#define ALWAYS_INLINE 			__attribute__((always_inline)) inline
+#define PACKED 					__attribute__((packed))
+#define NAKED 					__attribute__((naked))
+#define SECTION(name) 			__attribute__((section(name)))
+#define ALIGNED(alignment) 		__attribute__((aligned(alignment)))
+
+#define C_LINKAGE

@@ -17,30 +17,18 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
+  *  @file common/interrupts.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief Driver to use the TCS3472 color sensor
   */
 
-#pragma once
+#include <cpp/common/attributes.hpp>
+#include <cpp/common/types.hpp>
+#include <cpp/common/utils.hpp>
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
+#include <yggdrasil.h>
 
-/**
- * @brief RGBA16 color type
- */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+C_LINKAGE void handleInterrupts() {
+	bsp::drv::InterruptManager::handleInterrupt();
+}

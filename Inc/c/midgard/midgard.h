@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Yggdrasil -                           *
+  *                          - Midgard -                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,30 +17,13 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/midgard.h
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief Top-level include file for Midgard
   */
 
 #pragma once
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
 
-/**
- * @brief RGBA16 color type
- */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+#include <c/midgard/interfaces.h>

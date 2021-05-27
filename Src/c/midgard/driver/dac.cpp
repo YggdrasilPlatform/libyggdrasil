@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Yggdrasil -                           *
+  *                         - Midgard -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,30 +17,43 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
+  *  @file midgard/driver/dac.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief DAC abstraction implementation for Midgard
   */
 
-#pragma once
+#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
+	#include <cpp/common/attributes.hpp>
+	#include <cpp/common/types.hpp>
+	#include <cpp/common/utils.hpp>
 
-/**
- * @brief RGBA16 color type
- */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+	#include <c/midgard/driver/dac.h>
+
+	#include <yggdrasil.h>
+
+	#include <math.h>
+
+	static u32 getHALChannel(u8 index) {
+		switch (index) {
+			case 1:  return DAC_CHANNEL_1;
+			case 2:  return DAC_CHANNEL_2;
+			default: bsp::unreachable();
+		}
+	}
+
+	void yggdrasil_DAC_Write(dac_t dac, float value) {
+		u32 channel = getHALChannel(dac.channel);
+
+		HAL_DAC_SetValue(dac.interface, channel, DAC_ALIGN_12B_R, (u32)(fmax(value * dac.maxValue - dac.offset, 0.0F)));
+		HAL_DAC_Start(dac.interface, channel);
+	}
+
+	float yggdrasil_DAC_Read(dac_t dac) {
+		u32 channel = getHALChannel(dac.channel);
+
+		return ((float)fmax(HAL_DAC_GetValue(dac.interface, channel) + dac.offset, 0)) / dac.maxValue;
+	}
+
+#endif

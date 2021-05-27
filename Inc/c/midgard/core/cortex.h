@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Yggdrasil -                           *
+  *                          - Midgard -                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,30 +17,47 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/types.hpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/core/cortex.hpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Common type definitions used within drivers for yggdrasil
+  *  @brief Core control functions
   */
 
 #pragma once
 
-/**
- * @brief RGBA8 color type
- */
-typedef union {
-	struct {
-		u8 r, g, b, a;
-	};
-	u32 rgba;
-} RGBA8;
+#include <c/common/types.h>
+#include <c/common/attributes.h>
+
+#include <core_cm7.h>
 
 /**
- * @brief RGBA16 color type
+ * @brief Disables all interrupts
  */
-typedef union {
-	struct {
-		u16 r, g, b, a;
-	};
-	u64 rgba;
-} RGBA16;
+ALWAYS_INLINE void core_DisableInterrupts() {
+	asm volatile ("cpsid i" : : : "memory");
+}
+
+/**
+ * @brief Enables all interrupts
+ */
+ALWAYS_INLINE void core_EnableInterrupts() {
+	asm volatile ("cpsie i" : : : "memory");
+}
+
+/**
+ * @brief Sets the base address of the interrupt vector table
+ * @param address Base address
+ */
+ALWAYS_INLINE void core_SetInterruptVectorBase(addr_t address) {
+	SCB->VTOR = address;
+}
+
+/**
+ * @brief Delays execution by a certain number of milliseconds
+ * @param ms Number of milliseconds to wait
+ */
+ALWAYS_INLINE void core_Delay(u32 ms) {
+	u32 startTime = HAL_GetTick();
+
+	while (HAL_GetTick() < startTime + ms);
+}

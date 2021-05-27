@@ -149,13 +149,13 @@
 
 		namespace seven_segment {
 
-			static constexpr auto& A = GPIOPortG::Pin<0>;
-			static constexpr auto& B = GPIOPortG::Pin<1>;
-			static constexpr auto& C = GPIOPortG::Pin<2>;
-			static constexpr auto& D = GPIOPortG::Pin<3>;
-			static constexpr auto& E = GPIOPortG::Pin<4>;
-			static constexpr auto& F = GPIOPortG::Pin<5>;
-			static constexpr auto& G = GPIOPortG::Pin<6>;
+			static constexpr auto& A  = GPIOPortG::Pin<0>;
+			static constexpr auto& B  = GPIOPortG::Pin<1>;
+			static constexpr auto& C  = GPIOPortG::Pin<2>;
+			static constexpr auto& D  = GPIOPortG::Pin<3>;
+			static constexpr auto& E  = GPIOPortG::Pin<4>;
+			static constexpr auto& F  = GPIOPortG::Pin<5>;
+			static constexpr auto& G  = GPIOPortG::Pin<6>;
 			static constexpr auto& DP = GPIOPortG::Pin<7>;
 
 			static constexpr auto& All = GPIOPortG::Out<0,7>;
