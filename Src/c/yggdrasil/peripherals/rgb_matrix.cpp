@@ -51,13 +51,6 @@
 		RGBMatrix::setLed(index, bsp::bit_cast<bsp::ygg::RGBA8>(color));
 	}
 
-	C_LINKAGE void yggdrasil_RGBMatrix_SetLeds(u8 leds[9], RGBA8 color) {
-		std::array<u8, 9> cppLeds;
-		std::copy(leds, leds + 9, cppLeds.begin());
-
-		RGBMatrix::setLeds(cppLeds, bsp::bit_cast<bsp::ygg::RGBA8>(color));
-	}
-
 	C_LINKAGE void yggdrasil_RGBMatrix_SetLedMasked(u16 enableMask, RGBA8 color) {
 		RGBMatrix::setLedMasked(enableMask, bsp::bit_cast<bsp::ygg::RGBA8>(color));
 

@@ -31,7 +31,6 @@ C_LINKAGE void yggdrasil_RGBMatrix_Enable();
 C_LINKAGE void yggdrasil_RGBMatrix_Disable();
 C_LINKAGE void yggdrasil_RGBMatrix_Clear();
 C_LINKAGE void yggdrasil_RGBMatrix_SetLed(u8 index, RGBA8 color);
-C_LINKAGE void yggdrasil_RGBMatrix_SetLeds(u8 leds[9], RGBA8 color);
 C_LINKAGE void yggdrasil_RGBMatrix_SetLedMasked(u16 enableMask, RGBA8 color);
 C_LINKAGE void yggdrasil_RGBMatrix_Dice(u8 number, RGBA8 color);
 C_LINKAGE void yggdrasil_RGBMatrix_Flush();
