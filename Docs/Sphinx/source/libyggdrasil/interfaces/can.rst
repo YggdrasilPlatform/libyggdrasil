@@ -8,6 +8,7 @@ CAN Interface
 
 .. seealso::
     * `ISO1044BDR Datasheet <_static/datasheets/yggdrasil/iso1044bdr.pdf>`_ 
+    * :ref:`CAN Connector <CanConnector>`
 
 Simple Usage
 ------------
@@ -24,19 +25,21 @@ The example below shows how to write to the CAN bus.
 
     .. code-tab:: c
 
-         // Send on standard ID
- 
+        // Send on standard ID
+        u32 txdata = 0xAABBCCDD;
+        yggdrasil_CAN_Write(CANA, 0x123, &txdata, sizeof(txdata));
 
-         // Send on extended ID
+        // Send on extended ID
+        yggdrasil_CAN_Write(CANA, 0x12345, &txdata, sizeof(txdata));
 
 
     .. code-tab:: cpp
 
-         // Send on standard ID
-         bsp::CANA::write(0x123, 0xAABBCCDD);
+        // Send on standard ID
+        bsp::CANA::write(0x123, 0xAABBCCDD);
 
-         // Send on extended ID
-         bsp::CANA::write(0x12345, 0xAABBCCDD);
+        // Send on extended ID
+        bsp::CANA::write(0x12345, 0xAABBCCDD);
 
 
 The code below shows how to read 4 bytes from the bus. This function is polling.
@@ -45,13 +48,15 @@ The code below shows how to read 4 bytes from the bus. This function is polling.
 
     .. code-tab:: c
 
-         // Receive 4 bytes
-
+        // Receive 4 bytes
+        u32 rxdata;
+        u32 id;
+        yggdrasil_CAN_Read(CANA, &id,  &rxdata, sizeof(rxdata));
 
     .. code-tab:: cpp
 
-         // Receive 4 bytes
-         auto packet = bsp::CANA::read<std::array<u8, 4>>();
+        // Receive 4 bytes
+        auto packet = bsp::CANA::read<std::array<u8, 4>>();
 
 
 The following code will do a simple echo for a message of 4 bytes. 
@@ -60,14 +65,27 @@ The following code will do a simple echo for a message of 4 bytes.
 
     .. code-tab:: c
 
-         // Simple echo
-
+        // Simple echo
+        u32 data;
+        u32 id = 0;
+        yggdrasil_CAN_Read(CANA, &id,  &data, sizeof(data));
+        yggdrasil_CAN_Write(CANA, id, &data, sizeof(data));
 
     .. code-tab:: cpp
 
-         // Simple echo
-         bsp::CANA::write(bsp::CANA::read<std::array<u8, 4>>());
+        // Simple echo
+        bsp::CANA::write(bsp::CANA::read<std::array<u8, 4>>());
 
+Available Pins
+--------------
+
++-------+-----------------------------+
+| Name  | Description                 |
++=======+=============================+
+| CANA  | CAN screw terminal A        |
++-------+-----------------------------+
+| CANB  | CAN screw terminal B        |
++-------+-----------------------------+
 
 Filter Banks
 ------------
@@ -110,50 +128,44 @@ Code example to accept ID 0x400 and 0x401
 
     .. code-tab:: c
 
-         // Set the filter bank 0 to accept ID 0x400 and 0x401 o
+        // Set the filter bank 0 to accept ID 0x400 and 0x401 
+        yggdrasil_CAN_SetStdFilter(CANA, 0, 0x400, 0x7FE);
 
 
     .. code-tab:: cpp
 
-         // Set the filter bank 0 to accept ID 0x400 and 0x401 
-         bsp::CANA::setStdFilter(0, 0x400, 0x7FE);
+        // Set the filter bank 0 to accept ID 0x400 and 0x401 
+        bsp::CANA::setStdFilter(0, 0x400, 0x7FE);
 
 
-The simplest way to accept multiple IDs, is to you different filter banks. If you just want to accept one ID, the mask can be left out. The mask will automatically be set to 0x7FF.
+The simplest way to accept multiple IDs, is to use different filter banks and just accept one ID per bank. 
 
 .. tabs::
 
     .. code-tab:: c
 
-         // Simple echo
+        // Set the filter bank 0 to accept ID 0x100
+        yggdrasil_CAN_SetStdFilter(CANA, 0, 0x100, 0x7FF);
 
+        // Set the filter bank 1 to accept ID 0x105
+        yggdrasil_CAN_SetStdFilter(CANA, 1, 0x105, 0x7FF);
 
     .. code-tab:: cpp
 
-         // Set the filter bank 0 to accept ID 0x100
-         bsp::CANA::setStdFilter(0, 0x100);
-         
-         // Set the filter bank 1 to accept ID 0x105
-         bsp::CANA::setStdFilter(1, 0x105);
+        // The mask will automatically be set to 0x7FF and can be left out.
+        // Set the filter bank 0 to accept ID 0x100
+        bsp::CANA::setStdFilter(0, 0x100);
 
+        // Set the filter bank 1 to accept ID 0x105
+        bsp::CANA::setStdFilter(1, 0x105);
 
-Available Pins
---------------
-
-+-------+-----------------------------+
-| Name  | Description                 |
-+=======+=============================+
-| CANA  | CAN screw terminal A        |
-+-------+-----------------------------+
-| CANB  | CAN screw terminal B        |
-+-------+-----------------------------+
 
 Custom CAN
 -----------
 
 .. note::
 
-    For a custom CAN interface a external CAN FD Transceiver is needed.
+    For a custom CAN interface a external FD CAN Transceiver is needed.
 
 In order to use a FD CAN that has not been pre-defined by libyggdrasil, first it needs to be properly configured through the project's .ioc file. 
 Once this is done, the new CAN can be defined like this:
@@ -162,7 +174,7 @@ Once this is done, the new CAN can be defined like this:
 
     .. code-tab:: c
 
-     //BLABLA
+        const static can_t myCAN = { &hcan1 };
 
     .. code-tab:: cpp
 
