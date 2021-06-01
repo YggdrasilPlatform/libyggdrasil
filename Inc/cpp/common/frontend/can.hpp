@@ -55,14 +55,26 @@ namespace bsp::drv {
 
 		using Impl = CanImpl<Context>;
 
+		/**
+		 * @brief Can init function
+		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
+		 *
+		 * @return True when successfully stared, false when not
+		 */
 		static bool init(auto ... args) {
 			return Impl::init(args...);
 		}
 
+		/**
+		 * @brief Can enable
+		 */
 		static bool enable() {
 			return Impl::enable();
 		}
 
+		/**
+		 * @brief Can disable
+		 */
 		static bool disable() {
 			return Impl::disable();
 		}
@@ -72,8 +84,7 @@ namespace bsp::drv {
 	     * @brief CAN read function
 	     *
 	     * @tparam T type to read
-	     * @param address Device address
-	     * @return Read data
+	     * @return Read data in a CANpacket
 	     */
 		template<typename T>
 		static CANPacket<T> read() {
@@ -90,8 +101,8 @@ namespace bsp::drv {
 	    /**
 	     * @brief CAN write function
 	     *
-	     * @param address Device address
-	     * @param value Data to write
+	     * @tparam T type to write
+	     * @param CANPacket CAN packet to write
 	     */
 		template<typename T>
 		static u32 write(CANPacket<T> packet) {
@@ -101,6 +112,13 @@ namespace bsp::drv {
 
 		}
 
+	    /**
+	     * @brief CAN write function
+	     *
+	     * @tparam T type to write
+	     * @param id CAN id
+	     * @param data Data to write
+	     */
 		template<typename T>
 		static u32 write(u32 id,  const T &data) {
 			static_assert(sizeof(T) <= 8, "CAN data can be 8 byte maximal");

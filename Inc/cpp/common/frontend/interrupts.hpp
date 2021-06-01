@@ -35,7 +35,7 @@ namespace bsp::drv {
 	struct InterruptManager {
 
 		static void handleInterrupt() {
-			bsp::LD1 = !bsp::LD1;
+			//bsp::LD1 = !bsp::LD1;
 		}
 
 	};

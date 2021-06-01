@@ -42,14 +42,28 @@ namespace bsp::mid::drv {
 	template<auto Context>
 	struct CAN {
 
+
+		/**
+		 * @brief Can init function
+		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
+		 *
+		 * @return True when successfully stared, false when not
+		 */
 		static bool init() {
-			return true;
+			setStdFilter(0, 0, 0);	// bank 0 will accept all IDs
+			return HAL_CAN_Start(Context) == HAL_OK;
 		}
 
+		/**
+		 * @brief Can enable
+		 */
 		static bool enable() {
 			return HAL_CAN_Start(Context) == HAL_OK;
 		}
 
+		/**
+		 * @brief Can disable
+		 */
 		static bool disable() {
 			return HAL_CAN_Stop(Context) == HAL_OK;
 		}
@@ -58,11 +72,11 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief CAN receive
 		 *
-		 * @tparam N Data size
-		 * @param address Device address
-	     * @param data Array for the read data
+		 * @param[out] id CAN ID
+		 * @param[out] extendedId CAN extended ID
+	     * @param[out] timestamp Timestamp
+	     * @param[out] data Received data
 		 */
-
 		static void read(u32 &id, u32 &extendedId, u32 &timestamp, std::array<u8, 8> &data) {
 			CAN_RxHeaderTypeDef rxHeader = {0};
 			while (HAL_CAN_GetRxFifoFillLevel(Context, CAN_RX_FIFO0) == 0);
@@ -75,9 +89,8 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief CAN write
 		 *
-		 * @tparam N Data size
-		 * @param address Device address
-	     * @param data Array to send
+		 * @tparam T type to write
+		 * @param packet CAN packet to write
 		 */
 		template<typename T>
 		static u32 write(bsp::drv::CANPacket<T> packet) {
@@ -101,6 +114,14 @@ namespace bsp::mid::drv {
 			return pTxMailbox;
 		}
 
+		/**
+		 * @brief Standard ID filter configuration function
+		 *
+		 * @param bank Filterbank 0 to 28
+		 * @param id Standard ID 0 to 0x7FF
+		 * @param mask Filtermask 0 to 0x7FF
+		 * @return True when successfully set, false when not
+		 */
 		static bool setStdFilter(u8 bank, u16 id, u16 mask) {
 			if (bank > 28) return false;
 			if (id > 0x7FF) return false;
@@ -123,7 +144,16 @@ namespace bsp::mid::drv {
 		}
 
 
-
+		/**
+		 * @brief Extended ID filter configuration function
+		 *
+		 * @param bank Filterbank 0 to 28
+		 * @param id Standard ID 0 to 0x1FFFFFFF
+		 * @param mask Filtermask 0 to 0x1FFFFFFF
+		 * @return True when successfully set, false when not
+		 *
+		 * @warning This function might have complications with PCAN
+		 */
 		static bool setExtFilter(u8 bank, u32 id, u32 mask) {
 			if (bank > 28) return false;
 			if (id > 0x1FFFFFFF) return false;
@@ -147,6 +177,12 @@ namespace bsp::mid::drv {
 			return true;
 		}
 
+		/**
+		 * @brief Filter bank disable
+		 *
+		 * @param bank Filterbank number
+		 * @return True when successfully disabled, false when not
+		 */
 		static bool disableFilter(u8 bank) {
 			if (bank > 28) return false;
 
