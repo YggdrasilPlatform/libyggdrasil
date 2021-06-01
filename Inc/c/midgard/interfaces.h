@@ -32,6 +32,7 @@
 #include <c/midgard/driver/gpio.h>
 #include <c/midgard/driver/adc.h>
 #include <c/midgard/driver/dac.h>
+#include <c/midgard/driver/can.h>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
@@ -136,5 +137,8 @@
 	const static gpio_t TC78Mode = { GPIOI, 12 };
 	const static gpio_t TC78Err  = { GPIOI, 13, LOW_ACTIVE };
 	const static gpio_t TC78Stby = { GPIOI, 14, LOW_ACTIVE };
+
+	const static can_t CANA = {&hcan1};
+	const static can_t CANB = {&hcan2};
 
 	#endif
