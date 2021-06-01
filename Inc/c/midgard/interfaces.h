@@ -138,7 +138,7 @@
 	const static gpio_t TC78Err  = { GPIOI, 13, LOW_ACTIVE };
 	const static gpio_t TC78Stby = { GPIOI, 14, LOW_ACTIVE };
 
-	const static can_t CANA = {&hcan1};
-	const static can_t CANB = {&hcan2};
+	const static can_t CANA = { &hcan1 };
+	const static can_t CANB = { &hcan2 };
 
 	#endif
