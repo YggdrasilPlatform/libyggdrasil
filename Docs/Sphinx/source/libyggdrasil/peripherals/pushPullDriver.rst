@@ -1,3 +1,5 @@
+.. _PpDriverPeripheral:
+
 Push Pull Driver
 ================
 **IXYS IX4310T Low side gate driver**

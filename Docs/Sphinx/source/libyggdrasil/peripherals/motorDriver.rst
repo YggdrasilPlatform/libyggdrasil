@@ -1,3 +1,5 @@
+.. _MotorDriverPeripheral:
+
 DC Motor Driver
 ===============
 **Toshiba TC78H660FTG dial H Bridge**
