@@ -25,6 +25,7 @@ This should only be used with the unmodified template as things may stop working
     uart
     spi
     i2c
+    can
     adc
     dac
     hash
