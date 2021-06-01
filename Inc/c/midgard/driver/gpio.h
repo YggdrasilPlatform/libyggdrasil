@@ -39,9 +39,9 @@ typedef struct {
 	bool lowActive;
 } gpio_t;
 
-bool yggdrasil_GPIO_Get(gpio_t gpio);
-void yggdrasil_GPIO_Set(gpio_t gpio, bool state);
-void yggdrasil_GPIO_Toggle(gpio_t gpio);
+C_LINKAGE bool yggdrasil_GPIO_Get(gpio_t gpio);
+C_LINKAGE void yggdrasil_GPIO_Set(gpio_t gpio, bool state);
+C_LINKAGE void yggdrasil_GPIO_Toggle(gpio_t gpio);
 
-u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to);
-void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value);
+C_LINKAGE u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to);
+C_LINKAGE void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value);

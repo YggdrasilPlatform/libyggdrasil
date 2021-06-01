@@ -35,4 +35,4 @@ typedef struct {
 	u16 maxValue;
 } adc_t;
 
-float yggdrasil_ADC_Read(adc_t adc);
+C_LINKAGE float yggdrasil_ADC_Read(adc_t adc);

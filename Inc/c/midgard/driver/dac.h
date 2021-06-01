@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file c/midgard/driver/adc.h
+  *  @file c/midgard/driver/dac.h
   *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief ADC abstraction implementation for Midgard
+  *  @brief DAC abstraction implementation for Midgard
   */
 
 #include <c/common/types.h>
@@ -35,5 +35,5 @@ typedef struct {
 	u16 maxValue;
 } dac_t;
 
-void yggdrasil_DAC_Write(dac_t dac, float value);
-float yggdrasil_DAC_Read(dac_t dac);
+C_LINKAGE void yggdrasil_DAC_Write(dac_t dac, float value);
+C_LINKAGE float yggdrasil_DAC_Read(dac_t dac);

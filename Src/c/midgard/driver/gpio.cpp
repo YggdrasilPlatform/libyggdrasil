@@ -33,13 +33,13 @@
 
 	#include <yggdrasil.h>
 
-	bool yggdrasil_GPIO_Get(gpio_t gpio) {
+	C_LINKAGE bool yggdrasil_GPIO_Get(gpio_t gpio) {
 		bool state = gpio.port->IDR & (1 << gpio.pin);
 
 		return gpio.lowActive ? !state : !!state;
 	}
 
-	void yggdrasil_GPIO_Set(gpio_t gpio, bool state) {
+	C_LINKAGE void yggdrasil_GPIO_Set(gpio_t gpio, bool state) {
 		state = gpio.lowActive ? !state : state;
 
 		if (state)
@@ -48,17 +48,17 @@
 			gpio.port->ODR &= ~(1 << gpio.pin);
 	}
 
-	void yggdrasil_GPIO_Toggle(gpio_t gpio) {
+	C_LINKAGE void yggdrasil_GPIO_Toggle(gpio_t gpio) {
 		yggdrasil_GPIO_Set(gpio, !yggdrasil_GPIO_Get(gpio));
 	}
 
-	u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to) {
+	C_LINKAGE u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to) {
 		u32 mask = ((1ULL << (u64)(to - from + 1)) - 1) << from;
 
 		return (port->IDR & mask) >> from;
 	}
 
-	void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value) {
+	C_LINKAGE void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value) {
 		u32 mask = ((1ULL << (u64)(to - from + 1)) - 1) << from;
 
 		port->ODR = (port->ODR & ~mask) | (((u32)value << from) & mask);

@@ -43,14 +43,14 @@
 		}
 	}
 
-	void yggdrasil_DAC_Write(dac_t dac, float value) {
+	C_LINKAGE void yggdrasil_DAC_Write(dac_t dac, float value) {
 		u32 channel = getHALChannel(dac.channel);
 
 		HAL_DAC_SetValue(dac.interface, channel, DAC_ALIGN_12B_R, (u32)(fmax(value * dac.maxValue - dac.offset, 0.0F)));
 		HAL_DAC_Start(dac.interface, channel);
 	}
 
-	float yggdrasil_DAC_Read(dac_t dac) {
+	C_LINKAGE float yggdrasil_DAC_Read(dac_t dac) {
 		u32 channel = getHALChannel(dac.channel);
 
 		return ((float)fmax(HAL_DAC_GetValue(dac.interface, channel) + dac.offset, 0)) / dac.maxValue;
