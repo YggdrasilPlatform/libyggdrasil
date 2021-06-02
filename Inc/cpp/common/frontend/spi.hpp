@@ -53,6 +53,9 @@ namespace bsp::drv {
 
 		using Impl = SPIImpl<Context>;
 
+		/**
+		 * @brief SPI initialization
+		 */
 		static bool init(auto ... args) {
 			return Impl::init(args...);
 		}

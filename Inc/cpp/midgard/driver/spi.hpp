@@ -42,6 +42,9 @@ namespace bsp::mid::drv {
 	template<auto Context>
 	struct SPI {
 
+		/**
+		 * @brief SPI initialization
+		 */
 		static bool init() {
 			return true;
 		}
@@ -77,7 +80,7 @@ namespace bsp::mid::drv {
 		 */
 		static void setMode(bsp::drv::SPIMode mode) {
 			while (HAL_SPI_GetState(Context) == HAL_SPI_STATE_BUSY);
-		    hspi2.Instance->CR1 = (hspi2.Instance->CR1 & ~0b11) | enumValue(mode);
+			Context->Instance->CR1 = (Context->Instance->CR1 & ~0b11) | enumValue(mode);
 		}
 
 	};
