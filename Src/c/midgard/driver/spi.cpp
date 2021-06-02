@@ -36,41 +36,18 @@
 	#include <math.h>
 
 
-	/**
-	 * @brief SPI initialization
-	 */
 	C_LINKAGE bool yggdrasil_SPI_Init(spi_t spi) {
 		return true;
 	}
 
-	/**
-	 * @brief SPI write
-	 *
-	 * @param spi SPI handle
-	 * @param data Data to transmit
-	 * @param size Size of the data to transmit
-	 */
 	C_LINKAGE void yggdrasil_SPI_Write(spi_t spi, void *data, size_t size) {
 		HAL_SPI_Transmit(spi.interface, (u8 *)data, size, HAL_MAX_DELAY);
 	}
 
-	/**
-	 * @brief SPI read
-	 *
-	 * @param spi SPI handle
-	 * @param[out] data Received data
-	 * @param size Size of the data to receive
-	 */
 	C_LINKAGE void yggdrasil_SPI_Read(spi_t spi, void *data, size_t size) {
 		HAL_SPI_Receive(spi.interface, (u8 *)data, size, HAL_MAX_DELAY);
 	}
 
-	/**
-	 * @brief Set the spi mode (CPOL and CPHA)
-	 *
-	 * @param mode SPI mode
-	 * @note This function wait until the SPI is not busy anymore and then the mode change will take place
-	 */
 	C_LINKAGE void yggdrasil_SPI_SetMode(spi_t spi, SPIMode mode) {
 		while (HAL_SPI_GetState(spi.interface) == HAL_SPI_STATE_BUSY);
 		spi.interface->Instance->CR1 = (spi.interface->Instance->CR1 & ~0b11) | mode;

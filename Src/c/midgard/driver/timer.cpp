@@ -37,58 +37,26 @@
 
 	/* Basic tim functions */
 
-	/**
-	 * @brief Timer initialization
-	 *
-	 * @param tim Timer handel
-	 */
 	C_LINKAGE bool yggdrasil_TIM_Init(tim_t tim) {
 		return true;
 	}
 
-	/**
-	 * @brief Timer enable
-	 *
-	 * @param tim Timer handel
-	 */
 	C_LINKAGE void yggdrasil_TIM_Enable(tim_t tim) {
 		tim.interface->Instance->CR1 = TIM_CR1_CEN;		// Enable the timer
 	}
 
-	/**
-	 * @brief Timer disable
-	 *
-	 * @param tim Timer handel
-	 */
 	C_LINKAGE void yggdrasil_TIM_Disable(tim_t tim) {
 		tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the timer
 	}
 
-	/**
-	 * @brief Get the counter value
-	 *
-	 * @param tim Timer handel
-	 * @return Actual timer count
-	 */
 	C_LINKAGE u32 yggdrasil_TIM_GetCount(tim_t tim) {
 		return tim.interface->Instance->CNT;
 	}
 
-    /**
-     * @brief Set the counter value
-     *
-     * @param tim Timer handel
-     * @param cnt New timer value
-     */
 	C_LINKAGE void yggdrasil_TIM_SetCount(tim_t tim, u32 cnt) {
 		tim.interface->Instance->CNT = cnt;
 	}
 
-    /**
-     * @brief Reset the counter value
-     *
-     * @param tim Timer handel
-     */
 	C_LINKAGE void yggdrasil_TIM_ResetCount(tim_t tim) {
 		tim.interface->Instance->CNT = 0;
 	}
@@ -120,13 +88,6 @@
 		return static_cast<float>(intDutyCycle) / static_cast<float>(arr) * 100.0F;
 	}
 
-    /**
-     * @brief Get the pwm frequency
-     * @note The frequency is for all channels the same
-     *
-     * @param tim Timer handel
-     * @return Frequency in Hz
-     */
 	C_LINKAGE u32 yggdrasil_TIM_GetPwmFrequency(tim_t tim) {
 		auto arr = tim.interface->Instance->ARR;
 		auto psc = (tim.interface->Instance->PSC + 1);
@@ -151,17 +112,6 @@
 		}
 	}
 
-	/**
-	 * @brief Set the pwm frequency and (optional) the maximal ticks within on cycle for all channels
-	 * @note The actual duty cycle for all channels will be restored after the changes
-	 * @note Implement a proper error handling, the function does not guarantee to be successful
-	 *
-	 * @param tim Timer handel
-	 * @param f_hz new frequency in hz
-	 * @param resolution of the pwm, for 0 the actual value will be used
-	 *
-	 * @return True when the adjustment was possible, false when the parameter did not match
-	 */
 	C_LINKAGE bool yggdrasil_TIM_SetPwmFrequency(tim_t tim, u32 f_hz, u32 resolution) {
 		u32 pclk1 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
 		u32 pclk2 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
@@ -221,12 +171,7 @@
 
 
 	/* Channel functions */
-	/**
-	 * @brief Checks if the time has an pwm module
-	 *
-	 * @param tim Timer handel
-	 * @return True or false
-	 */
+
 	static bool hasPwmModule(tim_t tim) {
 		if ((tim.interface->Instance == TIM6) ||			// Checks if the timer does not have a pwm module (less to check)
 				(tim.interface->Instance == TIM7) ||
@@ -238,13 +183,6 @@
 		return true;
 	}
 
-	/**
-	 * @brief Start PWM generation for the channel
-	 * @Note A duty cycle should be set with setDuty()
-	 *
-	 * @param tim Timer handel
-	 * @return True when successfully started, false when not
-	 */
 	C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_t tim) {
 		if(!hasPwmModule(tim)) return false;
 		switch(tim.channel) {
@@ -258,13 +196,6 @@
 		return true;
 	}
 
-	/**
-	 * @brief Stop PWM generation for the channel
-	 * @note This function disables the counter when no PWM channel is active
-	 *
-	 * @param tim Timer handel
-	 * @return True when successfully stopped, false when not
-	 */
 	C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_t tim) {
 		if(!hasPwmModule(tim)) return false;
 		switch(tim.channel) {
@@ -278,13 +209,6 @@
 		return true;
 	}
 
-	/**
-	 * @brief Start set pwm polarity
-	 *
-	 * @param tim Timer handel
-	 * @param highActive Set channel to high active when true
-	 * @return True when successfully switched, false when not
-	 */
 	C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_t tim,	bool highActive) {
 		if(!hasPwmModule(tim)) return false;
 		if(!highActive){
@@ -309,12 +233,6 @@
 		return true;
 	}
 
-	/**
-	 * @brief Set the duty cycle as a float value
-	 *
-	 * @param tim Timer handel
-	 * @param dutyCycle Duty cycle in % [0 100]
-	 */
 	C_LINKAGE bool yggdrasil_TIM_Channel_SetDutyCycle(tim_t tim, float dutyCycle) {
 		if(!hasPwmModule(tim)) return false;
 		dutyCycle = std::abs(dutyCycle);						// Make sure that the value is positive
@@ -370,7 +288,7 @@
 	 * @param passedTime Passed time in nanoseconds
 	 * @return Time passed formatted as a string
 	 */
-	void formatToString(u64 passedTime, char *buffer, size_t size) {
+	static void formatToString(u64 passedTime, char *buffer, size_t size) {
 		u32 s = passedTime / 1E9;
 		u16 ms = static_cast<u32>(passedTime / 1E6) % 1000;
 		u16 us =  static_cast<u32>(passedTime / 1E3) % 1000;
@@ -379,68 +297,30 @@
 		snprintf(buffer, size, "%lus %dms %dus %dns", s, ms, us, ns);
 	}
 
-	/**
-	 * @brief Start the counter
-	 *
-	 * @param tim Timer handel
-	 */
 	C_LINKAGE void yggdrasil_Profilecounter_Start(tim_t tim) {
 		tim.interface->Instance->CR1 = TIM_CR1_CEN;	// Enable the timer
 	}
 
-	/**
-	 * @brief Stop the counter
-	 *
-	 * @param tim Timer handel
-	 */
 	C_LINKAGE void yggdrasil_Profilecounter_Stop(tim_t tim) {
 		tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the timer
 	}
 
-	/**
-	 * @brief Reset the counter to 0
-	 *
-	 * @param tim Timer handel
-	 */
 	C_LINKAGE void yggdrasil_Profilecounter_Reset(tim_t tim) {
 		tim.interface->Instance->CNT = 0;
 	}
 
-	/**
-	 * @brief Get the time to an overflow
-	 *
-	 * @param tim Timer handel
-	 * @return Time to an overflow in a u64
-	 */
 	C_LINKAGE u64 yggdrasil_Profilecounter_GetTimeToOverflow(tim_t tim) {
 		return cntToNanoSeconds(tim, (1ULL << (tim.size * 8)) - 1);
 	}
 
-	/**
-	 * @brief Get the time to an overflow
-	 *
-	 * @return Time to an overflow formatted as a string
-	 */
 	C_LINKAGE void yggdrasil_Profilecounter_GetFormattedTimeToOverflow(tim_t tim, char *buffer, size_t size) {
 		formatToString(cntToNanoSeconds(tim, (1ULL << (tim.size * 8)) - 1), buffer, size);
 	}
 
-	/**
-	 * @brief Get the time passed time since the start
-	 *
-	 * @param tim Timer handel
-	 * @return Passed time in a u64
-	 */
 	C_LINKAGE u64 yggdrasil_Profilecounter_GetPassedTime(tim_t tim) {
 		return cntToNanoSeconds(tim, tim.interface->Instance->CNT);
 	}
 
-	/**
-	 * @brief Get the time passed time since the start
-	 *
-	 * @param tim Timer handel
-	 * @return Passed time formatted as a string
-	 */
 	C_LINKAGE void yggdrasil_Profilecounter_GetFormattedPassedTime(tim_t tim, char *buffer, size_t size) {
 		return formatToString(cntToNanoSeconds(tim, tim.interface->Instance->CNT), buffer, size);
 	}
@@ -466,13 +346,6 @@
 		return false;
 	}
 
-	/**
-	 * @brief Initialization function for the encoder
-	 * @note Default encoder mode is 96 steps per turn
-	 *
-	 * @param tim Timer handel
-	 * @return True when successfully enabled, false when not
-	 */
 	C_LINKAGE bool yggdrasil_Encoder_Init(tim_t tim) {
 		if(!hasEncoderModule(tim)) return false;							// Check if the timer got a pwm modul
 		tim.interface->Instance->CCER = TIM_CCER_CC1E | TIM_CCER_CC2E;		// Enable capture compare 1 and 2
@@ -481,13 +354,6 @@
 		return true;
 	}
 
-	/**
-	 * @brief Enable the encoder mode
-	 * @note This does only work for timer with a encoder modul
-	 *
-	 * @param tim Timer handel
-	 * @return True when successfully enabled, false when not
-	 */
 	C_LINKAGE bool yggdrasil_Encoder_Enable(tim_t tim) {
 		if(!hasEncoderModule(tim)) return false;						// Check if the timer got a pwm modul
 		tim.interface->Instance->CCER = TIM_CCER_CC1E | TIM_CCER_CC2E;	// Enable capture compare channel 1 and 2
@@ -495,13 +361,6 @@
 		return true;
 	}
 
-	/**
-	 * @brief Disable the encoder mode
-	 * @note This does only work for timer with a encoder modul
-	 *
-	 * @param tim Timer handel
-	 * @return True when successfully disabled, false when not
-	 */
 	C_LINKAGE bool yggdrasil_Encoder_Disable(tim_t tim) {
 		if(!hasEncoderModule(tim)) return false;							// Check if the timer got a pwm modul
 		tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;							// Disable the timer
@@ -509,44 +368,19 @@
 		return true;
 	}
 
-	/**
-	 * @brief Get the counter value
-	 * @note This does only work for timer with a encoder modul
-	 *
-	 * @param tim Timer handel
-	 * @return Actual timer count
-	 */
 	C_LINKAGE u32 yggdrasil_Encoder_GetCount(tim_t tim) {
 		return tim.interface->Instance->CNT;		// Read the counter value form the register
 	}
 
-	/**
-	 * @brief Set the encoder counter value
-	 *
-	 * @param tim Timer handel
-	 * @param cnt New counter value
-	 */
 	C_LINKAGE void yggdrasil_Encoder_SetCount(tim_t tim, u32 cnt) {
 		tim.interface->Instance->CNT = cnt;		// Write the new counter value to the register
 	}
 
-	/**
-	 * @brief Get the direction of the last rotation
-	 * @note This bit might not be accurate while turning the encoder
-	 *
-	 * @param tim Timer handel
-	 * @return Direction
-	 */
 	C_LINKAGE enum EncoderDirection yggdrasil_Encoder_GetDirection(tim_t tim) {
 		return (tim.interface->Instance->CR1 & TIM_CR1_DIR) ? EncoderDirectionCounterClockwise : EncoderDirectionClockwise;
 	}
 
-	/**
-	 * @brief Set the mode of the encoder (48 or 96 counts per turn)
-	 *
-	 * @param tim Timer handel
-	 * @param mode Mode selection
-	 */
+
 	C_LINKAGE void yggdrasil_Encoder_SetMoce(tim_t tim, enum EncoderMode mode) {
 		tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;											// Disable the timer
 		tim.interface->Instance->SMCR &= ~(TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1);					// Reset the mode bits

@@ -31,6 +31,27 @@ typedef struct {
 	UART_HandleTypeDef *interface;
 } uart_t;
 
+/**
+ * @brief UART initialization
+ *
+ * @param uart UART handle
+ */
 C_LINKAGE bool yggdrasil_UART_Init(uart_t uart);
+
+/**
+ * @brief UART transmit
+ *
+ * @param uart UART handle
+ * @param data Data to transmit
+ * @param size Size of the data to transmit
+ */
 C_LINKAGE void yggdrasil_UART_Transmit(uart_t uart, void *data, size_t size);
+
+/**
+ * @brief UART receive
+ *
+ * @param uart UART handle
+ * @param data Data to transmit
+ * @param size Size of the data to transmit
+ */
 C_LINKAGE void yggdrasil_UART_Receive(uart_t uart, void *data, size_t size);

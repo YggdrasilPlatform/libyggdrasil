@@ -33,6 +33,10 @@
 
 	#include <yggdrasil.h>
 
+	C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio){
+		return true;
+	}
+
 	C_LINKAGE bool yggdrasil_GPIO_Get(gpio_t gpio) {
 		bool state = gpio.port->IDR & (1 << gpio.pin);
 

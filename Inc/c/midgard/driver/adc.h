@@ -35,4 +35,10 @@ typedef struct {
 	u16 maxValue;
 } adc_t;
 
+/**
+ * @brief Get the adc value from the channel specified in the ADC handle
+ *
+ * @param adc ADC handle
+ * @return ADC value
+ */
 C_LINKAGE float yggdrasil_ADC_Read(adc_t adc);

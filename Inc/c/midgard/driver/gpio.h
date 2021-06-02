@@ -39,9 +39,52 @@ typedef struct {
 	bool lowActive;
 } gpio_t;
 
+/**
+ * @brief GPIO initialization
+ *
+ * @param gpio GPIO handle
+ */
+C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio);
+
+/**
+ * @brief Get GPIO state
+ *
+ * @param gpio GPIO handle
+ * @return GPIO state
+ */
 C_LINKAGE bool yggdrasil_GPIO_Get(gpio_t gpio);
+
+/**
+ * @brief Set GPIO state
+ *
+ * @param gpio GPIO handle
+ * @param state GPIO state
+ */
 C_LINKAGE void yggdrasil_GPIO_Set(gpio_t gpio, bool state);
+
+/**
+ * @brief Toggle GPIO
+ *
+ * @param gpio GPIO handle
+ */
 C_LINKAGE void yggdrasil_GPIO_Toggle(gpio_t gpio);
 
+/**
+ * @brief Get multiple GPIO states
+ *
+ * @param gpio GPIO handle
+ * @param from Start bit number
+ * @param to End bit number
+ * @return GPIO state
+ */
 C_LINKAGE u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to);
+
+/**
+ * @brief Set multiple GPIO states
+ *
+ * @param gpio GPIO handle
+ * @param from Start bit number
+ * @param to End bit number
+ * @value GPIO state
+ */
 C_LINKAGE void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value);

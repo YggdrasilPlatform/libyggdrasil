@@ -31,8 +31,34 @@ typedef struct {
 
 } rng_t;
 
+/**
+ * @brief RNG initialization
+ *
+ * @param rng RNG handel
+ */
 C_LINKAGE bool yggdrasil_RNG_Init(rng_t rng);
+
+/**
+ * @brief Get a random u8
+ *
+ * @param rng RNG handel
+ * @return u8 random number
+ */
 C_LINKAGE u8   yggdrasil_RNG_GetU8(rng_t rng);
+
+/**
+ * @brief Get a random u16
+ *
+ * @param rng RNG handel
+ * @return u16 random number
+ */
 C_LINKAGE u16  yggdrasil_RNG_GetU16(rng_t rng);
+
+/**
+ * @brief Get a random u32
+ *
+ * @param rng RNG handel
+ * @return u32 random number
+ */
 C_LINKAGE u32  yggdrasil_RNG_GetU32(rng_t rng);
 

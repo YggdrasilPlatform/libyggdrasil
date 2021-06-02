@@ -90,50 +90,20 @@
 		return Data;													// Return the calculated CRC
 	}
 
-	/**
-	 * @brief Hash initialization
-	 */
 	C_LINKAGE bool yggdrasil_HASH_Init(void){
 		return bsp::Hash::init();
 	}
 
-	/**
-	 * @brief Hardware accelerated CRC8 caluclation
-	 *
-	 * @param data Data to calculate CRC of
-	 * @param size Size of the data
-	 * @param initValue Start value
-	 * @param polynomial Used polynomial
-	 * @param xorOut Value to xor result value with
-	 */
 	C_LINKAGE u8   yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 polynomial, u8 xorOut) {
 		POLYSIZE = 0b10;	// 8 Bit polynomial
 		return calculate(data, size, initValue, polynomial) & 0xFF;
 	}
 
-	/**
-	 * @brief Hardware accelerated CRC16 caluclation
-	 *
-	 * @param data Data to calculate CRC of
-	 * @param size Size of the data
-	 * @param initValue Start value
-	 * @param polynomial Used polynomial
-	 * @param xorOut Value to xor result value with
-	 */
 	C_LINKAGE u16  yggdrasil_HASH_getCRC16(void *data, size_t size, u16 initValue, u16 polynomial, u16 xorOut) {
 		POLYSIZE = 0b01;	// 16 Bit polynomial
 		return calculate(data, size, initValue, polynomial) & 0xFFFF;
 	}
 
-	/**
-	 * @brief Hardware accelerated CRC32 caluclation
-	 *
-	 * @param data Data to calculate CRC of
-	 * @param size Size of the data
-	 * @param initValue Start value
-	 * @param polynomial Used polynomial
-	 * @param xorOut Value to xor result value with
-	 */
 	C_LINKAGE u32  yggdrasil_HASH_getCRC32(void *data, size_t size, u32 initValue, u32 polynomial, u32 xorOut) {
 		POLYSIZE = 0b00;	// 32 Bit polynomial
 		return calculate(data, size, initValue, polynomial) & 0xFFFF'FFFF;

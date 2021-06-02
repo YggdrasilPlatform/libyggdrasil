@@ -35,5 +35,18 @@ typedef struct {
 	u16 maxValue;
 } dac_t;
 
+/**
+ * @brief Set the dac value to the channel specified in the DAC handle
+ *
+ * @param dac DAC handle
+ * @param value DAC value
+ */
 C_LINKAGE void yggdrasil_DAC_Write(dac_t dac, float value);
+
+/**
+ * @brief Get the dac value from the channel specified in the DAC handle
+ *
+ * @param dac DAC handle
+ * @return DAC value
+ */
 C_LINKAGE float yggdrasil_DAC_Read(dac_t dac);

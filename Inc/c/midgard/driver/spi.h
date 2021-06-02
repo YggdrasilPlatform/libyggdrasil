@@ -42,7 +42,33 @@ enum SPIMode {
 	SPIMode_3 = 0b11,	///< CPOL = 1  |  CPHA = 1
 };
 
+/**
+ * @brief SPI initialization
+ */
 C_LINKAGE bool yggdrasil_SPI_Init(spi_t spi);
+
+/**
+ * @brief SPI write
+ *
+ * @param spi SPI handle
+ * @param data Data to transmit
+ * @param size Size of the data to transmit
+ */
 C_LINKAGE void yggdrasil_SPI_Write(spi_t spi, void *data, size_t size);
+
+/**
+ * @brief SPI read
+ *
+ * @param spi SPI handle
+ * @param[out] data Received data
+ * @param size Size of the data to receive
+ */
 C_LINKAGE void yggdrasil_SPI_Read(spi_t spi,  void *data, size_t size);
+
+/**
+ * @brief Set the spi mode (CPOL and CPHA)
+ *
+ * @param mode SPI mode
+ * @note This function wait until the SPI is not busy anymore and then the mode change will take place
+ */
 C_LINKAGE void yggdrasil_SPI_SetMode(spi_t spi, enum SPIMode mode);

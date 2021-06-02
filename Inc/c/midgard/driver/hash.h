@@ -27,8 +27,40 @@
 
 #include <stm32f7xx_hal.h>
 
-
+/**
+ * @brief Hash initialization
+ */
 C_LINKAGE bool yggdrasil_HASH_Init(void);
+
+/**
+ * @brief Hardware accelerated CRC8 caluclation
+ *
+ * @param data Data to calculate CRC of
+ * @param size Size of the data
+ * @param initValue Start value
+ * @param polynomial Used polynomial
+ * @param xorOut Value to xor result value with
+ */
 C_LINKAGE u8   yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 polynomial, u8 xorOut);
+
+/**
+ * @brief Hardware accelerated CRC16 caluclation
+ *
+ * @param data Data to calculate CRC of
+ * @param size Size of the data
+ * @param initValue Start value
+ * @param polynomial Used polynomial
+ * @param xorOut Value to xor result value with
+ */
 C_LINKAGE u16  yggdrasil_HASH_getCRC16(void *data, size_t size, u16 initValue, u16 polynomial, u16 xorOut);
+
+/**
+ * @brief Hardware accelerated CRC32 caluclation
+ *
+ * @param data Data to calculate CRC of
+ * @param size Size of the data
+ * @param initValue Start value
+ * @param polynomial Used polynomial
+ * @param xorOut Value to xor result value with
+ */
 C_LINKAGE u32  yggdrasil_HASH_getCRC32(void *data, size_t size, u32 initValue, u32 polynomial, u32 xorOut);

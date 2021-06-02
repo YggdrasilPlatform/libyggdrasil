@@ -40,22 +40,154 @@ enum DisplayOrientation {
 	Landscape	= 0x01
 };
 
+/*
+ * @brief Display initialization
+ *
+ * @param orientation Display orientation
+ * @return True when successful, false when not
+ */
 C_LINKAGE bool yggdrasil_Display_Init(enum DisplayOrientation orientation);
+
+/*
+ * @brief Display reset
+ */
 C_LINKAGE void yggdrasil_Display_Reset(void);
+
+/*
+ * @brief Enable the display
+ */
 C_LINKAGE void yggdrasil_Display_TurnOn(void);
+
+/*
+ * @brief Disable the display
+ */
 C_LINKAGE void yggdrasil_Display_TurnOff(void);
+
+/*
+ * @brief Get the display width
+ *
+ * @return display width
+ */
 C_LINKAGE u16  yggdrasil_Display_getWidth(void);
+
+/*
+ * @brief Get the display height
+ *
+ * @return display height
+ */
 C_LINKAGE u16  yggdrasil_Display_getHeight(void);
+
+/*
+ * @brief Set the color palette
+ *
+ * @param palettet Color palette
+ */
 C_LINKAGE void yggdrasil_Display_SetPalette(palette_t *palette);
+
+/*
+ * @brief Get the default color palette
+ *
+ * @return Default color palette
+ */
 C_LINKAGE palette_t yggdrasil_Display_GetDefaultPalette(void);
+
+/*
+ * @brief Get the framebuffer address
+ *
+ * @return framebuffer address
+ */
 C_LINKAGE void * yggdrasil_Display_GetFrameBufferAddress(void);
+
+/**
+ * @brief Clear the display to a color
+ *
+ * @param paletteIndex Index for the color
+ */
 C_LINKAGE void yggdrasil_Display_Clear(u8 paletteIndex);
+
+/**
+ * @brief Draw a rectangle
+ *
+ * @param x1 X Start coordinate
+ * @param y1 Y Start coordinate
+ * @param x2 X End coordinate
+ * @param y2 Y End coordinate
+ * @param colorIndex Index for the color
+ */
 C_LINKAGE void yggdrasil_Display_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex);
+
+/**
+ * @brief Draw a filled rectangle
+ *
+ * @param x1 X Start coordinate
+ * @param y1 Y Start coordinate
+ * @param x2 X End coordinate
+ * @param y2 Y End coordinate
+ * @param colorIndex Index for the color
+ */
 C_LINKAGE void yggdrasil_Display_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex);
+
+/**
+ * @brief Draw a single pixel
+ *
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @param colorIndex Index for the color
+ */
 C_LINKAGE void yggdrasil_Display_DrawPixel(u16 x, u16 y, u8 colorIndex);
+
+/**
+ * @brief Draw a line
+ *
+ * @param x1 X Start coordinate
+ * @param y1 Y Start coordinate
+ * @param x2 X End coordinate
+ * @param y2 Y End coordinate
+ * @param colorIndex Index for the color
+*/
 C_LINKAGE void yggdrasil_Display_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex);
+
+/**
+ * @brief Draw a cricle
+ *
+ * @param centerX X Position of the center
+ * @param centerY Y Position of the center
+ * @param readius Radius
+ * @param colorIndex Index for the color
+ */
 C_LINKAGE void yggdrasil_Display_DrawCircle(i16 centerX, i16 centerY, u16 radius, u8 colorIndex);
+
+/**
+ * @brief Draw a filled cricle
+ *
+ * @param centerX X Position of the center
+ * @param centerY Y Position of the center
+ * @param readius Radius
+ * @param colorIndex Index for the color
+ */
 C_LINKAGE void yggdrasil_Display_FillCircle(i16 centerX, i16 centerY, u16 radius, u8 colorIndex);
+
+/**
+ * @brief Draw a single character
+ *
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @param c Charachter
+ * @param colorIndex Index for the color
+ * @param font Font
+ */
 C_LINKAGE void yggdrasil_Display_DrawCharacter(u16 x, u16 y, char c, u8 colorIndex, Font *font);
+
+/**
+ * @brief Draw a string
+ *
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @param string String view
+ * @param colorIndex Index for the color
+ * @param font Font
+ */
 C_LINKAGE void yggdrasil_Display_DrawString(u16 x, u16 y, const char *string, u8 colorIndex, Font *font);
+
+
 
