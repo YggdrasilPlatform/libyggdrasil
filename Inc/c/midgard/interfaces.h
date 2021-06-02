@@ -35,8 +35,11 @@
 #include <c/midgard/driver/can.h>
 #include <c/midgard/driver/spi.h>
 #include <c/midgard/driver/i2c.h>
+#include <c/midgard/driver/uart.h>
 #include <c/midgard/driver/timer.h>
 #include <c/midgard/driver/display.h>
+#include <c/midgard/driver/hash.h>
+#include <c/midgard/driver/rng.h>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
