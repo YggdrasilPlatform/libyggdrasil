@@ -47,6 +47,9 @@ namespace bsp::mid::drv {
 		Random(const Random&) = delete;
 		auto operator=(const Random&) = delete;
 
+		/**
+		 * @brief RNG initialization
+		 */
 		static bool init() {
 			return true;
 		}

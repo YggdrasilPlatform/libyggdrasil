@@ -46,6 +46,9 @@ namespace bsp::drv {
 
 		using Impl = RandomImpl<Context>;
 
+		/**
+		 * @brief RNG initialization
+		 */
 		static bool init(auto ... args) {
 			return Impl::init(args...);
 		}

@@ -34,6 +34,7 @@ namespace bsp::drv {
 
 	/**
 	 * @brief Base class for the Hash abstraction
+	 *
 	 * @tparam Context Hash context
 	 * @tparam HashImpl Hash Implementation
 	 */
@@ -45,12 +46,16 @@ namespace bsp::drv {
 
 		using Impl = HashImpl<Context>;
 
+		/**
+		 * @brief Hash initialization
+		 */
 		static bool init(auto ... args) {
 			return Impl::init(args...);
 		}
 
 		/**
 		 * @brief Hardware accelerated CRC8 caluclation
+		 *
 		 * @param data Data to calculate CRC of
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
@@ -63,6 +68,7 @@ namespace bsp::drv {
 
 		/**
 		 * @brief Hardware accelerated CRC16 caluclation
+		 *
 		 * @param data Data to calculate CRC of
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
@@ -75,6 +81,7 @@ namespace bsp::drv {
 
 		/**
 		 * @brief Hardware accelerated CRC32 caluclation
+		 *
 		 * @param data Data to calculate CRC of
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial

@@ -47,6 +47,9 @@ namespace bsp::mid::drv {
 		Hash(const Hash&) = delete;
 		auto operator=(const Hash&) = delete;
 
+		/**
+		 * @brief Hash initialization
+		 */
 		static bool init() {
 			return true;
 		}

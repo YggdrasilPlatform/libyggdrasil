@@ -42,6 +42,9 @@ namespace bsp::mid::drv {
 	template<addr_t BaseAddress>
 	struct UART {
 
+		/**
+		 * @brief UART initialization
+		 */
 		static bool init() {
 			return true;
 		}

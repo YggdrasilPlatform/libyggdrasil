@@ -45,6 +45,9 @@ namespace bsp::drv {
 
 		using Impl = UARTImpl<Context>;
 
+		/**
+		 * @brief UART initialization
+		 */
 		static bool init(auto ... args) {
 			return Impl::init(args...);
 		}

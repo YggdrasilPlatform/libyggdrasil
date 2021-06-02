@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/spi.cpp
+  *  @file midgard/driver/display.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief SPI abstraction implementation for Midgard
+  *  @brief Display abstraction implementation for Midgard
   */
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
