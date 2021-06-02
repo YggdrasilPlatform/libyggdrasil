@@ -44,6 +44,7 @@ namespace bsp::drv {
 		Timer(Timer &&) = delete;
 
 		using Impl = TimerImpl<Context, Size>;
+
 	    /**
 	     * @brief Timer channel
 	     *
@@ -62,6 +63,9 @@ namespace bsp::drv {
 		 */
 		static inline auto& ProfileCounter = Impl::ProfileCounter;
 
+		/**
+		 * @brief Timer initialization
+		 */
 		static bool init(auto ... args) {
 			return Impl::init(args...);
 		}

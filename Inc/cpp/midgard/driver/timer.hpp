@@ -125,8 +125,10 @@ namespace bsp::mid::drv {
 		 * @brief Set the duty cycle as a float value
 		 *
 		 * @param dutyCycle Duty cycle in % [0 100]
+		 * @return True when successfully set, false when not
 		 */
-		ALWAYS_INLINE void setDutyCycle(float dutyCycle) const noexcept {
+		ALWAYS_INLINE bool setDutyCycle(float dutyCycle) const noexcept {
+			if(!hasPwmModule()) return false;
 			dutyCycle = std::abs(dutyCycle);						// Make sure that the value is positive
 			if(dutyCycle > 100) dutyCycle = 100;					// Limit the duty cycle to 100
 			Size arr = Context->Instance->ARR;						// Get auto reload register
@@ -139,6 +141,8 @@ namespace bsp::mid::drv {
 				case 4: Context->Instance->CCR4 = ccr; break;		// Set the duty cycle for channel 4
 				default: bsp::unreachable();
 			}
+
+			return true;
 		}
 
 	private:
@@ -359,7 +363,7 @@ namespace bsp::mid::drv {
 		}
 
 		/**
-		 * @brief Formats the passed tim ein ns to a string
+		 * @brief Formats the passed time in ns to a string
 		 *
 		 * @param passedTime Passed time in nanoseconds
 		 * @return Time passed formatted as a string
@@ -438,6 +442,9 @@ namespace bsp::mid::drv {
 	     */
 		static constexpr auto ProfileCounter = TimerProfileCounter<Context, Size>();
 
+		/**
+		 * @brief Timer initialization
+		 */
 		static bool init() {
 			return true;
 		}
@@ -470,7 +477,7 @@ namespace bsp::mid::drv {
 	    /**
 	     * @brief Set the counter value
 	     *
-	     * @param Size new timer value
+	     * @param cnt New timer value
 	     */
 		static void setCount(Size cnt) {
 			Context->Instance->CNT = cnt;
