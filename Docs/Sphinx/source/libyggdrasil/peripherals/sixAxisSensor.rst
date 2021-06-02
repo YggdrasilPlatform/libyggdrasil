@@ -1,3 +1,5 @@
+.. _SixAxisSensorPeripheral:
+
 6-Axis Sensor
 =============
 **TDK ICM-42605 Accelerometer & Gyroscope**

@@ -1,4 +1,4 @@
-.. _RngInterfaceCpp:
+.. _RngInterface:
 
 RNG Hardware
 ============

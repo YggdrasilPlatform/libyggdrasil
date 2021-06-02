@@ -1,3 +1,5 @@
+.. _JoystickPeripheral:
+
 Joystick
 ========
 | **Nintendo Switch Joysticks**

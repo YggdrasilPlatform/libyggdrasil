@@ -6,7 +6,7 @@ Grove Connectors
 Grove is a standardized connector for all sort of sensor extension boards developed by Seeed and others. 
 
 .. seealso::
-    * :ref:`I2C Hardware Driver <I2cInterfaceCpp>`
+    * :ref:`I2C Hardware Driver <I2cInterface>`
 
 Grove Power
 -----------

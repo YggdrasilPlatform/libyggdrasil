@@ -1,3 +1,5 @@
+.. _RtcPeripheral:
+
 Real Time Clock
 ===============
 **Micro Crystal RV-3028-C7 RTC**

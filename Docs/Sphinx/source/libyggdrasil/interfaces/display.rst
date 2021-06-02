@@ -1,4 +1,4 @@
-.. _DisplayInterfaceCpp:
+.. _DisplayInterface:
 
 Display Interface
 =================

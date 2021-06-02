@@ -1,4 +1,4 @@
-.. _AdcInterfaceCpp:
+.. _AdcInterface:
 
 ADC Interface
 =============

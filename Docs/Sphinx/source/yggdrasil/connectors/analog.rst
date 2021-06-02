@@ -6,8 +6,8 @@ Analog Header
 The analog header gives easy access to the two DAC channels ``DACA`` and ``DACB`` as well as the four ADC channels ``ADCA`` to ``ADCD``.
 
 .. seealso::
-    * :ref:`ADC Hardware Driver <AdcInterfaceCpp>`
-    * :ref:`DAC Hardware Driver <DacInterfaceCpp>`
+    * :ref:`ADC Hardware Driver <AdcInterface>`
+    * :ref:`DAC Hardware Driver <DacInterface>`
 
 Connector
 ---------

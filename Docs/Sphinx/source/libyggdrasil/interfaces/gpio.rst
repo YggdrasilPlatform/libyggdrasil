@@ -1,4 +1,4 @@
-.. _GpioInterfaceCpp:
+.. _GpioInterface:
 
 GPIO Interface
 ==============

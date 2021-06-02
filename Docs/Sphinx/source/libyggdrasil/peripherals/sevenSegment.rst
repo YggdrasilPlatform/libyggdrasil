@@ -1,3 +1,5 @@
+.. _SevenSegmentPeripheral:
+
 7-Segment Display
 =================
 **BROADCOM HDSP-A103 common cathode 7-Segment digit**

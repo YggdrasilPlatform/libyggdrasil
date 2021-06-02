@@ -1,4 +1,4 @@
-.. _UartInterfaceCpp:
+.. _UartInterface:
 
 UART Interface
 ==============

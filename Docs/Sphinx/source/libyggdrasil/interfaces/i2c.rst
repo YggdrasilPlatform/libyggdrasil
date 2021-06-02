@@ -1,4 +1,4 @@
-.. _I2cInterfaceCpp:
+.. _I2cInterface:
 
 I2C Interface
 =============

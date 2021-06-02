@@ -1,3 +1,5 @@
+.. _ColorSensorPeripheral:
+
 Color Sensor
 ============
 **ams TCS3472 Color Sensor**

@@ -6,10 +6,10 @@ Pmod Connectors
 Pmod is an interface used mainly in extension boards for development platforms and has multiple different types. 
 
 .. seealso::
-    * :ref:`UART Hardware Driver <UartInterfaceCpp>`
-    * :ref:`I2C Hardware Driver <I2cInterfaceCpp>`
-    * :ref:`SPI Hardware Driver <SpiInterfaceCpp>`
-    * :ref:`Timer Hardware Driver <TimerInterfaceCpp>`
+    * :ref:`UART Hardware Driver <UartInterface>`
+    * :ref:`I2C Hardware Driver <I2cInterface>`
+    * :ref:`SPI Hardware Driver <SpiInterface>`
+    * :ref:`Timer Hardware Driver <TimerInterface>`
 
 PMod Power
 ----------

@@ -1,4 +1,4 @@
-.. _HashInterfaceCpp:
+.. _HashInterface:
 
 Hashing Hardware
 ================

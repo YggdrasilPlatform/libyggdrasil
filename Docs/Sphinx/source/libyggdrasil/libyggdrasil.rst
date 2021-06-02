@@ -37,4 +37,3 @@ libyggdrasil is a Support Library designed specifically for the use with the Ygg
    languages/languages
    interfaces/interfaces
    peripherals/peripherals
-   connectors/connectors

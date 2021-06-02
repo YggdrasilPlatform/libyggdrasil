@@ -1,3 +1,5 @@
+.. _PressureSensorPeripheral:
+
 Pressure Sensor
 ===============
 **STMicroelectronics LPS22HBTR Nano pressure sensor**

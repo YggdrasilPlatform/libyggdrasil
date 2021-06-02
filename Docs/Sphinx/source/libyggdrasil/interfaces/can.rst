@@ -1,4 +1,4 @@
-.. _CanInterfaceCpp:
+.. _CanInterface:
 
 CAN Interface
 =============

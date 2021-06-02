@@ -1,3 +1,5 @@
+.. _HumiditySensorPeripheral:
+
 Humidity Sensor
 ===============
 **Sensirion SHT40-AD1B-R2 Humidity & Temperature sensor**

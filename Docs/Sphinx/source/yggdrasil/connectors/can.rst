@@ -6,7 +6,7 @@ CAN Connectors
 The CAN connectors give access to two, optionally terminated CAN interfaces. 
 
 .. seealso::
-    * :ref:`CAN Hardware Driver <CanInterfaceCpp>`
+    * :ref:`CAN Hardware Driver <CanInterface>`
 
 .. important::
     Both CAN connectors are Galvantically isolated from the rest of Yggdrasil. They need therefor be supplied externally using the screw terminals.

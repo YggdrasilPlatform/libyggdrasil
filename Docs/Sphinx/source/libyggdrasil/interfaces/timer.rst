@@ -1,4 +1,4 @@
-.. _TimerInterfaceCpp:
+.. _TimerInterface:
 
 Timer Hardware
 ==============

@@ -7,11 +7,11 @@ Raspberry Pi Header Connector
 | If needed, all pins can be configured to be normal GPIOs 
 
 .. seealso::
-    * :ref:`GPIO Hardware Driver <GpioInterfaceCpp>`
-    * :ref:`UART Hardware Driver <UartInterfaceCpp>`
-    * :ref:`I2C Hardware Driver <I2cInterfaceCpp>`
-    * :ref:`SPI Hardware Driver <SpiInterfaceCpp>`
-    * :ref:`Timer Hardware Driver <TimerInterfaceCpp>`
+    * :ref:`GPIO Hardware Driver <GpioInterface>`
+    * :ref:`UART Hardware Driver <UartInterface>`
+    * :ref:`I2C Hardware Driver <I2cInterface>`
+    * :ref:`SPI Hardware Driver <SpiInterface>`
+    * :ref:`Timer Hardware Driver <TimerInterface>`
 
 Connector
 ---------

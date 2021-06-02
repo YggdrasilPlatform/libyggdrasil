@@ -1,4 +1,4 @@
-.. _SpiInterfaceCpp:
+.. _SpiInterface:
 
 SPI Interface
 =============

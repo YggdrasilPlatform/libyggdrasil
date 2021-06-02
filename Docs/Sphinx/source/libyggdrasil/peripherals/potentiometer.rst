@@ -1,8 +1,10 @@
+.. _PotentiometerPeripheral:
+
 Potentiometer
 =============
 
 .. seealso::
-    * :ref:`ADC interface <AdcInterfaceCpp>`
+    * :ref:`ADC interface <AdcInterface>`
 
 
 Description

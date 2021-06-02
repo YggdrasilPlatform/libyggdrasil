@@ -1,4 +1,4 @@
-.. _DacInterfaceCpp:
+.. _DacInterface:
 
 DAC Interface
 =============

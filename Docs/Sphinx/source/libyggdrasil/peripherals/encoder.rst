@@ -1,8 +1,10 @@
+.. _EncoderPeripheral:
+
 Encoder
 =======
 
 .. seealso::
-    * :ref:`Timer interface <TimerInterfaceCpp>`
+    * :ref:`Timer interface <TimerInterface>`
 
 
 Description

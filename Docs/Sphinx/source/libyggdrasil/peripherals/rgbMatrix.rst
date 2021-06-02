@@ -1,3 +1,5 @@
+.. _RgbMatrixPeripheral:
+
 RGB LED Matrix
 ==============
 **SK9822 RGB LED**

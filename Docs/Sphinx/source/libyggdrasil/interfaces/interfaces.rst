@@ -16,19 +16,77 @@ This should only be used with the unmodified template as things may stop working
     implementation class of the current board as template parameters. The frontend is the common interface that gets accessed by the user. It then calls into the implementation
     to interact with the hardware.
 
+Interfaces
+----------
+
+.. seealso::
+    | **GPIO**
+    | General Purpose Input/Output
+    | :ref:`>>> <GpioInterface>`
+
+.. seealso::
+    | **ADC**
+    | Analog-Digital Converter
+    | :ref:`>>> <AdcInterface>`
+
+.. seealso::
+    | **DAC**
+    | Digital-Analog Converter
+    | :ref:`>>> <DacInterface>`
+
+.. seealso::
+    | **UART**
+    | Universal Asynchronous Receiver/Transmitter
+    | :ref:`>>> <UartInterface>`
+
+.. seealso::
+    | **SPI**
+    | Serial Peripheral Interface
+    | :ref:`>>> <SpiInterface>`
+
+.. seealso::
+    | **I2C**
+    | Inter-Integrated Circuits
+    | :ref:`>>> <I2cInterface>`
+
+.. seealso::
+    | **Display**
+    | Drawing to the screen
+    | :ref:`>>> <DisplayInterface>`
+
+.. seealso::
+    | **Timer**
+    | Counters, PWM and performance counters
+    | :ref:`>>> <TimerInterface>`
+
+.. seealso::
+    | **CAN**
+    | Controller Area Network
+    | :ref:`>>> <CanInterface>`
+
+.. seealso::
+    | **RNG**
+    | Random Number Generator
+    | :ref:`>>> <RngInterface>`
+
+.. seealso::
+    | **Hash**
+    | Hardware accelerated checksum and hashing algorithms
+    | :ref:`>>> <HashInterface>`
+
 .. toctree::
     :maxdepth: 1
     :caption: Contents:
     :hidden:
      
     gpio
+    adc
+    dac
     uart
     spi
     i2c
-    can
-    adc
-    dac
-    hash
-    rng
-    timer
     display
+    timer
+    can
+    rng
+    hash

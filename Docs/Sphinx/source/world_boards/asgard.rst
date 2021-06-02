@@ -1,3 +1,5 @@
+.. _AsgardBoard:
+
 Asgard
 ======
 

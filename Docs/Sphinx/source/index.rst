@@ -6,7 +6,6 @@ libyggdrasil Documentation
    :caption: Contents:
    :hidden:
    
-   yggdrasil
-   midgard
-   asgard
+   yggdrasil/yggdrasil
+   world_boards/world_boards
    libyggdrasil/libyggdrasil
