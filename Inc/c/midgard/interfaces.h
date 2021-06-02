@@ -34,6 +34,7 @@
 #include <c/midgard/driver/dac.h>
 #include <c/midgard/driver/can.h>
 #include <c/midgard/driver/spi.h>
+#include <c/midgard/driver/i2c.h>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
