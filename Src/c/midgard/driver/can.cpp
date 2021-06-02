@@ -36,9 +36,10 @@
 	#include <math.h>
 
 	/**
-	 * @brief Can init function
+	 * @brief CAN init function
 	 * @note Filter bank 0 will be set to 0 0 to accept all IDs
 	 *
+	 * @param can CAN handle
 	 * @return True when successfully stared, false when not
 	 */
 	C_LINKAGE bool yggdrasil_CAN_Init(can_t can) {
@@ -47,14 +48,18 @@
 	}
 
 	/**
-	 * @brief Can enable
+	 * @brief CAN enable
+	 *
+	 * @param can CAN handle
 	 */
 	C_LINKAGE bool yggdrasil_CAN_Enable(can_t can) {
 		return HAL_CAN_Start(can.interface) == HAL_OK;
 	}
 
 	/**
-	 * @brief Can disable
+	 * @brief CAN disable
+	 *
+	 * @param can CAN handle
 	 */
 	C_LINKAGE bool yggdrasil_CAN_Disable(can_t can) {
 		return HAL_CAN_Stop(can.interface) == HAL_OK;
@@ -64,6 +69,7 @@
 	/**
 	 * @brief CAN receive
 	 *
+	 * @param can CAN handle
 	 * @param[out] id CAN ID
 	 * @param[out] extendedId CAN extended ID
      * @param[out] timestamp Timestamp
@@ -115,6 +121,7 @@
 	/**
 	 * @brief Standard ID filter configuration function
 	 *
+	 * @param can CAN handle
 	 * @param bank Filterbank 0 to 28
 	 * @param id Standard ID 0 to 0x7FF
 	 * @param mask Filtermask 0 to 0x7FF
@@ -144,6 +151,7 @@
 	/**
 	 * @brief Filter bank disable
 	 *
+	 * @param can CAN handle
 	 * @param bank Filterbank number
 	 * @return True when successfully disabled, false when not
 	 */
