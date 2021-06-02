@@ -36,6 +36,7 @@
 #include <c/midgard/driver/spi.h>
 #include <c/midgard/driver/i2c.h>
 #include <c/midgard/driver/timer.h>
+#include <c/midgard/driver/display.h>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
