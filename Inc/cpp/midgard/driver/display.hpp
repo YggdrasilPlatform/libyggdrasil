@@ -45,6 +45,12 @@ namespace bsp::mid::drv {
 		};
 
 
+		/*
+		 * @brief Display initialization
+		 *
+		 * @param orientation Display orientation
+		 * @return True when successful, false when not
+		 */
 		static bool init(Orientation orientation = Orientation::Portrait) noexcept {
 			auto [hltdc, hdsi, hdma2d] = Context;
 
@@ -209,6 +215,9 @@ namespace bsp::mid::drv {
 			return true;
 		}
 
+		/*
+		 * @brief Display reset
+		 */
 		static void reset() noexcept {
 			using GPIOPortD = bsp::drv::GPIOPort<0x4002'0C00, bsp::mid::drv::GPIOPort>;
 			constexpr auto& DisplayReset = GPIOPortD::Pin<11, bsp::drv::Active::Low>;
@@ -219,46 +228,89 @@ namespace bsp::mid::drv {
 			core::delay(10);
 		}
 
+		/*
+		 * @brief Enable the display
+		 */
 		static void turnOn() noexcept {
 			const auto [hltdc, hdsi, hdma2d] = Context;
 
 		    HAL_DSI_ShortWrite(hdsi, Display::s_hdsiVideo.VirtualChannelID, DSI_DCS_SHORT_PKT_WRITE_P1, OTM8009A_CMD_DISPON, 0x00);
 		}
 
+		/*
+		 * @brief Disable the display
+		 */
 		static void turnOff() noexcept {
 			const auto [hltdc, hdsi, hdma2d] = Context;
 
 		    HAL_DSI_ShortWrite(hdsi, Display::s_hdsiVideo.VirtualChannelID, DSI_DCS_SHORT_PKT_WRITE_P1, OTM8009A_CMD_DISPOFF, 0x00);
 		}
 
+		/*
+		 * @brief Get the display width
+		 *
+		 * @return display width
+		 */
 		static inline u16 getWidth() {
 			return Display::s_xSize;
 		}
 
+		/*
+		 * @brief Get the display height
+		 *
+		 * @return display height
+		 */
 		static inline u16 getHeight() {
 			return Display::s_ySize;
 		}
 
+		/*
+		 * @brief Set the color palette
+		 *
+		 * @param palettet Color palette
+		 */
 		static inline void setPalette(const std::array<u32, 256> &palette) {
 			const auto [hltdc, hdsi, hdma2d] = Context;
 
 			HAL_LTDC_ConfigCLUT(hltdc, const_cast<u32*>(palette.data()), palette.size(), 0);
 		}
 
+		/*
+		 * @brief Get the default color palette
+		 *
+		 * @return Default color palette
+		 */
 		static std::array<u32, 256> getDefaultPalette() {
 			return std::array<u32, 256> {
 				0xFF000000, 0xFF00004E, 0xFF00009C, 0xFF0000EA, 0xFF002400, 0xFF00244E, 0xFF00249C, 0xFF0024EA, 0xFF004800, 0xFF00484E, 0xFF00489C, 0xFF0048EA, 0xFF006C00, 0xFF006C4E, 0xFF006C9C, 0xFF006CEA, 0xFF009000, 0xFF00904E, 0xFF00909C, 0xFF0090EA, 0xFF00B400, 0xFF00B44E, 0xFF00B49C, 0xFF00B4EA, 0xFF00D800, 0xFF00D84E, 0xFF00D89C, 0xFF00D8EA, 0xFF00FC00, 0xFF00FC4E, 0xFF00FC9C, 0xFF00FCEA, 0xFF240000, 0xFF24004E, 0xFF24009C, 0xFF2400EA, 0xFF242400, 0xFF24244E, 0xFF24249C, 0xFF2424EA, 0xFF244800, 0xFF24484E, 0xFF24489C, 0xFF2448EA, 0xFF246C00, 0xFF246C4E, 0xFF246C9C, 0xFF246CEA, 0xFF249000, 0xFF24904E, 0xFF24909C, 0xFF2490EA, 0xFF24B400, 0xFF24B44E, 0xFF24B49C, 0xFF24B4EA, 0xFF24D800, 0xFF24D84E, 0xFF24D89C, 0xFF24D8EA, 0xFF24FC00, 0xFF24FC4E, 0xFF24FC9C, 0xFF24FCEA, 0xFF480000, 0xFF48004E, 0xFF48009C, 0xFF4800EA, 0xFF482400, 0xFF48244E, 0xFF48249C, 0xFF4824EA, 0xFF484800, 0xFF48484E, 0xFF48489C, 0xFF4848EA, 0xFF486C00, 0xFF486C4E, 0xFF486C9C, 0xFF486CEA, 0xFF489000, 0xFF48904E, 0xFF48909C, 0xFF4890EA, 0xFF48B400, 0xFF48B44E, 0xFF48B49C, 0xFF48B4EA, 0xFF48D800, 0xFF48D84E, 0xFF48D89C, 0xFF48D8EA, 0xFF48FC00, 0xFF48FC4E, 0xFF48FC9C, 0xFF48FCEA, 0xFF6C0000, 0xFF6C004E, 0xFF6C009C, 0xFF6C00EA, 0xFF6C2400, 0xFF6C244E, 0xFF6C249C, 0xFF6C24EA, 0xFF6C4800, 0xFF6C484E, 0xFF6C489C, 0xFF6C48EA, 0xFF6C6C00, 0xFF6C6C4E, 0xFF6C6C9C, 0xFF6C6CEA, 0xFF6C9000, 0xFF6C904E, 0xFF6C909C, 0xFF6C90EA, 0xFF6CB400, 0xFF6CB44E, 0xFF6CB49C, 0xFF6CB4EA, 0xFF6CD800, 0xFF6CD84E, 0xFF6CD89C, 0xFF6CD8EA, 0xFF6CFC00, 0xFF6CFC4E, 0xFF6CFC9C, 0xFF6CFCEA, 0xFF900000, 0xFF90004E, 0xFF90009C, 0xFF9000EA, 0xFF902400, 0xFF90244E, 0xFF90249C, 0xFF9024EA, 0xFF904800, 0xFF90484E, 0xFF90489C, 0xFF9048EA, 0xFF906C00, 0xFF906C4E, 0xFF906C9C, 0xFF906CEA, 0xFF909000, 0xFF90904E, 0xFF90909C, 0xFF9090EA, 0xFF90B400, 0xFF90B44E, 0xFF90B49C, 0xFF90B4EA, 0xFF90D800, 0xFF90D84E, 0xFF90D89C, 0xFF90D8EA, 0xFF90FC00, 0xFF90FC4E, 0xFF90FC9C, 0xFF90FCEA, 0xFFB40000, 0xFFB4004E, 0xFFB4009C, 0xFFB400EA, 0xFFB42400, 0xFFB4244E, 0xFFB4249C, 0xFFB424EA, 0xFFB44800, 0xFFB4484E, 0xFFB4489C, 0xFFB448EA, 0xFFB46C00, 0xFFB46C4E, 0xFFB46C9C, 0xFFB46CEA, 0xFFB49000, 0xFFB4904E, 0xFFB4909C, 0xFFB490EA, 0xFFB4B400, 0xFFB4B44E, 0xFFB4B49C, 0xFFB4B4EA, 0xFFB4D800, 0xFFB4D84E, 0xFFB4D89C, 0xFFB4D8EA, 0xFFB4FC00, 0xFFB4FC4E, 0xFFB4FC9C, 0xFFB4FCEA, 0xFFD80000, 0xFFD8004E, 0xFFD8009C, 0xFFD800EA, 0xFFD82400, 0xFFD8244E, 0xFFD8249C, 0xFFD824EA, 0xFFD84800, 0xFFD8484E, 0xFFD8489C, 0xFFD848EA, 0xFFD86C00, 0xFFD86C4E, 0xFFD86C9C, 0xFFD86CEA, 0xFFD89000, 0xFFD8904E, 0xFFD8909C, 0xFFD890EA, 0xFFD8B400, 0xFFD8B44E, 0xFFD8B49C, 0xFFD8B4EA, 0xFFD8D800, 0xFFD8D84E, 0xFFD8D89C, 0xFFD8D8EA, 0xFFD8FC00, 0xFFD8FC4E, 0xFFD8FC9C, 0xFFD8FCEA, 0xFFFC0000, 0xFFFC004E, 0xFFFC009C, 0xFFFC00EA, 0xFFFC2400, 0xFFFC244E, 0xFFFC249C, 0xFFFC24EA, 0xFFFC4800, 0xFFFC484E, 0xFFFC489C, 0xFFFC48EA, 0xFFFC6C00, 0xFFFC6C4E, 0xFFFC6C9C, 0xFFFC6CEA, 0xFFFC9000, 0xFFFC904E, 0xFFFC909C, 0xFFFC90EA, 0xFFFCB400, 0xFFFCB44E, 0xFFFCB49C, 0xFFFCB4EA, 0xFFFCD800, 0xFFFCD84E, 0xFFFCD89C, 0xFFFCD8EA, 0xFFFCFC00, 0xFFFCFC4E, 0xFFFCFC9C, 0xFFFCFCEA,
 			};
 		}
 
+		/*
+		 * @brief Get the framebuffer address
+		 *
+		 * @return framebuffer address
+		 */
 		ALWAYS_INLINE static void* getFramebufferAddress() {
 			return reinterpret_cast<void*>(FramebufferAddress);
 		}
 
+		/*
+		 * @brief Set a Pixel
+		 *
+		 * @param x X coordinate
+		 * @param y Y coordinate
+		 * @param paletteIndex Index for the color
+		 */
 		ALWAYS_INLINE static void setPixel(u16 x, u16 y, u8 paletteIndex) {
 			reinterpret_cast<u8*>(FramebufferAddress)[y * Display::s_xSize + x] = paletteIndex;
 		}
 
+		/**
+		 * @brief Clear the display to a color
+		 *
+		 * @param paletteIndex Index for the color
+		 */
 		ALWAYS_INLINE static void clear(u8 paletteIndex) {
 			const auto [hltdc, hdsi, hdma2d] = Context;
 
