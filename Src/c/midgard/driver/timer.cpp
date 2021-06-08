@@ -381,7 +381,7 @@
 	}
 
 
-	C_LINKAGE void yggdrasil_Encoder_SetMoce(tim_t tim, enum EncoderMode mode) {
+	C_LINKAGE void yggdrasil_Encoder_SetMode(tim_t tim, enum EncoderMode mode) {
 		tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;											// Disable the timer
 		tim.interface->Instance->SMCR &= ~(TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1);					// Reset the mode bits
 		switch(mode) {																									// Set the new mode according to

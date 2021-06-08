@@ -274,6 +274,6 @@ C_LINKAGE enum EncoderDirection yggdrasil_Encoder_GetDirection(tim_t tim);
  * @param tim Timer handel
  * @param mode Mode selection
  */
-C_LINKAGE void yggdrasil_Encoder_SetMoce(tim_t tim, enum EncoderMode mode);
+C_LINKAGE void yggdrasil_Encoder_SetMode(tim_t tim, enum EncoderMode mode);
 
 
