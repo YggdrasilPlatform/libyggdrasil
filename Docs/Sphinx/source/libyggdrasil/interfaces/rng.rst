@@ -12,10 +12,16 @@ Simple Usage
 
 The interface allows reading of an arbitrary amount of random data into any default constructible type.
 
-.. code-block:: cpp
+.. tabs::
 
-    auto random32BitValue = bsp::RNG::get<u32>();
-    auto random512Bytes = bsp::RNG::get<std::array<u8, 512>>();
+    .. code-tab:: c
+
+        u32 random32BitValue = yggdrasil_RNG_GetU32();
+
+    .. code-tab:: cpp
+
+        auto random32BitValue = bsp::RNG::get<u32>();
+        auto random512Bytes = bsp::RNG::get<std::array<u8, 512>>();
 
 .. important::
     The hardware generates 4 random bytes at once every 42 cycles of the RNG clock.

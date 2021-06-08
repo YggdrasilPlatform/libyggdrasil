@@ -14,31 +14,63 @@ Simple Usage
 Reading from and writing to a I2C device is as simple as calling the ``read`` and ``write`` functions of the relevant 
 I2C interface. For example, for a sensor connected to the Grove A connector, the following code can be used to read data:
 
-.. code-block:: cpp
+.. tabs::
 
-    constexpr u8 DeviceAddress = 0x42;
+    .. code-tab:: c
 
-    // Read data directly
-    auto value = bsp::I2CA::read<u8>(DeviceAddress);
+        const u8 deviceAddress = 0x42;
 
-    constexpr u8 RegisterAddress = 0x11;
+        // Read data directly
+        u8 value = 0;
+        yggdrasil_I2C_Read(I2CA, deviceAddress, &value, sizeof(u8));
 
-    // Read data from a register
-    auto registerValue = bsp::I2CA::read<u8>(DeviceAddress, RegisterAddress);
+        const u8 registerAddress = 0x11;
+
+        // Read data from a register
+        u8 registerValue = 0;
+        yggdrasil_I2C_ReadRegister(I2CA, deviceAddress, registerAddress, &registerValue, sizeof(u8));
+
+    .. code-tab:: cpp
+
+        constexpr u8 DeviceAddress = 0x42;
+
+        // Read data directly
+        auto value = bsp::I2CA::read<u8>(DeviceAddress);
+
+        constexpr u8 RegisterAddress = 0x11;
+
+        // Read data from a register
+        auto registerValue = bsp::I2CA::read<u8>(DeviceAddress, RegisterAddress);
 
 And this code to write data:
 
-.. code-block:: cpp
+.. tabs::
 
-    constexpr u8 DeviceAddress = 0x42;
+    .. code-tab:: c
 
-    // Write 0xFF directly
-    bsp::I2CA::write<u8>(DeviceAddress, 0xFF);
+        const u8 deviceAddress = 0x42;
 
-    constexpr u8 RegisterAddress = 0x22;
+        // Write 0xFF directly
+        u8 value = 0xFF;
+        yggdrasil_I2C_Write(I2CA, deviceAddress, &value, sizeof(u8));
 
-    // Write 0x55 to a register
-    bsp::I2CA::read<u8>(DeviceAddress, RegisterAddress, 0x55);
+        const u8 registerAddress = 0x22;
+
+        // Write 0x55 to a register
+        value = 0x55;
+        yggdrasil_I2C_WriteRegister(I2CA, deviceAddress, registerAddress, &value, sizeof(u8));
+
+    .. code-tab:: cpp
+
+        constexpr u8 DeviceAddress = 0x42;
+
+        // Write 0xFF directly
+        bsp::I2CA::write<u8>(DeviceAddress, 0xFF);
+
+        constexpr u8 RegisterAddress = 0x22;
+
+        // Write 0x55 to a register
+        bsp::I2CA::write<u8>(DeviceAddress, RegisterAddress, 0x55);
 
 
 .. important::
