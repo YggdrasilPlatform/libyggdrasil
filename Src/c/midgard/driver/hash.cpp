@@ -53,13 +53,13 @@
 	using INIT 	= bsp::Register<0x4002'3000, RegisterMap::INIT, u32>;
 	using POL 	= bsp::Register<0x4002'3000, RegisterMap::POL, u32>;
 
-	static inline auto Data		= typename DR::template Field<0, 31>();			///< Data register
+	static inline auto Data			= typename DR::template Field<0, 31>();			///< Data register
 
 	static inline auto HASHRESET	= typename IDR::template Field<0, 0>();			///< Reset bit
-	static inline auto POLYSIZE	= typename IDR::template Field<3, 4>();			///< Polynomial size (7, 8, 16 or 32 bit)
+	static inline auto POLYSIZE		= typename IDR::template Field<3, 4>();			///< Polynomial size (7, 8, 16 or 32 bit)
 
-	static inline auto InitialValue = typename INIT::template Field<0, 31>();	///< Used to write the CRC initial value.
-	static inline auto Polynomial 	= typename POL::template Field<0, 31>(); 	///< Used to write the coefficients of the polynomial to be used for CRC calculation
+	static inline auto InitialValue = typename INIT::template Field<0, 31>();		///< Used to write the CRC initial value.
+	static inline auto Polynomial 	= typename POL::template Field<0, 31>(); 		///< Used to write the coefficients of the polynomial to be used for CRC calculation
 
 
 	/**
@@ -96,17 +96,17 @@
 
 	C_LINKAGE u8   yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 polynomial, u8 xorOut) {
 		POLYSIZE = 0b10;	// 8 Bit polynomial
-		return calculate(data, size, initValue, polynomial) & 0xFF;
+		return (calculate(data, size, initValue, polynomial) & 0xFF) ^ xorOut;
 	}
 
 	C_LINKAGE u16  yggdrasil_HASH_getCRC16(void *data, size_t size, u16 initValue, u16 polynomial, u16 xorOut) {
 		POLYSIZE = 0b01;	// 16 Bit polynomial
-		return calculate(data, size, initValue, polynomial) & 0xFFFF;
+		return (calculate(data, size, initValue, polynomial) & 0xFFFF) ^ xorOut;
 	}
 
 	C_LINKAGE u32  yggdrasil_HASH_getCRC32(void *data, size_t size, u32 initValue, u32 polynomial, u32 xorOut) {
 		POLYSIZE = 0b00;	// 32 Bit polynomial
-		return calculate(data, size, initValue, polynomial) & 0xFFFF'FFFF;
+		return (calculate(data, size, initValue, polynomial) & 0xFFFF'FFFF) ^ xorOut;
 	}
 
 
