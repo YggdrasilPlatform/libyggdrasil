@@ -187,6 +187,7 @@
 	const static uart_t UARTA = { &huart2 };					// USART 2
 	const static uart_t UARTB = { &huart8 };					// UART 8
 	const static uart_t UARTC = { &huart4 };					// UART 4
+	const static uart_t UASRTST = UARTC;
 
 
 	const static tim_t Encoder = TimerF;						///< Encoder

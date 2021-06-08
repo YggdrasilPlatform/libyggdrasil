@@ -230,6 +230,7 @@
 		using UARTA = bsp::drv::UART<0x4000'4400, bsp::mid::drv::UART>;	 	// USART 2
 		using UARTB = bsp::drv::UART<0x4000'7C00, bsp::mid::drv::UART>;		// UART 8
 		using UARTC = bsp::drv::UART<0x4000'4C00, bsp::mid::drv::UART>;		// UART 4
+		using UARTST = UARTC;
 
 		using Display = bsp::drv::Display<std::make_tuple(&hltdc, &hdsi, &hdma2d), bsp::mid::drv::Display>;
 
