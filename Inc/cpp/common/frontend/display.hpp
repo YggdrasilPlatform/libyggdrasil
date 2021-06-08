@@ -149,8 +149,8 @@ namespace bsp::drv {
 		 *
 		 * @param paletteIndex Index for the color
 		 */
-		static void clear(u8 colorIndex) {
-			Impl::clear(colorIndex);
+		static void clear(auto colorIndex) {
+			Impl::clear(static_cast<u8>(colorIndex));
 		}
 
 		/**
