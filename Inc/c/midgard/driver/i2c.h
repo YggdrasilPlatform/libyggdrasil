@@ -47,6 +47,16 @@ C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c);
 C_LINKAGE void yggdrasil_I2C_Write(i2c_t i2c, u8 address, void *data, size_t size);
 
 /**
+ * @brief I2C write register
+ *
+ * @param i2c I2C handle
+ * @param address I2C device address
+ * @param reg I2C device register address
+ * @param data Data to transmit
+ * @param size Size of the data to transmit
+ */
+C_LINKAGE void yggdrasil_I2C_WriteRegister(i2c_t i2c, u8 address, u8 reg, void *data, size_t size);
+/**
  * @brief I2C read
  *
  * @param i2c I2C handle
