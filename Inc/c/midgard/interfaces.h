@@ -73,6 +73,10 @@
 	extern CAN_HandleTypeDef hcan1;
 	extern CAN_HandleTypeDef hcan2;
 
+	extern UART_HandleTypeDef huart4;
+	extern UART_HandleTypeDef huart8;
+	extern UART_HandleTypeDef huart2;
+
 
 
 	const static gpio_t LeftJoyStickButton = { GPIOG, 10, LOW_ACTIVE };
@@ -147,5 +151,48 @@
 
 	const static can_t CANA = { &hcan1 };
 	const static can_t CANB = { &hcan2 };
+
+	const static i2c_t I2CA = { &hi2c2 };
+	const static i2c_t I2CB = { &hi2c4 };
+	const static i2c_t I2CC = { &hi2c3 };
+	const static i2c_t I2CD = { &hi2c1 };
+
+	const static spi_t SPIA = { &hspi2 };
+	const static spi_t SPIB = { &hspi4 };
+	const static spi_t SPIC = { &hspi5 };
+
+	const static tim_t TimerA = { &htim12, sizeof(u16) };		///< PWM on Raspberry / PMOD
+	const static tim_t TimerB = { &htim4, sizeof(u16) };		///< PWM on Motor Driver / Raspberry / PMOD
+	const static tim_t TimerC = { &htim5, sizeof(u32) };		///< PWM on Raspberry / PMOD
+	const static tim_t TimerD = { &htim3, sizeof(u16) };		///< PWM on PushPull Driver
+	const static tim_t TimerE = { &htim11, sizeof(u16) };		///< PWM for LCD Backlight Control
+	const static tim_t TimerF = { &htim8, sizeof(u16) };		///< Encoder
+	const static tim_t TimerG = { &htim2, sizeof(u32) };		///< Profile Counter
+
+	const static tim_channel_t TimerACHA = { TimerA, 1 };		///< PMOD A Pin 2 / Raspberry Pin 33
+
+	const static tim_channel_t TimerBCHA = { TimerB, 1 };		///< Motor Driver / Raspberry Pin 26
+	const static tim_channel_t TimerBCHB = { TimerB, 2 };		///< Motor Driver / Raspberry Pin 28
+	const static tim_channel_t TimerBCHC = { TimerB, 3 };		///< Motor Driver / PMOD B Pin 2 / Raspberry Pin 32
+	const static tim_channel_t TimerBCHD = { TimerB, 4 };		///< Motor Driver / Raspberry Pin 36
+
+
+	const static tim_channel_t TimerCCHA = { TimerC, 1 };		///< PMOD A Pin 4 / Raspberry Pin 27
+
+	const static tim_channel_t TimerDCHA = { TimerD, 2 };		///< Push pull driver A
+	const static tim_channel_t TimerDCHB = { TimerD, 1 };		///< Push pull driver B
+	const static tim_channel_t TimerDCHC = { TimerD, 3 };		///< Push pull driver C
+	const static tim_channel_t TimerDCHD = { TimerD, 4 };		///< Push pull driver D
+
+	const static uart_t UARTA = { &huart2 };					// USART 2
+	const static uart_t UARTB = { &huart8 };					// UART 8
+	const static uart_t UARTC = { &huart4 };					// UART 4
+
+
+	const static tim_t Encoder = TimerF;						///< Encoder
+
+	const static tim_t ProfileCounter = TimerG;					///< Profilecounter
+
+	const static rng_t Random = { };
 
 	#endif
