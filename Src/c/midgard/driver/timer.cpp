@@ -183,49 +183,49 @@
 		return true;
 	}
 
-	C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_t tim) {
-		if(!hasPwmModule(tim)) return false;
-		switch(tim.channel) {
-			case 1: tim.interface->Instance->CCER |= TIM_CCER_CC1E; break;	// Enable capture compare output for channel 1
-			case 2: tim.interface->Instance->CCER |= TIM_CCER_CC2E; break;	// Enable capture compare output for channel 2
-			case 3: tim.interface->Instance->CCER |= TIM_CCER_CC3E; break;	// Enable capture compare output for channel 3
-			case 4: tim.interface->Instance->CCER |= TIM_CCER_CC4E; break;	// Enable capture compare output for channel 4
+	C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_channel_t channel) {
+		if(!hasPwmModule(channel.timer)) return false;
+		switch(channel.channel) {
+			case 1: channel.timer.interface->Instance->CCER |= TIM_CCER_CC1E; break;	// Enable capture compare output for channel 1
+			case 2: channel.timer.interface->Instance->CCER |= TIM_CCER_CC2E; break;	// Enable capture compare output for channel 2
+			case 3: channel.timer.interface->Instance->CCER |= TIM_CCER_CC3E; break;	// Enable capture compare output for channel 3
+			case 4: channel.timer.interface->Instance->CCER |= TIM_CCER_CC4E; break;	// Enable capture compare output for channel 4
 			default: bsp::unreachable();
 		}
-		tim.interface->Instance->CR1 = TIM_CR1_CEN;							// Enable the counter
+		channel.timer.interface->Instance->CR1 = TIM_CR1_CEN;							// Enable the counter
 		return true;
 	}
 
-	C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_t tim) {
-		if(!hasPwmModule(tim)) return false;
-		switch(tim.channel) {
-			case 1: tim.interface->Instance->CCER &= ~TIM_CCER_CC1E; break;	// Disable capture compare output for channel 1
-			case 2: tim.interface->Instance->CCER &= ~TIM_CCER_CC2E; break;	// Disable capture compare output for channel 2
-			case 3: tim.interface->Instance->CCER &= ~TIM_CCER_CC3E; break;	// Disable capture compare output for channel 3
-			case 4: tim.interface->Instance->CCER &= ~TIM_CCER_CC4E; break;	// Disable capture compare output for channel 4
+	C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_channel_t channel) {
+		if(!hasPwmModule(channel.timer)) return false;
+		switch(channel.channel) {
+			case 1: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC1E; break;	// Disable capture compare output for channel 1
+			case 2: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC2E; break;	// Disable capture compare output for channel 2
+			case 3: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC3E; break;	// Disable capture compare output for channel 3
+			case 4: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC4E; break;	// Disable capture compare output for channel 4
 			default: bsp::unreachable();
 		}
-		if(tim.interface->Instance->CCER == 0) tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the counter when all pwm channels are disabled
+		if(channel.timer.interface->Instance->CCER == 0) channel.timer.interface->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the counter when all pwm channels are disabled
 		return true;
 	}
 
-	C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_t tim,	bool highActive) {
-		if(!hasPwmModule(tim)) return false;
+	C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_channel_t channel,	bool highActive) {
+		if(!hasPwmModule(channel.timer)) return false;
 		if(!highActive){
-			switch(tim.channel) {
-				case 1: tim.interface->Instance->CCER |= TIM_CCER_CC1P; break;	// Capture/Compare 1 output Polarity to low
-				case 2: tim.interface->Instance->CCER |= TIM_CCER_CC2P; break;	// Capture/Compare 2 output Polarity to low
-				case 3: tim.interface->Instance->CCER |= TIM_CCER_CC3P; break;	// Capture/Compare 3 output Polarity to low
-				case 4: tim.interface->Instance->CCER |= TIM_CCER_CC4P; break;	// Capture/Compare 4 output Polarity to low
+			switch(channel.channel) {
+				case 1: channel.timer.interface->Instance->CCER |= TIM_CCER_CC1P; break;	// Capture/Compare 1 output Polarity to low
+				case 2: channel.timer.interface->Instance->CCER |= TIM_CCER_CC2P; break;	// Capture/Compare 2 output Polarity to low
+				case 3: channel.timer.interface->Instance->CCER |= TIM_CCER_CC3P; break;	// Capture/Compare 3 output Polarity to low
+				case 4: channel.timer.interface->Instance->CCER |= TIM_CCER_CC4P; break;	// Capture/Compare 4 output Polarity to low
 				default: bsp::unreachable();
 			}
 		}
 		else {
-			switch(tim.channel) {
-				case 1: tim.interface->Instance->CCER &= ~TIM_CCER_CC1P; break;	// Capture/Compare 1 output Polarity to high
-				case 2: tim.interface->Instance->CCER &= ~TIM_CCER_CC2P; break;	// Capture/Compare 2 output Polarity to high
-				case 3: tim.interface->Instance->CCER &= ~TIM_CCER_CC3P; break;	// Capture/Compare 3 output Polarity to high
-				case 4: tim.interface->Instance->CCER &= ~TIM_CCER_CC4P; break;	// Capture/Compare 4 output Polarity to high
+			switch(channel.channel) {
+				case 1: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC1P; break;	// Capture/Compare 1 output Polarity to high
+				case 2: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC2P; break;	// Capture/Compare 2 output Polarity to high
+				case 3: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC3P; break;	// Capture/Compare 3 output Polarity to high
+				case 4: channel.timer.interface->Instance->CCER &= ~TIM_CCER_CC4P; break;	// Capture/Compare 4 output Polarity to high
 				default: bsp::unreachable();
 			}
 		}
@@ -233,18 +233,18 @@
 		return true;
 	}
 
-	C_LINKAGE bool yggdrasil_TIM_Channel_SetDutyCycle(tim_t tim, float dutyCycle) {
-		if(!hasPwmModule(tim)) return false;
+	C_LINKAGE bool yggdrasil_TIM_Channel_SetDutyCycle(tim_channel_t channel, float dutyCycle) {
+		if(!hasPwmModule(channel.timer)) return false;
 		dutyCycle = std::abs(dutyCycle);						// Make sure that the value is positive
 		if(dutyCycle > 100) dutyCycle = 100;					// Limit the duty cycle to 100
-		u32 arr = tim.interface->Instance->ARR;						// Get auto reload register
+		u32 arr = channel.timer.interface->Instance->ARR;						// Get auto reload register
 		u32 ccr = 0;
 		if(dutyCycle != 0) ccr = arr / 100 * dutyCycle;			// Calculate capture compare register value
-		switch(tim.channel) {
-			case 1: tim.interface->Instance->CCR1 = ccr; break;		// Set the duty cycle for channel 1
-			case 2: tim.interface->Instance->CCR2 = ccr; break;		// Set the duty cycle for channel 2
-			case 3: tim.interface->Instance->CCR3 = ccr; break;		// Set the duty cycle for channel 3
-			case 4: tim.interface->Instance->CCR4 = ccr; break;		// Set the duty cycle for channel 4
+		switch(channel.channel) {
+			case 1: channel.timer.interface->Instance->CCR1 = ccr; break;		// Set the duty cycle for channel 1
+			case 2: channel.timer.interface->Instance->CCR2 = ccr; break;		// Set the duty cycle for channel 2
+			case 3: channel.timer.interface->Instance->CCR3 = ccr; break;		// Set the duty cycle for channel 3
+			case 4: channel.timer.interface->Instance->CCR4 = ccr; break;		// Set the duty cycle for channel 4
 			default: bsp::unreachable();
 		}
 
@@ -297,31 +297,31 @@
 		snprintf(buffer, size, "%lus %dms %dus %dns", s, ms, us, ns);
 	}
 
-	C_LINKAGE void yggdrasil_Profilecounter_Start(tim_t tim) {
+	C_LINKAGE void yggdrasil_ProfileCounter_Start(tim_t tim) {
 		tim.interface->Instance->CR1 = TIM_CR1_CEN;	// Enable the timer
 	}
 
-	C_LINKAGE void yggdrasil_Profilecounter_Stop(tim_t tim) {
+	C_LINKAGE void yggdrasil_ProfileCounter_Stop(tim_t tim) {
 		tim.interface->Instance->CR1 &= ~TIM_CR1_CEN;	// Disable the timer
 	}
 
-	C_LINKAGE void yggdrasil_Profilecounter_Reset(tim_t tim) {
+	C_LINKAGE void yggdrasil_ProfileCounter_Reset(tim_t tim) {
 		tim.interface->Instance->CNT = 0;
 	}
 
-	C_LINKAGE u64 yggdrasil_Profilecounter_GetTimeToOverflow(tim_t tim) {
+	C_LINKAGE u64 yggdrasil_ProfileCounter_GetTimeToOverflow(tim_t tim) {
 		return cntToNanoSeconds(tim, (1ULL << (tim.size * 8)) - 1);
 	}
 
-	C_LINKAGE void yggdrasil_Profilecounter_GetFormattedTimeToOverflow(tim_t tim, char *buffer, size_t size) {
+	C_LINKAGE void yggdrasil_ProfileCounter_GetFormattedTimeToOverflow(tim_t tim, char *buffer, size_t size) {
 		formatToString(cntToNanoSeconds(tim, (1ULL << (tim.size * 8)) - 1), buffer, size);
 	}
 
-	C_LINKAGE u64 yggdrasil_Profilecounter_GetPassedTime(tim_t tim) {
+	C_LINKAGE u64 yggdrasil_ProfileCounter_GetPassedTime(tim_t tim) {
 		return cntToNanoSeconds(tim, tim.interface->Instance->CNT);
 	}
 
-	C_LINKAGE void yggdrasil_Profilecounter_GetFormattedPassedTime(tim_t tim, char *buffer, size_t size) {
+	C_LINKAGE void yggdrasil_ProfileCounter_GetFormattedPassedTime(tim_t tim, char *buffer, size_t size) {
 		return formatToString(cntToNanoSeconds(tim, tim.interface->Instance->CNT), buffer, size);
 	}
 
@@ -377,7 +377,7 @@
 	}
 
 	C_LINKAGE enum EncoderDirection yggdrasil_Encoder_GetDirection(tim_t tim) {
-		return (tim.interface->Instance->CR1 & TIM_CR1_DIR) ? EncoderDirectionCounterClockwise : EncoderDirectionClockwise;
+		return (tim.interface->Instance->CR1 & TIM_CR1_DIR) ? EncoderDirection_CounterClockwise : EncoderDirection_Clockwise;
 	}
 
 
