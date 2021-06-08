@@ -4,7 +4,8 @@ Color Sensor
 ============
 **ams TCS3472 Color Sensor**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `TCS3472 Datasheet <_static/datasheets/yggdrasil/TCS3472.pdf>`_ 
 
 

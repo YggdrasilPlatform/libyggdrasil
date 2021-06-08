@@ -4,7 +4,8 @@ Pressure Sensor
 ===============
 **STMicroelectronics LPS22HBTR Nano pressure sensor**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `LPS22HBTR Datasheet <_static/datasheets/yggdrasil/LPS22HBTR.pdf>`_ 
 
 Description

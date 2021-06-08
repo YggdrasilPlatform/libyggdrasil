@@ -4,7 +4,8 @@ Humidity Sensor
 ===============
 **Sensirion SHT40-AD1B-R2 Humidity & Temperature sensor**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `SHT40-AD1B-R2 Datasheet <_static/datasheets/yggdrasil/SHT40-AD1B-R2.pdf>`_ 
 
 Description

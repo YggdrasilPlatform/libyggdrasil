@@ -4,7 +4,8 @@ DC Motor Driver
 ===============
 **Toshiba TC78H660FTG dial H Bridge**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `TC78H660FTG Datasheet <_static/datasheets/yggdrasil/TC78H660FTG.pdf>`_ 
 
 Description

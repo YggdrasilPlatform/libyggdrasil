@@ -4,7 +4,8 @@
 =============
 **TDK ICM-42605 Accelerometer & Gyroscope**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `ICM-42605 Datasheet <_static/datasheets/yggdrasil/ICM-42605.pdf>`_ 
 
 Description

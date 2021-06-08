@@ -4,7 +4,8 @@
 =================
 **BROADCOM HDSP-A103 common cathode 7-Segment digit**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `HDSP-A103 Datasheet <_static/datasheets/yggdrasil/HDSP-A103.pdf>`_ 
 
 

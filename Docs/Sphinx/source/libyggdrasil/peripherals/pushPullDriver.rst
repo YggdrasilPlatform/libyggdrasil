@@ -4,7 +4,8 @@ Push Pull Driver
 ================
 **IXYS IX4310T Low side gate driver**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `IX4310T Datasheet <_static/datasheets/yggdrasil/IX4310T.pdf>`_ 
 
 Description

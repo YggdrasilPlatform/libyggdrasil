@@ -4,7 +4,8 @@ RGB LED Matrix
 ==============
 **SK9822 RGB LED**
 
-.. seealso::
+.. admonition:: Datasheets
+    
     * `SK9822 Datasheet <_static/datasheets/yggdrasil/SK9822.pdf>`_ 
 
 Description
