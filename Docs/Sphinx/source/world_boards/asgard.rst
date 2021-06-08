@@ -3,10 +3,8 @@
 Asgard
 ======
 
-Resources
----------
+.. admonition:: Datasheets
 
-.. seealso::
     * `MPU STM32MP157C Datasheet <_static/datasheets/asgard/STM32MP157C/datasheet.pdf>`_ 
     * `MPU STM32MP157C Reference manual <_static/datasheets/asgard/STM32MP157C/reference_manual.pdf>`_ 
     * `MPU Arm Cortex M4 Reference manual <_static/datasheets/asgard/STM32MP157C/coreM4_reference_manual.pdf>`_ 
@@ -61,24 +59,39 @@ General-purpose input/outputs
 * Up to 6 Wakeup, 3 tampers, 1 active tamper
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 PMIC STPMIC1A
 ^^^^^^^^^^^^^
+Highly integrated power management IC for micro processor units
 
-Ethernet Phy
-^^^^^^^^^^^^
+* Input voltage range from 2.8 V to 5.5 V
+* 4 adjustable general purpose LDOs
+* 4 adjustable adaptive constant on-time (COT) buck SMPS converters
+* 5.2 V / 1.1 A boost SMPS with bypass mode for 5 V input or battery input
+* I²C and digital IO control interface
+
+Ethernet Phy DP83867IR
+^^^^^^^^^^^^^^^^^^^^^^
+Robust, High Immunity 10/100/1000 Ethernet Physical Layer Transceiver
+
+* Ultra low RGMII latency TX < 90ns, RX < 290ns
+* Low power consumption 457 mW
+* 16 programmable RGMII delay modes on RX/TX
+* Programmable MII/GMII/RGMII termination impedance
+* WoL (Wake-on-LAN) packet detection
+* Fully compatible to IEEE 802.3 10BASE-Te, 100BASE-TX, and 1000BASE-T Specification
 
 DDR3L SDRAM MT41K256M16TW
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+DDR3L SDRAM (1.35V) is a low voltage version of the DDR3 (1.5V) SDRAM. Refer to DDR3 (1.5V) SDRAM (Die Rev :E) data sheet specifications when running in 1.5V compatible mode.
+
+* Differential bidirectional data strobe
+* 8n-bit prefetch architecture
+* Differential clock inputs (CK, CK#)
+* 8 internal banks
+* Nominal and dynamic on-die termination (ODT) for data, strobe, and mask signals
+* Programmable CAS (READ) latency (CL)
+* Programmable posted CAS additive latency (AL)
+* Programmable CAS (WRITE) latency (CWL)
+* Fixed burst length (BL) of 8 and burst chop (BC) of 4 (via the mode register set [MRS])
+* Selectable BC4 or BL8 on-the-fly (OTF)
+* Self refresh mode

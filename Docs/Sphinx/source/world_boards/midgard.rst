@@ -3,14 +3,13 @@
 Midgard
 =======
 
-Resources
----------
+.. admonition:: Datasheets
 
-.. seealso::
     * `MCU STM32F769 Datasheet <_static/datasheets/midgard/STM32F769/datasheet.pdf>`_ 
     * `MCU STM32F769 Reference manual <_static/datasheets/midgard/STM32F769/reference_manual.pdf>`_ 
     * `MCU Arm Cortex M7 Reference manual <_static/datasheets/midgard/STM32F769/core_reference_manual.pdf>`_ 
     * `Ethernet Phy DP83620 Datasheet <_static/datasheets/midgard/DP83620/datasheet.pdf>`_ 
+
 
 Peripherals
 -----------
@@ -22,8 +21,8 @@ Core
 """"
 Arm® 32-bit Cortex®-M7 CPU with DPFPU, ART Accelerator and L1-cache, execution from embedded Flash and external memories, up to 216 MHz, 462 DMIPS/2.14 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
 
-Memories
-""""""""
+Memory
+""""""
 * 1 Mbyte of Flash memory organized into two banks allowing read-while-write
 * SRAM: 512 Kbytes (including 128 Kbytes of data TCM RAM for critical real-time data) + 16 Kbytes of instruction TCM RAM (for critical real-time routines) + 4 Kbytes of backup SRAM
 * Flexible external memory controller with up to 32-bit data bus: SRAM, PSRAM, SDRAM/LPSDR SDRAM, NOR/NAND memories
@@ -54,8 +53,9 @@ Debug mode
 * SWD and JTAG interfaces
 * Cortex®-M7 Trace Macrocell™
 
+GPIO Interrupts
+"""""""""""""""
 Up to 168 I/O ports with interrupt capability
-"""""""""""""""""""""""""""""""""""""""""""""
 * Up to 164 fast I/Os up to 108 MHz
 * Up to 166 5 V-tolerant I/Os
 
