@@ -41,7 +41,6 @@ namespace bsp::mid::drv {
 
 		enum class Orientation {
 			Portrait	= 0x00,
-			Landscape	= 0x01
 		};
 
 
@@ -209,7 +208,7 @@ namespace bsp::mid::drv {
 			HAL_LTDC_EnableCLUT(hltdc, 0);
 
 			Display::setPalette(Display::getDefaultPalette());
-
+			Display::clear(static_cast<u8>(bsp::drv::Color::Black));
 			Display::turnOn();
 
 			return true;

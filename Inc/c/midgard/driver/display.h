@@ -36,8 +36,29 @@ typedef struct {
  * @brief Display orientation
  */
 enum DisplayOrientation {
-	Portrait	= 0x00,
-	Landscape	= 0x01
+	DisplayOrientation_Portrait	= 0x00,
+};
+
+/**
+ * @brief Predefined colors
+ */
+enum Color {
+	Color_Black 	= 0b00000000,
+	Color_Navy 		= 0b00000010,
+	Color_Blue		= 0b00000011,
+	Color_Green		= 0b00001100,
+	Color_Teal		= 0b00001001,
+	Color_Lime		= 0b00011100,
+	Color_Aqua		= 0b00011111,
+	Color_Maroon	= 0b01100000,
+	Color_Purple	= 0b01100011,
+	Color_Olive		= 0b01101100,
+	Color_Gray		= 0b01001001,
+	Color_Red		= 0b11100000,
+	Color_Fuchsia	= 0b11100011,
+	Color_Yellow	= 0b11111100,
+	Color_Orange	= 0b11110000,
+	Color_White		= 0b11111111,
 };
 
 /*
