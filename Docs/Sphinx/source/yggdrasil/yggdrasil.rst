@@ -27,16 +27,16 @@ This is a simple overview of all peripherals found on Yggdrasil.
         <area alt="6-Axis sensor"     title="6-Axis sensor"       coords="466,208,535,276"        shape="rect"    href="../libyggdrasil/peripherals/sixAxisSensor.html">
         <area alt="Humidity sensor"   title="Humidity sensor"     coords="547,209,603,273"        shape="rect"    href="../libyggdrasil/peripherals/humiditySensor.html">
         <area alt="Pressure sensor"   title="Pressure sensor"     coords="616,211,680,273"        shape="rect"    href="../libyggdrasil/peripherals/pressureSensor.html">
-        <area alt="CAN"               title="CAN"                 coords="1453,341,1582,630"      shape="rect"    href="../libyggdrasil/interfaces/can.html">
+        <area alt="CAN"               title="CAN"                 coords="1453,341,1582,630"      shape="rect"    href="connectors/can.html">
         <area alt="DCMI"              title="DCMI"                coords="1487,792,1596,1002"     shape="rect">
-        <area alt="ST-Link bridge"    title="ST-Link bridge"      coords="1138,985,1408,959"      shape="rect">
+        <area alt="ST-Link bridge"    title="ST-Link bridge"      coords="1138,985,1408,959"      shape="rect"    href="connectors/stlinkBridge.html">
         <area alt="Display"           title="Display"             coords="185,320,1424,949"       shape="rect"    href="../libyggdrasil/interfaces/display.html">
-        <area alt="Seeed"             title="Seeed"               coords="223,20,364,117"         shape="rect">
-        <area alt="PMOD"              title="PMOD"                coords="67,317,-1,18"           shape="rect">
+        <area alt="Grove"             title="Grove"               coords="223,20,364,117"         shape="rect"    href="connectors/grove.html">
+        <area alt="PMod"              title="PMod"                coords="67,317,-1,18"           shape="rect"    href="connectors/pmod.html">
         <area alt="Flash"             title="Flash"               coords="182,1009,286,1089"      shape="rect">
-        <area alt="Raspberry Pi "     title="Raspberry Pi"        coords="50,345,1,1005"          shape="rect">
-        <area alt="Drivers"           title="Drivers"             coords="54,856,155,1007"        shape="rect"    href="../libyggdrasil/peripherals/pushPullDriver.html">
-        <area alt="Analog Headers"    title="Analog Headers"      coords="83,673,152,832"         shape="rect">
+        <area alt="Raspberry Pi "     title="Raspberry Pi"        coords="50,345,1,1005"          shape="rect"    href="connectors/raspberry.html">
+        <area alt="Sink Drivers"      title="Sink Drivers"        coords="54,856,155,1007"        shape="rect"    href="connectors/driver.html">
+        <area alt="Analog Headers"    title="Analog Headers"      coords="83,673,152,832"         shape="rect"    href="connectors/analog.html">
         <area alt="DC Motor header"   title="DC Motor header"     coords="115,492,152,631"        shape="rect"    href="../libyggdrasil/peripherals/motorDriver.html">
         <area alt="Boot modes"        title="Boot modes"          coords="721,188,817,283"        shape="rect">
         <area alt="5V USB C Power"    title="5V USB C Power"      coords="1477,96,1580,3"         shape="rect">
@@ -60,3 +60,4 @@ This is a simple overview of all peripherals found on Yggdrasil.
    :hidden:
 
    connectors/connectors
+   bootModes
