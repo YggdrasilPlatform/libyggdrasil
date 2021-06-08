@@ -30,8 +30,12 @@
 typedef struct {
 	TIM_HandleTypeDef *interface;
 	size_t size;
-	u8 channel;
 } tim_t;
+
+typedef struct {
+	tim_t timer;
+	u8 channel;
+} tim_channel_t;
 
 
 /* Basic tim functions */
@@ -110,7 +114,7 @@ C_LINKAGE bool yggdrasil_TIM_SetPwmFrequency(tim_t tim, u32 f_hz, u32 resolution
  * @param tim Timer handel
  * @return True when successfully started, false when not
  */
-C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_t tim);
+C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_channel_t channel);
 
 /**
  * @brief Stop PWM generation for the channel
@@ -119,7 +123,7 @@ C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_t tim);
  * @param tim Timer handel
  * @return True when successfully stopped, false when not
  */
-C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_t tim);
+C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_channel_t channel);
 
 /**
  * @brief Start set pwm polarity
@@ -128,7 +132,7 @@ C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_t tim);
  * @param highActive Set channel to high active when true
  * @return True when successfully switched, false when not
  */
-C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_t tim, bool highActive);
+C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_channel_t channel, bool highActive);
 
 /**
  * @brief Set the duty cycle as a float value
@@ -136,7 +140,7 @@ C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_t tim, bool highActive)
  * @param tim Timer handel
  * @param dutyCycle Duty cycle in % [0 100]
  */
-C_LINKAGE bool yggdrasil_TIM_Channel_SetDutyCycle(tim_t tim, float dutyCycle);
+C_LINKAGE bool yggdrasil_TIM_Channel_SetDutyCycle(tim_channel_t channel, float dutyCycle);
 
 
 /* Profile counter functions */
@@ -146,21 +150,21 @@ C_LINKAGE bool yggdrasil_TIM_Channel_SetDutyCycle(tim_t tim, float dutyCycle);
  *
  * @param tim Timer handel
  */
-C_LINKAGE void yggdrasil_Profilecounter_Start(tim_t tim);
+C_LINKAGE void yggdrasil_ProfileCounter_Start(tim_t tim);
 
 /**
  * @brief Stop the counter
  *
  * @param tim Timer handel
  */
-C_LINKAGE void yggdrasil_Profilecounter_Stop(tim_t tim);
+C_LINKAGE void yggdrasil_ProfileCounter_Stop(tim_t tim);
 
 /**
  * @brief Reset the counter to 0
  *
  * @param tim Timer handel
  */
-C_LINKAGE void yggdrasil_Profilecounter_Reset(tim_t tim);
+C_LINKAGE void yggdrasil_ProfileCounter_Reset(tim_t tim);
 
 /**
  * @brief Get the time to an overflow
@@ -168,14 +172,14 @@ C_LINKAGE void yggdrasil_Profilecounter_Reset(tim_t tim);
  * @param tim Timer handel
  * @return Time to an overflow in a u64
  */
-C_LINKAGE u64  yggdrasil_Profilecounter_GetTimeToOverflow(tim_t tim);
+C_LINKAGE u64  yggdrasil_ProfileCounter_GetTimeToOverflow(tim_t tim);
 
 /**
  * @brief Get the time to an overflow formatted as a string
  *
  * @return Time to an overflow formatted as a string
  */
-C_LINKAGE void yggdrasil_Profilecounter_GetFormattedTimeToOverflow(tim_t tim, char *buffer, size_t size);
+C_LINKAGE void yggdrasil_ProfileCounter_GetFormattedTimeToOverflow(tim_t tim, char *buffer, size_t size);
 
 /**
  * @brief Get the time passed time since the start
@@ -183,7 +187,7 @@ C_LINKAGE void yggdrasil_Profilecounter_GetFormattedTimeToOverflow(tim_t tim, ch
  * @param tim Timer handel
  * @return Passed time in a u64
  */
-C_LINKAGE u64  yggdrasil_Profilecounter_GetPassedTime(tim_t tim);
+C_LINKAGE u64  yggdrasil_ProfileCounter_GetPassedTime(tim_t tim);
 
 /**
  * @brief Get the time passed time since the start
@@ -191,7 +195,7 @@ C_LINKAGE u64  yggdrasil_Profilecounter_GetPassedTime(tim_t tim);
  * @param tim Timer handel
  * @return Passed time formatted as a string
  */
-C_LINKAGE void yggdrasil_Profilecounter_GetFormattedPassedTime(tim_t tim, char *buffer, size_t size);
+C_LINKAGE void yggdrasil_ProfileCounter_GetFormattedPassedTime(tim_t tim, char *buffer, size_t size);
 
 
 /* Encoder functions */
@@ -199,8 +203,8 @@ C_LINKAGE void yggdrasil_Profilecounter_GetFormattedPassedTime(tim_t tim, char *
  * @brief Last known turning direction of the encoder
  */
 enum EncoderDirection {
-	EncoderDirectionClockwise,
-	EncoderDirectionCounterClockwise,
+	EncoderDirection_Clockwise,
+	EncoderDirection_CounterClockwise,
 };
 
 /**
