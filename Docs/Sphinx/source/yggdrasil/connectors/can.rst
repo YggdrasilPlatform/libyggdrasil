@@ -17,18 +17,36 @@ Connector
 CAN A
 ^^^^^
 
-.. image:: assets/cana.png
-    :width: 30%
-    :alt: CAN A
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/cana_light.png
+        :width: 30%
+        :alt: CAN A connector
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/cana_dark.png
+        :width: 30%
+        :alt: CAN A connector
+        :align: center
 
 CAN B
 ^^^^^
 
-.. image:: assets/canb.png
-    :width: 30%
-    :alt: CAN B
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/canb_light.png
+        :width: 30%
+        :alt: CAN B connector
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/canb_dark.png
+        :width: 30%
+        :alt: CAN B connector
+        :align: center
 
 Termination
 -----------

@@ -93,10 +93,10 @@ Once this is done, the new SPI can be defined like this:
 
     .. code-tab:: c
 
-        spi_t mySPI = { &hspi1 };
+        spi_t MySPI = { &hspi1 };
 
     .. code-tab:: cpp
 
-    using mySPI = bsp::drv::SPI<&hspi1, bsp::mid::drv::SPI>;
+        using MySPI = bsp::drv::SPI<&hspi1, bsp::mid::drv::SPI>;
 
 and then used like all the other SPI.

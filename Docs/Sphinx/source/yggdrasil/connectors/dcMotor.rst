@@ -11,10 +11,20 @@ The DC Motor Connector exposes a dual H-Bridge used for driving DC motors.
 Connector
 ---------
 
-.. image:: assets/dcMotor.png
-    :width: 40%
-    :alt: Dual DC Motor connector
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/dcMotor_light.png
+        :width: 40%
+        :alt: Dual DC Motor connector
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/dcMotor_dark.png
+        :width: 40%
+        :alt: Dual DC Motor connector
+        :align: center
+
 
 .. important::
     The voltage of the Motor channels can be configured between 3.3V and 5V by closing either solder bridge SB3 or SB4 located next to the DC Motor header.

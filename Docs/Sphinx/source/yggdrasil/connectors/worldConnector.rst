@@ -151,7 +151,7 @@ Pin  Description                 Pin  Description
 267  GND                         268  GND
 269  Segment Select A            270  LCD Backlight Controll
 271  Segment Select B            272  
-273  Segment Select C            274  
+273  Segment Select C            274  Touch Interrupt
 275  Segment Select D            276  ICM-42605 Interrupt Line 1
 277  QSPI BK2 IO0                278  ICM-42605 Interrupt Line 2
 279  QSPI BK2 IO1                280  GND
@@ -170,9 +170,9 @@ Pin  Description                 Pin  Description
 305  ADC Channel A               306  Button Joystick A
 307  ADC Channel B               308  GND
 309  ADC Channel C               310  Button Joystick B
-311  ADC Channel D               312  
+311  ADC Channel D               312  Error LED
 313  GND                         314  VDD
-315  ADC Potentiometer           316  
+315  ADC Potentiometer           316  LightUp LED
 317  GND                         318  
 319  DAC Channel A               320  VDD
 321  DAC Channel B               |     

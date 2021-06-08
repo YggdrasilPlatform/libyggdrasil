@@ -11,7 +11,16 @@ The ST-Link v3 on Yggdrasil allows talking to various interfaces through it's br
 Connector
 ---------
 
-.. image:: assets/stlinkbridge.png
-    :width: 60%
-    :alt: STLink Bridge connector
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/stlinkbridge_light.png
+        :width: 60%
+        :alt: STLink Bridge connector
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/stlinkbridge_dark.png
+        :width: 60%
+        :alt: STLink Bridge connector
+        :align: center

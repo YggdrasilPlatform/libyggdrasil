@@ -16,7 +16,16 @@ Raspberry Pi Header Connector
 Connector
 ---------
 
-.. image:: assets/raspberry.png
-    :width: 80%
-    :alt: Raspberry connector
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/raspberry_light.png
+        :width: 80%
+        :alt: Raspberry shield connector
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/raspberry_dark.png
+        :width: 80%
+        :alt: Raspberry shield connector
+        :align: center

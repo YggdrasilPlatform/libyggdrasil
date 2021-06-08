@@ -29,10 +29,20 @@ PMod A
 .. note::
     This connector is compatible with Type 2 and 6.
 
-.. image:: assets/pmoda.png
-    :width: 80%
-    :alt: PMod A Type 2 / 6
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/pmoda_light.png
+        :width: 80%
+        :alt: PMod A Type 2 / 6
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/pmoda_dark.png
+        :width: 80%
+        :alt: PMod A Type 2 / 6
+        :align: center
+
 
 PMod B
 ^^^^^^
@@ -40,7 +50,16 @@ PMod B
 .. note::
     This connector is compatible with Type 3 and 6.
 
-.. image:: assets/pmodb.png
-    :width: 80%
-    :alt: PMod B Type 3 / 6
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/pmodb_light.png
+        :width: 80%
+        :alt: PMod B Type 3 / 6
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/pmodb_dark.png
+        :width: 80%
+        :alt: PMod B Type 3 / 6
+        :align: center

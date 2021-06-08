@@ -23,15 +23,34 @@ Connector
 Grove A
 ^^^^^^^
 
-.. image:: assets/grovea.png
-    :width: 40%
-    :alt: Grove A
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/grovea_light.png
+        :width: 40%
+        :alt: Grove A
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/grovea_dark.png
+        :width: 40%
+        :alt: Grove A
+        :align: center
+
 
 Grove B
 ^^^^^^^
 
-.. image:: assets/groveb.png
-    :width: 40%
-    :alt: Grove B
-    :align: center
+.. rst-class:: only-light
+
+    .. image:: assets/groveb_light.png
+        :width: 40%
+        :alt: Grove B
+        :align: center
+
+.. rst-class:: only-dark
+
+    .. image:: assets/groveb_dark.png
+        :width: 40%
+        :alt: Grove B
+        :align: center
