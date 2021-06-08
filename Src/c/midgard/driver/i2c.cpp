@@ -34,7 +34,7 @@
 	#include <yggdrasil.h>
 
 	#include <math.h>
-
+	#include <vector>
 
 	C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c) {
 		return true;
@@ -42,6 +42,14 @@
 
 	C_LINKAGE void yggdrasil_I2C_Write(i2c_t i2c, u8 address, void *data, size_t size) {
 		HAL_I2C_Master_Transmit(i2c.interface, address, (u8 *)data, size, HAL_MAX_DELAY);
+	}
+
+	C_LINKAGE void yggdrasil_I2C_WriteRegister(i2c_t i2c, u8 address, u8 reg, void *data, size_t size) {
+		std::vector<u8> buffer(size + 1, 0x00);
+		buffer[0] = reg;
+		std::memcpy(&buffer[1], data, size);
+		HAL_I2C_Master_Transmit(i2c.interface, address, buffer.data(), buffer.size(), HAL_MAX_DELAY);
+
 	}
 
 	C_LINKAGE void yggdrasil_I2C_Read(i2c_t i2c, u8 address, void *data, size_t size) {
