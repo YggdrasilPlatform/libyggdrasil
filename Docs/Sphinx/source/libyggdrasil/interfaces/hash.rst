@@ -30,20 +30,22 @@ CRC
 ^^^
 
 The interface for all CRC algorithms are the same.
-This is how to use the CRC32 hardware for example with default settings
+This is how to use the CRC32 hardware for example with default settings. In C the default values must be provided anytime.
 
 .. tabs::
 
-    .. code-tab:: cpp
+    .. code-tab:: c
 
         u8 data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
+        // Get the CRC32 result with default values
         u32 crc32 = yggdrasil_HASH_getCRC32(data, sizeof(data), 0xFFFFFFFF, 0x04C11DB7, 0xFFFFFFFF);
 
     .. code-tab:: cpp
 
         std::array<u8, 10> data = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
+        
+        // Get the CRC32 result with default values
         u32 crc32 = bsp::Hash::getCRC32(data);
 
 To use different settings, they can be provided as additional arguments.
@@ -58,6 +60,7 @@ To use different settings, they can be provided as additional arguments.
         const u32 polynomial   = 0x814141AB;
         const u32 xorOut       = 0x00000000;
 
+        // Get the CRC32 result with custom settings
         u32 crc32 = yggdrasil_HASH_getCRC32(data, sizeof(data), initialValue, polynomial, xorOut);
 
     .. code-tab:: cpp
@@ -68,6 +71,7 @@ To use different settings, they can be provided as additional arguments.
         constexpr u32 Polynomial   = 0x8141'41AB;
         constexpr u32 XorOut       = 0x0000'0000;
 
+        // Get the CRC32 result with custom settings
         u32 crc32 = bsp::Hash::getCRC32(data, InitialValue, Polynomial, XorOut);
 
 .. note::

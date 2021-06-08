@@ -16,11 +16,15 @@ The interface allows reading of an arbitrary amount of random data into any defa
 
     .. code-tab:: c
 
+        // Get a random 32 bit value
         u32 random32BitValue = yggdrasil_RNG_GetU32();
 
     .. code-tab:: cpp
 
+        // Get a random 32 bit value
         auto random32BitValue = bsp::RNG::get<u32>();
+
+        // Get a random array of 512 u8
         auto random512Bytes = bsp::RNG::get<std::array<u8, 512>>();
 
 .. important::

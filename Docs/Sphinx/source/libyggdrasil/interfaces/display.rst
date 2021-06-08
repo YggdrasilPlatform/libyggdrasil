@@ -24,17 +24,13 @@ The following code will initialize the display and clear the screen to white.
     .. code-tab:: c
 
         yggdrasil_Display_Init(DisplayOrientation_Portrait);
-        yggdrasil_Display_TurnOn();
-
-        yggdrasil_Display_Clear(0xFF);
+        yggdrasil_Display_Clear(Color_White);
 
     .. code-tab:: cpp
 
         using Color = bsp::drv::Color;
 
         bsp::Display::init();
-        bsp::Display::turnOn();
-
         bsp::Display::clear(Color::White);
 
 The following drawing functions are available:
@@ -44,25 +40,25 @@ The following drawing functions are available:
     .. code-tab:: c
 
         // Draw a blue rectangular frame from [100, 100] to [300, 400]
-        yggdrasil_Display_DrawRectangle(100, 100, 300, 400, 0x03);
+        yggdrasil_Display_DrawRectangle(100, 100, 300, 400, Color_Blue);
 
         // Draw a blue filled rectangle from [150, 150] to [250, 350]
-        yggdrasil_Display_FillRectangle(150, 150, 250, 350, 0x0C);
+        yggdrasil_Display_FillRectangle(150, 150, 250, 350, Color_Blue);
 
         // Draw a single yellow pixel at [50, 50]
-        yggdrasil_Display_DrawPixel(50, 50, 0xFC);
+        yggdrasil_Display_DrawPixel(50, 50, Color_Yellow);
 
         // Draw a maroon line from [10, 20] to [300, 60]
-        yggdrasil_Display_DrawLine(10, 20, 300, 60, 0x60);
+        yggdrasil_Display_DrawLine(10, 20, 300, 60, Color_Maroon);
 
         // Draw a navy circle outline at [150, 150] with radius 50
-        yggdrasil_Display_DrawCircle(150, 150, 50, 0x02);
+        yggdrasil_Display_DrawCircle(150, 150, 50, Color_Navy);
 
         // Draw a lime filled circle at [150, 150] with radius 30
-        yggdrasil_Display_FillCircle(150, 150, 30, 0x1C);
+        yggdrasil_Display_FillCircle(150, 150, 30, Color_Lime);
 
         // Draw a red "Hello World" at [200, 300] with size 16
-        yggdrasil_Display_DrawString(200, 300, "Hello World", 0xE0, Font16);
+        yggdrasil_Display_DrawString(200, 300, "Hello World", Color_Red, Font16);
 
     .. code-tab:: cpp
 

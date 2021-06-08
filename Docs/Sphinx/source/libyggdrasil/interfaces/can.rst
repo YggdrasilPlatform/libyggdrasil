@@ -174,12 +174,12 @@ Once this is done, the new CAN can be defined like this:
 
     .. code-tab:: c
 
-        const static can_t myCAN = { &hcan1 };
+        const static can_t MyCAN = { &hcan1 };
 
     .. code-tab:: cpp
 
-        using myCAN = bsp::drv::CAN<&hcan1, bsp::mid::drv::CAN>;
+        using MyCAN = bsp::drv::CAN<&hcan1, bsp::mid::drv::CAN>;
 
-and then used like all other CANs.
+and then used like all the other CAN.
 
 

@@ -14,19 +14,53 @@ Simple Usage
 Reading from and writing to a SPI device is as simple as calling the ``read`` and ``write`` functions of the relevant 
 SPI interface. For example, for a device connected to the PMOD A connector, the following code can be used to read data:
 
-.. code-block:: cpp
+.. tabs::
 
-    auto word = bsp::SPIC::read<u32>();
+    .. code-tab:: c
 
-    auto tenBytes = bsp::SPIC::read<std::array<u8, 10>>();
+        u32 rxdata = 0;
+
+        // Read an u32
+        yggdrasil_SPI_Read(SPIC, &rxdata, sizeof(u32));
+        
+
+        u8 rxarray[10] = { 0 };
+
+        // Read an array of 10 u8 
+        yggdrasil_SPI_Read(SPIC, rxarray, sizeof(rxarray));
+
+
+    .. code-tab:: cpp
+
+        // Read an u32
+        auto word = bsp::SPIC::read<u32>();
+
+        // Read an array of 10 u8 
+        auto tenBytes = bsp::SPIC::read<std::array<u8, 10>>();
+
 
 And this code to write data:
+.. tabs::
 
-.. code-block:: cpp
-    
-    bsp::SPIC::write<u32>(0x1234'5678);
+    .. code-tab:: c
 
-    bsp::SPIC::write<std::array<u8, 5>>({ 1, 2, 3, 4, 5 });
+        u32 txdata = 0x12345678;
+
+        // Write an u32
+        yggdrasil_SPI_Write(SPIC, &txdata, sizeof(u32));
+
+        u8 txarray[5] = { 1, 2, 3, 4, 5 };
+
+        // Write an array of 5 u8
+        yggdrasil_SPI_Read(SPIC, txarray, sizeof(txarray));
+
+    .. code-block:: cpp
+        
+        // Write an u32
+        bsp::SPIC::write<u32>(0x1234'5678);
+
+        // Write an array of 5 u8
+        bsp::SPIC::write<std::array<u8, 5>>({ 1, 2, 3, 4, 5 });
 
 .. important::
     All SPI interfaces are configured in Full-Duplex Master, MSB First, Mode 3 with a data rate of 6.75 MBits/s.
@@ -44,7 +78,25 @@ Available peripherals
 +-----------------+-------------------+--------------+
 | PMOD A          | SPIC              | Hardware NSS |
 +-----------------+-------------------+--------------+
-| Raspberry Port  | SPIB              | ``SPIACE``   |
+| Raspberry Port  | SPIB              | ``SPIBCE``   |
 +-----------------+-------------------+--------------+
 | Raspberry Port  | SPIC              | Hardware NSS |
 +-----------------+-------------------+--------------+
+
+Custom SPI
+----------
+
+In order to control a SPI that has not been pre-defined by libyggdrasil, first it needs to be properly configured through the project's .ioc file. 
+Once this is done, the new SPI can be defined like this:
+
+.. tabs::
+
+    .. code-tab:: c
+
+        spi_t mySPI = { &hspi1 };
+
+    .. code-tab:: cpp
+
+    using mySPI = bsp::drv::SPI<&hspi1, bsp::mid::drv::SPI>;
+
+and then used like all the other SPI.

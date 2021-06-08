@@ -14,24 +14,46 @@ Every timer got some basic functions and depending on the selected timer some ad
 
 Here is an example how to use a timer.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Enable timer A
-    bsp::TimerA::enable();
+    .. code-tab:: c
 
-    // Do something
+        // Enable timer A
+        yggdrasil_TIM_Enable(TimerA);
 
-    // Disable timer A
-    bsp::TimerA::disable();
+        // Do something
 
-    // Read the counter value
-    auto cnt = bsp::TimerA::getCount();
+        // Disable timer A
+        yggdrasil_TIM_Disable(TimerA);
 
-    // Reset the value 
-    bsp::TimerA::resetCount();
+        // Read the counter value
+        u32 cnt = yggdrasil_TIM_GetCount(TimerA);
 
-    // Or preset the counter value
-    bsp::TimerA::setCount(200);
+        // Reset the value 
+        yggdrasil_TIM_ResetCount(TimerA);
+
+        // Or preset the counter value
+        yggdrasil_TIM_SetCount(TimerA, 200);
+
+
+    .. code-tab:: cpp
+
+        // Enable timer A
+        bsp::TimerA::enable();
+
+        // Do something
+
+        // Disable timer A
+        bsp::TimerA::disable();
+
+        // Read the counter value
+        auto cnt = bsp::TimerA::getCount();
+
+        // Reset the value 
+        bsp::TimerA::resetCount();
+
+        // Or preset the counter value
+        bsp::TimerA::setCount(200);
 
 For runtime measurement it is suggested to use the implemented profile counter.  
 
@@ -69,22 +91,45 @@ Profile Counter
 
 Using a 32 Bit timer, the profile counter is able to get you high resolution long time measurement of the code execution time.
 
-.. code-block:: cpp
+.. tabs::
 
-    ProfileCounter.start();
-	// The code to measure
-	ProfileCounter.stop();
+    .. code-tab:: c
 
-    // Get the passed time in nano seconds  
-    auto passedTime = ProfileCounter.getPassedTime();
+        yggdrasil_ProfileCounter_Start(ProfileCounter);
+        // The code to measure
+        function_to_measure();
+        
+        yggdrasil_ProfileCounter_Stop(ProfileCounter);
 
-    // Or get the passed time formatted in a string
-    auto passedTimeString = ProfileCounter.getFormattedPassedTime();
-    // The string may be printed like this
-    printf("Measured time: %s \n", passedTimeString.c_str());
+        // Get the passed time in nano seconds  
+        u64 passedTime = yggdrasil_ProfileCounter_GetPassedTime(ProfileCounter);
 
-    // Reset the counter value 
-    ProfileCounter.reset();
+        // Or get the passed time formatted in a string
+        char buffer[30];
+        yggdrasil_ProfileCounter_GetFormattedPassedTime(ProfileCounter, buffer, sizeof(buffer));
+
+        // The string may be printed like this
+        printf("Measured time: %s \n", buffer);
+
+        // Reset the counter value 
+        ProfileCounter.reset();
+
+    .. code-tab:: cpp
+
+        ProfileCounter.start();
+        // The code to measure
+        ProfileCounter.stop();
+
+        // Get the passed time in nano seconds  
+        auto passedTime = ProfileCounter.getPassedTime();
+
+        // Or get the passed time formatted in a string
+        auto passedTimeString = ProfileCounter.getFormattedPassedTime();
+        // The string may be printed like this
+        printf("Measured time: %s \n", passedTimeString.c_str());
+
+        // Reset the counter value 
+        ProfileCounter.reset();
 
 There is also a function to get the time to an overflow regarding the configured timer clock frequency. 
 

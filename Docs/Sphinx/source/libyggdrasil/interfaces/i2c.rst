@@ -114,3 +114,22 @@ Available peripherals
 +---------------+-------------------+---------+
 | USB C         | I2CD              | 0x50    |
 +---------------+-------------------+---------+
+
+
+Custom I2C
+----------
+
+In order to control a I2C that has not been pre-defined by libyggdrasil, first it needs to be properly configured through the project's .ioc file. 
+Once this is done, the new I2C can be defined like this:
+
+.. tabs::
+
+    .. code-tab:: c
+
+        i2c_t myI2C = { &hi2c1 };
+
+    .. code-tab:: cpp
+
+    using myI2C = bsp::drv::I2C<&hi2c1, bsp::mid::drv::I2C>;
+
+and then used like all the other I2C.
