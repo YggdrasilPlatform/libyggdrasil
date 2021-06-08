@@ -126,10 +126,10 @@ Once this is done, the new I2C can be defined like this:
 
     .. code-tab:: c
 
-        i2c_t myI2C = { &hi2c1 };
+        i2c_t MyI2C = { &hi2c1 };
 
     .. code-tab:: cpp
 
-    using myI2C = bsp::drv::I2C<&hi2c1, bsp::mid::drv::I2C>;
+        using MyI2C = bsp::drv::I2C<&hi2c1, bsp::mid::drv::I2C>;
 
 and then used like all the other I2C.

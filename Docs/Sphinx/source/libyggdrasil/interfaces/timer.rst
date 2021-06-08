@@ -21,13 +21,11 @@ Here is an example how to use a timer.
         // Enable timer A
         yggdrasil_TIM_Enable(TimerA);
 
-        // Do something
+        // Read the counter value
+        u32 cnt = yggdrasil_TIM_GetCount(TimerA);
 
         // Disable timer A
         yggdrasil_TIM_Disable(TimerA);
-
-        // Read the counter value
-        u32 cnt = yggdrasil_TIM_GetCount(TimerA);
 
         // Reset the value 
         yggdrasil_TIM_ResetCount(TimerA);
@@ -41,13 +39,11 @@ Here is an example how to use a timer.
         // Enable timer A
         bsp::TimerA::enable();
 
-        // Do something
+        // Read the counter value
+        auto cnt = bsp::TimerA::getCount();
 
         // Disable timer A
         bsp::TimerA::disable();
-
-        // Read the counter value
-        auto cnt = bsp::TimerA::getCount();
 
         // Reset the value 
         bsp::TimerA::resetCount();
@@ -98,7 +94,6 @@ Using a 32 Bit timer, the profile counter is able to get you high resolution lon
         yggdrasil_ProfileCounter_Start(ProfileCounter);
         // The code to measure
         function_to_measure();
-        
         yggdrasil_ProfileCounter_Stop(ProfileCounter);
 
         // Get the passed time in nano seconds  
@@ -112,12 +107,13 @@ Using a 32 Bit timer, the profile counter is able to get you high resolution lon
         printf("Measured time: %s \n", buffer);
 
         // Reset the counter value 
-        ProfileCounter.reset();
+        yggdrasil_ProfileCounter_Reset(ProfileCounter);
 
     .. code-tab:: cpp
 
         ProfileCounter.start();
         // The code to measure
+        function_to_measure();
         ProfileCounter.stop();
 
         // Get the passed time in nano seconds  
@@ -125,6 +121,7 @@ Using a 32 Bit timer, the profile counter is able to get you high resolution lon
 
         // Or get the passed time formatted in a string
         auto passedTimeString = ProfileCounter.getFormattedPassedTime();
+
         // The string may be printed like this
         printf("Measured time: %s \n", passedTimeString.c_str());
 
@@ -133,16 +130,49 @@ Using a 32 Bit timer, the profile counter is able to get you high resolution lon
 
 There is also a function to get the time to an overflow regarding the configured timer clock frequency. 
 
+.. tabs::
+
+    .. code-tab:: c
+
+        // The time to an overflow in nano seconds 
+        u64 timeToOverflow = yggdrasil_ProfileCounter_GetTimeToOverflow(ProfileCounter);
+
+        // The time to an overflow formatted in a string
+        char buffer[30];
+        yggdrasil_ProfileCounter_GetFormattedTimeToOverflow(ProfileCounter, buffer, sizeof(buffer));
+
+        // The string may be printed like this
+        printf("Time to an overflow: %s \n",buffer);
+
+    .. code-tab:: cpp
+
+        // The time to an overflow in nano seconds 
+        auto timeToOverflow = ProfileCounter.getTimeToOverflow();
+
+        // The time to an overflow formatted in a string
+        auto timeToOverflowString = ProfileCounter.getFormattedTimeToOverflow();
+
+        // The string may be printed like this
+        printf("Time to an overflow: %s \n", timeToOverflowString.c_str());
+
+
 Custom Profile Counter
 ^^^^^^^^^^^^^^^^^^^^^^ 
 
 If you want to use an additional profile counter, it needs to be properly configured through the project's .ioc file. 
 Once this is done, the profile counter, in this case timer 10, can be defined like this:
 
-.. code-block:: cpp
+.. tabs::
 
-    using MyProfileTimer = bsp::drv::Timer<&htim10, bsp::mid::drv::Timer, u16>;
-    static constexpr auto& MyProfileCounter = MyProfileTimer::ProfileCounter;
+    .. code-tab:: c
+
+        tim_t myProfileCounter = { &htim2, sizeof(u32) };		
+
+
+    .. code-tab:: cpp
+
+        using MyProfileTimer = bsp::drv::Timer<&htim10, bsp::mid::drv::Timer, u16>;
+        static constexpr auto& MyProfileCounter = MyProfileTimer::ProfileCounter;
 
 After this declaration, the profile counter can be used as in the examples above.
 
@@ -150,16 +180,6 @@ After this declaration, the profile counter can be used as in the examples above
 
     Note that 16 bit timer, possibly on high frequency bus reaches an overflow faster than expected.
 
-
-.. code-block:: cpp
-
-    // The time to an overflow in nano seconds 
-    auto timeToOverflow = ProfileCounter.getTimeToOverflow();
-
-    // The time to an overflow formatted in a string
-    auto timeToOverflowString = ProfileCounter.getFormattedTimeToOverflow();
-    // The string may be printed like this
-    printf("Time to an overflow: %s \n", timeToOverflowString.c_str());
 
 
 Encoder
@@ -169,27 +189,51 @@ The encoder can be used in two different modes. These modes determine how many s
 Default setting is, that the encoder module counts 96 steps each turn. This can be change to 48 steps if needed.
 The encoder also has a button which can be used as a gpio.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Enable the encoder 
-    if (!bsp::Encoder.enable()) {
-        // No encoder module on this timer
-        // Error handling
-    }
+    .. code-tab:: c
+    
+        // Enable the encoder 
+        if (!yggdrasil_Encoder_Enable(Encoder)) {
+            // No encoder module on this timer
+            // Error handling
+        }
 
-    // Get the direction of the ongoing or the last rotation
-    auto direction = bsp::Encoder.getDirection();
+        // Get the direction of the ongoing or the last rotation
+        u8 direction = yggdrasil_Encoder_GetDirection(Encoder);
 
-    // Get the count 
-	auto count = bsp::Encoder.getCount();
+        // Get the count 
+        u32 count = yggdrasil_Encoder_GetCount(Encoder);
 
-    // Set the count to a desired value
-    bsp::Encoder.setCount(1000);
+        // Set the count to a desired value
+        yggdrasil_Encoder_SetCount(Encoder, 1000);
 
-    auto buttonState = bsp::EncoderButton;
+        u8 buttonState = yggdrasil_GPIO_Get(EncoderButton);
 
-    // Disable the encoder
-    bsp::Encoder.disable();
+        // Disable the encoder
+        yggdrasil_Encoder_Disable(Encoder);
+
+    .. code-tab:: cpp
+
+        // Enable the encoder 
+        if (!bsp::Encoder.enable()) {
+            // No encoder module on this timer
+            // Error handling
+        }
+
+        // Get the direction of the ongoing or the last rotation
+        auto direction = bsp::Encoder.getDirection();
+
+        // Get the count 
+        auto count = bsp::Encoder.getCount();
+
+        // Set the count to a desired value
+        bsp::Encoder.setCount(1000);
+
+        auto buttonState = bsp::EncoderButton;
+
+        // Disable the encoder
+        bsp::Encoder.disable();
 
 
 Custom Encoder
@@ -198,10 +242,16 @@ Custom Encoder
 If you want to use an additional encoder, it needs to be properly configured through the project's .ioc file. 
 Once this is done, the new encoder, in this case timer 1, can be defined like this:
 
-.. code-block:: cpp
+.. tabs::
 
-    using MyEncoderTimer = bsp::drv::Timer<&htim1, bsp::mid::drv::Timer, u16>;
-    static constexpr auto& MyEncoder = MyEncoderTimer::Encoder;	
+    .. code-tab:: c
+
+        tim_t myEncoder = { &htim1, sizeof(u16) };
+
+    .. code-tab:: cpp
+
+        using MyEncoderTimer = bsp::drv::Timer<&htim1, bsp::mid::drv::Timer, u16>;
+        static constexpr auto& MyEncoder = MyEncoderTimer::Encoder;	
 
 After this declaration, the added encoder can be used as in the examples above.
 
@@ -210,31 +260,57 @@ PWM Generation
 
 Some timer have an integrated multichannel PWM generation module. These channels can be used as shown in the example below.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Enable a pwm generation on timer A channel A
-    if (!bsp::TimerDCHA.startPwm()) {
-        // Timer could not be started
-        // Error handling
-    }
+    .. code-tab:: c
 
-    // Set the duty cycle to an float between 0 an 100
-    bsp::TimerDCHA.setDutyCycle(25.2F);
+        // Enable a pwm generation on timer A channel A
+        if (!yggdrasil_TIM_Channel_StartPwm(TimeACHA)) {
+            // Timer could not be started
+            // Error handling
+        }
 
-    // Disable the pwm
-    bsp::TimerDCHA.stopPwm();
+        // Set the duty cycle to an float between 0 an 100
+        yggdrasil_TIM_Channel_SetDutyCycle(TimeACHA, 25.5F);
+
+        // Disable the pwm
+        yggdrasil_TIM_Channel_StopPwm(TimeACHA);
+
+    .. code-tab:: cpp
+
+        // Enable a pwm generation on timer A channel A
+        if (!bsp::TimerDCHA.startPwm()) {
+            // Timer could not be started
+            // Error handling
+        }
+
+        // Set the duty cycle to an float between 0 an 100
+        bsp::TimerDCHA.setDutyCycle(25.2F);
+
+        // Disable the pwm
+        bsp::TimerDCHA.stopPwm();
 
 For the multichannel PWM modules, the frequency for each channel is the same. To adjust the frequency the best way is to change this in the project's .ioc file.
 There is also a function provided to change the PWM frequency, but there is no guarantee that the function is able to change it. 
 In order to change the frequency of timer A channel A, the frequency of the timer A must be changed. The frequency for all channels in one timer is the same.
 
-.. code-block:: cpp
+.. tabs::
 
-    // Change the pwm frequency of timer A 
-    if (!bsp::TimerA::setPwmFrequency(50,1000)) {
-        // Frequency could not be changed
-        // Error handling
-    }
+    .. code-tab:: c
+
+        // Change the pwm frequency of timer A 
+        if (!yggdrasil_TIM_SetPwmFrequency(TimerA, 50, 1000)) {
+            // Frequency could not be changed
+            // Error handling
+        }
+
+    .. code-tab:: cpp
+
+        // Change the pwm frequency of timer A 
+        if (!bsp::TimerA::setPwmFrequency(50, 1000)) {
+            // Frequency could not be changed
+            // Error handling
+        }
  
 
 In the example above, the frequency will be set 50Hz with a resolution of 1000 steps. 
@@ -249,14 +325,26 @@ Custom PWM Generation
 
 To add an other timer with a pwm module, the timer as is must be declared.
 
-.. code-block:: cpp
+.. tabs::
 
-    using MyPwmTimer = bsp::drv::Timer<&htim10, bsp::mid::drv::Timer, u16>;
+    .. code-tab:: c
+
+        tim_t MyPwmTimer = { &htim10, sizeof(u16) };
+
+    .. code-tab:: cpp
+
+        using MyPwmTimer = bsp::drv::Timer<&htim10, bsp::mid::drv::Timer, u16>;
 
 Then the actual channel can be declared.
 
-.. code-block:: cpp
+.. tabs::
 
-    static constexpr auto& MyPwmChannel = MyPwmTimer::Channel<1>;
+    .. code-tab:: c
+
+        tim_channel_t MyPwmChannel = { MyPwmTimer, 1 };
+
+    .. code-tab:: cpp
+
+        static constexpr auto& MyPwmChannel = MyPwmTimer::Channel<1>;
 
 After this declaration, the added pwm channel can be used as in the examples above.
