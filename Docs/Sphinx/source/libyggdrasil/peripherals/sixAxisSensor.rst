@@ -6,7 +6,7 @@
 
 .. admonition:: Datasheets
     
-    * `ICM-42605 Datasheet <_static/datasheets/yggdrasil/ICM-42605.pdf>`_ 
+    * `ICM-42605 Datasheet </_static/datasheets/yggdrasil/ICM-42605.pdf>`_ 
 
 Description
 -----------

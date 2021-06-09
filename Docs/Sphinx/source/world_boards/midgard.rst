@@ -10,10 +10,10 @@ Midgard
 
 .. admonition:: Datasheets
 
-    * `MCU STM32F769 Datasheet <_static/datasheets/midgard/STM32F769/datasheet.pdf>`_ 
-    * `MCU STM32F769 Reference manual <_static/datasheets/midgard/STM32F769/reference_manual.pdf>`_ 
-    * `MCU Arm Cortex M7 Reference manual <_static/datasheets/midgard/STM32F769/core_reference_manual.pdf>`_ 
-    * `Ethernet Phy DP83620 Datasheet <_static/datasheets/midgard/DP83620/datasheet.pdf>`_ 
+    * `MCU STM32F769 Datasheet </_static/datasheets/midgard/STM32F769/datasheet.pdf>`_ 
+    * `MCU STM32F769 Reference manual </_static/datasheets/midgard/STM32F769/reference_manual.pdf>`_ 
+    * `MCU Arm Cortex M7 Reference manual </_static/datasheets/midgard/STM32F769/core_reference_manual.pdf>`_ 
+    * `Ethernet Phy DP83620 Datasheet </_static/datasheets/midgard/DP83620/datasheet.pdf>`_ 
 
 
 Peripherals

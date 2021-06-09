@@ -6,7 +6,7 @@ Humidity Sensor
 
 .. admonition:: Datasheets
     
-    * `SHT40-AD1B-R2 Datasheet <_static/datasheets/yggdrasil/SHT40-AD1B-R2.pdf>`_ 
+    * `SHT40-AD1B-R2 Datasheet </_static/datasheets/yggdrasil/SHT40-AD1B-R2.pdf>`_ 
 
 Description
 -----------

@@ -6,7 +6,7 @@ Pressure Sensor
 
 .. admonition:: Datasheets
     
-    * `LPS22HBTR Datasheet <_static/datasheets/yggdrasil/LPS22HBTR.pdf>`_ 
+    * `LPS22HBTR Datasheet </_static/datasheets/yggdrasil/LPS22HBTR.pdf>`_ 
 
 Description
 -----------

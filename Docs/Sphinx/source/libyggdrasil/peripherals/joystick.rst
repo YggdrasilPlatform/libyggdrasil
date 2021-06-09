@@ -10,7 +10,7 @@ Joystick
 
 .. admonition:: Datasheets
     
-    * `TLA2024IRUGT Datasheet <_static/datasheets/yggdrasil/TLA2024IRUGT.pdf>`_ 
+    * `TLA2024IRUGT Datasheet </_static/datasheets/yggdrasil/TLA2024IRUGT.pdf>`_ 
 
 Description
 -----------

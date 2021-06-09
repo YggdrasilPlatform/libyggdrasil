@@ -6,7 +6,7 @@ Push Pull Driver
 
 .. admonition:: Datasheets
     
-    * `IX4310T Datasheet <_static/datasheets/yggdrasil/IX4310T.pdf>`_ 
+    * `IX4310T Datasheet </_static/datasheets/yggdrasil/IX4310T.pdf>`_ 
 
 Description
 -----------

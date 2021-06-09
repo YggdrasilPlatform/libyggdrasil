@@ -7,7 +7,7 @@ CAN Interface
     CAN (Controller Area Network) is a robust vehicle bus standard designed to allow microcontrollers and devices to communicate with each other's applications without a host computer. 
 
 .. seealso::
-    * `ISO1044BDR Datasheet <_static/datasheets/yggdrasil/iso1044bdr.pdf>`_ 
+    * `ISO1044BDR Datasheet </_static/datasheets/yggdrasil/iso1044bdr.pdf>`_ 
     * :ref:`CAN Connector <CanConnector>`
 
 Simple Usage

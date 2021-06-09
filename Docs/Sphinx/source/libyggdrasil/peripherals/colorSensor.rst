@@ -6,7 +6,7 @@ Color Sensor
 
 .. admonition:: Datasheets
     
-    * `TCS3472 Datasheet <_static/datasheets/yggdrasil/TCS3472.pdf>`_ 
+    * `TCS3472 Datasheet </_static/datasheets/yggdrasil/TCS3472.pdf>`_ 
 
 
 Description

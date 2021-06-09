@@ -6,7 +6,7 @@ DC Motor Driver
 
 .. admonition:: Datasheets
     
-    * `TC78H660FTG Datasheet <_static/datasheets/yggdrasil/TC78H660FTG.pdf>`_ 
+    * `TC78H660FTG Datasheet </_static/datasheets/yggdrasil/TC78H660FTG.pdf>`_ 
 
 Description
 -----------
