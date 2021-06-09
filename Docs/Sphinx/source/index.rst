@@ -1,7 +1,12 @@
 Yggdrasil Platform
 ==================
 
-.. tip::
+.. image:: assets/title.jpg
+   :width: 100%
+   :alt: Yggdrasil
+   :align: center
+
+.. important::
 
    Yggdrasil is the embedded development platform for Students at the Bern University of Applied Sciences. It’s designed specifically to allow a unified learning experience throughout the Bachelor studies by combining Bare-Metal Microcontroller development and modern Linux / Android programming into a single multi-purpose development board.
 
