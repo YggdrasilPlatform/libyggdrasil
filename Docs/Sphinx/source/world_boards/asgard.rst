@@ -3,6 +3,11 @@
 Asgard
 ======
 
+.. image:: assets/asgard.png
+    :width: 70%
+    :alt: Asgard
+    :align: center
+
 .. admonition:: Datasheets
 
     * `MPU STM32MP157C Datasheet <_static/datasheets/asgard/STM32MP157C/datasheet.pdf>`_ 

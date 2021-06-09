@@ -3,6 +3,11 @@
 Midgard
 =======
 
+.. image:: assets/midgard.png
+    :width: 70%
+    :alt: Asgard
+    :align: center
+
 .. admonition:: Datasheets
 
     * `MCU STM32F769 Datasheet <_static/datasheets/midgard/STM32F769/datasheet.pdf>`_ 
