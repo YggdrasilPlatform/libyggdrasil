@@ -54,7 +54,7 @@ Input / Output devices
 * 1 x **800x480 True Color Touch LCD Display**
 * 1 x **Potentiometer**
 * 1 x **Incremental Encoder with up to 96 steps**
-* 2 x **Joystick**
+* 2 x **Joystick with 4-Channel 12bit Sigma-Delta ADC**
 * 1 x **Audio Codec with microphone and Stereo Speakers**
 * 1 x **1Gb Serial NAND Flash or 8Mb Serial MRAM**
 * 1 x **Dual DIP Switch for Boot Mode configuration**
