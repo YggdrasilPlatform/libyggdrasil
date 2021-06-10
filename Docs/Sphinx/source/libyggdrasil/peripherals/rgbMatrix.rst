@@ -6,7 +6,7 @@ RGB LED Matrix
 
 .. admonition:: Datasheets
     
-    * `SK9822 Datasheet <_static/datasheets/yggdrasil/SK9822.pdf>`_ 
+    * `SK9822 Datasheet </_static/datasheets/yggdrasil/SK9822.pdf>`_ 
 
 Description
 -----------
