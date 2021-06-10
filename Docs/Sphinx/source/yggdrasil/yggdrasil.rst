@@ -1,6 +1,11 @@
 Yggdrasil
 =========
 
+.. image:: assets/yggdrasil.png
+    :width: 70%
+    :alt: Asgard
+    :align: center
+
 Overview
 --------
 
