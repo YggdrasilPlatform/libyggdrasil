@@ -44,6 +44,6 @@
 	#include <cpp/yggdrasil/peripherals/seven_segment.hpp>
 	#include <cpp/yggdrasil/peripherals/rgb_matrix.hpp>
 	#include <cpp/yggdrasil/peripherals/motor_driver.hpp>
-	#include <cpp/yggdrasil/peripherals/push_pull_driver.hpp>
+	#include <cpp/yggdrasil/peripherals/sink_driver.hpp>
 
 #endif

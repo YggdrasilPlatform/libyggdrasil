@@ -34,7 +34,7 @@
 	#include <c/yggdrasil/peripherals/joystick.h>
 	#include <c/yggdrasil/peripherals/motor_driver.h>
 	#include <c/yggdrasil/peripherals/pressure_sensor.h>
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
+	#include <c/yggdrasil/peripherals/sink_driver.h>
 	#include <c/yggdrasil/peripherals/rgb_matrix.h>
 	#include <c/yggdrasil/peripherals/rtc.h>
 	#include <c/yggdrasil/peripherals/seven_segment.h>
