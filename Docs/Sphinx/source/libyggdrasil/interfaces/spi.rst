@@ -40,6 +40,7 @@ SPI interface. For example, for a device connected to the PMOD A connector, the 
 
 
 And this code to write data:
+
 .. tabs::
 
     .. code-tab:: c
@@ -54,7 +55,7 @@ And this code to write data:
         // Write an array of 5 u8
         yggdrasil_SPI_Read(SPIC, txarray, sizeof(txarray));
 
-    .. code-block:: cpp
+    .. code-tab:: cpp
         
         // Write an u32
         bsp::SPIC::write<u32>(0x1234'5678);
