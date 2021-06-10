@@ -1,25 +1,26 @@
-.. _PpDriverPeripheral:
+.. _SinkDriverPeripheral:
 
-Push Pull Driver
-================
-**IXYS IX4310T Low side gate driver**
+Sink Driver
+===========
+**Sink driver**
 
 .. admonition:: Datasheets
     
-    * `IX4310T Datasheet </_static/datasheets/yggdrasil/IX4310T.pdf>`_ 
+    * `DMN2020LSN-7 Datasheet </_static/datasheets/yggdrasil/DMN2020LSN-7.pdf>`_ 
 
 Description
 -----------
 
-The IX4310T is a 2A low side gate driver. The output
-is capable of sourcing and sinking 2A of peak current,
-and has a maximum voltage rating of 24V.
+Each sink driver is capable of sinking 5A of peak current,
+and has a maximum voltage rating of 20V. 
 
-Each driver can be used as:
+All driver can be use as:
 
 * Servo driver
-* PWM output with high current capability 
-* Output with high current capability 
+* PWM output with high sink capability 
+* Output with high sink capability 
+
+There is a pull up resistor to provide a high signal, which is needed to controll a servo.
 
 .. note::
 
@@ -28,9 +29,6 @@ Each driver can be used as:
 
 Usage as output
 ---------------
-
-.. note:: 
-    Due to the high internal resistance and the low supply voltage (5V) the specified current can not be sourced / sinked. 
 
 The example below will use button A to control the state of the driver output.
 
