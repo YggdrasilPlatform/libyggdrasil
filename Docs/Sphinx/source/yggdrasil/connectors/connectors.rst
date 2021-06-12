@@ -36,6 +36,11 @@ On-board connectors are headers, plugs and pins that allow extending the functio
     | :ref:`>>> <PmodConnector>`
 
 .. seealso::
+    | **SWD Debug Port**
+    | Debugging external PCBs over STLink
+    | :ref:`>>> <SwdConnector>`
+
+.. seealso::
     | **STLinkv3 Bridge Interface**
     | Using interfaces through STLink from a computer
     | :ref:`>>> <StLinkBridgeConnector>`
@@ -57,5 +62,6 @@ On-board connectors are headers, plugs and pins that allow extending the functio
     pmod
     grove
     can
+    swd
     stlinkBridge
     worldConnector

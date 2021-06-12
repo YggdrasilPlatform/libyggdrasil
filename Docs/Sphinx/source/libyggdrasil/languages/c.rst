@@ -8,7 +8,7 @@ Templates
 
 To get started with C development, it's easiest to clone the example or a template for the board and environment you're using from GitLab.
 
-.. note::
+.. important::
     If there are build errors about the compiler not finding certain includes from libyggdrasil, make sure you cloned the template repository recusively with ``--recurse-submodules``. Without this flag, the ``libyggdrasil`` folder will be empty.
 
 

@@ -18,6 +18,8 @@ Asgard
     * `Ethernet Phy DP83867 Datasheet </_static/datasheets/asgard/DP83867/datasheet.pdf>`_ 
     * `DDR3L SDRAM MT41K256M16TW Datasheet </_static/datasheets/asgard/DDR3LSDRAM/datasheet.pdf>`_ 
 
+Asgard is a powerful SBC with a dual core ARM Cortex A7 + Cortex M4 STM32MP1 SoC, 1GB of DDR3 RAM and Gigabit Ethernet support. It's capable of running Linux and Android
+as well as code with real-time requirements on it's coprocessor.
 
 Peripherals
 -----------
@@ -100,3 +102,13 @@ DDR3L SDRAM (1.35V) is a low voltage version of the DDR3 (1.5V) SDRAM. Refer to 
 * Fixed burst length (BL) of 8 and burst chop (BC) of 4 (via the mode register set [MRS])
 * Selectable BC4 or BL8 on-the-fly (OTF)
 * Self refresh mode
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+   :hidden:
+
+   pcb
+   u-boot/u-boot
+   linux/linux
+   android/android

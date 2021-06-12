@@ -13,6 +13,17 @@ Description
 With the timer F (TIM8) in the encoder mode, the onboard encoder can be used. 
 
 
+Measurement values
+^^^^^^^^^^^^^^^^^^
+
+| The following diagram shows what turn direction of the encoder leads to a increase or decrease of the internal counter.
+|
+
+.. image:: assets/encoder.png
+    :width: 30%
+    :alt: Encoder values
+    :align: center
+
 Usage
 -----
 

@@ -12,6 +12,17 @@ Description
 
 The potentiometer is connected to the internal ADC 2 channel 13. 
 
+Measurement values
+^^^^^^^^^^^^^^^^^^
+
+| The following diagram shows what turn direction of the potentiometer leads to a increase or decrease of voltage at the ADC.
+|
+
+.. image:: assets/potentiometer.png
+    :width: 20%
+    :alt: Potentiometer values
+    :align: center
+
 Usage
 -----
 

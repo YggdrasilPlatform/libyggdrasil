@@ -8,6 +8,26 @@
     
     * `HDSP-A103 Datasheet </_static/datasheets/yggdrasil/HDSP-A103.pdf>`_ 
 
+Indices
+^^^^^^^
+
+| When interacting with individual 7-Segments, the following indexing is used. 
+|
+
+.. image:: assets/sevensegments.png
+    :width: 50%
+    :alt: 7-Segment Indices
+    :align: center
+
+|
+| If instead individual segments should get addressed, the typical naming convention is used.
+| 
+
+.. image:: assets/segments.png
+    :width: 25%
+    :alt: 7-Segment Indices
+    :align: center
+
 
 Description
 -----------

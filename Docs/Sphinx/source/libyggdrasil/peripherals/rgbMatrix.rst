@@ -18,11 +18,23 @@ These leds have 4 built in pwm generators. For the red, green and blue channel t
     Each led consumes up to 200mW. It is not recommended to look at the leds directly.
 
 
+Indices
+^^^^^^^
+
+| Each LED has an index that is used when setting individul LED colors.
+|
+
+.. image:: assets/rgbMatrix.png
+    :width: 50%
+    :alt: RGB Matrix Indices
+    :align: center
+
 Usage
 -----
 
-. .note::
-    When enabling the leds, the SPIA mode will be set to mode 3
+.. note::
+
+    When enabling the LEDs, SPIA wil be set to mode 3
 
 Example to set LED 1 and 7 
 

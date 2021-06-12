@@ -20,5 +20,5 @@ The World Boards are small ``SODIMM314`` compatible SoC boards which can be plug
    :caption: Contents:
    :hidden:
 
-   midgard
-   asgard
+   midgard/midgard
+   asgard/asgard

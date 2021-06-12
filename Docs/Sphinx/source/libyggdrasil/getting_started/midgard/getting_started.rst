@@ -13,7 +13,7 @@ To start developing on the Yggdrasil platform using Midgard, the following thing
 
 .. seealso::
     * `STM32CubeIDE <https://www.st.com/en/development-tools/stm32cubeide.html>`_
-    * `Midgard Template <https://gitlab.ti.bfh.ch/yggdrasil/midgard>`_
+    * `Midgard Template <https://gitlab.ti.bfh.ch/yggdrasil/midgard/midgard_template>`_
 
 After starting the IDE for the first time, close the welcome screen and click on ``File -> Import...``.
 Then import the Midgard Template using the ``Existing Project into Workspace`` option.

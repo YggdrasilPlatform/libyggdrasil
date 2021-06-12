@@ -15,6 +15,7 @@ Midgard
     * `MCU Arm Cortex M7 Reference manual </_static/datasheets/midgard/STM32F769/core_reference_manual.pdf>`_ 
     * `Ethernet Phy DP83620 Datasheet </_static/datasheets/midgard/DP83620/datasheet.pdf>`_ 
 
+Midgard is a powerful but easy to use development board with a STM32F7 microcontroller as well as 100 Mbit eithernet support.
 
 Peripherals
 -----------
@@ -85,3 +86,10 @@ Single Port 10/100 Mbps Ethernet Physical Layer Transceiver with Fiber Support
 * 25 MHz MDC and MDIO Serial Management
 * Programmable LED Support for Link, 10 /100 Mb/s Mode, Duplex, Activity, and Collision Detect
 * Optional 100BASE-TX Fast Link Loss Detection
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+   :hidden:
+
+   pcb

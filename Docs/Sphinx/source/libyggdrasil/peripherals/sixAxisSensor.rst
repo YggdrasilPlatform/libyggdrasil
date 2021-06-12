@@ -20,6 +20,9 @@ The ICM-42605 is a 6-axis MEMS MotionTracking device that combines a 3-axis gyro
 Usage
 -----
 
+.. note::
+    A coordinate system with roll and pitch indicators can be found on Yggdrasil's silk screen. It's very useful to make sense of the values returned by the following functions.
+
 The sensor will be initialized through the BSP. These default values will be set:
 
 * Scaling factor of the Accelerometer       2G

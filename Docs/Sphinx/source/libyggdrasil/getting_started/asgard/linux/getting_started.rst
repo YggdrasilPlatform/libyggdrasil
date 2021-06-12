@@ -10,7 +10,7 @@ To start developing on the Yggdrasil platform with Linux using Asgard, the follo
 
 .. seealso::
     * `VSCode <https://code.visualstudio.com/>`_
-    * `Asgard Linux Template <https://gitlab.ti.bfh.ch/sagen1/asgard_linux>`_
+    * `Asgard Linux Template <https://gitlab.ti.bfh.ch/yggdrasil/asgard/asgard_linux_template>`_
     * Asgard Toolchain
     * A WSL2 or Linux setup
     * Meson

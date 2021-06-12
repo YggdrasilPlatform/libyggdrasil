@@ -21,6 +21,17 @@ Theoretically each axis give a value from -100 to 100, but due to product tolera
 To guarantee that 0|0 is read even the hands are on the joysticks, there is a default deadzone from 5.  
 
 
+Coordinates
+^^^^^^^^^^^
+
+| The following image describes the coordinates returned by the joysticks when moving it around.
+|
+
+.. image:: assets/joysticks.png
+    :width: 30%
+    :alt: Joystick coordiantes
+    :align: center
+
 Usage
 -----
 
