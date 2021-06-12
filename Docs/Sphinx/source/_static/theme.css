@@ -3,3 +3,11 @@ img.align-center {
     margin-right: auto;
     display: block;
 }
+
+.sidebar-drawer {
+    width: 20em;
+}
+
+.content {
+    width: 60em;
+}
