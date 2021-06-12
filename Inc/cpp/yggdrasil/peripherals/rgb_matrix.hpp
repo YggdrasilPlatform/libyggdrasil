@@ -84,7 +84,7 @@ namespace bsp::ygg::prph {
 		 * @param color RGBA8 color
 		 */
 		static void setLed(u8 index, RGBA8 color) {
-			if (index >= 0 && index <= NumLEDs){
+			if (index >= 0 && index < NumLEDs){
 				RGBMatrix::s_LEDs[index * 4 + 0] = (0xE0 | color.a);
 				RGBMatrix::s_LEDs[index * 4 + 1] = color.b;
 				RGBMatrix::s_LEDs[index * 4 + 2] = color.g;

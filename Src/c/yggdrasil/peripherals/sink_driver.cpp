@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/pressure_sensor.cpp
+  *  @file yggdrasil/peripherals/sink_driver.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Driver to use the LPS22HBTR pressure sensor
+  *  @brief Driver to use the sink driver
   */
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
@@ -29,36 +29,36 @@
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	#include <c/yggdrasil/peripherals/push_pull_driver.h>
+	#include <c/yggdrasil/peripherals/sink_driver.h>
 	#include <yggdrasil.h>
 
 
-	using PushPullDriver = bsp::ygg::prph::PushPullDriver;
+	using SinkDriver = bsp::ygg::prph::SinkDriver;
 
-	C_LINKAGE void yggdrasil_PushPullDriver_Servo_Set(PushPullDriverChannel channel, float percent) {
-		PushPullDriver::Servo::set(static_cast<PushPullDriver::Channel>(channel), percent);
+	C_LINKAGE void yggdrasil_SinkDriver_Servo_Set(SinkDriverChannel channel, float percent) {
+		SinkDriver::Servo::set(static_cast<SinkDriver::Channel>(channel), percent);
 	}
 
-	C_LINKAGE void yggdrasil_PushPullDriver_Servo_SetDeltaHighTime(PushPullDriverChannel channel, u16 delta) {
-		PushPullDriver::Servo::setDeltaHighTime(static_cast<PushPullDriver::Channel>(channel), delta);
-	}
-
-
-	C_LINKAGE void yggdrasil_PushPullDriver_PWM_SetDuty(PushPullDriverChannel channel, float dutyCycle) {
-		PushPullDriver::PWM::setDuty(static_cast<PushPullDriver::Channel>(channel), dutyCycle);
-	}
-
-	C_LINKAGE bool yggdrasil_PushPullDriver_PWM_SetFrequency(u32 frequency, u16 resolution) {
-		return PushPullDriver::PWM::setFrequency(frequency, resolution);
-	}
-
-	C_LINKAGE u32 yggdrasil_PushPullDriver_PWM_GetFrequency() {
-		return PushPullDriver::PWM::getFrequency();
+	C_LINKAGE void yggdrasil_SinkDriver_Servo_SetDeltaHighTime(SinkDriverChannel channel, u16 delta) {
+		SinkDriver::Servo::setDeltaHighTime(static_cast<SinkDriver::Channel>(channel), delta);
 	}
 
 
-	C_LINKAGE void yggdrasil_PushPullDriver_Out_Set(PushPullDriverChannel channel, bool state) {
-		PushPullDriver::Out::set(static_cast<PushPullDriver::Channel>(channel), state);
+	C_LINKAGE void yggdrasil_SinkDriver_PWM_SetDuty(SinkDriverChannel channel, float dutyCycle) {
+		SinkDriver::PWM::setDuty(static_cast<SinkDriver::Channel>(channel), dutyCycle);
+	}
+
+	C_LINKAGE bool yggdrasil_SinkDriver_PWM_SetFrequency(u32 frequency, u16 resolution) {
+		return SinkDriver::PWM::setFrequency(frequency, resolution);
+	}
+
+	C_LINKAGE u32 yggdrasil_SinkDriver_PWM_GetFrequency() {
+		return SinkDriver::PWM::getFrequency();
+	}
+
+
+	C_LINKAGE void yggdrasil_SinkDriver_Out_Set(SinkDriverChannel channel, bool state) {
+		SinkDriver::Out::set(static_cast<SinkDriver::Channel>(channel), state);
 	}
 
 

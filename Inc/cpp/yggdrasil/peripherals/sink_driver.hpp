@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/yggdrasil/peripherals/push_pull_driver.hpp
+  *  @file cpp/yggdrasil/peripherals/sink_driver.hpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Driver to use the IX4310T push-pull drivers
+  *  @brief Driver to use the sink drivers
   */
 
 #pragma once
@@ -33,11 +33,11 @@ namespace bsp::ygg::prph {
 
 
 	/**
-	 * @brief Push Pull driver containing classes to use the driver as GPIO, as PWM Module or as Servo port
+	 * @brief Sink driver containing classes to use the driver as GPIO, as PWM Module or as Servo port
 	 */
-	class PushPullDriver {
+	class SinkDriver {
 	public:
-		PushPullDriver() = delete;
+		SinkDriver() = delete;
 
 		/**
 		 * @brief Timer Channels
@@ -115,7 +115,7 @@ namespace bsp::ygg::prph {
 			 * @return True when successful, false when not (this will come from a system clock frequency which is to low)
 			 */
 			static bool checkMode(Channel channel) {
-				if (PushPullDriver::s_mode[static_cast<u8>(channel)] != Mode::Servo) {
+				if (SinkDriver::s_mode[static_cast<u8>(channel)] != Mode::Servo) {
 					if (bsp::TimerD::getPwmFrequency() != 50) {
 						if(!bsp::TimerD::setPwmFrequency(50,40000)) return false;
 					}
@@ -135,7 +135,7 @@ namespace bsp::ygg::prph {
 							break;
 					}
 
-					PushPullDriver::s_mode[enumValue(channel)] = Mode::Servo;
+					SinkDriver::s_mode[enumValue(channel)] = Mode::Servo;
 				}
 				return true;
 			}
@@ -157,7 +157,7 @@ namespace bsp::ygg::prph {
 			 * @param dutyCycle Duty cycle
 			 */
 			static void setDuty(Channel channel, float dutyCycle) {
-				if(PushPullDriver::s_mode[enumValue(channel)] != Mode::PWM){
+				if(SinkDriver::s_mode[enumValue(channel)] != Mode::PWM){
 					// Set to high active state and start the pwm for the used channel
 					switch(channel){
 					case Channel::A:
@@ -177,7 +177,7 @@ namespace bsp::ygg::prph {
 						bsp::TimerDCHD.setPolarityHigh();
 						break;
 					}
-					PushPullDriver::s_mode[enumValue(channel)] = Mode::PWM;
+					SinkDriver::s_mode[enumValue(channel)] = Mode::PWM;
 				}
 
 				// Set the duty cycle for the used channel
@@ -237,13 +237,13 @@ namespace bsp::ygg::prph {
 			Out() = delete;
 
 			/**
-			 * @brief set the push pull pin state
+			 * @brief set the sink driver pin state
 			 *
 			 * @param channel Channel to set
 			 * @param state Pin state
 			 */
 			static void set(Channel channel, bool state) {
-				if(PushPullDriver::s_mode[enumValue(channel)] != Mode::GPIO) {
+				if(SinkDriver::s_mode[enumValue(channel)] != Mode::GPIO) {
 
 					// Enable the pwm and set the duty cycle to 0
 					switch(channel){
@@ -265,7 +265,7 @@ namespace bsp::ygg::prph {
 						break;
 					}
 
-					PushPullDriver::s_mode[enumValue(channel)] = Mode::GPIO;
+					SinkDriver::s_mode[enumValue(channel)] = Mode::GPIO;
 				}
 
 				// Set the pwm polarity according to the state. Since the duty cycle is 0 this action will result in a always low

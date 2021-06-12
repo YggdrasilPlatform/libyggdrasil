@@ -64,9 +64,9 @@ Peripherals
     | :ref:`>>> <MotorDriverPeripheral>`
 
 .. seealso::
-    | **Push-Pull Driver**
+    | **Sink Driver**
     | Driving or sinking up to 2A on dedicated pins
-    | :ref:`>>> <PpDriverPeripheral>`
+    | :ref:`>>> <SinkDriverPeripheral>`
 
 .. toctree::
     :maxdepth: 1
@@ -84,4 +84,4 @@ Peripherals
     rgbMatrix
     sevenSegment
     motorDriver
-    pushPullDriver
+    sinkDriver

@@ -26,7 +26,7 @@ Pin  Description                 Pin  Description
 17   Button D                    18   CAN B TX
 |                                |                        
 |                                |     
-23   GND                         24   TP 28
+23   GND                         24   PONKEYn / TP 28
 25                               26   Subnet reset
 27                               28   NRST
 29   GND                         30   VDD
