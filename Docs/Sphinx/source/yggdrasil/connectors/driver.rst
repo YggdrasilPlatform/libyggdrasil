@@ -1,4 +1,4 @@
-.. _PpDriverConnector:
+.. _SinkDriverConnector:
 
 Sink Driver Header
 =======================
@@ -7,7 +7,7 @@ Sink Driver Header
 | Each Driver Channel also has an LED to show activity. 
 
 .. seealso::
-    * :ref:`Push Pull Driver Peripheral Driver <PpDriverPeripheral>`
+    * :ref:`Push Pull Driver Peripheral Driver <SinkDriverPeripheral>`
 
 Connector
 ---------

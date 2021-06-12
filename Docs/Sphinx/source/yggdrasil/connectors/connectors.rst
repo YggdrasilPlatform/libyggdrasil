@@ -21,6 +21,11 @@ On-board connectors are headers, plugs and pins that allow extending the functio
     | :ref:`>>> <CanConnector>`
 
 .. seealso::
+    | **Sink Driver Connector**
+    | Sink high currents and connect servos
+    | :ref:`>>> <DcMotorConnector>`
+
+.. seealso::
     | **DC Motor Connector**
     | Interface to easily drive a DC motor
     | :ref:`>>> <DcMotorConnector>`

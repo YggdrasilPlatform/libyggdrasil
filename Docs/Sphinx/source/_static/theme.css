@@ -5,9 +5,5 @@ img.align-center {
 }
 
 .sidebar-drawer {
-    width: 20em;
-}
-
-.content {
-    width: 60em;
+	width: calc(50% - 35em);
 }
