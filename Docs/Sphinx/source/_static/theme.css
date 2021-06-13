@@ -1,9 +1,0 @@
-img.align-center {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
-.sidebar-drawer {
-	width: calc(50% - 35em);
-}
