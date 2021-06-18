@@ -112,6 +112,8 @@
 		static constexpr auto& LDD = LD4;
 		static constexpr auto& LedGreen = LD4;
 
+		static constexpr auto& Heartbeat = GPIOPortA::Pin<10>;
+
 		static constexpr auto& EncoderButton = GPIOPortK::Pin<3, drv::Active::Low>;
 		static constexpr auto& ButtonA = GPIOPortK::Pin<4, drv::Active::Low>;
 		static constexpr auto& ButtonB = GPIOPortK::Pin<5, drv::Active::Low>;

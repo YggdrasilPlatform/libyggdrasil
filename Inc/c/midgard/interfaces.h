@@ -95,6 +95,8 @@
 	const static gpio_t LDD = LD4;
 	const static gpio_t LedGreen = LD4;
 
+	const static gpio_t Heartbeat = { GPIOA, 10 };
+
 	const static gpio_t ButtonA = { GPIOK, 4, LOW_ACTIVE };
 	const static gpio_t ButtonB = { GPIOK, 5, LOW_ACTIVE };
 	const static gpio_t ButtonC = { GPIOK, 6, LOW_ACTIVE };
