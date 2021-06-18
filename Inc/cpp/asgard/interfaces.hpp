@@ -27,10 +27,11 @@
 
 #include <cpp/asgard/driver/gpio.hpp>
 #include <cpp/asgard/driver/i2c.hpp>
+#include <cpp/asgard/driver/display.hpp>
 
 #include <cpp/asgard/core/cortex.hpp>
 
-//#if defined(YGGDRASIL_PERIPHERAL_DEFS)
+#if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
 	namespace bsp {
 
@@ -76,6 +77,9 @@
 
 		static constexpr auto& LeftJoyStickButton = GPIOPortE::Pin<9, drv::Active::Low>;
 		static constexpr auto& RightJoyStickButton = GPIOPortE::Pin<7, drv::Active::Low>;
+
+		using Display = bsp::drv::Display<0, bsp::asg::drv::Display>;
+
 	}
 
-//#endif
+#endif

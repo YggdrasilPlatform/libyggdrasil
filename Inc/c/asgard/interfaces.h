@@ -29,6 +29,7 @@
 
 #include <c/asgard/driver/gpio.h>
 #include <c/asgard/driver/i2c.h>
+#include <c/asgard/driver/display.h>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 

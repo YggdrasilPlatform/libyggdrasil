@@ -24,6 +24,7 @@ cpp_args = [ ] + c_args
     source_files = [
         'Src/c/asgard/driver/gpio.cpp',
         'Src/c/asgard/driver/i2c.cpp',
+        'Src/c/asgard/driver/display.cpp',
 
         'Src/c/yggdrasil/peripherals/color_sensor.cpp',
         'Src/c/yggdrasil/peripherals/humidity_sensor.cpp',

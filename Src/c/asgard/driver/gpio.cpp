@@ -44,7 +44,7 @@
 			if (fd == -1) return false;
 
 			auto value = std::to_string(gpio.pinNumber);
-			write(fd, value.c_str(), value.length()) < value.length();
+			write(fd, value.c_str(), value.length());
 			close(fd);
 
 			return true;

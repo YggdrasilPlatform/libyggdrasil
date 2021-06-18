@@ -33,6 +33,29 @@
 
 #include <cmath>
 
+namespace bsp::drv {
+
+	enum class Color : u8 {
+		Black 	= 0b000'000'00,
+		Navy 	= 0b000'000'10,
+		Blue	= 0b000'000'11,
+		Green	= 0b000'011'00,
+		Teal	= 0b000'010'01,
+		Lime	= 0b000'111'00,
+		Aqua	= 0b000'111'11,
+		Maroon	= 0b011'000'00,
+		Purple	= 0b011'000'11,
+		Olive	= 0b011'011'00,
+		Gray	= 0b010'010'01,
+		Red		= 0b111'000'00,
+		Fuchsia	= 0b111'000'11,
+		Yellow	= 0b111'111'00,
+		Orange	= 0b111'100'00,
+		White	= 0b111'111'11,
+	};
+
+}
+
 namespace bsp::mid::drv {
 
 	template<auto Context>
