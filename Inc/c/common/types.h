@@ -27,6 +27,7 @@
 
 #include <stdint.h>		// Exact width integer definitions
 #include <stdbool.h>
+#include <stddef.h>
 
 /**
  * @brief Unsigned integer definitions

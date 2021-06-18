@@ -23,7 +23,7 @@
   *  @brief DAC abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -34,6 +34,14 @@
 	#include <yggdrasil.h>
 
 	#include <math.h>
+
+	bool yggdrasil_DAC_Init(dac_t adc) {
+		return true;
+	}
+
+	bool yggdrasil_DAC_Deinit(dac_t adc) {
+		return true;
+	}
 
 	static u32 getHALChannel(u8 index) {
 		switch (index) {

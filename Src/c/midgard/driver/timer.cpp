@@ -23,7 +23,7 @@
  *  @brief Timer abstraction implementation for Midgard
  */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -38,6 +38,10 @@
 	/* Basic tim functions */
 
 	C_LINKAGE bool yggdrasil_TIM_Init(tim_t tim) {
+		return true;
+	}
+
+	C_LINKAGE bool yggdrasil_TIM_Deinit(tim_t tim) {
 		return true;
 	}
 

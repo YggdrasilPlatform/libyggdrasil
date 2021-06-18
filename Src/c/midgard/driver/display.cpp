@@ -23,7 +23,7 @@
   *  @brief Display abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -37,6 +37,10 @@
 
 	C_LINKAGE bool yggdrasil_Display_Init(enum DisplayOrientation orientation) {
 		return bsp::Display::init(static_cast<bsp::Display::Impl::Orientation>(orientation));
+	}
+
+	bool yggdrasil_Display_Deinit() {
+		return bsp::Display::deinit();
 	}
 
 	C_LINKAGE void yggdrasil_Display_Reset(void) {

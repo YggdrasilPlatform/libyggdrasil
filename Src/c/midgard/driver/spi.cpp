@@ -23,7 +23,7 @@
   *  @brief SPI abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -37,6 +37,10 @@
 
 
 	C_LINKAGE bool yggdrasil_SPI_Init(spi_t spi) {
+		return true;
+	}
+
+	C_LINKAGE bool yggdrasil_SPI_Deinit(spi_t spi) {
 		return true;
 	}
 

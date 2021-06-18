@@ -35,6 +35,7 @@
 
 	}
 
+#if BOARD == MIDGARD
 	#include <cpp/yggdrasil/peripherals/six_axis_sensor.hpp>
 	#include <cpp/yggdrasil/peripherals/color_sensor.hpp>
 	#include <cpp/yggdrasil/peripherals/humidity_sensor.hpp>
@@ -45,5 +46,12 @@
 	#include <cpp/yggdrasil/peripherals/rgb_matrix.hpp>
 	#include <cpp/yggdrasil/peripherals/motor_driver.hpp>
 	#include <cpp/yggdrasil/peripherals/sink_driver.hpp>
+#elif BOARD == ASGARD
+	#include <cpp/yggdrasil/peripherals/six_axis_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/color_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/humidity_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/joystick.hpp>
+	#include <cpp/yggdrasil/peripherals/rtc.hpp>
+#endif
 
 #endif

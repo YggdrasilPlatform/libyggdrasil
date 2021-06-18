@@ -38,21 +38,44 @@
 		 * @brief GPIO Port definitions
 		 * @{
 		 */
-		using GPIOPortA = bsp::drv::GPIOPort<0x5000'2000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortB = bsp::drv::GPIOPort<0x5000'3000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortC = bsp::drv::GPIOPort<0x5000'4000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortD = bsp::drv::GPIOPort<0x5000'5000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortE = bsp::drv::GPIOPort<0x5000'6000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortF = bsp::drv::GPIOPort<0x5000'7000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortG = bsp::drv::GPIOPort<0x5000'8000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortH = bsp::drv::GPIOPort<0x5000'9000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortI = bsp::drv::GPIOPort<0x5000'A000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortJ = bsp::drv::GPIOPort<0x5000'B000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortK = bsp::drv::GPIOPort<0x5000'C000, bsp::asg::drv::GPIOPort>;
-		using GPIOPortZ = bsp::drv::GPIOPort<0x5400'4000, bsp::asg::drv::GPIOPort>;
+		using GPIOPortA = bsp::drv::GPIOPort<0, bsp::asg::drv::GPIOPort>;
+		using GPIOPortB = bsp::drv::GPIOPort<16, bsp::asg::drv::GPIOPort>;
+		using GPIOPortC = bsp::drv::GPIOPort<32, bsp::asg::drv::GPIOPort>;
+		using GPIOPortD = bsp::drv::GPIOPort<48, bsp::asg::drv::GPIOPort>;
+		using GPIOPortE = bsp::drv::GPIOPort<64, bsp::asg::drv::GPIOPort>;
+		using GPIOPortF = bsp::drv::GPIOPort<80, bsp::asg::drv::GPIOPort>;
+		using GPIOPortG = bsp::drv::GPIOPort<96, bsp::asg::drv::GPIOPort>;
+		using GPIOPortH = bsp::drv::GPIOPort<112, bsp::asg::drv::GPIOPort>;
+		using GPIOPortI = bsp::drv::GPIOPort<128, bsp::asg::drv::GPIOPort>;
+		using GPIOPortJ = bsp::drv::GPIOPort<144, bsp::asg::drv::GPIOPort>;
+		using GPIOPortK = bsp::drv::GPIOPort<160, bsp::asg::drv::GPIOPort>;
 		/** @} */
 
-		using I2CA = bsp::drv::I2C<1, bsp::asg::drv::I2C>;	// I2C1
+		using I2CA = bsp::drv::I2C<1, bsp::asg::drv::I2C>;
+		using I2CB = bsp::drv::I2C<3, bsp::asg::drv::I2C>;
+		using I2CC = bsp::drv::I2C<4, bsp::asg::drv::I2C>;
+		using I2CD = bsp::drv::I2C<0, bsp::asg::drv::I2C>;
+
+    	static constexpr auto& LD1 = GPIOPortJ::Pin<0>;
+		static constexpr auto& LDA = LD1;
+		static constexpr auto& LedBlue = LD1;
+		static constexpr auto& LD2 = GPIOPortJ::Pin<1>;
+		static constexpr auto& LDB = LD2;
+		static constexpr auto& LedRed = LD2;
+		static constexpr auto& LD3 = GPIOPortJ::Pin<2>;
+		static constexpr auto& LDC = LD3;
+		static constexpr auto& LedYellow = LD3;
+		static constexpr auto& LD4 = GPIOPortJ::Pin<3>;
+		static constexpr auto& LDD = LD4;
+		static constexpr auto& LedGreen = LD4;
+
+		static constexpr auto& ButtonA = GPIOPortJ::Pin<4, drv::Active::Low>;
+		static constexpr auto& ButtonB = GPIOPortJ::Pin<5, drv::Active::Low>;
+		static constexpr auto& ButtonC = GPIOPortJ::Pin<6, drv::Active::Low>;
+		static constexpr auto& ButtonD = GPIOPortJ::Pin<7, drv::Active::Low>;
+
+		static constexpr auto& LeftJoyStickButton = GPIOPortE::Pin<9, drv::Active::Low>;
+		static constexpr auto& RightJoyStickButton = GPIOPortE::Pin<7, drv::Active::Low>;
 	}
 
 //#endif

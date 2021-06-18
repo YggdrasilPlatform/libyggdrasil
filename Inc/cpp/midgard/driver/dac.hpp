@@ -47,7 +47,21 @@ namespace bsp::mid::drv {
 
 		constexpr static auto ReferenceVoltage = 3.3;
 
-		bool init() {
+		/**
+		 * @brief Init function
+		 *
+		 * @return True when successfully started, false when not
+		 */
+		static bool init() {
+			return true;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
 			return true;
 		}
 
@@ -62,6 +76,11 @@ namespace bsp::mid::drv {
 			HAL_DAC_Start(Context, Channel);
 		}
 
+		/**
+		 * @brief Get the current DAC value
+		 * 
+		 * @return Fraction of reference voltage between 0.0 and 1.0
+		 */ 
 		operator float() const noexcept {
 			constexpr auto Channel = getHALChannel();
 

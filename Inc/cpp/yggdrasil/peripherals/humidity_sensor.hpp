@@ -62,6 +62,7 @@ namespace bsp::ygg::prph {
 		 * @note The sensor does not need a special initialization, this function just does a soft reset
 		 */
 		static void init() {
+			bsp::I2CA::init();
 			bsp::I2CA::write(DeviceAddress, enumValue(Command::SoftReset));
 			core::delay(2);
 		}

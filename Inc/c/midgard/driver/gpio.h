@@ -47,6 +47,13 @@ typedef struct {
 C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio);
 
 /**
+ * @brief GPIO deinitialization
+ *
+ * @param gpio GPIO handle
+ */
+C_LINKAGE bool yggdrasil_GPIO_Deinit(gpio_t gpio);
+
+/**
  * @brief Get GPIO state
  *
  * @param gpio GPIO handle

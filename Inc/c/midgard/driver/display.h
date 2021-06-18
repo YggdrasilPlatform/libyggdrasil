@@ -70,6 +70,13 @@ enum Color {
 C_LINKAGE bool yggdrasil_Display_Init(enum DisplayOrientation orientation);
 
 /*
+ * @brief Display deinitialization
+ *
+ * @return True when successful, false when not
+ */
+C_LINKAGE bool yggdrasil_Display_Deinit();
+
+/*
  * @brief Display reset
  */
 C_LINKAGE void yggdrasil_Display_Reset(void);

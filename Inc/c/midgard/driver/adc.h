@@ -36,6 +36,22 @@ typedef struct {
 } adc_t;
 
 /**
+ * @brief ADC init function
+ *
+ * @param adc ADC handle
+ * @return True when successfully stared, false when not
+ */
+C_LINKAGE bool yggdrasil_ADC_Init(adc_t adc);
+
+/**
+ * @brief ADC deinit function
+ *
+ * @param adc ADC handle
+ * @return True when successfully stopped, false when not
+ */
+C_LINKAGE bool yggdrasil_ADC_Deinit(adc_t adc);
+
+/**
  * @brief Get the adc value from the channel specified in the ADC handle
  *
  * @param adc ADC handle

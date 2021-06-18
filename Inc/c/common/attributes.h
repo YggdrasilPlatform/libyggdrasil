@@ -37,4 +37,8 @@
 #define SECTION(name) 			__attribute__((section(name)))
 #define ALIGNED(alignment) 		__attribute__((aligned(alignment)))
 
-#define C_LINKAGE
+#if defined(__cplusplus)
+	#define C_LINKAGE extern "C"
+#else
+	#define C_LINKAGE
+#endif

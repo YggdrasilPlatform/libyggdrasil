@@ -35,8 +35,10 @@ namespace bsp::mid::drv {
 		 * @brief Register map for used registers
 		 */
 		enum class RegisterMap {
-			IDR = 0x10,		///< Input data register
-			ODR = 0x14,		///< Output data register
+			MODER 	= 0x00,		///< Mode register
+			OTYPER	= 0x04,		///< Output type register
+			IDR 	= 0x10,		///< Input data register
+			ODR 	= 0x14,		///< Output data register
 		};
 
 	}
@@ -83,19 +85,46 @@ namespace bsp::mid::drv {
 	        return LogicActive == bsp::drv::Active::High ? IDRx : !IDRx;
 	    }
 
+		/**
+		 * @brief Turn pin into an output
+		 */
+		void makeOutput() const noexcept {
+			MODERx = 0b01;
+			OTYPERx = 0b0;
+		}
+
+		/**
+		 * @brief Turn pin into an input
+		 */
+		void makeInput() const noexcept {
+			MODERx = 0b00;
+		}	
+
 	private:
 	    GPIOPin() = default;
 
 		/**
+		 * @brief MODER register
+		 */
+	    using MODER = Register<BaseAddress, RegisterMap::MODER, u32>;
+	    static inline auto MODERx = typename MODER::template Field<Pin * 2, Pin * 2 + 1>();
+
+	    /**
+	     * @brief OTYPER register
+	     */
+	    using OTYPER = Register<BaseAddress, RegisterMap::OTYPER, u32>;
+	    static inline auto OTYPERx = typename OTYPER::template Field<Pin, Pin>();
+
+		/**
 		 * @brief IDR register
 		 */
-	    using IDR 	= Register<BaseAddress, RegisterMap::IDR, u32>;
+	    using IDR = Register<BaseAddress, RegisterMap::IDR, u32>;
 	    static inline auto IDRx = typename IDR::template Field<Pin, Pin>();
 
 	    /**
 	     * @brief ODR register
 	     */
-	    using ODR 	= Register<BaseAddress, RegisterMap::ODR, u32>;
+	    using ODR = Register<BaseAddress, RegisterMap::ODR, u32>;
 	    static inline auto ODRx = typename ODR::template Field<Pin, Pin>();
 
 		/**
@@ -123,7 +152,21 @@ namespace bsp::mid::drv {
 		GPIOPort(const GPIOPort&) = delete;
 		GPIOPort(GPIOPort&&) = delete;
 
-		bool init() {
+		/**
+		 * @brief Init function
+		 *
+		 * @return True when successfully started, false when not
+		 */
+		static bool init() {
+			return true;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
 			return true;
 		}
 

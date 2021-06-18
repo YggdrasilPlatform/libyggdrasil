@@ -41,7 +41,7 @@ namespace bsp::drv {
 	 * @tparam Context GPIO context
 	 * @tparam GPIOPin GPIOPin implementation
 	 */
-	template<auto Context, template<addr_t> typename GPIOImpl>
+	template<auto Context, template<auto> typename GPIOImpl>
 	struct GPIOPort {
 	    GPIOPort() = delete;
 	    GPIOPort(const GPIOPort&) = delete;
@@ -49,8 +49,12 @@ namespace bsp::drv {
 
 		using Impl = GPIOImpl<Context>;
 
-		static bool init(auto ... args) {
+		static auto init(auto ... args) {
 			return Impl::init(args...);
+		}
+
+		static auto deinit(auto ... args) {
+			return Impl::deinit(args...);
 		}
 
 	    /**

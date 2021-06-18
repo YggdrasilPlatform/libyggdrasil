@@ -23,7 +23,7 @@
   *  @brief CAN abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -38,6 +38,10 @@
 	C_LINKAGE bool yggdrasil_CAN_Init(can_t can) {
 		yggdrasil_CAN_SetStdFilter(can, 0, 0, 0);	// bank 0 will accept all IDs
 		return HAL_CAN_Start(can.interface) == HAL_OK;
+	}
+
+	bool yggdrasil_CAN_Deinit(can_t can) {
+		return true;
 	}
 
 	C_LINKAGE bool yggdrasil_CAN_Enable(can_t can) {

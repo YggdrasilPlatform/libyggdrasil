@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Midgard -                             *
+  *                          - Midgard -                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,44 +17,22 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/rng.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/core/cortex.hpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief RNG abstraction implementation for Midgard
+  *  @brief Core control functions
   */
 
-#if BOARD == MIDGARD
+#pragma once
 
-	#include <cpp/common/attributes.hpp>
-	#include <cpp/common/types.hpp>
-	#include <cpp/common/utils.hpp>
+#include <c/common/types.h>
+#include <c/common/attributes.h>
+#include <unistd.h>
 
-	#include <c/midgard/driver/rng.h>
-
-	#include <yggdrasil.h>
-
-	#include <math.h>
-
-
-	C_LINKAGE bool yggdrasil_RNG_Init(rng_t rng) {
-		return bsp::Random::init();
-	}
-
-	C_LINKAGE bool yggdrasil_RNG_Deinit(rng_t rng) {
-		return bsp::Random::deinit();
-	}
-
-	C_LINKAGE u8 yggdrasil_RNG_GetU8(rng_t rng) {
-		return bsp::Random::get<u8>();
-	}
-
-	C_LINKAGE u16 yggdrasil_RNG_GetU16(rng_t rng) {
-		return bsp::Random::get<u16>();
-	}
-
-	C_LINKAGE u32 yggdrasil_RNG_GetU32(rng_t rng) {
-		return bsp::Random::get<u32>();
-	}
-
-
-#endif
+/**
+ * @brief Delays execution by a certain number of milliseconds
+ * @param ms Number of milliseconds to wait
+ */
+ALWAYS_INLINE void core_Delay(u32 ms) {
+	usleep(ms * 1'000);
+}

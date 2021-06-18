@@ -23,7 +23,7 @@
   *  @brief UART abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -37,6 +37,10 @@
 
 
 	C_LINKAGE bool yggdrasil_UART_Init(uart_t uart) {
+		return true;
+	}
+
+	C_LINKAGE bool yggdrasil_UART_Deinit(uart_t uart) {
 		return true;
 	}
 

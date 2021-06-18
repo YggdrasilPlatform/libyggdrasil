@@ -74,8 +74,17 @@ namespace bsp::drv {
 		 * @param orientation Display orientation
 		 * @return True when successful, false when not
 		 */
-		static bool init(auto ... args) {
+		static auto init(auto ... args) {
 			return Impl::init(args...);
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static auto deinit(auto ... args) {
+			return Impl::deinit(args...);
 		}
 
 		/*

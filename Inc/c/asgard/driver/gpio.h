@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Midgard -                             *
+  *                          - Asgard -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,44 +17,69 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/rng.cpp
-  *  @ingroup yggdrasil
+  *  @file c/asgard/driver/gpio.h
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief RNG abstraction implementation for Midgard
+  *  @brief GPIO Pin abstraction implementation for Asgard
   */
 
-#if BOARD == MIDGARD
+#include <c/common/types.h>
 
-	#include <cpp/common/attributes.hpp>
-	#include <cpp/common/types.hpp>
-	#include <cpp/common/utils.hpp>
+#define LOW_ACTIVE true
+#define HIGH_ACTIVE false
 
-	#include <c/midgard/driver/rng.h>
+typedef struct {
+	u8 pinNumber;
+  bool lowActive;
+} gpio_t;
 
-	#include <yggdrasil.h>
+/**
+ * @brief GPIO initialization
+ *
+ * @param gpio GPIO handle
+ */
+extern "C" bool yggdrasil_GPIO_Init(gpio_t gpio);
 
-	#include <math.h>
+/**
+ * @brief GPIO deinitialization
+ *
+ * @param gpio GPIO handle
+ */
+C_LINKAGE bool yggdrasil_GPIO_Deinit(gpio_t gpio);
 
+/**
+ * @brief Turn pin into an output
+ *
+ * @param gpio GPIO handle
+ */
+C_LINKAGE bool yggdrasil_GPIO_MakeOutput(gpio_t gpio);
 
-	C_LINKAGE bool yggdrasil_RNG_Init(rng_t rng) {
-		return bsp::Random::init();
-	}
+/**
+ * @brief Turn pin into an input
+ *
+ * @param gpio GPIO handle
+ */
+C_LINKAGE bool yggdrasil_GPIO_MakeInput(gpio_t gpio);
 
-	C_LINKAGE bool yggdrasil_RNG_Deinit(rng_t rng) {
-		return bsp::Random::deinit();
-	}
+/**
+ * @brief Get GPIO state
+ *
+ * @param gpio GPIO handle
+ * @return GPIO state
+ */
+C_LINKAGE bool yggdrasil_GPIO_Get(gpio_t gpio);
 
-	C_LINKAGE u8 yggdrasil_RNG_GetU8(rng_t rng) {
-		return bsp::Random::get<u8>();
-	}
+/**
+ * @brief Set GPIO state
+ *
+ * @param gpio GPIO handle
+ * @param state GPIO state
+ */
+C_LINKAGE void yggdrasil_GPIO_Set(gpio_t gpio, bool state);
 
-	C_LINKAGE u16 yggdrasil_RNG_GetU16(rng_t rng) {
-		return bsp::Random::get<u16>();
-	}
-
-	C_LINKAGE u32 yggdrasil_RNG_GetU32(rng_t rng) {
-		return bsp::Random::get<u32>();
-	}
-
-
-#endif
+/**
+ * @brief Toggle GPIO
+ *
+ * @param gpio GPIO handle
+ */
+C_LINKAGE void yggdrasil_GPIO_Toggle(gpio_t gpio);

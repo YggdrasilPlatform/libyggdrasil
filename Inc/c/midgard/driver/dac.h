@@ -36,6 +36,22 @@ typedef struct {
 } dac_t;
 
 /**
+ * @brief DAC init function
+ *
+ * @param dac DAC handle
+ * @return True when successfully stared, false when not
+ */
+C_LINKAGE bool yggdrasil_DAC_Init(dac_t dac);
+
+/**
+ * @brief DAC deinit function
+ *
+ * @param dac DAC handle
+ * @return True when successfully stopped, false when not
+ */
+C_LINKAGE bool yggdrasil_DAC_Deinit(dac_t dac);
+
+/**
  * @brief Set the dac value to the channel specified in the DAC handle
  *
  * @param dac DAC handle

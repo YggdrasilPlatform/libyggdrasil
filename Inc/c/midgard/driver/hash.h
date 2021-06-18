@@ -33,6 +33,11 @@
 C_LINKAGE bool yggdrasil_HASH_Init(void);
 
 /**
+ * @brief Hash deinitialization
+ */
+C_LINKAGE bool yggdrasil_HASH_Deinit(void);
+
+/**
  * @brief Hardware accelerated CRC8 caluclation
  *
  * @param data Data to calculate CRC of

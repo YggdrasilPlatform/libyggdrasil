@@ -140,7 +140,7 @@
 	const static gpio_t SevenSegment_Select3 = { GPIOJ, 15 };
 
 
-	const static gpio_t RGB_EN = { GPIOD, 9 };
+	const static gpio_t SK9822_EN = { GPIOD, 9 };
 
 
 	const static gpio_t SPIACE = { GPIOI, 0, LOW_ACTIVE };

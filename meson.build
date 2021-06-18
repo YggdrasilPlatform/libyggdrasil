@@ -5,8 +5,11 @@ project('libyggdrasil',
     version: '1.0.0'
 )
 
+c_args = [ '-DBOARD=ASGARD', '-DYGGDRASIL_PERIPHERAL_DEFS' ]
+cpp_args = [ ] + c_args
+
 # Make sure the project gets cross compiled
-    assert(meson.is_cross_build(), 'This project can only be cross-compiled. Make sure to call meson with the "--cross-file=stm32mp1" option!')
+    assert(meson.is_cross_build(), 'This project can only be cross-compiled. Make sure to call meson with the "--cross-file=asgard" option!')
 
 
 # Available portlib libraries 
@@ -19,6 +22,15 @@ project('libyggdrasil',
 
 # Source files and include directories
     source_files = [
+        'Src/c/asgard/driver/gpio.cpp',
+        'Src/c/asgard/driver/i2c.cpp',
+
+        'Src/c/yggdrasil/peripherals/color_sensor.cpp',
+        'Src/c/yggdrasil/peripherals/humidity_sensor.cpp',
+        'Src/c/yggdrasil/peripherals/joystick.cpp',
+        'Src/c/yggdrasil/peripherals/rtc.cpp',
+        'Src/c/yggdrasil/peripherals/six_axis_sensor.cpp',
+
         'Src/common/resources/fonts/font8.c',
         'Src/common/resources/fonts/font12.c',
         'Src/common/resources/fonts/font16.c',
@@ -34,6 +46,8 @@ project('libyggdrasil',
         'libyggdrasil.a',
         source_files,
         native: false,
+        c_args: c_args,
+        cpp_args: cpp_args,
         name_prefix: '',
         dependencies: [ libstdcpp ],
         include_directories: include_dirs

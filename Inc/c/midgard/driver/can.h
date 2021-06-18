@@ -42,6 +42,14 @@ typedef struct {
 C_LINKAGE bool yggdrasil_CAN_Init(can_t can);
 
 /**
+ * @brief CAN init function
+ *
+ * @param can CAN handle
+ * @return True when successfully stopped, false when not
+ */
+C_LINKAGE bool yggdrasil_CAN_Deinit(can_t can);
+
+/**
  * @brief CAN enable
  *
  * @param can CAN handle

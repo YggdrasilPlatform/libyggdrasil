@@ -39,6 +39,13 @@ typedef struct {
 C_LINKAGE bool yggdrasil_RNG_Init(rng_t rng);
 
 /**
+ * @brief RNG deinitialization
+ *
+ * @param rng RNG handel
+ */
+C_LINKAGE bool yggdrasil_RNG_Deinit(rng_t rng);
+
+/**
  * @brief Get a random u8
  *
  * @param rng RNG handel

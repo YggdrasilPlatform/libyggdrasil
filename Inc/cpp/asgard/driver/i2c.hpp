@@ -47,8 +47,24 @@ namespace bsp::asg::drv {
 	template<u16 InterfaceNumber>
 	struct I2C {
 
-		static void init() {
+		/**
+		 * @brief Init function
+		 *
+		 * @return True when successfully started, false when not
+		 */
+		static bool init() {
 			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(InterfaceNumber)).c_str(), O_RDWR);
+			return I2C::s_fileHandle != -1;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
+			close(I2C::s_fileHandle);
+			return true;
 		}
 
 		/**

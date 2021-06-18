@@ -51,7 +51,7 @@ namespace bsp::ygg::prph {
 		static void enable() {
 			RGBA8 color = {0};
 			bsp::SPIA::setMode(bsp::drv::SPIMode::_3);
-			RGB_EN = 1;
+			SK9822_EN = 1;
 			for(u8 i = 0; i <= NumLEDs; i++){
 				setLed(i, color);
 			}
@@ -63,7 +63,7 @@ namespace bsp::ygg::prph {
 		 * @brief Disable the SK9822 led
 		 */
 		static void disable() {
-			RGB_EN = 0;
+			SK9822_EN = 0;
 		}
 
 		/**

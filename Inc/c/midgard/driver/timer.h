@@ -48,6 +48,13 @@ typedef struct {
 C_LINKAGE bool yggdrasil_TIM_Init(tim_t tim);
 
 /**
+ * @brief Timer deinitialization
+ *
+ * @param tim Timer handel
+ */
+C_LINKAGE bool yggdrasil_TIM_Deinit(tim_t tim);
+
+/**
  * @brief Timer enable
  *
  * @param tim Timer handel

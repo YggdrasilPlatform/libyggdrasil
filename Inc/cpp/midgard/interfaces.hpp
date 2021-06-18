@@ -171,7 +171,7 @@
 
 		}
 
-		static constexpr auto& RGB_EN = GPIOPortD::Pin<9>;
+		static constexpr auto& SK9822_EN = GPIOPortD::Pin<9>;
 
 		/**
 		 * @brief GPIO Port definitions

@@ -31,24 +31,12 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <string>
 
 namespace bsp::asg::drv {
 
-	namespace {
-
-		/**
-		 * @brief Register map for used registers
-		 */
-		enum class RegisterMap {
-			IDR = 0x10,		///< Input data register
-			ODR = 0x14,		///< Output data register
-		};
-
-	}
-
-
 	// Forward declaring
-	template<addr_t BaseAddress>
+	template<u8 GPIOBaseNumber>
 	struct GPIOPort;
 
 	/**
@@ -58,7 +46,7 @@ namespace bsp::asg::drv {
 	 * @tparam BaseAddress GPIO Block base address
 	 * @tparam Pin Pin number
 	 */
-	template<addr_t BaseAddress, u8 Pin, bsp::drv::Active LogicActive>
+	template<u8 GPIOBaseNumber, u8 Pin, bsp::drv::Active LogicActive>
 	struct GPIOPin {
 		GPIOPin(const GPIOPin&) = delete;
 		GPIOPin(GPIOPin&&) = delete;
@@ -73,8 +61,14 @@ namespace bsp::asg::drv {
 	     * @param state Pin state
 	     * @return Pin
 	     */
-	    ALWAYS_INLINE constexpr auto& operator=(bool state) const noexcept {
-	        ODRx = LogicActive == bsp::drv::Active::High ? state : !state;
+	    auto& operator=(bool state) const noexcept {
+			state = LogicActive == bsp::drv::Active::High ? state : !state;
+
+			int fd = open(("/sys/class/gpio/gpio" + std::to_string(GPIOBaseNumber + Pin) + "/value").c_str(), O_WRONLY);
+			if (fd == -1) return *this;
+
+			write(fd, state ? "1" : "0", 1);
+			close(fd);
 
 	        return *this;
 	    }
@@ -84,25 +78,75 @@ namespace bsp::asg::drv {
 	     *
 	     * @return Pin value
 	     */
-	    [[nodiscard]] ALWAYS_INLINE constexpr operator u8() const noexcept {
-	        return LogicActive == bsp::drv::Active::High ? IDRx : !IDRx;
+	    [[nodiscard]] operator u8() const noexcept {
+			int fd = open(("/sys/class/gpio/gpio" + std::to_string(GPIOBaseNumber + Pin) + "/value").c_str(), O_RDONLY);
+			if (fd == -1) return 0;
+
+			char buffer[2] = { 0 };
+			read(fd, buffer, sizeof(buffer));
+			close(fd);
+
+			bool result = buffer[0] == '1';
+
+	        return LogicActive == bsp::drv::Active::High ? result : !result;
 	    }
+
+		/**
+		 * @brief Init function
+		 *
+		 * @return True when successfully started, false when not
+		 */
+		bool init() const noexcept {
+			int fd = open("/sys/class/gpio/export", O_WRONLY);
+			if (fd == -1) return false;
+
+			auto value = std::to_string(GPIOBaseNumber + Pin);
+			write(fd, value.c_str(), value.length());
+			close(fd);
+
+			return true;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully started, false when not
+		 */
+		bool deinit() const noexcept {
+			int fd = open("/sys/class/gpio/unexport", O_WRONLY);
+			if (fd == -1) return false;
+
+			auto value = std::to_string(GPIOBaseNumber + Pin);
+			write(fd, value.c_str(), value.length());
+			close(fd);
+
+			return true;
+		}
+
+		/**
+		 * @brief Turn pin into an output
+		 */
+		void makeOutput() const noexcept {			
+			int fd = open(("/sys/class/gpio/gpio" + std::to_string(GPIOBaseNumber + Pin) + "/direction").c_str(), O_WRONLY);
+			if (fd == -1) return;
+
+			write(fd, "out", 3);
+			close(fd);
+		}
+
+		/**
+		 * @brief Turn pin into an input
+		 */
+		void makeInput() const noexcept {			
+			int fd = open(("/sys/class/gpio/gpio" + std::to_string(GPIOBaseNumber + Pin) + "/direction").c_str(), O_WRONLY);
+			if (fd == -1) return;
+
+			write(fd, "in", 2);
+			close(fd);
+		}
 
 	private:
 	    GPIOPin() = default;
-
-		/**
-		 * @brief IDR register
-		 */
-	    using IDR 	= Register<BaseAddress, RegisterMap::IDR, u32>;
-	    static inline auto IDRx = typename IDR::template Field<Pin, Pin>();
-
-	    /**
-	     * @brief ODR register
-	     */
-	    using ODR 	= Register<BaseAddress, RegisterMap::ODR, u32>;
-	    static inline auto ODRx = typename ODR::template Field<Pin, Pin>();
-
 		/**
 		 * @brief Declare GPIOPort as friend
 		 */
@@ -116,57 +160,41 @@ namespace bsp::asg::drv {
 	 *
 	 * @tparam BaseAddress GPIO Block base address
 	 */
-	template<addr_t BaseAddress>
+	template<u8 GPIOBaseNumber>
 	struct GPIOPort {
 	private:
 		GPIOPort() = default;
 
-	    using IDR 	= Register<BaseAddress, RegisterMap::IDR, u32>;
-	    using ODR 	= Register<BaseAddress, RegisterMap::ODR, u32>;
-
     public:
-		GPIOPort(const GPIOPort&) = delete;
-		GPIOPort(GPIOPort&&) = delete;
-
-		bool init() {
-			int fd = open("/dev/mem", O_RDWR);
-			mmap(reinterpret_cast<void*>(BaseAddress), GPIOSize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, BaseAddress);
-			close(fd);
-
+		/**
+		 * @brief Init function
+		 *
+		 * @return True when successfully started, false when not
+		 */
+		static bool init() {
 			return true;
 		}
 
-	    /**
-	     * @brief GPIO Pin
-	     *
-	     * @tparam Pin Pin number
-	     * @tparam LogicActive Logic active state
-	     */
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
+			return true;
+		}
+
+		GPIOPort(const GPIOPort&) = delete;
+		GPIOPort(GPIOPort&&) = delete;
+
+		/**
+		 * @brief GPIO Pin definition
+		 * 
+		 * @tparam Pin Pin number
+		 * @tparam LogicActive Active logic level
+		 */
 		template<u8 Pin, bsp::drv::Active LogicActive>
-		static constexpr auto Pin = GPIOPin<BaseAddress, Pin, LogicActive>();
-
-	    /**
-	     * @brief Read multiple GPIO Pins
-	     * @note These pins must be in a row
-	     *
-	     * @tparam From Start pin number
-	     * @tparam To Stop pin
-	     */
-		template<u8 From, u8 To>
-		static constexpr auto In = typename IDR::template Field<From, To>();
-
-	    /**
-	     * @brief Write multiple GPIO Pins
-	     * @note These pins must be in a row
-	     *
-	     * @tparam From Start pin number
-	     * @tparam To Stop pin
-	     */
-		template<u8 From, u8 To>
-		static constexpr auto Out = typename ODR::template Field<From, To>();
-
-		private:
-			constexpr static inline auto GPIOSize = 0x0400;
+		static constexpr auto Pin = GPIOPin<GPIOBaseNumber, Pin, LogicActive>();
 	};
 
 }

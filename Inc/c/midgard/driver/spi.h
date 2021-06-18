@@ -44,8 +44,17 @@ enum SPIMode {
 
 /**
  * @brief SPI initialization
+ * 
+ * @param spi SPI handel
  */
 C_LINKAGE bool yggdrasil_SPI_Init(spi_t spi);
+
+/**
+ * @brief SPI deinitialization
+ * 
+ * @param spi SPI handel
+ */
+C_LINKAGE bool yggdrasil_SPI_Deinit(spi_t spi);
 
 /**
  * @brief SPI write

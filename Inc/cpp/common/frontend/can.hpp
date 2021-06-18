@@ -56,13 +56,22 @@ namespace bsp::drv {
 		using Impl = CanImpl<Context>;
 
 		/**
-		 * @brief Can init function
+		 * @brief Init function
 		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
 		 *
-		 * @return True when successfully stared, false when not
+		 * @return True when successfully started, false when not
 		 */
-		static bool init(auto ... args) {
+		static auto init(auto ... args) {
 			return Impl::init(args...);
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static auto deinit(auto ... args) {
+			return Impl::deinit(args...);
 		}
 
 		/**

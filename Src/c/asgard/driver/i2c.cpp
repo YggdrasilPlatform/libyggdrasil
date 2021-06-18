@@ -17,59 +17,64 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/gpio.cpp
+  *  @file midgard/driver/i2c.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief GPIO Pin abstraction implementation for Midgard
+  *  @brief I2C abstraction implementation for Midgard
   */
 
-#if BOARD == MIDGARD
+#if BOARD == ASGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	#include <c/midgard/driver/gpio.h>
+	#include <c/asgard/driver/i2c.h>
 
 	#include <yggdrasil.h>
 
-	C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio){
+	#include <math.h>
+	#include <vector>
+	#include <string>
+
+	#include <unistd.h>
+	#include <fcntl.h>
+	#include <sys/ioctl.h>
+	#include <sys/stat.h>
+	#include <linux/i2c-dev.h>
+
+	C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c) {
+		i2c.fileHandle = open(("/dev/i2c-" + std::to_string(i2c.interfaceNumber)).c_str(), O_RDWR);
+		return i2c.fileHandle != -1;
+	}
+
+	C_LINKAGE bool yggdrasil_I2C_Deinit(i2c_t i2c) {
+		close(i2c.fileHandle);
 		return true;
 	}
 
-	C_LINKAGE bool yggdrasil_GPIO_Deinit(gpio_t gpio){
-		return true;
+	C_LINKAGE void yggdrasil_I2C_Write(i2c_t i2c, u8 address, void *data, size_t size) {
+		::ioctl(i2c.fileHandle, I2C_SLAVE, address >> 1);
+		::write(i2c.fileHandle, static_cast<u8*>(data), size);
 	}
 
-	C_LINKAGE bool yggdrasil_GPIO_Get(gpio_t gpio) {
-		bool state = gpio.port->IDR & (1 << gpio.pin);
+	C_LINKAGE void yggdrasil_I2C_WriteRegister(i2c_t i2c, u8 address, u8 reg, void *data, size_t size) {
+		std::vector<u8> buffer(size + 1, 0x00);
+		buffer[0] = reg;
+		std::memcpy(&buffer[1], data, size);
+		yggdrasil_I2C_Write(i2c, address, buffer.data(), buffer.size());
 
-		return gpio.lowActive ? !state : !!state;
 	}
 
-	C_LINKAGE void yggdrasil_GPIO_Set(gpio_t gpio, bool state) {
-		state = gpio.lowActive ? !state : state;
-
-		if (state)
-			gpio.port->ODR |= (1 << gpio.pin);
-		else
-			gpio.port->ODR &= ~(1 << gpio.pin);
+	C_LINKAGE void yggdrasil_I2C_Read(i2c_t i2c, u8 address, void *data, size_t size) {
+		::ioctl(i2c.fileHandle, I2C_SLAVE, address >> 1);
+		::read(i2c.fileHandle, static_cast<u8*>(data), size);
 	}
 
-	C_LINKAGE void yggdrasil_GPIO_Toggle(gpio_t gpio) {
-		yggdrasil_GPIO_Set(gpio, !yggdrasil_GPIO_Get(gpio));
+	C_LINKAGE void yggdrasil_I2C_ReadRegister(i2c_t i2c, u8 address, u8 reg, void *data, size_t size) {
+		yggdrasil_I2C_Write(i2c, address, &reg, sizeof(u8));
+		yggdrasil_I2C_Read(i2c, address, data, size);
 	}
 
-	C_LINKAGE u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to) {
-		u32 mask = ((1ULL << (u64)(to - from + 1)) - 1) << from;
-
-		return (port->IDR & mask) >> from;
-	}
-
-	C_LINKAGE void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value) {
-		u32 mask = ((1ULL << (u64)(to - from + 1)) - 1) << from;
-
-		port->ODR = (port->ODR & ~mask) | (((u32)value << from) & mask);
-	}
 
 #endif

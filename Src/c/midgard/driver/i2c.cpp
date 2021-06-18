@@ -23,7 +23,7 @@
   *  @brief I2C abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
@@ -37,6 +37,10 @@
 	#include <vector>
 
 	C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c) {
+		return true;
+	}
+
+	C_LINKAGE bool yggdrasil_I2C_Deinit(i2c_t i2c) {
 		return true;
 	}
 

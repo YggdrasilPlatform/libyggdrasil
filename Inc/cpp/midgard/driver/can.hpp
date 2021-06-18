@@ -42,16 +42,24 @@ namespace bsp::mid::drv {
 	template<auto Context>
 	struct CAN {
 
-
 		/**
-		 * @brief Can init function
+		 * @brief Init function
 		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
 		 *
-		 * @return True when successfully stared, false when not
+		 * @return True when successfully started, false when not
 		 */
 		static bool init() {
 			setStdFilter(0, 0, 0);	// bank 0 will accept all IDs
 			return HAL_CAN_Start(Context) == HAL_OK;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
+			return true;
 		}
 
 		/**

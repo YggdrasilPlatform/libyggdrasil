@@ -443,9 +443,20 @@ namespace bsp::mid::drv {
 		static constexpr auto ProfileCounter = TimerProfileCounter<Context, Size>();
 
 		/**
-		 * @brief Timer initialization
+		 * @brief Init function
+		 *
+		 * @return True when successfully started, false when not
 		 */
 		static bool init() {
+			return true;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
 			return true;
 		}
 

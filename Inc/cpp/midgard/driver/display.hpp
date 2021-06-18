@@ -214,6 +214,15 @@ namespace bsp::mid::drv {
 			return true;
 		}
 
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return True when successfully stopped, false when not
+		 */
+		static bool deinit() {
+			return true;
+		}
+
 		/*
 		 * @brief Display reset
 		 */

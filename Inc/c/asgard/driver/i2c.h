@@ -25,23 +25,19 @@
 
 #include <c/common/types.h>
 
-#include <stm32f7xx_hal.h>
 
 typedef struct {
-	I2C_HandleTypeDef *interface;
+	u8 interfaceNumber;
+  int fileHandle;
 } i2c_t;
 
 /**
  * @brief I2C initialization
- * 
- * @param i2c I2C handel
  */
 C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c);
 
 /**
  * @brief I2C deinitialization
- * 
- * @param i2c I2C handel
  */
 C_LINKAGE bool yggdrasil_I2C_Deinit(i2c_t i2c);
 

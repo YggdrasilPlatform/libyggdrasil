@@ -39,6 +39,13 @@ typedef struct {
 C_LINKAGE bool yggdrasil_UART_Init(uart_t uart);
 
 /**
+ * @brief UART deinitialization
+ *
+ * @param uart UART handle
+ */
+C_LINKAGE bool yggdrasil_UART_Deinit(uart_t uart);
+
+/**
  * @brief UART transmit
  *
  * @param uart UART handle

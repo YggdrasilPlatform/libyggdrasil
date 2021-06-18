@@ -23,7 +23,7 @@
   *  @brief Hash abstraction implementation for Midgard
   */
 
-#if defined(YGGDRASIL_PERIPHERAL_DEFS) && BOARD == MIDGARD
+#if BOARD == MIDGARD
 
 	#include <cpp/common/registers.hpp>
 	#include <cpp/common/attributes.hpp>
@@ -92,6 +92,10 @@
 
 	C_LINKAGE bool yggdrasil_HASH_Init(void){
 		return bsp::Hash::init();
+	}
+
+	C_LINKAGE bool yggdrasil_HASH_Deinit(void){
+		return bsp::Hash::deinit();
 	}
 
 	C_LINKAGE u8   yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 polynomial, u8 xorOut) {
