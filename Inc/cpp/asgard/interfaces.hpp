@@ -27,9 +27,13 @@
 
 #include <cpp/asgard/driver/gpio.hpp>
 #include <cpp/asgard/driver/i2c.hpp>
-#include <cpp/asgard/driver/display.hpp>
+#include <cpp/asgard/driver/spi.hpp>
+#include <cpp/asgard/driver/adc.hpp>
+#include <cpp/asgard/driver/dac.hpp>
 
 #include <cpp/asgard/core/cortex.hpp>
+
+#include <array>
 
 #if defined(YGGDRASIL_PERIPHERAL_DEFS)
 
@@ -57,6 +61,8 @@
 		using I2CC = bsp::drv::I2C<4, bsp::asg::drv::I2C>;
 		using I2CD = bsp::drv::I2C<0, bsp::asg::drv::I2C>;
 
+		using SPIA = bsp::drv::SPI<std::array{ 0, 0 }, bsp::asg::drv::SPI>;
+
     	static constexpr auto& LD1 = GPIOPortJ::Pin<0>;
 		static constexpr auto& LDA = LD1;
 		static constexpr auto& LedBlue = LD1;
@@ -69,6 +75,23 @@
 		static constexpr auto& LD4 = GPIOPortJ::Pin<3>;
 		static constexpr auto& LDD = LD4;
 		static constexpr auto& LedGreen = LD4;
+
+		static constexpr auto& SPIACE = GPIOPortI::Pin<0>;
+		static constexpr auto& SK9822_EN = GPIOPortE::Pin<10>;
+
+		using ADConverter1 = bsp::drv::ADConverter<2, bsp::mid::drv::ADCChannel>;
+
+		static constexpr auto& ADCA 				= ADConverter1::Channel<0, 0, (1 << 16) - 1>;
+		static constexpr auto& ADCB 				= ADConverter1::Channel<1, 0, (1 << 16) - 1>;
+		static constexpr auto& ADCC 				= ADConverter1::Channel<2, 0, (1 << 16) - 1>;
+		static constexpr auto& ADCD 				= ADConverter1::Channel<6, 0, (1 << 16) - 1>;
+		static constexpr auto& ADCPotentiometer 	= ADConverter1::Channel<15, 0, (1 << 16) - 1>;
+
+		using DAConverter1 = bsp::drv::DAConverter<0, bsp::mid::drv::DACChannel>;
+		using DAConverter2 = bsp::drv::DAConverter<1, bsp::mid::drv::DACChannel>;
+
+		static constexpr auto& DACA	= DAConverter1::Channel<1, 0, (1 << 16) - 1>;
+		static constexpr auto& DACB	= DAConverter2::Channel<2, 0, (1 << 16) - 1>;
 
 		static constexpr auto& ButtonA = GPIOPortJ::Pin<4, drv::Active::Low>;
 		static constexpr auto& ButtonB = GPIOPortJ::Pin<5, drv::Active::Low>;

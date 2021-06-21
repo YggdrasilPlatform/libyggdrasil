@@ -42,24 +42,6 @@ namespace bsp::drv {
 		ADConverter(ADConverter &&) = delete;
 
 		/**
-		 * @brief Init function
-		 *
-		 * @return True when successfully started, false when not
-		 */
-		static auto init(auto ... args) {
-			return Impl::init(args...);
-		}
-
-		/**
-		 * @brief Deinit function
-		 *
-		 * @return True when successfully stopped, false when not
-		 */
-		static auto deinit(auto ... args) {
-			return Impl::deinit(args...);
-		}
-
-		/**
 		 * @brief Channel implementation
 		 * @tparam Index ChannelID
 		 * @tparam Offset Calibration offset

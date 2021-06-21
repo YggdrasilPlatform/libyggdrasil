@@ -17,30 +17,35 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/midgard/driver/spi.hpp
+  *  @file cpp/midgard/driver/adc.hpp
   *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief SPI abstraction implementation for Midgard
+  *  @brief ADC Channel abstraction implementation for Midgard
   */
 
 #pragma once
 
-#include <cpp/common/frontend/spi.hpp>
+#include <cpp/common/frontend/adc.hpp>
 
-#include <string>
-#include <string_view>
-#include <array>
+#include <cmath>
 
 namespace bsp::mid::drv {
 
 	/**
-	 * @brief SPI implementation for Midgard
+	 * @brief ADC Channel implementation for Midgard
 	 * @warning Do not use this on its own!
 	 *
-	 * @tparam Context SPI context
+	 * @tparam Context ADC Context
+	 * @tparam Index Channel ID
+	 * @tparam Offset Calibration offset
+	 * @tparam MaxValue Maximum value reported
 	 */
-	template<auto Context>
-	struct SPI {
+	template<auto Context, u8 Index, u32 Offset, u32 MaxValue>
+	struct ADCChannel {
+		ADCChannel(const ADCChannel&) = delete;
+		auto operator=(const ADCChannel&) = delete;
+
+		constexpr static auto ReferenceVoltage = 3.3;
 
 		/**
 		 * @brief Init function
@@ -48,7 +53,8 @@ namespace bsp::mid::drv {
 		 * @return True when successfully started, false when not
 		 */
 		static bool init() {
-			return true;
+			ADCChannel::s_device = open(("/sys/bus/iio/devices/iio:device" + std::to_string(Context) + "/in_voltage" + std::to_string(Index) + "_raw").c_str(), O_RDWR);
+			return ADCChannel::s_device != -1;
 		}
 
 		/**
@@ -57,43 +63,36 @@ namespace bsp::mid::drv {
 		 * @return True when successfully stopped, false when not
 		 */
 		static bool deinit() {
+			close(ADCChannel::s_device);
 			return true;
 		}
 
 		/**
-		 * @brief SPI receive
+		 * @brief Get the current ADC value
+		 * @note This function polls the result
 		 *
-		 * @tparam N Data size
-	     * @param data Array for the read data
+		 * @return Current value between 0.0 and 1.0
 		 */
-		template<size_t N>
-		static void read(std::array<u8, N> &data) {
-			HAL_SPI_Receive(Context, data.data(), data.size(), HAL_MAX_DELAY);
+		operator float() const noexcept {
+			std::string data(0xFF, 0x00);
+
+			if (read(ADCChannel::s_device, data.data(), data.size()) <= 0)
+				return 0.0F;
+			lseek(ADCChannel::s_device, 0, 0);
+
+			return std::max<float>(std::stol(data) - Offset, 0.0F) / MaxValue;	// Get the value and transform it to 0.0 to 1.0
 		}
+
+	private:
+		ADCChannel() = default;
 
 		/**
-		 * @brief SPI write
-		 *
-		 * @tparam N Data size
-	     * @param data Array to send
+		 * @brief Declare ADConverter frontend as friend
 		 */
-		template<size_t N>
-		static void write(const std::array<u8, N> &data) {
-			HAL_SPI_Transmit(Context, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
-		}
+		template<auto, template<auto, u8, u32, u32> typename>
+		friend struct bsp::drv::ADConverter;
 
-
-		/**
-		 * @brief Set the spi mode (CPOL and CPHA)
-		 *
-		 * @param mode SPI mode
-		 * @note This function wait until the SPI is not busy anymore and then the mode change will take place
-		 */
-		static void setMode(bsp::drv::SPIMode mode) {
-			while (HAL_SPI_GetState(Context) == HAL_SPI_STATE_BUSY);
-			Context->Instance->CR1 = (Context->Instance->CR1 & ~0b11) | enumValue(mode);
-		}
-
+		static inline int s_device = -1;
 	};
 
 }

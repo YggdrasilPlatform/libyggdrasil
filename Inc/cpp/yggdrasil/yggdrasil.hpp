@@ -50,8 +50,10 @@
 	#include <cpp/yggdrasil/peripherals/six_axis_sensor.hpp>
 	#include <cpp/yggdrasil/peripherals/color_sensor.hpp>
 	#include <cpp/yggdrasil/peripherals/humidity_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/pressure_sensor.hpp>
 	#include <cpp/yggdrasil/peripherals/joystick.hpp>
 	#include <cpp/yggdrasil/peripherals/rtc.hpp>
+	#include <cpp/yggdrasil/peripherals/rgb_matrix.hpp>
 #endif
 
 #endif
