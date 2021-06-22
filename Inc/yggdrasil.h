@@ -82,3 +82,5 @@
 #if !defined(YGGDRASIL_PERIPHERAL_DEFS)
 	#warning "Standard peripheral definitions won't be added. Add them with '#define YGGDRASIL_PERIPHERAL_DEFS'!"
 #endif
+
+#include <init.h>
