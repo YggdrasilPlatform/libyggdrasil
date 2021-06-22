@@ -44,6 +44,14 @@ namespace bsp::ygg::prph {
 	public:
 		RGBMatrix() = delete;
 
+		/**
+		 * @brief Initialization function
+		 *
+		 * @return always true
+		 */
+		static bool init() {
+			return true;
+		}
 
 		/**
 		 * @brief Initialization of the SK9822 led

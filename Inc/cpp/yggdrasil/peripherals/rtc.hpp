@@ -40,6 +40,15 @@ namespace bsp::ygg::prph {
 		RealTimeClock() = delete;
 
 		/**
+		 * @brief Initialization function
+		 *
+		 * @return always true
+		 */
+		static bool init() {
+			return true;
+		}
+
+		/**
 		 * @brief Get the time saved in the RTC
 		 *
 		 * @return Time saved in the RTC

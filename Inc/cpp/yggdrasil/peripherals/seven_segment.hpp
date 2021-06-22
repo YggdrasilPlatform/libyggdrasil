@@ -41,6 +41,15 @@ namespace bsp::ygg::prph {
 		SevenSegment() = delete;
 
 		/**
+		 * @brief Initialization function
+		 *
+		 * @return always true
+		 */
+		static bool init() {
+			return true;
+		}
+
+		/**
 		 * @brief Display a unsigned value from 0 to 9999 on the 7 segments
 		 * @note The function takes care of the multiplexing, but must be called frequently (>= 200Hz recommended)
 		 *

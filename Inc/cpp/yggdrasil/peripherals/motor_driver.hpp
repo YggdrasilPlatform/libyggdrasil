@@ -53,8 +53,10 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief init function for the motor as a dual channel dc driver
 		 * @note this function does start the needed pwm generators
+		 *
+		 * @return always true
 		 */
-		static void init() {
+		static bool init() {
 			TC78Mode = true;	// Set the mode as dual DC motor driver
 			core::delay(1);
 			TC78Stby = false;	// Enables the motor driver
@@ -63,6 +65,8 @@ namespace bsp::ygg::prph {
 			bsp::TimerBCHB.startPwm();
 			bsp::TimerBCHC.startPwm();
 			bsp::TimerBCHD.startPwm();
+
+			return true;
 		}
 
 		/**

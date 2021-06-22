@@ -56,6 +56,16 @@ namespace bsp::ygg::prph {
 		  bool pressed;		///< State of the joystick button
 		};
 
+
+		/**
+		 * @brief Initialization function
+		 *
+		 * @return always true
+		 */
+		static bool init() {
+			return true;
+		}
+
 		/**
 		 * @brief Get the joystick data for the left joystick
 		 *

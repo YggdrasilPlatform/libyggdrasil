@@ -40,6 +40,15 @@ namespace bsp::ygg::prph {
 		SinkDriver() = delete;
 
 		/**
+		 * @brief Initialization function
+		 *
+		 * @return always true
+		 */
+		static bool init() {
+			return true;
+		}
+
+		/**
 		 * @brief Timer Channels
 		 */
 		enum class Channel {
