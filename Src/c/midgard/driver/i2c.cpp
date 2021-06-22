@@ -23,6 +23,8 @@
   *  @brief I2C abstraction implementation for Midgard
   */
 
+#include <yggdrasil.h>
+
 #if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
@@ -30,8 +32,6 @@
 	#include <cpp/common/utils.hpp>
 
 	#include <c/midgard/driver/i2c.h>
-
-	#include <yggdrasil.h>
 
 	#include <math.h>
 	#include <vector>

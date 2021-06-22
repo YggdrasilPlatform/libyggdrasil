@@ -23,6 +23,8 @@
   *  @brief GPIO Pin abstraction implementation for Midgard
   */
 
+#include <yggdrasil.h>
+
 #if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
@@ -30,8 +32,6 @@
 	#include <cpp/common/utils.hpp>
 
 	#include <c/midgard/driver/gpio.h>
-
-	#include <yggdrasil.h>
 
 	C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio){
 		return true;

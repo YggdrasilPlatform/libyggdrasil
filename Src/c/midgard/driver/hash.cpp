@@ -23,6 +23,8 @@
   *  @brief Hash abstraction implementation for Midgard
   */
 
+#include <yggdrasil.h>
+
 #if BOARD == MIDGARD
 
 	#include <cpp/common/registers.hpp>
@@ -31,8 +33,6 @@
 	#include <cpp/common/utils.hpp>
 
 	#include <c/midgard/driver/hash.h>
-
-	#include <yggdrasil.h>
 
 	#include <math.h>
 

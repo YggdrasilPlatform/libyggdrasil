@@ -23,6 +23,8 @@
   *  @brief DAC abstraction implementation for Midgard
   */
 
+#include <yggdrasil.h>
+
 #if BOARD == MIDGARD
 
 	#include <cpp/common/attributes.hpp>
@@ -30,8 +32,6 @@
 	#include <cpp/common/utils.hpp>
 
 	#include <c/midgard/driver/dac.h>
-
-	#include <yggdrasil.h>
 
 	#include <math.h>
 

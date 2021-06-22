@@ -23,6 +23,8 @@
   *  @brief GPIO Pin abstraction implementation for Asgard
   */
 
+#include <yggdrasil.h>
+
 #if BOARD == ASGARD
 
 	#include <cpp/common/attributes.hpp>
@@ -31,7 +33,7 @@
 
 	#include <c/asgard/driver/gpio.h>
 
-	#include <yggdrasil.h>
+
 
   #include <unistd.h>
   #include <fcntl.h>
