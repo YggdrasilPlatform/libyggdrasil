@@ -33,6 +33,9 @@
   *
   ******************************************************************************
   */
+#include <yggdrasil.h>
+
+#if BOARD == MIDGARD
 
 /* Includes ------------------------------------------------------------------*/
 #include <cpp/midgard/st/ft6x06.h>
@@ -496,3 +499,5 @@ static uint8_t ft6x06_GetInstance(uint16_t DeviceAddr)
   */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+#endif

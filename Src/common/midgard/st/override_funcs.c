@@ -1,3 +1,8 @@
+
+#include <yggdrasil.h>
+
+#if BOARD == MIDGARD
+
 #include <stm32f7xx_hal.h>
 
 extern DSI_HandleTypeDef hdsi;
@@ -26,3 +31,5 @@ int __io_putchar(int ch){
 
 	return ch;
 }
+
+#endif

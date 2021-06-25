@@ -34,6 +34,10 @@
   ******************************************************************************
   */
 
+#include <yggdrasil.h>
+
+#if BOARD == MIDGARD
+
 /* Includes ------------------------------------------------------------------*/
 #include <cpp/midgard/st/otm8009a.h>
 #include <stm32f7xx_hal.h>
@@ -454,3 +458,5 @@ uint8_t OTM8009A_Init(uint32_t ColorCoding, uint32_t orientation)
   */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+#endif
