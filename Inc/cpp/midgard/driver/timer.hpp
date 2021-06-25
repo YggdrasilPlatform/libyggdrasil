@@ -390,8 +390,6 @@ namespace bsp::mid::drv {
 		 * @return Time passed in nano seconds
 		 */
 		u64 cntToNanoSeconds(Size cntValue) const noexcept {
-			float pclk1 = static_cast<float>(SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
-			float pclk2 = static_cast<float>(SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
 			float timerFrequency;
 
 			if ((Context->Instance == TIM1) ||			// Get the timerFrequency before prescaler
@@ -399,11 +397,13 @@ namespace bsp::mid::drv {
 					(Context->Instance == TIM9) ||
 					(Context->Instance == TIM10) ||
 					(Context->Instance == TIM11)) {
+				float pclk2 = static_cast<float>(SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
 				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Timer frequency when APB2 prescaler = 1
 				else timerFrequency = 2 * pclk2;								// Timer frequency when APB2 prescaler > 1
 
 			}
 			else {
+				float pclk1 = static_cast<float>(SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
 				if ((RCC->CFGR & RCC_CFGR_PPRE1) == 0) timerFrequency = pclk1;	// Timer frequency when APB1 prescaler = 1
 				else timerFrequency = 2 * pclk1;								// Timer frequency when APB1 prescaler > 1
 			}
@@ -535,8 +535,6 @@ namespace bsp::mid::drv {
 		 * @return True when the adjustment was possible, false when the parameter did not match
 		 */
 		static bool setPwmFrequency(u32 f_hz, Size resolution = 0){
-			u32 pclk1 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
-			u32 pclk2 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
 			u32 timerFrequency;							// Timerfrequency depending on the RCC configuration
 			u32 psc = 0;
 			Size arr = 0;
@@ -560,11 +558,13 @@ namespace bsp::mid::drv {
 					(Context->Instance == TIM9) ||
 					(Context->Instance == TIM10) ||
 					(Context->Instance == TIM11)) {
+				u32 pclk2 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE2) >> RCC_CFGR_PPRE2_Pos]); // Get the timer clock before prescaler for APB2
 				if ((RCC->CFGR & RCC_CFGR_PPRE2) == 0) timerFrequency = pclk2;	// Pwm frequency when APB2 prescaler = 1
 				else timerFrequency = 2 * pclk2;								// Pwm frequency when APB2 prescaler > 1
 
 			}
 			else {
+				u32 pclk1 = (SystemCoreClock >> APBPrescTable[(RCC->CFGR & RCC_CFGR_PPRE1) >> RCC_CFGR_PPRE1_Pos]); // Get the timer clock before prescaler for APB1
 				if ((RCC->CFGR & RCC_CFGR_PPRE1) == 0) timerFrequency = pclk1;	// Pwm frequency when APB1 prescaler = 1
 				else timerFrequency = 2 * pclk1;								// Pwm frequency when APB1 prescaler > 1
 			}
