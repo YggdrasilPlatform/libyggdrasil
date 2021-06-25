@@ -54,6 +54,17 @@
 	#include <cpp/yggdrasil/peripherals/joystick.hpp>
 	#include <cpp/yggdrasil/peripherals/rtc.hpp>
 	#include <cpp/yggdrasil/peripherals/rgb_matrix.hpp>
+#elif BOARD == ASGARD_COPROC
+	#include <cpp/yggdrasil/peripherals/six_axis_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/color_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/humidity_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/pressure_sensor.hpp>
+	#include <cpp/yggdrasil/peripherals/joystick.hpp>
+	#include <cpp/yggdrasil/peripherals/rtc.hpp>
+	#include <cpp/yggdrasil/peripherals/seven_segment.hpp>
+	#include <cpp/yggdrasil/peripherals/rgb_matrix.hpp>
+	#include <cpp/yggdrasil/peripherals/motor_driver.hpp>
+	#include <cpp/yggdrasil/peripherals/sink_driver.hpp>
 #endif
 
 #endif

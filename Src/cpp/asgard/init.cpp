@@ -23,17 +23,15 @@
   *  @brief Hardware initialization for asgard
   */
 
-#include <cpp/common/attributes.hpp>
-#include <cpp/common/types.hpp>
-#include <cpp/common/utils.hpp>
-
 #include <yggdrasil.h>
-
-namespace bsp {
 
 #if BOARD == ASGARD
 
-C_LINKAGE i8 bsp_init(){
+	#include <cpp/common/attributes.hpp>
+	#include <cpp/common/types.hpp>
+	#include <cpp/common/utils.hpp>
+
+	C_LINKAGE i8 bsp_init() {
 
 		using namespace bsp;
 		using namespace bsp::ygg::prph;
@@ -133,6 +131,4 @@ C_LINKAGE i8 bsp_init(){
 
 	}
 
-
 #endif
-}

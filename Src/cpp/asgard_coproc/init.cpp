@@ -1,40 +1,45 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *  _____.___.                 .___                    .__.__      *
- *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
- *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
- *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
- *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
- *   \/     /_____//_____/      \/            \/     \/            *
- *                         - Yggdrasil -                           *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This software can be used by students and other personal of the *
- * Bern University of Applied Sciences under the terms of the MIT  *
- * license.                                                        *
- * For other persons this software is under the terms of the GNU   *
- * General Public License version 2.                               *
- *                                                                 *
- * Copyright &copy; 2021, Bern University of Applied Sciences.     *
- * All rights reserved.                                            *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *  _____.___.                 .___                    .__.__      *
+  *  \__  |   | ____   ____   __| _/___________    _____|__|  |     *
+  *   /   |   |/ ___\ / ___\ / __ |\_  __ \__  \  /  ___/  |  |     *
+  *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
+  *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
+  *   \/     /_____//_____/      \/            \/     \/            *
+  *                         - Yggdrasil -                           *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * This software can be used by students and other personal of the *
+  * Bern University of Applied Sciences under the terms of the MIT  *
+  * license.                                                        *
+  * For other persons this software is under the terms of the GNU   *
+  * General Public License version 2.                               *
+  *                                                                 *
+  * Copyright &copy; 2021, Bern University of Applied Sciences.     *
+  * All rights reserved.                                            *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
- *  @file cpp/midgard/midgard/init.cpp
- *  @ingroup yggdrasil
- *  @author Fabian Weber, Nikolaij Saegesser
- *  @brief Hardware initialization for midgard
- */
+  *  @file cpp/midgard/midgard/init.cpp
+  *  @ingroup yggdrasil
+  *  @author Fabian Weber, Nikolaij Saegesser
+  *  @brief Hardware initialization for midgard
+  */
+
 
 #include <yggdrasil.h>
 
-#if BOARD == MIDGARD
+#if BOARD == ASGARD_COPROC
 
 	#include <cpp/common/attributes.hpp>
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
+	static void gpio_config();
+
 	C_LINKAGE i8 bsp_init() {
 
 		using namespace bsp;
 		using namespace bsp::ygg::prph;
+
+		gpio_config();
 
 		/* GPIO initialization */
 		if (!GPIOPortA::init())
@@ -91,8 +96,6 @@
 			return INITRESULT_I2C_FAILURE;
 		if (!I2CB::init())
 			return INITRESULT_I2C_FAILURE;
-		if (!I2CC::init())
-			return INITRESULT_I2C_FAILURE;
 		if (!I2CD::init())
 			return INITRESULT_I2C_FAILURE;
 
@@ -127,10 +130,6 @@
 			return INITRESULT_UART_FAILURE;
 		if (!UARTC::init())
 			return INITRESULT_UART_FAILURE;
-
-		/* Display initialization */
-		if (!Display::init())
-			return INITRESULT_DISPLAY_FAILURE;
 
 		/* Hash initialization */
 		if (!Hash::init())
@@ -184,6 +183,26 @@
 			return INITRESULT_SIXAXISSENSOR_FAILURE;
 
 		return INITRESULT_SUCCESS;
+
+	}
+
+	static void gpio_config() {
+
+
+		GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+
+		GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3;
+		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+		GPIO_InitStruct.Pull = GPIO_NOPULL;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+		HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct);
+
+		GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7;
+		GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+		GPIO_InitStruct.Pull = GPIO_NOPULL;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+		HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct);
 
 	}
 

@@ -25,8 +25,9 @@
 
 #pragma once
 
-#define ASGARD 		1
-#define MIDGARD 	2
+#define ASGARD 			1
+#define MIDGARD 		2
+#define ASGARD_COPROC 	3
 
 // C++ headers
 #if defined(__cplusplus) && !defined(YGGDRASIL_USE_C_INTERFACE)
@@ -39,6 +40,8 @@
 
 	#if BOARD == ASGARD
 		#include <cpp/asgard/asgard.hpp>
+	#elif BOARD == ASGARD_COPROC
+		#include <cpp/asgard_coproc/asgard_coproc.hpp>
 	#elif BOARD == MIDGARD
 		#include <cpp/midgard/midgard.hpp>
 	#else
@@ -52,12 +55,17 @@
 // C headers
 #else
 
+	#include <c/common/attributes.h>
+	#include <c/common/types.h>
+
 	#if BOARD == ASGARD
 		#include <c/asgard/asgard.h>
+	#elif BOARD == ASGARD_COPROC
+
 	#elif BOARD == MIDGARD
 		#include <c/midgard/midgard.h>
 	#else
-		#error "No board selected. Choose one with '#define BOARD <BOARD_NAME>' before '#include <yggdrasil.h>'!"
+		#error "No board selected. Choose one with 'BOARD = <BOARD_NAME>' define in the preprocessor settings!"
 	#endif
 
 	#include <c/yggdrasil/yggdrasil.h>
@@ -80,7 +88,7 @@
 #endif
 
 #if !defined(YGGDRASIL_PERIPHERAL_DEFS)
-	#warning "Standard peripheral definitions won't be added. Add them with '#define YGGDRASIL_PERIPHERAL_DEFS'!"
+	#warning "Standard peripheral definitions won't be added. Add them by adding the 'YGGDRASIL_PERIPHERAL_DEFS' define in the preprocessor settings!"
 #endif
 
 #include <init.h>
