@@ -125,7 +125,7 @@
 		static constexpr auto& LeftJoyStickButton = GPIOPortG::Pin<10, drv::Active::Low>;	///< JoystickA Button
 		static constexpr auto& ButtonJoystickA = LeftJoyStickButton;						///< Alias for JoystickA Button
 		static constexpr auto& RightJoyStickButton = GPIOPortG::Pin<11, drv::Active::Low>;	///< JoystickB Button
-		static constexpr auto& ButtonJoystickB = RightJoyStickButton;						///< Alias for JoystickA Button
+		static constexpr auto& ButtonJoystickB = RightJoyStickButton;						///< Alias for JoystickB Button
 
 		static constexpr auto& ButtonA = GPIOPortK::Pin<4, drv::Active::Low>;			///< Button A
 		static constexpr auto& ButtonB = GPIOPortK::Pin<5, drv::Active::Low>;			///< Button B
@@ -209,7 +209,6 @@
 
 		}
 		/** @} */
-
 
 		/**
 		 * @brief I2C definitions
