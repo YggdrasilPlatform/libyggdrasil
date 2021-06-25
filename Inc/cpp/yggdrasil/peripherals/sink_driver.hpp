@@ -84,16 +84,16 @@ namespace bsp::ygg::prph {
 
 				switch(channel){
 				case Channel::A:
-					bsp::TimerDCHA.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHA.setDutyCycle(dutyCycle);
 					break;
 				case Channel::B:
-					bsp::TimerDCHB.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHB.setDutyCycle(dutyCycle);
 					break;
 				case Channel::C:
-					bsp::TimerDCHC.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHC.setDutyCycle(dutyCycle);
 					break;
 				case Channel::D:
-					bsp::TimerDCHD.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHD.setDutyCycle(dutyCycle);
 					break;
 				}
 
@@ -125,22 +125,31 @@ namespace bsp::ygg::prph {
 			 */
 			static bool checkMode(Channel channel) {
 				if (SinkDriver::s_mode[static_cast<u8>(channel)] != Mode::Servo) {
-					if (bsp::TimerD::getPwmFrequency() != 50) {
-						if(!bsp::TimerD::setPwmFrequency(50,40000)) return false;
-					}
 
 					switch(channel){
 						case Channel::A:
-							bsp::TimerDCHA.startPwm();
+							if (bsp::SinkDriverTimerA::getPwmFrequency() != 50) {
+								if(!bsp::SinkDriverTimerA::setPwmFrequency(50,40000)) return false;
+							}
+							bsp::SinkDriverTimerCHA.startPwm();
 							break;
 						case Channel::B:
-							bsp::TimerDCHB.startPwm();
+							if (bsp::SinkDriverTimerB::getPwmFrequency() != 50) {
+								if(!bsp::SinkDriverTimerB::setPwmFrequency(50,40000)) return false;
+							}
+							bsp::SinkDriverTimerCHB.startPwm();
 							break;
 						case Channel::C:
-							bsp::TimerDCHC.startPwm();
+							if (bsp::SinkDriverTimerC::getPwmFrequency() != 50) {
+								if(!bsp::SinkDriverTimerC::setPwmFrequency(50,40000)) return false;
+							}
+							bsp::SinkDriverTimerCHC.startPwm();
 							break;
 						case Channel::D:
-							bsp::TimerDCHD.startPwm();
+							if (bsp::SinkDriverTimerD::getPwmFrequency() != 50) {
+								if(!bsp::SinkDriverTimerD::setPwmFrequency(50,40000)) return false;
+							}
+							bsp::SinkDriverTimerCHD.startPwm();
 							break;
 					}
 
@@ -170,20 +179,20 @@ namespace bsp::ygg::prph {
 					// Set to high active state and start the pwm for the used channel
 					switch(channel){
 					case Channel::A:
-						bsp::TimerDCHA.startPwm();
-						bsp::TimerDCHA.setPolarityHigh();
+						bsp::SinkDriverTimerCHA.startPwm();
+						bsp::SinkDriverTimerCHA.setPolarityHigh();
 						break;
 					case Channel::B:
-						bsp::TimerDCHB.startPwm();
-						bsp::TimerDCHB.setPolarityHigh();
+						bsp::SinkDriverTimerCHB.startPwm();
+						bsp::SinkDriverTimerCHB.setPolarityHigh();
 						break;
 					case Channel::C:
-						bsp::TimerDCHC.startPwm();
-						bsp::TimerDCHC.setPolarityHigh();
+						bsp::SinkDriverTimerCHC.startPwm();
+						bsp::SinkDriverTimerCHC.setPolarityHigh();
 						break;
 					case Channel::D:
-						bsp::TimerDCHD.startPwm();
-						bsp::TimerDCHD.setPolarityHigh();
+						bsp::SinkDriverTimerCHD.startPwm();
+						bsp::SinkDriverTimerCHD.setPolarityHigh();
 						break;
 					}
 					SinkDriver::s_mode[enumValue(channel)] = Mode::PWM;
@@ -192,16 +201,16 @@ namespace bsp::ygg::prph {
 				// Set the duty cycle for the used channel
 				switch(channel){
 				case Channel::A:
-					bsp::TimerDCHA.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHA.setDutyCycle(dutyCycle);
 					break;
 				case Channel::B:
-					bsp::TimerDCHB.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHB.setDutyCycle(dutyCycle);
 					break;
 				case Channel::C:
-					bsp::TimerDCHC.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHC.setDutyCycle(dutyCycle);
 					break;
 				case Channel::D:
-					bsp::TimerDCHD.setDutyCycle(dutyCycle);
+					bsp::SinkDriverTimerCHD.setDutyCycle(dutyCycle);
 					break;
 				}
 
@@ -257,20 +266,20 @@ namespace bsp::ygg::prph {
 					// Enable the pwm and set the duty cycle to 0
 					switch(channel){
 					case Channel::A:
-						bsp::TimerDCHA.startPwm();
-						bsp::TimerDCHA.setDutyCycle(0.0F);
+						bsp::SinkDriverTimerCHA.startPwm();
+						bsp::SinkDriverTimerCHA.setDutyCycle(0.0F);
 						break;
 					case Channel::B:
-						bsp::TimerDCHB.startPwm();
-						bsp::TimerDCHB.setDutyCycle(0.0F);
+						bsp::SinkDriverTimerCHB.startPwm();
+						bsp::SinkDriverTimerCHB.setDutyCycle(0.0F);
 						break;
 					case Channel::C:
-						bsp::TimerDCHC.startPwm();
-						bsp::TimerDCHC.setDutyCycle(0.0F);
+						bsp::SinkDriverTimerCHC.startPwm();
+						bsp::SinkDriverTimerCHC.setDutyCycle(0.0F);
 						break;
 					case Channel::D:
-						bsp::TimerDCHD.startPwm();
-						bsp::TimerDCHD.setDutyCycle(0.0F);
+						bsp::SinkDriverTimerCHD.startPwm();
+						bsp::SinkDriverTimerCHD.setDutyCycle(0.0F);
 						break;
 					}
 
@@ -281,16 +290,16 @@ namespace bsp::ygg::prph {
 				// or always high. A duty of 100% usually is not really 100%
 				switch(channel){
 				case Channel::A:
-					bsp::TimerDCHA.setPolarityHigh(!state);
+					bsp::SinkDriverTimerCHA.setPolarityHigh(!state);
 					break;
 				case Channel::B:
-					bsp::TimerDCHB.setPolarityHigh(!state);
+					bsp::SinkDriverTimerCHB.setPolarityHigh(!state);
 					break;
 				case Channel::C:
-					bsp::TimerDCHC.setPolarityHigh(!state);
+					bsp::SinkDriverTimerCHC.setPolarityHigh(!state);
 					break;
 				case Channel::D:
-					bsp::TimerDCHD.setPolarityHigh(!state);
+					bsp::SinkDriverTimerCHD.setPolarityHigh(!state);
 					break;
 				}
 
