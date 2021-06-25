@@ -242,6 +242,7 @@
 		using UARTB = bsp::drv::UART<0x4000'7C00, bsp::mid::drv::UART>;					///< UART 8 on Raspberry, PMod
 		using UARTC = bsp::drv::UART<0x4000'4C00, bsp::mid::drv::UART>;					///< UART 4 onboard to STLINK-V3
 		using UARTST = UARTC;															///< UART ST onboard to STLINK-V3
+		/** @} */
 
 		/**
 		 * @brief CAN definitions
@@ -250,8 +251,6 @@
 		using CANA = bsp::drv::CAN<&hcan1, bsp::mid::drv::CAN>;							///< CAN A
 		using CANB = bsp::drv::CAN<&hcan2, bsp::mid::drv::CAN>;							///< CAN B
 		/** @} */
-
-
 
 		/**
 		 * @brief Timer definitions
