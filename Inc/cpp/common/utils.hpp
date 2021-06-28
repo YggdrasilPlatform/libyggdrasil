@@ -76,6 +76,10 @@ namespace bsp {
 		public:
 			constexpr ScopeGuardImpl(F func) : m_func(std::move(func)), m_active(true) { }
 			~ScopeGuardImpl() { if (this->m_active) { this->m_func(); } }
+
+			/**
+			 * @brief Releases the scope guard and prevents it from being executed when going out of scope
+			 */
 			void release() { this->m_active = false; }
 
 			ScopeGuardImpl(ScopeGuardImpl &&other) noexcept : m_func(std::move(other.m_func)), m_active(other.m_active) {
@@ -87,6 +91,9 @@ namespace bsp {
 
 		enum class ScopeGuardOnExit { };
 
+		/**
+		 * Helper operator overload to easily generate a scope guard
+		 */
 		template <typename F>
 		constexpr ScopeGuardImpl<F> operator+(ScopeGuardOnExit, F&& f) {
 			return ScopeGuardImpl<F>(std::forward<F>(f));
@@ -130,9 +137,16 @@ namespace bsp {
 	    else if constexpr (sizeof(T) == 2) 	return __builtin_bswap16(value);
 	    else if constexpr (sizeof(T) == 4) 	return __builtin_bswap32(value);
 	    else if constexpr (sizeof(T) == 8) 	return __builtin_bswap64(value);
-	    else __builtin_unreachable();
+	    else bsp::unreachable();
 	}
 
+	/**
+	 * @brief Casts a scoped enum type into its underlying value
+	 *
+	 * @tparam T enum type
+	 * @param value enum value
+	 * @return underlying value
+	 */
 	template<typename T>
 	auto enumValue(T value) {
 		static_assert(std::is_enum<T>::value, "Cannot get value of non-enum type");
@@ -149,16 +163,33 @@ namespace bsp {
 	    constexpr ByteSwapped() : m_value(0) {}
 	    constexpr ByteSwapped(T value) : m_value(byteSwap(value)) {}
 
+	    /**
+	     * @brief Transparently return byte swapped value
+	     *
+	     * @return byte swapped value
+	     */
 	    constexpr operator T() const noexcept {
 	        return byteSwap(this->m_value);
 	    }
 
+	    /**
+	     * @brief Transparently assign value and store it byte swapped
+	     *
+	     * @param value value
+	     * @return current object
+	     */
 	    constexpr auto operator=(T value) {
 	        this->m_value = byteSwap(value);
 
 	        return *this;
 	    }
 
+	    /**
+	     * @brief Copy assignment operator
+	     *
+	     * @param other value
+	     * @return current object
+	     */
 	    constexpr auto operator=(const ByteSwapped &value) {
 	        this->m_value = value.m_value;
 
@@ -168,21 +199,12 @@ namespace bsp {
 	    T m_value;
 	};
 
-	#undef assert
-
-	WEAK void assertionFailed(const char *message, const char *file, const char *function, u32 line) {
-		while (true);
-	}
-
-	[[maybe_unused]] static void assert(bool condition, const char *message, const char *file = __builtin_FILE(), const char *function = __builtin_FUNCTION(), u32 line = __builtin_LINE()) {
-		if (!condition) {
-			assertionFailed(message, file, function, line);
-		}
-	}
-
-
-	template<typename T>
-	ALWAYS_INLINE void doNotOptimize(T const& value) {
+	/**
+	 * @brief Confuses the compiler to prevent it from optimizing out a variable. Helpful for debugging
+	 *
+	 * @param value Variable to prevent optimization of
+	 */
+	ALWAYS_INLINE void doNotOptimize(const auto& value) {
 	  asm volatile("" : : "r,m"(value) : "memory");
 	}
 }
