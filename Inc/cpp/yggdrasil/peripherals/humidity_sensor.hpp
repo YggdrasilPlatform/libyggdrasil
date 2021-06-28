@@ -61,7 +61,7 @@ namespace bsp::ygg::prph {
 		 * @brief Initialization of the SHT40-AD1B-R2 relative humidity and temperature sensor
 		 * @note The sensor does not need a special initialization, this function just does a soft reset
 		 *
-		 * @return always true
+		 * @return Success
 		 */
 		static bool init() {
 			bsp::I2CA::write(DeviceAddress, enumValue(Command::SoftReset));

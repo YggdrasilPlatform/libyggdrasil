@@ -86,6 +86,24 @@ namespace bsp::mid::drv {
 	    }
 
 		/**
+		 * @brief Init function
+		 *
+		 * @return Success
+		 */
+		bool init() const noexcept {
+			return true;
+		}
+
+		/**
+		 * @brief Deinit function
+		 *
+		 * @return Success
+		 */
+		bool deinit() const noexcept {
+			return true;
+		}
+
+		/**
 		 * @brief Turn pin into an output
 		 */
 		void makeOutput() const noexcept {
@@ -155,7 +173,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -164,7 +182,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;
@@ -198,9 +216,6 @@ namespace bsp::mid::drv {
 	     */
 		template<u8 From, u8 To>
 		static constexpr auto Out = typename ODR::template Field<From, To>();
-
-
-
 
 	};
 

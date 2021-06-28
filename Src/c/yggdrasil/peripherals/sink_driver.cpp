@@ -35,6 +35,10 @@
 
 	using SinkDriver = bsp::ygg::prph::SinkDriver;
 
+	C_LINKAGE void yggdrasil_SinkDriver_Init(void) {
+		SinkDriver::init();
+	}
+
 	C_LINKAGE void yggdrasil_SinkDriver_Servo_Set(SinkDriverChannel channel, float percent) {
 		SinkDriver::Servo::set(static_cast<SinkDriver::Channel>(channel), percent);
 	}
@@ -52,8 +56,8 @@
 		return SinkDriver::PWM::setFrequency(frequency, resolution);
 	}
 
-	C_LINKAGE u32 yggdrasil_SinkDriver_PWM_GetFrequency() {
-		return SinkDriver::PWM::getFrequency();
+	C_LINKAGE u32 yggdrasil_SinkDriver_PWM_GetFrequency(enum SinkDriverChannel channel) {
+		return SinkDriver::PWM::getFrequency(static_cast<SinkDriver::Channel>(channel));
 	}
 
 

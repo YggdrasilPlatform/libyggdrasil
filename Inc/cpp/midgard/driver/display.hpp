@@ -71,7 +71,7 @@ namespace bsp::mid::drv {
 		 * @brief Display initialization
 		 *
 		 * @param orientation Display orientation
-		 * @return True when successful, false when not
+		 * @return Success
 		 */
 		static bool init(Orientation orientation = Orientation::Portrait) noexcept {
 			auto [hltdc, hdsi, hdma2d] = Context;
@@ -240,7 +240,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;
@@ -331,18 +331,18 @@ namespace bsp::mid::drv {
 		 *
 		 * @param x X coordinate
 		 * @param y Y coordinate
-		 * @param paletteIndex Index for the color
+		 * @param color Index for the color
 		 */
-		ALWAYS_INLINE static void setPixel(u16 x, u16 y, u8 paletteIndex) {
+		ALWAYS_INLINE static void setPixel(u16 x, u16 y, u8 color) {
 			reinterpret_cast<u8*>(FramebufferAddress)[y * Display::s_xSize + x] = paletteIndex;
 		}
 
 		/**
 		 * @brief Clear the display to a color
 		 *
-		 * @param paletteIndex Index for the color
+		 * @param color Index for the color
 		 */
-		ALWAYS_INLINE static void clear(u8 paletteIndex) {
+		ALWAYS_INLINE static void clear(u8 color) {
 			const auto [hltdc, hdsi, hdma2d] = Context;
 
 			hdma2d->Init.Mode         = DMA2D_R2M;

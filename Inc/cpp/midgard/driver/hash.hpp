@@ -50,7 +50,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -59,7 +59,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;

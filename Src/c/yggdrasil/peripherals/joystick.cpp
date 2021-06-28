@@ -35,7 +35,11 @@
 
 	using Joystick = bsp::ygg::prph::Joystick;
 
-	C_LINKAGE ::JoystickData yggdrasil_Joystick_GetLeft() {
+	C_LINKAGE bool yggdrasil_Joystick_Init(void) {
+		return Joystick::init();
+	}
+
+	C_LINKAGE ::JoystickData yggdrasil_Joystick_GetLeft(void) {
 		::JoystickData result;
 
 		auto joystickData = Joystick::getLeft();
@@ -48,7 +52,7 @@
 		return result;
 	}
 
-	C_LINKAGE ::JoystickData yggdrasil_Joystick_GetRight() {
+	C_LINKAGE ::JoystickData yggdrasil_Joystick_GetRight(void) {
 		::JoystickData result;
 
 		auto joystickData = Joystick::getRight();
@@ -65,7 +69,7 @@
 		Joystick::setDeadzone(deadzone);
 	}
 
-	C_LINKAGE u8 yggdrasil_Joystick_GetDeadzone() {
+	C_LINKAGE u8 yggdrasil_Joystick_GetDeadzone(void) {
 		return Joystick::getDeadzone();
 	}
 

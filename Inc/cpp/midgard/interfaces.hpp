@@ -132,7 +132,6 @@
 		static constexpr auto& ButtonC = GPIOPortK::Pin<6, drv::Active::Low>;			///< Button C
 		static constexpr auto& ButtonD = GPIOPortK::Pin<7, drv::Active::Low>;			///< Button D
 
-
 		static constexpr auto& DriverA = GPIOPortC::Pin<13>;							///< Sink driver pin A
 		static constexpr auto& LD5 = DriverA;											///< Alias for Sink driver pin A
 		static constexpr auto& LDE = DriverA;											///< Alias for Sink driver pin A

@@ -45,7 +45,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -54,7 +54,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;
@@ -81,7 +81,6 @@ namespace bsp::mid::drv {
 		static void write(const std::array<u8, N> &data) {
 			HAL_SPI_Transmit(Context, const_cast<u8*>(data.data()), data.size(), HAL_MAX_DELAY);
 		}
-
 
 		/**
 		 * @brief Set the spi mode (CPOL and CPHA)

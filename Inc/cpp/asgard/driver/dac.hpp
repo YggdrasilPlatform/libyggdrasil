@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Midgard -                            *
+  *                          - Asgard -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/midgard/driver/dac.hpp
-  *  @ingroup midgard
+  *  @file cpp/asgard/driver/dac.hpp
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief DAC Channel abstraction implementation for Midgard
+  *  @brief DAC Channel abstraction implementation for Asgard
   */
 
 #pragma once
@@ -32,7 +32,7 @@
 namespace bsp::mid::drv {
 
 	/**
-	 * @brief DAC Channel implementation for Midgard
+	 * @brief DAC Channel implementation for Asgard
 	 * @warning Do not use this on its own!
 	 *
 	 * @tparam Context DAC Context
@@ -50,7 +50,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			DACChannel::s_device = open(("/sys/bus/iio/devices/iio:device" + std::to_string(Context) + "/out_voltage" + std::to_string(Index) + "_raw").c_str(), O_RDWR);
@@ -60,7 +60,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			close(DACChannel::s_device);

@@ -44,9 +44,40 @@ struct JoystickData {
   bool pressed;		///< State of the joystick button
 };
 
+/**
+ * @brief Initialization function
+ *
+ * @return Success
+ */
+C_LINKAGE bool yggdrasil_Joystick_Init(void);
 
+/**
+ * @brief Get the joystick data for the left joystick
+ *
+ * @return JoyStickData struct
+ * @note This function is polling
+ */
 C_LINKAGE struct JoystickData yggdrasil_Joystick_GetLeft();
+
+/**
+ * @brief Get the joystick data for the right joystick
+ *
+ * @return JoyStickData struct
+ * @note This function is polling
+ */
 C_LINKAGE struct JoystickData yggdrasil_Joystick_GetRight();
+
+/**
+ * @brief Set both joystick's deadzone
+ *
+ * @param deadzone Deadzone value
+ */
 C_LINKAGE void yggdrasil_Joystick_SetDeadzone(u8 deadzone);
-C_LINKAGE u8 yggdrasil_Joystick_GetDeadzone();
+
+/**
+ * @brief Get the current Joystick deadzone
+ *
+ * @return Current deadzone value
+ */
+C_LINKAGE u8 yggdrasil_Joystick_GetDeadzone(void);
 

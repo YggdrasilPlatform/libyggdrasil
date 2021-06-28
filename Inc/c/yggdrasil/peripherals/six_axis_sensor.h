@@ -102,10 +102,45 @@ enum SixAxisSensorGyroOutputDataRange {
 	SixAxisSensorGyroOutputDataRange_12_5Hz   = 0x0B,	///< 12.5 measurements per second
 };
 
+/**
+ * @brief Initializes the ICM-42605 Six Axis Sensor
+ *
+ * @param accelScale Scaling factor of the Accelerometer
+ * @param gyroScale Scaling factor of the Gyroscope
+ * @param accelOdr Output data rate of the Accelerometer
+ * @param gyroOdr Output data rate of the Gyroscope
+ *
+ * @return Success
+ */
 C_LINKAGE bool yggdrasil_SixAxisSensor_Init(enum SixAxisSensorAccelFullScaleRange accelScale, enum SixAxisSensorGyroFullScaleRange gyroScale, enum SixAxisSensorAccelOutputDataRange accelOdr, enum SixAxisSensorGyroOutputDataRange gyroOdr);
-C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetRotation();
-C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetAcceleration();
-C_LINKAGE float yggdrasil_SixAxisSensor_GetTemperature();
-C_LINKAGE struct Orientation yggdrasil_SixAxisSensor_GetBoardOrientation();
+
+/**
+ * @brief Get yggdrasil's current orientation from the gyroscope
+ *
+ * @return X, Y and Z rotation axis values
+ */
+C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetRotation(void);
+
+/**
+ * @brief Get yggdrasil's current acceleration from the accelerometer
+ *
+ * @return X, Y and Z acceleration axis values
+ */
+C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetAcceleration(void);
+
+/**
+ * @brief Get the internal temperature of the ICM-42605 sensor
+ *
+ * @return Temperature value
+ */
+C_LINKAGE float yggdrasil_SixAxisSensor_GetTemperature(void);
+
+/**
+ * @brief Get yggdrasil's current orientation
+ * @note When the board is flat on a plain surface this function returns approximately 0 0
+ *
+ * @return orientation (roll and pitch) in the range from -180 to 180
+ */
+C_LINKAGE struct Orientation yggdrasil_SixAxisSensor_GetBoardOrientation(void);
 
 

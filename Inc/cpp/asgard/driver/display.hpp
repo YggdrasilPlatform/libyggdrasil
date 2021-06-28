@@ -59,6 +59,12 @@ namespace bsp::drv {
 
 namespace bsp::asg::drv {
 
+	/**
+	 * @brief Display Channel implementation for Asgard
+	 * @warning Do not use this on its own!
+	 *
+	 * @tparam Context Display Context
+	 */
 	template<auto Context>
 	struct Display {
 		Display(const Display&) = delete;
@@ -67,7 +73,7 @@ namespace bsp::asg::drv {
 		 * @brief Display initialization
 		 *
 		 * @param orientation Display orientation
-		 * @return True when successful, false when not
+		 * @return Success
 		 */
 		static bool init() noexcept {
 			int fd = open("/dev/fb0", O_RDWR);
@@ -95,7 +101,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			munmap(getFramebufferAddress(), Display::s_xSize * Display::s_ySize * Display::s_bpp / 8);
@@ -173,7 +179,7 @@ namespace bsp::asg::drv {
 		 *
 		 * @param x X coordinate
 		 * @param y Y coordinate
-		 * @param paletteIndex Index for the color
+		 * @param color Index for the color
 		 */
 		ALWAYS_INLINE static void setPixel(u16 x, u16 y, u32 color) {
 			u32 offset = (x + Display::s_vinfo.xoffset) * (Display::s_bpp / 8) + (y + Display::s_vinfo.yoffset) * Display::s_finfo.line_length;
@@ -185,7 +191,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Clear the display to a color
 		 *
-		 * @param paletteIndex Index for the color
+		 * @param color Index for the color
 		 */
 		ALWAYS_INLINE static void clear(auto color) {
 			for (u32 x = 0; x < Display::s_xSize; x++)

@@ -44,19 +44,17 @@ namespace bsp::asg_coproc::drv {
 
 		/**
 		 * @brief Init function
-		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
-			//setStdFilter(0, 0, 0);	// bank 0 will accept all IDs
 			return HAL_FDCAN_Start(Context) == HAL_OK;
 		}
 
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;
@@ -127,87 +125,6 @@ namespace bsp::asg_coproc::drv {
 			while (HAL_CAN_GetTxMailboxesFreeLevel(Context) != 3);
 			return pTxMailbox;
 		}
-
-//		/**
-//		 * @brief Standard ID filter configuration function
-//		 *
-//		 * @param bank Filterbank 0 to 28
-//		 * @param id Standard ID 0 to 0x7FF
-//		 * @param mask Filtermask 0 to 0x7FF
-//		 * @return True when successfully set, false when not
-//		 */
-//		static bool setStdFilter(u8 bank, u16 id, u16 mask) {
-//			if (bank > 28) return false;
-//			if (id > 0x7FF) return false;
-//			if (mask > 0x7FF) return false;
-//
-//			FDCAN_FilterTypeDef sFilterConfig;
-//			sFilterConfig.FilterBank = bank;
-//			sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-//			sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-//			sFilterConfig.FilterIdHigh = (id << 5);
-//			sFilterConfig.FilterIdLow = 0;
-//			sFilterConfig.FilterMaskIdHigh = (mask << 5);
-//			sFilterConfig.FilterMaskIdLow = 0;
-//			sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
-//			sFilterConfig.FilterActivation = ENABLE;
-//			sFilterConfig.SlaveStartFilterBank = 0;
-//
-//			if (HAL_CAN_ConfigFilter(Context, &sFilterConfig) != HAL_OK) return false;
-//			return true;
-//		}
-//
-//
-//		/**
-//		 * @brief Extended ID filter configuration function
-//		 *
-//		 * @param bank Filterbank 0 to 28
-//		 * @param id Standard ID 0 to 0x1FFFFFFF
-//		 * @param mask Filtermask 0 to 0x1FFFFFFF
-//		 * @return True when successfully set, false when not
-//		 *
-//		 * @warning This function might have complications with PCAN
-//		 */
-//		static bool setExtFilter(u8 bank, u32 id, u32 mask) {
-//			if (bank > 28) return false;
-//			if (id > 0x1FFFFFFF) return false;
-//			if (mask > 0x1FFFFFFF) return false;
-//
-//			FDCAN_FilterTypeDef sFilterConfig;
-//			sFilterConfig.FilterBank = bank;
-//			sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-//			sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-//			sFilterConfig.FilterIdHigh = ((id & 0x7FF) << 5) | ((id >> 27) & 0xFFFF);
-//			sFilterConfig.FilterIdLow = ((id >> 11) << 3) & 0xFFFF;
-//			sFilterConfig.FilterMaskIdHigh = ((mask & 0x7FF) << 5) | ((mask >> 27) & 0xFFFF);
-//			sFilterConfig.FilterMaskIdLow = ((mask >> 11) << 3) & 0xFFFF;
-//			sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
-//			sFilterConfig.FilterActivation = ENABLE;
-//			sFilterConfig.SlaveStartFilterBank = 0;
-//
-//			if (HAL_CAN_ConfigFilter(Context, &sFilterConfig) != HAL_OK)
-//				return false;
-//
-//			return true;
-//		}
-//
-//		/**
-//		 * @brief Filter bank disable
-//		 *
-//		 * @param bank Filterbank number
-//		 * @return True when successfully disabled, false when not
-//		 */
-//		static bool disableFilter(u8 bank) {
-//			if (bank > 28) return false;
-//
-//			FDCAN_FilterTypeDef sFilterConfig;
-//			sFilterConfig.FilterBank = bank;
-//			sFilterConfig.FilterActivation = DISABLE;
-//
-//			if (HAL_CAN_ConfigFilter(Context, &sFilterConfig) != HAL_OK) return false;
-//			return true;
-//		}
-
 
 	};
 

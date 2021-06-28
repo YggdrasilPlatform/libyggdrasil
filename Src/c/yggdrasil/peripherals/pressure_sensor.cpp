@@ -35,15 +35,15 @@
 
 	using PressureSensor = bsp::ygg::prph::PressureSensor;
 
-	C_LINKAGE void yggdrasil_PressureSensor_Init() {
+	C_LINKAGE void yggdrasil_PressureSensor_Init(void) {
 		PressureSensor::init();
 	}
 
-	C_LINKAGE float yggdrasil_PressureSensor_GetPressure() {
+	C_LINKAGE float yggdrasil_PressureSensor_GetPressure(void) {
 		return PressureSensor::getPressure();
 	}
 
-	C_LINKAGE float yggdrasil_PressureSensor_GetTemperature() {
+	C_LINKAGE float yggdrasil_PressureSensor_GetTemperature(void) {
 		return PressureSensor::getTemperature();
 	}
 

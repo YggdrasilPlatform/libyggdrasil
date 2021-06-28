@@ -43,19 +43,19 @@
 				static_cast<SixAxisSensor::GyroOutputDataRange>(gyroOdr));
 	}
 
-	C_LINKAGE ::Coordinate yggdrasil_SixAxisSensor_GetRotation() {
+	C_LINKAGE ::Coordinate yggdrasil_SixAxisSensor_GetRotation(void) {
 		return bsp::bit_cast<::Coordinate>(SixAxisSensor::getRotation());
 	}
 
-	C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetAcceleration() {
+	C_LINKAGE struct Coordinate yggdrasil_SixAxisSensor_GetAcceleration(void) {
 		return bsp::bit_cast<::Coordinate>(SixAxisSensor::getAcceleration());
 	}
 
-	C_LINKAGE float yggdrasil_SixAxisSensor_GetTemperature() {
+	C_LINKAGE float yggdrasil_SixAxisSensor_GetTemperature(void) {
 		return SixAxisSensor::getTemperature();
 	}
 
-	C_LINKAGE ::Orientation yggdrasil_SixAxisSensor_GetBoardOrientation() {
+	C_LINKAGE ::Orientation yggdrasil_SixAxisSensor_GetBoardOrientation(void) {
 		return bsp::bit_cast<::Orientation>(SixAxisSensor::getBoardOrientation());
 	}
 

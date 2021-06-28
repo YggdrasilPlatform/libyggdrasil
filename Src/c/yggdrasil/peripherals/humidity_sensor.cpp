@@ -35,7 +35,7 @@
 
 	using HumiditySensor = bsp::ygg::prph::HumiditySensor;
 
-	C_LINKAGE void yggdrasil_HumiditySensor_Init() {
+	C_LINKAGE void yggdrasil_HumiditySensor_Init(void) {
 		HumiditySensor::init();
 	}
 

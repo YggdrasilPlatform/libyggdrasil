@@ -20,7 +20,7 @@
   *  @file cpp/midgard/core/instructions.hpp
   *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Assembly instruction wrapper functions
+  *  @brief Assembly instruction wrapper functions for Midgard
   */
 
 #pragma once

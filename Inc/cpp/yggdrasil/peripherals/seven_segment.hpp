@@ -43,7 +43,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Initialization function
 		 *
-		 * @return always true
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -219,7 +219,6 @@ namespace bsp::ygg::prph {
 
 		/**
 		 * @brief Disable all segments
-		 *
 		 */
 		static void disable(){
 			setDigit(' ');

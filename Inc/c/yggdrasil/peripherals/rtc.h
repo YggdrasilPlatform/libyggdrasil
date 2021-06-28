@@ -29,5 +29,23 @@
 
 #include <time.h>
 
-C_LINKAGE time_t yggdrasil_RealTimeClock_GetTime();
+/**
+ * @brief Initialization function
+ *
+ * @return Success
+ */
+C_LINKAGE bool yggdrasil_RealTimeClock_Init(void);
+
+/**
+ * @brief Get the time saved in the RTC
+ *
+ * @return Time saved in the RTC
+ */
+C_LINKAGE time_t yggdrasil_RealTimeClock_GetTime(void);
+
+/**
+ * @brief Set the time in the RTC
+ *
+ * @param time Time to save in the RTC
+ */
 C_LINKAGE void yggdrasil_RealTimeClock_SetTime(time_t time);

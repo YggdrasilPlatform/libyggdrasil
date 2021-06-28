@@ -34,10 +34,34 @@ enum MotorDriverChannel {
 	MotorDriverChannel_A = 0,		///< Channel A
 	MotorDriverChannel_B = 1,		///< Channel B
 };
+/**
+ * @brief init function for the motor as a dual channel dc driver
+ * @note this function does start the needed pwm generators
+ *
+ * @return Success
+ */
+C_LINKAGE void yggdrasil_MotorDriver_Init(void);
 
-C_LINKAGE void yggdrasil_MotorDriver_Init();
+/**
+ * @brief set the motor driver to standby
+ *
+ * @param stby True for standby, false for active
+ */
 C_LINKAGE void yggdrasil_MotorDriver_Standby(bool stby);
+
+/**
+ * @brief Controls the speed and rotation of each channel
+ *
+ * @param ch Channel to set speed
+ * @param speed Speed from -100% o 100% where - does change the rotation direction
+ */
 C_LINKAGE void yggdrasil_MotorDriver_SetSpeed(enum MotorDriverChannel channel, float speed);
-C_LINKAGE bool yggdrasil_MotorDriver_GetError();
+
+/**
+ * @brief get the Status from the motor driver
+ *
+ * @return false when no error occurring, true when in thermal shutdown (TSD) or over current (ISD)
+ */
+C_LINKAGE bool yggdrasil_MotorDriver_GetError(void);
 
 

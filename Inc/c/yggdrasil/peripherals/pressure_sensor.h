@@ -27,6 +27,23 @@
 
 #include <c/yggdrasil/types.h>
 
-C_LINKAGE void yggdrasil_PressureSensor_Init();
-C_LINKAGE float yggdrasil_PressureSensor_GetPressure();
-C_LINKAGE float yggdrasil_PressureSensor_GetTemperature();
+/**
+ * @brief Initializes the LPS22HBTR pressure sensor
+ *
+ * @return True when the connected device matched the device id, false when not
+ */
+C_LINKAGE void yggdrasil_PressureSensor_Init(void);
+
+/**
+ * @brief Get the current air pressure
+ *
+ * @return Pressure in hPa
+ */
+C_LINKAGE float yggdrasil_PressureSensor_GetPressure(void);
+
+/**
+ * @brief Get the current sensor temperature
+ *
+ * @return Temperature in °C
+ */
+C_LINKAGE float yggdrasil_PressureSensor_GetTemperature(void);

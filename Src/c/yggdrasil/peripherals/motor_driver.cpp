@@ -35,7 +35,7 @@
 
 	using MotorDriver = bsp::ygg::prph::MotorDriver;
 
-	C_LINKAGE void yggdrasil_MotorDriver_Init() {
+	C_LINKAGE void yggdrasil_MotorDriver_Init(void) {
 		MotorDriver::init();
 	}
 
@@ -47,7 +47,7 @@
 		MotorDriver::setSpeed(static_cast<MotorDriver::Channel>(channel), speed);
 	}
 
-	C_LINKAGE bool yggdrasil_MotorDriver_GetError() {
+	C_LINKAGE bool yggdrasil_MotorDriver_GetError(void) {
 		return MotorDriver::getError();
 	}
 

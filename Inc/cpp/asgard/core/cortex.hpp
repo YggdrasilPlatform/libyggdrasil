@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file asgard/core/cortex.hpp
+  *  @file cpp/asgard/core/cortex.hpp
   *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Core control functions
+  *  @brief Core control functions for Asgard
   */
 
 #pragma once

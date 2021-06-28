@@ -42,7 +42,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Initialization function
 		 *
-		 * @return always true
+		 * @return Success
 		 */
 		static bool init() {
 			return true;

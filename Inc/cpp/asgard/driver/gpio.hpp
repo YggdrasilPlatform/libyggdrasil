@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file asgard/driver/gpio.hpp
+  *  @file cpp/asgard/driver/gpio.hpp
   *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief GPIO Pin abstraction implementation for Asgard
@@ -94,7 +94,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		bool init() const noexcept {
 			int fd = open("/sys/class/gpio/export", O_WRONLY);
@@ -110,7 +110,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		bool deinit() const noexcept {
 			int fd = open("/sys/class/gpio/unexport", O_WRONLY);
@@ -169,7 +169,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -178,7 +178,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;

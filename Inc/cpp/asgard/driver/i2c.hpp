@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file asgard/driver/i2c.hpp
+  *  @file cpp/asgard/driver/i2c.hpp
   *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief I2C abstraction implementation for Asgard
@@ -50,7 +50,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			I2C::s_fileHandle = open(("/dev/i2c-" + std::to_string(InterfaceNumber)).c_str(), O_RDWR);
@@ -60,7 +60,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			close(I2C::s_fileHandle);

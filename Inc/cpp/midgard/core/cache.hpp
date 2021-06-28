@@ -20,7 +20,7 @@
   *  @file cpp/midgard/core/cache.hpp
   *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Cache related constants and functions
+  *  @brief Cache related constants and functions for Midgard
   */
 
 #pragma once
@@ -52,6 +52,7 @@ namespace bsp::core {
 
 	/**
 	 * @brief Invalidates all possibly cached instructions in a specific region of memory
+	 *
 	 * @param address Start address of the region
 	 * @param size Size of the region
 	 */

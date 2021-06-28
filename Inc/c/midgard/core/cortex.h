@@ -33,14 +33,14 @@
 /**
  * @brief Disables all interrupts
  */
-ALWAYS_INLINE void core_DisableInterrupts() {
+ALWAYS_INLINE void core_DisableInterrupts(void) {
 	asm volatile ("cpsid i" : : : "memory");
 }
 
 /**
  * @brief Enables all interrupts
  */
-ALWAYS_INLINE void core_EnableInterrupts() {
+ALWAYS_INLINE void core_EnableInterrupts(void) {
 	asm volatile ("cpsie i" : : : "memory");
 }
 

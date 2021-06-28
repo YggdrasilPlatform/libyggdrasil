@@ -54,14 +54,14 @@ enum Color {
  *
  * @return True when successful, false when not
  */
-C_LINKAGE bool yggdrasil_Display_Init();
+C_LINKAGE bool yggdrasil_Display_Init(void);
 
 /*
  * @brief Display deinitialization
  *
  * @return True when successful, false when not
  */
-C_LINKAGE bool yggdrasil_Display_Deinit();
+C_LINKAGE bool yggdrasil_Display_Deinit(void);
 
 /*
  * @brief Display reset

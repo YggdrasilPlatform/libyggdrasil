@@ -35,15 +35,19 @@
 
 	using RGBMatrix = bsp::ygg::prph::RGBMatrix;
 
-	C_LINKAGE void yggdrasil_RGBMatrix_Enable() {
+	C_LINKAGE void yggdrasil_RGBMatrix_Init(void) {
+		RGBMatrix::init();
+	}
+
+	C_LINKAGE void yggdrasil_RGBMatrix_Enable(void) {
 		RGBMatrix::enable();
 	}
 
-	C_LINKAGE void yggdrasil_RGBMatrix_Disable() {
+	C_LINKAGE void yggdrasil_RGBMatrix_Disable(void) {
 		RGBMatrix::disable();
 	}
 
-	C_LINKAGE void yggdrasil_RGBMatrix_Clear() {
+	C_LINKAGE void yggdrasil_RGBMatrix_Clear(void) {
 		RGBMatrix::clear();
 	}
 
@@ -60,7 +64,7 @@
 		RGBMatrix::dice(number, bsp::bit_cast<bsp::ygg::RGBA8>(color));
 	}
 
-	C_LINKAGE void yggdrasil_RGBMatrix_Flush() {
+	C_LINKAGE void yggdrasil_RGBMatrix_Flush(void) {
 		RGBMatrix::flush();
 	}
 

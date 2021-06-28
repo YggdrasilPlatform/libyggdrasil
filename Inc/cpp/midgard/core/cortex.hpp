@@ -20,7 +20,7 @@
   *  @file cpp/midgard/core/cortex.hpp
   *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Core control functions
+  *  @brief Core control functions for Midgard
   */
 
 #pragma once
@@ -50,6 +50,7 @@ namespace bsp::core {
 
 	/**
 	 * @brief Sets the base address of the interrupt vector table
+	 *
 	 * @param address Base address
 	 */
 	ALWAYS_INLINE void setInterruptVectorBase(addr_t address) {
@@ -58,6 +59,7 @@ namespace bsp::core {
 
 	/**
 	 * @brief Delays execution by a certain number of milliseconds
+	 *
 	 * @param ms Number of milliseconds to wait
 	 */
 	ALWAYS_INLINE void delay(u32 ms) {

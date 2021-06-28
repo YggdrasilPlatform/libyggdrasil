@@ -42,7 +42,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Initialization function
 		 *
-		 * @return always true
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -70,7 +70,7 @@ namespace bsp::ygg::prph {
 			 * @brief Set the servo arm rotation in percent relative to its maximal value
 			 * @note The needed high period of pwm signal to reach maximal magnitude can
 			 * be configured with the setDeltaHighTime() function (This is servo specific)
-			 * @warning If the system clock is not 216MHz the function might not be able to set the pwm frequency to 50Hz
+			 * @warning If the system clock is not not above 200MHz the function might not be able to set the pwm frequency to 50Hz
 			 *
 			 * @param channel Channel which should be changed
 			 * @param percent Servo arm rotation in percent from -100% to 100%
@@ -231,17 +231,34 @@ namespace bsp::ygg::prph {
 				for(auto mode : s_mode){
 					if(mode == Mode::Servo) return false;
 				}
-				return bsp::TimerD::setPwmFrequency(frequency, resolution);
+				bsp::SinkDriverTimerA::setPwmFrequency(frequency, resolution);
+				bsp::SinkDriverTimerB::setPwmFrequency(frequency, resolution);
+				bsp::SinkDriverTimerC::setPwmFrequency(frequency, resolution);
+				bsp::SinkDriverTimerD::setPwmFrequency(frequency, resolution);
 			}
 
 		    /**
 		     * @brief Get the pwm frequency
 		     * @note The frequency is for all channels the same
 		     *
+		     * @param channel Channel, this is used when not all channels are from the same timer
 		     * @return Frequency in Hz
 		     */
-			static u32 getFrequency() {
-				return bsp::TimerD::getPwmFrequency();
+			static u32 getFrequency(Channel channel) {
+				switch(channel){
+				case Channel::A:
+					return bsp::SinkDriverTimerA::getPwmFrequency();
+					break;
+				case Channel::B:
+					return bsp::SinkDriverTimerB::getPwmFrequency();
+					break;
+				case Channel::C:
+					return bsp::SinkDriverTimerC::getPwmFrequency();
+					break;
+				case Channel::D:
+					return bsp::SinkDriverTimerD::getPwmFrequency();
+					break;
+				}
 			}
 
 		};

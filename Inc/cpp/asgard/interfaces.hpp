@@ -43,65 +43,120 @@
 		 * @brief GPIO Port definitions
 		 * @{
 		 */
-		using GPIOPortA = bsp::drv::GPIOPort<0, bsp::asg::drv::GPIOPort>;
-		using GPIOPortB = bsp::drv::GPIOPort<16, bsp::asg::drv::GPIOPort>;
-		using GPIOPortC = bsp::drv::GPIOPort<32, bsp::asg::drv::GPIOPort>;
-		using GPIOPortD = bsp::drv::GPIOPort<48, bsp::asg::drv::GPIOPort>;
-		using GPIOPortE = bsp::drv::GPIOPort<64, bsp::asg::drv::GPIOPort>;
-		using GPIOPortF = bsp::drv::GPIOPort<80, bsp::asg::drv::GPIOPort>;
-		using GPIOPortG = bsp::drv::GPIOPort<96, bsp::asg::drv::GPIOPort>;
-		using GPIOPortH = bsp::drv::GPIOPort<112, bsp::asg::drv::GPIOPort>;
-		using GPIOPortI = bsp::drv::GPIOPort<128, bsp::asg::drv::GPIOPort>;
-		using GPIOPortJ = bsp::drv::GPIOPort<144, bsp::asg::drv::GPIOPort>;
-		using GPIOPortK = bsp::drv::GPIOPort<160, bsp::asg::drv::GPIOPort>;
+		using GPIOPortA = bsp::drv::GPIOPort<0, bsp::asg::drv::GPIOPort>;								///< GPIO Port A
+		using GPIOPortB = bsp::drv::GPIOPort<16, bsp::asg::drv::GPIOPort>;								///< GPIO Port B
+		using GPIOPortC = bsp::drv::GPIOPort<32, bsp::asg::drv::GPIOPort>;								///< GPIO Port C
+		using GPIOPortD = bsp::drv::GPIOPort<48, bsp::asg::drv::GPIOPort>;								///< GPIO Port D
+		using GPIOPortE = bsp::drv::GPIOPort<64, bsp::asg::drv::GPIOPort>;								///< GPIO Port E
+		using GPIOPortF = bsp::drv::GPIOPort<80, bsp::asg::drv::GPIOPort>;								///< GPIO Port F
+		using GPIOPortG = bsp::drv::GPIOPort<96, bsp::asg::drv::GPIOPort>;								///< GPIO Port G
+		using GPIOPortH = bsp::drv::GPIOPort<112, bsp::asg::drv::GPIOPort>;								///< GPIO Port H
+		using GPIOPortI = bsp::drv::GPIOPort<128, bsp::asg::drv::GPIOPort>;								///< GPIO Port I
+		using GPIOPortJ = bsp::drv::GPIOPort<144, bsp::asg::drv::GPIOPort>;								///< GPIO Port J
+		using GPIOPortK = bsp::drv::GPIOPort<160, bsp::asg::drv::GPIOPort>;								///< GPIO Port K
 		/** @} */
 
-		using I2CA = bsp::drv::I2C<1, bsp::asg::drv::I2C>;
-		using I2CB = bsp::drv::I2C<3, bsp::asg::drv::I2C>;
-		using I2CC = bsp::drv::I2C<4, bsp::asg::drv::I2C>;
-		using I2CD = bsp::drv::I2C<0, bsp::asg::drv::I2C>;
+		/**
+		 * @brief User LEDs and buttons definitions
+		 * @{
+		 */
+    	static constexpr auto& LD1 = GPIOPortJ::Pin<0>;													///< Alias for LDA
+		static constexpr auto& LDA = LD1;																///< LDA
+		static constexpr auto& LedBlue = LD1;															///< Alias for LDA
+		static constexpr auto& LD2 = GPIOPortJ::Pin<1>;													///< Alias for LDB
+		static constexpr auto& LDB = LD2;																///< LDB
+		static constexpr auto& LedRed = LD2;															///< Alias for LDB
+		static constexpr auto& LD3 = GPIOPortJ::Pin<2>;													///< Alias for LDC
+		static constexpr auto& LDC = LD3;																///< LDC
+		static constexpr auto& LedYellow = LD3;															///< Alias for LDC
+		static constexpr auto& LD4 = GPIOPortJ::Pin<3>;													///< Alias for LDF
+		static constexpr auto& LDD = LD4;																///< LDF
+		static constexpr auto& LedGreen = LD4;															///< Alias for LDF
 
-		using SPIA = bsp::drv::SPI<std::array{ 0, 0 }, bsp::asg::drv::SPI>;
+		static constexpr auto& LeftJoyStickButton = GPIOPortE::Pin<9, drv::Active::Low>;				///< JoystickA Button
+		static constexpr auto& ButtonJoystickA = LeftJoyStickButton;									///< Alias for JoystickA Button
+		static constexpr auto& RightJoyStickButton = GPIOPortE::Pin<7, drv::Active::Low>;				///< JoystickB Button
+		static constexpr auto& ButtonJoystickB = RightJoyStickButton;									///< Alias for JoystickB Button
 
-    	static constexpr auto& LD1 = GPIOPortJ::Pin<0>;
-		static constexpr auto& LDA = LD1;
-		static constexpr auto& LedBlue = LD1;
-		static constexpr auto& LD2 = GPIOPortJ::Pin<1>;
-		static constexpr auto& LDB = LD2;
-		static constexpr auto& LedRed = LD2;
-		static constexpr auto& LD3 = GPIOPortJ::Pin<2>;
-		static constexpr auto& LDC = LD3;
-		static constexpr auto& LedYellow = LD3;
-		static constexpr auto& LD4 = GPIOPortJ::Pin<3>;
-		static constexpr auto& LDD = LD4;
-		static constexpr auto& LedGreen = LD4;
+		static constexpr auto& ButtonA = GPIOPortJ::Pin<4, drv::Active::Low>;							///< Button A
+		static constexpr auto& ButtonB = GPIOPortJ::Pin<5, drv::Active::Low>;							///< Button B
+		static constexpr auto& ButtonC = GPIOPortJ::Pin<6, drv::Active::Low>;							///< Button C
+		static constexpr auto& ButtonD = GPIOPortJ::Pin<7, drv::Active::Low>;							///< Button D
 
-		static constexpr auto& SPIACE = GPIOPortI::Pin<0>;
-		static constexpr auto& SK9822_EN = GPIOPortE::Pin<10>;
+		static constexpr auto& DriverA = GPIOPortB::Pin<3>;												///< Sink driver pin A
+		static constexpr auto& LD5 = DriverA;															///< Alias for Sink driver pin A
+		static constexpr auto& LDE = DriverA;															///< Alias for Sink driver pin A
+		static constexpr auto& DriverB = GPIOPortB::Pin<4>;												///< Sink driver pin B
+		static constexpr auto& LD6 = DriverB;															///< Alias for Sink driver pin B
+		static constexpr auto& LDF = DriverB;															///< Alias for Sink driver pin B
+		static constexpr auto& DriverC = GPIOPortB::Pin<14>;											///< Sink driver pin C
+		static constexpr auto& LD7 = DriverC;															///< Alias for Sink driver pin C
+		static constexpr auto& LDG = DriverC;															///< Alias for Sink driver pin C
+		static constexpr auto& DriverD = GPIOPortB::Pin<15>;											///< Sink driver pin D
+		static constexpr auto& LD8 = DriverD;															///< Alias for Sink driver pin D
+		static constexpr auto& LDH = DriverD;															///< Alias for Sink driver pin D
+		/** @} */
 
-		using ADConverter1 = bsp::drv::ADConverter<2, bsp::mid::drv::ADCChannel>;
+		/**
+		 * @brief ADC definitions
+		 * @{
+		 */
+		using ADConverter1 = bsp::drv::ADConverter<2, bsp::mid::drv::ADCChannel>;						///<  ADC1
+		/** @} */
 
-		static constexpr auto& ADCA 				= ADConverter1::Channel<0, 0, (1 << 16) - 1>;
-		static constexpr auto& ADCB 				= ADConverter1::Channel<1, 0, (1 << 16) - 1>;
-		static constexpr auto& ADCC 				= ADConverter1::Channel<2, 0, (1 << 16) - 1>;
-		static constexpr auto& ADCD 				= ADConverter1::Channel<6, 0, (1 << 16) - 1>;
-		static constexpr auto& ADCPotentiometer 	= ADConverter1::Channel<15, 0, (1 << 16) - 1>;
+		/**
+		 * @brief ADC channel definitions
+		 * @{
+		 */
+		static constexpr auto& ADCA 				= ADConverter1::Channel<0, 0, (1 << 16) - 1>;		///< ADCA on Analog header
+		static constexpr auto& ADCB 				= ADConverter1::Channel<1, 0, (1 << 16) - 1>;		///< ADCB on Analog header
+		static constexpr auto& ADCC 				= ADConverter1::Channel<2, 0, (1 << 16) - 1>;		///< ADCC on Analog header
+		static constexpr auto& ADCD 				= ADConverter1::Channel<6, 0, (1 << 16) - 1>;		///< ADCD on Analog header
+		static constexpr auto& ADCPotentiometer 	= ADConverter1::Channel<15, 0, (1 << 16) - 1>;		///< Potentiometer
+		/** @} */
 
-		using DAConverter1 = bsp::drv::DAConverter<0, bsp::mid::drv::DACChannel>;
-		using DAConverter2 = bsp::drv::DAConverter<1, bsp::mid::drv::DACChannel>;
+		/**
+		 * @brief DAC definitions
+		 * @{
+		 */
+		using DAConverter1 = bsp::drv::DAConverter<0, bsp::mid::drv::DACChannel>;						///< DAC1
+		using DAConverter2 = bsp::drv::DAConverter<1, bsp::mid::drv::DACChannel>;						///< DAC2
+		/** @} */
 
-		static constexpr auto& DACA	= DAConverter1::Channel<1, 0, (1 << 16) - 1>;
-		static constexpr auto& DACB	= DAConverter2::Channel<2, 0, (1 << 16) - 1>;
+		/**
+		 * @brief DAC channel definitions
+		 * @{
+		 */
+		static constexpr auto& DACA	= DAConverter1::Channel<1, 0, (1 << 16) - 1>;						///< DACA on Analog header
+		static constexpr auto& DACB	= DAConverter2::Channel<2, 0, (1 << 16) - 1>;						///< DACB on Analog header
+		/** @} */
 
-		static constexpr auto& ButtonA = GPIOPortJ::Pin<4, drv::Active::Low>;
-		static constexpr auto& ButtonB = GPIOPortJ::Pin<5, drv::Active::Low>;
-		static constexpr auto& ButtonC = GPIOPortJ::Pin<6, drv::Active::Low>;
-		static constexpr auto& ButtonD = GPIOPortJ::Pin<7, drv::Active::Low>;
+		/**
+		 * @brief I2C definitions
+		 * @{
+		 */
+		using I2CA = bsp::drv::I2C<1, bsp::asg::drv::I2C>;												///< I2CA on board Sensors, Seeed, Raspberry, PMod
+		using I2CB = bsp::drv::I2C<3, bsp::asg::drv::I2C>;												///< I2CB Seeed, Raspberry, PMod
+		using I2CC = bsp::drv::I2C<4, bsp::asg::drv::I2C>;												///< I2CC display touch screen
+		using I2CD = bsp::drv::I2C<0, bsp::asg::drv::I2C>;												///< I2CD DCMI, USB C and USB Hub (NC), Audio Codec
+		/** @} */
 
-		static constexpr auto& LeftJoyStickButton = GPIOPortE::Pin<9, drv::Active::Low>;
-		static constexpr auto& RightJoyStickButton = GPIOPortE::Pin<7, drv::Active::Low>;
+		/**
+		 * @brief SPI definitions
+		 * @{
+		 */
+		using SPIA = bsp::drv::SPI<std::array{ 0, 0 }, bsp::asg::drv::SPI>;								///< SPI A onboard only
 
-		using Display = bsp::drv::Display<0, bsp::asg::drv::Display>;
+		static constexpr auto& SPIACE = GPIOPortI::Pin<0>;												///< SPI A chip enable
+		static constexpr auto& SK9822_EN = GPIOPortE::Pin<10>;											///< SPI A chip enable for SK9822 RGB LEDs
+		/** @} */
+
+		/**
+		 * @brief Display definitions
+		 * @{
+		 */
+		using Display = bsp::drv::Display<0, bsp::asg::drv::Display>;									///< LCD Display
+		/** @} */
 
 	}
 

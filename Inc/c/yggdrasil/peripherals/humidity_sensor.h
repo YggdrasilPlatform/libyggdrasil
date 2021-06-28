@@ -37,7 +37,7 @@ enum HumiditySensorHeat {
 	HumiditySensorHeat_110mWFor1s	 	= 0x2F,		///< 110mW @ 3.3V for 1s
 	HumiditySensorHeat_110mWFor0p1s 	= 0x24,		///< 110mW @ 3.3V for 0.1s
 	HumiditySensorHeat_20mWFor1s	 	= 0x1E,		///< 20mW @ 3.3V for 1s
-	HumiditySensorHeat_20mWFor0p1s	= 0x15,		///< 20mW @ 3.3V for 0.1s
+	HumiditySensorHeat_20mWFor0p1s		= 0x15,		///< 20mW @ 3.3V for 0.1s
 };
 
 /**
@@ -49,7 +49,36 @@ enum HumiditySensorPrecision {
 	HumiditySensorPrecision_Low 		= 0xE0,		///< measure T & RH with lowest precision (low repeatability)
 };
 
-C_LINKAGE void yggdrasil_HumiditySensor_Init();
+/**
+ * @brief Initialization of the SHT40-AD1B-R2 relative humidity and temperature sensor
+ * @note The sensor does not need a special initialization, this function just does a soft reset
+ *
+ * @return Success
+ */
+C_LINKAGE void yggdrasil_HumiditySensor_Init(void);
+
+/**
+ * @brief Get the temperature without using the heater
+ * @note The measurement takes about 10ms
+ *
+ * @param precision Precision for the conversion
+ * @return Temperature sensor temperature
+ */
 C_LINKAGE float yggdrasil_HumiditySensor_GetTemperature(enum HumiditySensorPrecision precision);
+
+/**
+ * @brief Get the temperature without using the heater
+ * @note The measurement takes about 10ms
+ *
+ * @param precision Precision for the conversion
+ * @return Temperature sensor temperature
+ */
 C_LINKAGE float yggdrasil_HumiditySensor_GetHumidity(enum HumiditySensorPrecision precision);
+
+/**
+ * @brief Enable the heater module on the sensor
+ * @warning The heater is designed for a maximal duty cycle of less than 5% when it is periodically heated
+ *
+ * @param level Power and duration command
+ */
 C_LINKAGE void yggdrasil_HumiditySensor_EnableHeater(enum HumiditySensorHeat level);

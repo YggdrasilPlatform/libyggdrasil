@@ -122,7 +122,7 @@ namespace bsp::ygg::prph {
 		 * @param accelOdr Output data rate of the Accelerometer
 		 * @param gyroOdr Output data rate of the Gyroscope
 		 *
-		 * @return True when the connected device matched the device id, false when not
+		 * @return Success
 		 */
 		static bool init(AccelFullScaleRange accelScale = AccelFullScaleRange::_2G ,
 				GyroFullScaleRange gyroScale = GyroFullScaleRange::_250DPS ,

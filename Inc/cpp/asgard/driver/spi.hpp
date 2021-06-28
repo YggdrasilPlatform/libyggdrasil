@@ -38,7 +38,7 @@
 namespace bsp::asg::drv {
 
 	/**
-	 * @brief SPI implementation for Midgard
+	 * @brief SPI implementation for Asgard
 	 * @warning Do not use this on its own!
 	 *
 	 * @tparam Context SPI context
@@ -49,7 +49,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			SPI::s_device = open(("/dev/spidev" + std::to_string(Context[0]) + "." + std::to_string(Context[1])).c_str(), O_RDWR);
@@ -81,7 +81,7 @@ namespace bsp::asg::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			close(SPI::s_device);

@@ -54,7 +54,7 @@ namespace bsp::ygg::prph {
 		 * @brief init function for the motor as a dual channel dc driver
 		 * @note this function does start the needed pwm generators
 		 *
-		 * @return always true
+		 * @return Success
 		 */
 		static bool init() {
 			TC78Mode = true;	// Set the mode as dual DC motor driver

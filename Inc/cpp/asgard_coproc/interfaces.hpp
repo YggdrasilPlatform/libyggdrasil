@@ -247,9 +247,9 @@
 		 * @brief Timer definitions
 		 * @{
 		 */
-		using TimerA = bsp::drv::Timer<&htim2, bsp::asg_coproc::drv::Timer, u32>;				///< PWM on Raspberry / PMOD / Sink Driver
-		using TimerB = bsp::drv::Timer<&htim4, bsp::asg_coproc::drv::Timer, u16>;				///< PWM on Motor Driver / Raspberry / PMOD
-		using TimerC = bsp::drv::Timer<&htim16, bsp::asg_coproc::drv::Timer, u16>;				///< PWM on Raspberry / PMOD
+		using TimerA = bsp::drv::Timer<&htim2, bsp::asg_coproc::drv::Timer, u32>;				///< PWM on Raspberry / PMod / Sink Driver
+		using TimerB = bsp::drv::Timer<&htim4, bsp::asg_coproc::drv::Timer, u16>;				///< PWM on Motor Driver / Raspberry / PMod
+		using TimerC = bsp::drv::Timer<&htim16, bsp::asg_coproc::drv::Timer, u16>;				///< PWM on Raspberry / PMod
 		using TimerD = bsp::drv::Timer<&htim12, bsp::asg_coproc::drv::Timer, u16>;				///< PWM on Sink Driver
 		using TimerE = bsp::drv::Timer<&htim3, bsp::asg_coproc::drv::Timer, u16>;				///< PWM for Sink Driver / LCD Backlight Control
 		using TimerF = bsp::drv::Timer<&htim1, bsp::asg_coproc::drv::Timer, u16>;				///< Encoder
@@ -265,14 +265,14 @@
 		 * @brief Timer channel definitions
 		 * @{
 		 */
-		static constexpr auto& TimerACHA = TimerA::Channel<3>;									///< PMOD A Pin 2 / Raspberry Pin 33
+		static constexpr auto& TimerACHA = TimerA::Channel<3>;									///< PMod A Pin 2 / Raspberry Pin 33
 
 		static constexpr auto& TimerBCHA = TimerB::Channel<1>;									///< Motor Driver / Raspberry Pin 26
 		static constexpr auto& TimerBCHB = TimerB::Channel<2>;									///< Motor Driver / Raspberry Pin 28
-		static constexpr auto& TimerBCHC = TimerB::Channel<3>;									///< Motor Driver / PMOD B Pin 2 / Raspberry Pin 32
+		static constexpr auto& TimerBCHC = TimerB::Channel<3>;									///< Motor Driver / PMod B Pin 2 / Raspberry Pin 32
 		static constexpr auto& TimerBCHD = TimerB::Channel<4>;									///< Motor Driver / Raspberry Pin 36
 
-		static constexpr auto& TimerCCHA = TimerC::Channel<1>;									///< PMOD A Pin 4 / Raspberry Pin 27
+		static constexpr auto& TimerCCHA = TimerC::Channel<1>;									///< PMod A Pin 4 / Raspberry Pin 27
 
 		static constexpr auto& SinkDriverTimerCHA = SinkDriverTimerA::Channel<2>;				///< Sink driver A
 		static constexpr auto& SinkDriverTimerCHB = SinkDriverTimerB::Channel<1>;				///< Sink driver B

@@ -35,6 +35,10 @@
 
 	using SevenSegment = bsp::ygg::prph::SevenSegment;
 
+	C_LINKAGE void yggdrasil_SevenSegment_SetUnsigned(void) {
+		SevenSegment::init();
+	}
+
 	C_LINKAGE void yggdrasil_SevenSegment_SetUnsigned(u16 value) {
 		SevenSegment::setUnsigned(value);
 	}
@@ -59,7 +63,7 @@
 		SevenSegment::enableDigit(number);
 	}
 
-	C_LINKAGE void yggdrasil_SevenSegment_Disable() {
+	C_LINKAGE void yggdrasil_SevenSegment_Disable(void) {
 		SevenSegment::disable();
 	}
 

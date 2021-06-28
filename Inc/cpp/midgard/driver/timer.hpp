@@ -57,7 +57,7 @@ namespace bsp::mid::drv {
 		 * @brief Start PWM generation for the channel
 		 * @Note A duty cycle should be set with setDuty()
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool startPwm() const noexcept {
 			if(!hasPwmModule()) return false;
@@ -76,7 +76,7 @@ namespace bsp::mid::drv {
 		 * @brief Stop PWM generation for the channel
 		 * @note This function disables the counter when no PWM channel is active
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool stopPwm() const noexcept {
 			if(!hasPwmModule()) return false;
@@ -95,7 +95,7 @@ namespace bsp::mid::drv {
 		 * @brief Start set pwm polarity
 		 *
 		 * @param highActive Set channel to high active when true
-		 * @return True when successfully switched, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool setPolarityHigh(bool highActive = true) const noexcept {
 			if(!hasPwmModule()) return false;
@@ -125,7 +125,7 @@ namespace bsp::mid::drv {
 		 * @brief Set the duty cycle as a float value
 		 *
 		 * @param dutyCycle Duty cycle in % [0 100]
-		 * @return True when successfully set, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool setDutyCycle(float dutyCycle) const noexcept {
 			if(!hasPwmModule()) return false;
@@ -149,7 +149,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Checks if the time has an pwm module
 		 *
-		 * @return True or false
+		 * @return Success
 		 */
 		bool hasPwmModule() const noexcept{
 			if ((Context->Instance == TIM6) ||			// Checks if the timer does not have a pwm module (less to check)
@@ -195,7 +195,7 @@ namespace bsp::mid::drv {
 		 * @brief Enable the encoder mode
 		 * @note This does only work for timer with a encoder modul
 		 *
-		 * @return True when successfully enabled, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool enable() const noexcept {
 			if(!hasEncoderModule()) return false;						// Check if the timer got a pwm modul
@@ -208,7 +208,7 @@ namespace bsp::mid::drv {
 		 * @brief Disable the encoder mode
 		 * @note This does only work for timer with a encoder modul
 		 *
-		 * @return True when successfully disabled, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool disable() const noexcept {
 			if(!hasEncoderModule()) return false;							// Check if the timer got a pwm modul
@@ -265,7 +265,7 @@ namespace bsp::mid::drv {
 		 * @brief Initialization function for the encoder
 		 * @note Default encoder mode is 96 steps per turn
 		 *
-		 * @return True when successfully enabled, false when not
+		 * @return Success
 		 */
 		ALWAYS_INLINE bool init() const noexcept {
 			if(!hasEncoderModule()) return false;							// Check if the timer got a pwm modul
@@ -279,7 +279,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Checks if the time has an encoder module
 		 *
-		 * @return True or false
+		 * @return Success
 		 */
 		bool hasEncoderModule() const noexcept{
 			if ((Context->Instance == TIM1) ||		// All timer with a Encoder Module
@@ -445,7 +445,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Init function
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			return true;
@@ -454,7 +454,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;

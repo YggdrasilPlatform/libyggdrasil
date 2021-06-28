@@ -35,7 +35,11 @@
 
 	using RealTimeClock = bsp::ygg::prph::RealTimeClock;
 
-	C_LINKAGE time_t yggdrasil_RealTimeClock_GetTime() {
+	C_LINKAGE bool yggdrasil_RealTimeClock_Init(void) {
+		return RealTimeClock::init();
+	}
+
+	C_LINKAGE time_t yggdrasil_RealTimeClock_GetTime(void) {
 		return RealTimeClock::getTime();
 	}
 

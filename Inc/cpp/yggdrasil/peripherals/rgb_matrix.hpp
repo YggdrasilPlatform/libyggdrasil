@@ -47,23 +47,22 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Initialization function
 		 *
-		 * @return always true
+		 * @return Success
 		 */
 		static bool init() {
+			for(u8 i = 0; i <= NumLEDs; i++){
+				setLed(i, color);
+			}
 			return true;
 		}
 
 		/**
-		 * @brief Initialization of the SK9822 led
+		 * @brief Enables the SK9822 led
 		 */
 		static void enable() {
 			RGBA8 color = {0};
 			bsp::SPIA::setMode(bsp::drv::SPIMode::_3);
 			SK9822_EN = 1;
-			for(u8 i = 0; i <= NumLEDs; i++){
-				setLed(i, color);
-			}
-
 			flush();
 		}
 
@@ -136,7 +135,7 @@ namespace bsp::ygg::prph {
 		}
 
 		/**
-		 * @brief Sends the saved color values to the leds
+		 * @brief Send the saved color values to the leds
 		 */
 		static void flush(){
 			 sendStartFrame();

@@ -67,7 +67,6 @@ namespace bsp::ygg::prph {
 		 *
 		 * @return True when the connected device matched the device id, false when not
 		 */
-
 		static bool init() {
 			u8 retries = 0;
 			do{
@@ -136,7 +135,6 @@ namespace bsp::ygg::prph {
 		static void disable() {
 			EnableRegister enRegister = { 0 };
 			bsp::I2CA::write<u8>(DeviceAddress, CommandBit | enumValue(RegisterID::EN), bit_cast<u8>(enRegister));		// Disable sensor
-
 		}
 
 		/**
