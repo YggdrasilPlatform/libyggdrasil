@@ -222,7 +222,7 @@ namespace bsp::ygg::prph {
 			 * @note Implement a proper error handling, the function does not guarantee to be successful
 			 * @warning When one channel is used as servo port, the frequency can not be changed
 			 *
-			 * @param f_hz new frequency in hz
+			 * @param frequency new frequency in hz
 			 * @param resolution of the pwm, for 0 the actual value will be used
 			 *
 			 * @return True when the adjustment was possible, false when the parameter did not match

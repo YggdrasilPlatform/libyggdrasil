@@ -102,7 +102,7 @@ C_LINKAGE void* yggdrasil_Display_GetFrameBufferAddress(void);
 /**
  * @brief Clear the display to a color
  *
- * @param paletteIndex RGB565 Color
+ * @param color RGB565 Color
  */
 C_LINKAGE void yggdrasil_Display_Clear(u16 color);
 

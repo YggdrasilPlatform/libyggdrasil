@@ -52,7 +52,7 @@ C_LINKAGE void yggdrasil_MotorDriver_Standby(bool stby);
 /**
  * @brief Controls the speed and rotation of each channel
  *
- * @param ch Channel to set speed
+ * @param channel Channel to set speed
  * @param speed Speed from -100% o 100% where - does change the rotation direction
  */
 C_LINKAGE void yggdrasil_MotorDriver_SetSpeed(enum MotorDriverChannel channel, float speed);

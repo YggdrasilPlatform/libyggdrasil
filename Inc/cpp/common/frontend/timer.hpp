@@ -111,7 +111,7 @@ namespace bsp::drv {
 	    /**
 	     * @brief Set the counter value
 	     *
-	     * @param Size new timer value
+	     * @param cnt new timer value
 	     */
 	    static inline void setCount(Size cnt) {
 	    	Impl::setCount(cnt);

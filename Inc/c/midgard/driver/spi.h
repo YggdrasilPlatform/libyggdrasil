@@ -82,6 +82,7 @@ C_LINKAGE void yggdrasil_SPI_Read(spi_t spi,  void *data, size_t size);
 /**
  * @brief Set the spi mode (CPOL and CPHA)
  *
+ * @param spi SPI handle
  * @param mode SPI mode
  * @note This function wait until the SPI is not busy anymore and then the mode change will take place
  */

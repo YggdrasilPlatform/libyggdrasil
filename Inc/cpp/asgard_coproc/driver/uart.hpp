@@ -62,7 +62,7 @@ namespace bsp::asg_coproc::drv {
 
 		/**
 		 * @brief UART receive string
-		 * @note The function receives until a '\n' or a '\r'
+		 * @note The function receives until a '\\n' or a '\\r'
 		 *
 	     * @param buffer Buffer for the read string
 		 */

@@ -91,7 +91,7 @@ C_LINKAGE void yggdrasil_GPIO_Toggle(gpio_t gpio);
 /**
  * @brief Get multiple GPIO states
  *
- * @param gpio GPIO handle
+ * @param port GPIO port
  * @param from Start bit number
  * @param to End bit number
  * @return GPIO state
@@ -101,9 +101,10 @@ C_LINKAGE u16 yggdrasil_GPIO_GetMultiple(port_t port, u8 from, u8 to);
 /**
  * @brief Set multiple GPIO states
  *
- * @param gpio GPIO handle
+ * @param port GPIO port
  * @param from Start bit number
  * @param to End bit number
- * @value GPIO state
+ * @param value Value to set
+ * @return GPIO state
  */
 C_LINKAGE void yggdrasil_GPIO_SetMultiple(port_t port, u8 from, u8 to, u16 value);

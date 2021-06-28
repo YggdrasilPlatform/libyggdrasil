@@ -58,6 +58,12 @@ namespace bsp::drv {
 
 namespace bsp::mid::drv {
 
+	/**
+	 * @brief Display implementation for Midgard
+	 * @warning Do not use this on its own!
+	 *
+	 * @tparam Context Display Context
+	 */
 	template<auto Context>
 	struct Display {
 		Display(const Display&) = delete;

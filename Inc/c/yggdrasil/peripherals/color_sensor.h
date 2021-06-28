@@ -103,7 +103,7 @@ C_LINKAGE bool yggdrasil_ColorSensor_IsDone(void);
  * @brief Get the color values and start a new measurement (optional)
  * @note The integration time must be passed since the last read
  *
- * @param restart Restart a measurement after reading with the same setting
+ * @param restartConversion Restart a measurement after reading with the same setting
  * @return Color RGBA8 value
  */
 C_LINKAGE RGBA8  yggdrasil_ColorSensor_GetColor8(bool restartConversion);
@@ -112,7 +112,7 @@ C_LINKAGE RGBA8  yggdrasil_ColorSensor_GetColor8(bool restartConversion);
  * @brief Get the color values and start a new measurement (optional)
  * @note The integration time must be passed since the last read
  *
- * @param restart Restart a measurement after reading with the same setting
+ * @param restartConversion Restart a measurement after reading with the same setting
  * @return Color RGB and brightness value (all 16 Bit)
  */
 C_LINKAGE RGBA16 yggdrasil_ColorSensor_GetColor16(bool restartConversion);

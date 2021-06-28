@@ -55,7 +55,7 @@ namespace bsp::mid::drv {
 
 		/**
 		 * @brief Start PWM generation for the channel
-		 * @Note A duty cycle should be set with setDuty()
+		 * @note A duty cycle should be set with setDuty()
 		 *
 		 * @return Success
 		 */

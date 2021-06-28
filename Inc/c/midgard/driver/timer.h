@@ -124,9 +124,9 @@ C_LINKAGE bool yggdrasil_TIM_SetPwmFrequency(tim_t tim, u32 f_hz, u32 resolution
 
 /**
  * @brief Start PWM generation for the channel
- * @Note A duty cycle should be set with setDuty()
+ * @note A duty cycle should be set with setDuty()
  *
- * @param tim Timer handle
+ * @param channel Timer channel handle
  * @return Success
  */
 C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_channel_t channel);
@@ -135,7 +135,7 @@ C_LINKAGE bool yggdrasil_TIM_Channel_StartPwm(tim_channel_t channel);
  * @brief Stop PWM generation for the channel
  * @note This function disables the counter when no PWM channel is active
  *
- * @param tim Timer handle
+ * @param channel Timer channel handle
  * @return Success
  */
 C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_channel_t channel);
@@ -143,7 +143,7 @@ C_LINKAGE bool yggdrasil_TIM_Channel_StopPwm(tim_channel_t channel);
 /**
  * @brief Start set pwm polarity
  *
- * @param tim Timer handle
+ * @param channel Timer channel handle
  * @param highActive Set channel to high active when true
  * @return Success
  */
@@ -152,7 +152,7 @@ C_LINKAGE bool yggdrasil_TIM_Channel_SetPolarityHigh(tim_channel_t channel, bool
 /**
  * @brief Set the duty cycle as a float value
  *
- * @param tim Timer handle
+ * @param channel Timer channel handle
  * @param dutyCycle Duty cycle in % [0 100]
  * @return Success
  */
@@ -193,6 +193,9 @@ C_LINKAGE u64 yggdrasil_ProfileCounter_GetTimeToOverflow(tim_t tim);
 /**
  * @brief Get the time to an overflow formatted as a string
  *
+ * @param tim Timer handle
+ * @param buffer String buffer
+ * @param size Buffer size
  * @return Time to an overflow formatted as a string
  */
 C_LINKAGE void yggdrasil_ProfileCounter_GetFormattedTimeToOverflow(tim_t tim, char *buffer, size_t size);
@@ -209,6 +212,8 @@ C_LINKAGE u64 yggdrasil_ProfileCounter_GetPassedTime(tim_t tim);
  * @brief Get the time passed time since the start
  *
  * @param tim Timer handle
+ * @param buffer String buffer
+ * @param size Buffer size
  * @return Passed time formatted as a string
  */
 C_LINKAGE void yggdrasil_ProfileCounter_GetFormattedPassedTime(tim_t tim, char *buffer, size_t size);

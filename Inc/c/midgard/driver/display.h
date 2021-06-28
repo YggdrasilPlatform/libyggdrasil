@@ -182,7 +182,7 @@ C_LINKAGE void yggdrasil_Display_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u8 col
  *
  * @param centerX X Position of the center
  * @param centerY Y Position of the center
- * @param readius Radius
+ * @param radius Radius
  * @param colorIndex Index for the color
  */
 C_LINKAGE void yggdrasil_Display_DrawCircle(i16 centerX, i16 centerY, u16 radius, u8 colorIndex);
@@ -192,7 +192,7 @@ C_LINKAGE void yggdrasil_Display_DrawCircle(i16 centerX, i16 centerY, u16 radius
  *
  * @param centerX X Position of the center
  * @param centerY Y Position of the center
- * @param readius Radius
+ * @param radius Radius
  * @param colorIndex Index for the color
  */
 C_LINKAGE void yggdrasil_Display_FillCircle(i16 centerX, i16 centerY, u16 radius, u8 colorIndex);

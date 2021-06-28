@@ -110,7 +110,7 @@ namespace bsp::drv {
 	     * @brief CAN write function
 	     *
 	     * @tparam T type to write
-	     * @param CANPacket CAN packet to write
+	     * @param packet CAN packet to write
 	     */
 		template<typename T>
 		static u32 write(CANPacket<T> packet) {

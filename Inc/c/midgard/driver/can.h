@@ -72,9 +72,8 @@ C_LINKAGE bool yggdrasil_CAN_Disable(can_t can);
  *
  * @param can CAN handle
  * @param[out] id CAN ID
- * @param[out] extendedId CAN extended ID
- * @param[out] timestamp Timestamp
- * @param[out] data Received data
+ * @param data Received data
+ * @param size Buffer size
  */
 C_LINKAGE void yggdrasil_CAN_Read(can_t can, u32 *id, void *data, size_t size);
 
@@ -82,9 +81,9 @@ C_LINKAGE void yggdrasil_CAN_Read(can_t can, u32 *id, void *data, size_t size);
  * @brief CAN write
  *
  * @param can CAN handle
- * @param id CAN id standard or extended
- * @param data Pointer to the data
- * @param size Size of the data
+ * @param id CAN ID
+ * @param data Received data
+ * @param size Buffer size
  * @return Tx mailbox number
  */
 C_LINKAGE u32 yggdrasil_CAN_Write(can_t can, u32 id, void *data, size_t size);

@@ -143,9 +143,9 @@ namespace bsp {
 	/**
 	 * @brief Casts a scoped enum type into its underlying value
 	 *
-	 * @tparam T enum type
-	 * @param value enum value
-	 * @return underlying value
+	 * @tparam T Enum type
+	 * @param value Enum value
+	 * @return Underlying value
 	 */
 	template<typename T>
 	auto enumValue(T value) {
@@ -166,7 +166,7 @@ namespace bsp {
 	    /**
 	     * @brief Transparently return byte swapped value
 	     *
-	     * @return byte swapped value
+	     * @return Byte swapped value
 	     */
 	    constexpr operator T() const noexcept {
 	        return byteSwap(this->m_value);
@@ -175,8 +175,8 @@ namespace bsp {
 	    /**
 	     * @brief Transparently assign value and store it byte swapped
 	     *
-	     * @param value value
-	     * @return current object
+	     * @param value Value
+	     * @return Current object
 	     */
 	    constexpr auto operator=(T value) {
 	        this->m_value = byteSwap(value);
@@ -187,8 +187,8 @@ namespace bsp {
 	    /**
 	     * @brief Copy assignment operator
 	     *
-	     * @param other value
-	     * @return current object
+	     * @param value Other value
+	     * @return Current object
 	     */
 	    constexpr auto operator=(const ByteSwapped &value) {
 	        this->m_value = value.m_value;

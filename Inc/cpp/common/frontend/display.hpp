@@ -243,7 +243,7 @@ namespace bsp::drv {
 		 *
 		 * @param centerX X Position of the center
 		 * @param centerY Y Position of the center
-		 * @param readius Radius
+		 * @param radius Radius
 		 * @param colorIndex Index for the color
 		 */
 		static void drawCircle(i16 centerX, i16 centerY, u16 radius, auto colorIndex) {
@@ -282,7 +282,7 @@ namespace bsp::drv {
 		 *
 		 * @param centerX X Position of the center
 		 * @param centerY Y Position of the center
-		 * @param readius Radius
+		 * @param radius Radius
 		 * @param colorIndex Index for the color
 		 */
 		static void fillCircle(i16 centerX, i16 centerY, u16 radius, auto colorIndex) {
