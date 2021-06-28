@@ -32,9 +32,8 @@
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	static void gpio_config();
+	C_LINKAGE init_result_t yggdrasil_init() {
 
-	C_LINKAGE i8 bsp_init() {
 
 		using namespace bsp;
 		using namespace bsp::ygg::prph;

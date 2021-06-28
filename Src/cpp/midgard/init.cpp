@@ -31,7 +31,7 @@
 	#include <cpp/common/types.hpp>
 	#include <cpp/common/utils.hpp>
 
-	C_LINKAGE i8 bsp_init() {
+	C_LINKAGE init_result_t yggdrasil_init() {
 
 		using namespace bsp;
 		using namespace bsp::ygg::prph;
