@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/common/frontend/CAN.hpp
+  *  @file cpp/common/frontend/can.hpp
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Frontend for the CAN abstraction
@@ -59,7 +59,7 @@ namespace bsp::drv {
 		 * @brief Init function
 		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
@@ -68,7 +68,6 @@ namespace bsp::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
 		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);
@@ -139,14 +138,38 @@ namespace bsp::drv {
 
 		}
 
+		/**
+		 * @brief Standard ID filter configuration function
+		 *
+		 * @param bank Filterbank 0 to 28
+		 * @param id Standard ID 0 to 0x7FF
+		 * @param mask Filtermask 0 to 0x7FF
+		 * @return Success
+		 */
 		static bool setStdFilter(u8 bank, u16 id, u16 mask = 0x7FF) {
 			return Impl::setStdFilter(bank, id, mask);
 		}
 
+		/**
+		 * @brief Extended ID filter configuration function
+		 *
+		 * @param bank Filterbank 0 to 28
+		 * @param id Standard ID 0 to 0x1FFFFFFF
+		 * @param mask Filtermask 0 to 0x1FFFFFFF
+		 * @return Success
+		 *
+		 * @warning This function might have complications with PCAN
+		 */
 		static bool setExtFilter(u8 bank, u32 id, u32 mask = 0x1FFF'FFFF) {
 			return Impl::setExtFilter(bank, id, mask);
 		}
 
+		/**
+		 * @brief Filter bank disable
+		 *
+		 * @param bank Filterbank number
+		 * @return Success
+		 */
 		static bool disableFilter(u8 bank) {
 			return Impl::disableFilter(bank);
 		}

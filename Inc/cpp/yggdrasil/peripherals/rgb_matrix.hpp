@@ -50,6 +50,7 @@ namespace bsp::ygg::prph {
 		 * @return Success
 		 */
 		static bool init() {
+			RGBA8 color = {0};
 			for(u8 i = 0; i <= NumLEDs; i++){
 				setLed(i, color);
 			}
@@ -60,7 +61,6 @@ namespace bsp::ygg::prph {
 		 * @brief Enables the SK9822 led
 		 */
 		static void enable() {
-			RGBA8 color = {0};
 			bsp::SPIA::setMode(bsp::drv::SPIMode::_3);
 			SK9822_EN = 1;
 			flush();

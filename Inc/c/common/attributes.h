@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/common/attributes.h
+  *  @file c/common/attributes.h
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Commonly used C and GNU attributes

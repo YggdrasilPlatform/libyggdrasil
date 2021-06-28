@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/asg_coproc/interfaces.hpp
-  *  @ingroup asg_coproc
+  *  @file cpp/asgard_coproc/interfaces.hpp
+  *  @ingroup asgard_coproc
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Interface definitions for Asgard
   */

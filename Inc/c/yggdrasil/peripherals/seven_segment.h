@@ -32,7 +32,7 @@
  *
  * @return Success
  */
-C_LINKAGE void yggdrasil_SevenSegment_Init(u16 value);
+C_LINKAGE void yggdrasil_SevenSegment_Init(void);
 
 /**
  * @brief Display a unsigned value from 0 to 9999 on the 7 segments

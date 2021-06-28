@@ -128,7 +128,7 @@ namespace bsp::mid::drv {
 		 * @param bank Filterbank 0 to 28
 		 * @param id Standard ID 0 to 0x7FF
 		 * @param mask Filtermask 0 to 0x7FF
-		 * @return True when successfully set, false when not
+		 * @return Success
 		 */
 		static bool setStdFilter(u8 bank, u16 id, u16 mask) {
 			if (bank > 28) return false;
@@ -158,7 +158,7 @@ namespace bsp::mid::drv {
 		 * @param bank Filterbank 0 to 28
 		 * @param id Standard ID 0 to 0x1FFFFFFF
 		 * @param mask Filtermask 0 to 0x1FFFFFFF
-		 * @return True when successfully set, false when not
+		 * @return Success
 		 *
 		 * @warning This function might have complications with PCAN
 		 */
@@ -189,7 +189,7 @@ namespace bsp::mid::drv {
 		 * @brief Filter bank disable
 		 *
 		 * @param bank Filterbank number
-		 * @return True when successfully disabled, false when not
+		 * @return Success
 		 */
 		static bool disableFilter(u8 bank) {
 			if (bank > 28) return false;

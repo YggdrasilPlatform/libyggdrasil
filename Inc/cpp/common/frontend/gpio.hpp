@@ -30,6 +30,9 @@
 
 namespace bsp::drv {
 
+	/**
+	 * @brief GPIO pin logical on state
+	 */
 	enum class Active {
 		Low,
 		High
@@ -49,10 +52,22 @@ namespace bsp::drv {
 
 		using Impl = GPIOImpl<Context>;
 
+		/**
+		 * @brief GPIO Port initialization
+		 *
+		 * @param args Platform specific arguments
+		 * @return Success
+		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
 		}
 
+		/**
+		 * @brief GPIO Port deinitialization
+		 *
+		 * @param args Platform specific arguments
+		 * @return Success
+		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);
 		}

@@ -50,8 +50,6 @@
 
 	#include <cpp/yggdrasil/yggdrasil.hpp>
 
-	#include <cpp/common/frontend/interrupts.hpp>
-
 // C headers
 #else
 

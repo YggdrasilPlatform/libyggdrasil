@@ -54,18 +54,20 @@ namespace bsp::drv {
 		using Impl = SPIImpl<Context>;
 
 		/**
-		 * @brief Init function
+		 * @brief SPI initialization
 		 *
-		 * @return True when successfully started, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
 		}
 
 		/**
-		 * @brief Deinit function
+		 * @brief SPI deinitialization
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);

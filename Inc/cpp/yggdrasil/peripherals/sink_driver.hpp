@@ -235,6 +235,8 @@ namespace bsp::ygg::prph {
 				bsp::SinkDriverTimerB::setPwmFrequency(frequency, resolution);
 				bsp::SinkDriverTimerC::setPwmFrequency(frequency, resolution);
 				bsp::SinkDriverTimerD::setPwmFrequency(frequency, resolution);
+
+				return true;
 			}
 
 		    /**
@@ -257,6 +259,9 @@ namespace bsp::ygg::prph {
 					break;
 				case Channel::D:
 					return bsp::SinkDriverTimerD::getPwmFrequency();
+					break;
+				default:
+					bsp::unreachable();
 					break;
 				}
 			}

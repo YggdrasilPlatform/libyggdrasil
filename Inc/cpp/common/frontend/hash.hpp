@@ -47,18 +47,20 @@ namespace bsp::drv {
 		using Impl = HashImpl<Context>;
 
 		/**
-		 * @brief Init function
+		 * @brief Hash initialization
 		 *
-		 * @return True when successfully started, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
 		}
 
 		/**
-		 * @brief Deinit function
+		 * @brief Hash deinitialization
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);
@@ -71,6 +73,7 @@ namespace bsp::drv {
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
 		 * @param xorOut Value to xor result value with
+		 * @return CRC 8
 		 * @note By default this function uses the CRC-8 settings
 		 */
 		[[nodiscard]] static u8 getCRC8(const auto &data, u8 initValue = 0x00, u8 polynomial = 0x07, u8 xorOut = 0x00) noexcept {
@@ -84,6 +87,7 @@ namespace bsp::drv {
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
 		 * @param xorOut Value to xor result value with
+		 * @return CRC 16
 		 * @note By default this function uses the CRC-16/ARC settings
 		 */
 		[[nodiscard]] static u16 getCRC16(const auto &data, u16 initValue = 0x0000, u16 polynomial = 0x8005, u16 xorOut = 0x0000) noexcept {
@@ -97,6 +101,7 @@ namespace bsp::drv {
 		 * @param initValue Start value
 		 * @param polynomial Used polynomial
 		 * @param xorOut Value to xor result value with
+		 * @return CRC 32
 		 * @note By default this function uses the CRC-32 (ethernet) settings
 		 */
 		[[nodiscard]] static u32 getCRC32(const auto &data, u32 initValue = 0xFFFF'FFFF, u32 polynomial = 0x04C11DB7, u32 xorOut = 0xFFFFFFFF) noexcept {

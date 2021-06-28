@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file c/asgard/core/cortex.hpp
+  *  @file c/asgard/core/cortex.h
   *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Core control functions for Asgard

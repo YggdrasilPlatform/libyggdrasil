@@ -64,18 +64,20 @@ namespace bsp::drv {
 		static inline auto& ProfileCounter = Impl::ProfileCounter;
 
 		/**
-		 * @brief Init function
+		 * @brief Timer initialization
 		 *
-		 * @return True when successfully started, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
 		}
 
 		/**
-		 * @brief Deinit function
+		 * @brief Timer deinitialization
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);

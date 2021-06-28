@@ -53,7 +53,7 @@ namespace bsp::drv {
 		 * @brief Display initialization
 		 *
 		 * @param orientation Display orientation
-		 * @return True when successful, false when not
+		 * @return Success
 		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
@@ -62,7 +62,7 @@ namespace bsp::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);
@@ -137,7 +137,7 @@ namespace bsp::drv {
 		/**
 		 * @brief Clear the display to a color
 		 *
-		 * @param paletteIndex Index for the color
+		 * @param colorIndex Index for the color
 		 */
 		static void clear(auto colorIndex) {
 			Impl::clear(static_cast<u8>(colorIndex));

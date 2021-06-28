@@ -46,18 +46,20 @@ namespace bsp::drv {
 		using Impl = I2CImpl<Context>;
 
 		/**
-		 * @brief Init function
+		 * @brief I2C initialization
 		 *
-		 * @return True when successfully started, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto init(auto ... args) {
 			return Impl::init(args...);
 		}
 
 		/**
-		 * @brief Deinit function
+		 * @brief I2C deinitialization
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @param args Platform specific arguments
+		 * @return Success
 		 */
 		static auto deinit(auto ... args) {
 			return Impl::deinit(args...);

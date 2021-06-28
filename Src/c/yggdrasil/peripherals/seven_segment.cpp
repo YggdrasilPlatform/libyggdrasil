@@ -35,7 +35,7 @@
 
 	using SevenSegment = bsp::ygg::prph::SevenSegment;
 
-	C_LINKAGE void yggdrasil_SevenSegment_SetUnsigned(void) {
+	C_LINKAGE void yggdrasil_SevenSegment_Init(void) {
 		SevenSegment::init();
 	}
 
