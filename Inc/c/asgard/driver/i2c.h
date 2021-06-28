@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Midgard -                            *
+  *                          - Asgard -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,27 +17,31 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file c/midgard/driver/i2c.h
-  *  @ingroup midgard
+  *  @file c/asgard/driver/i2c.h
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief I2C abstraction implementation for Midgard
+  *  @brief I2C abstraction implementation for Asgard
   */
 
 #include <c/common/types.h>
 
-
+/**
+ * @brief I2C handle type
+ */
 typedef struct {
 	u8 interfaceNumber;
-  int fileHandle;
+	int fileHandle;
 } i2c_t;
 
 /**
  * @brief I2C initialization
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c);
 
 /**
  * @brief I2C deinitialization
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_I2C_Deinit(i2c_t i2c);
 

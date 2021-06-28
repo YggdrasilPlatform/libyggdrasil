@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/rng.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/rng.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief RNG abstraction implementation for Midgard
   */

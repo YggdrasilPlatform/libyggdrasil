@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file asgard/driver/gpio.cpp
+  *  @file c/asgard/driver/gpio.cpp
   *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief GPIO Pin abstraction implementation for Asgard

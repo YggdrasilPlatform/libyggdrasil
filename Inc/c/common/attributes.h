@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file cpp/common/attributes.hpp
+  *  @file cpp/common/attributes.h
   *  @ingroup common
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Commonly used C++ and GNU attributes
+  *  @brief Commonly used C and GNU attributes
   */
 
 #pragma once

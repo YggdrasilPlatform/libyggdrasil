@@ -27,6 +27,9 @@
 
 #include <stm32f7xx_hal.h>
 
+/**
+ * @brief RNG handle type
+ */
 typedef struct {
 
 } rng_t;
@@ -35,6 +38,7 @@ typedef struct {
  * @brief RNG initialization
  *
  * @param rng RNG handel
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_RNG_Init(rng_t rng);
 
@@ -42,6 +46,7 @@ C_LINKAGE bool yggdrasil_RNG_Init(rng_t rng);
  * @brief RNG deinitialization
  *
  * @param rng RNG handel
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_RNG_Deinit(rng_t rng);
 
@@ -51,7 +56,7 @@ C_LINKAGE bool yggdrasil_RNG_Deinit(rng_t rng);
  * @param rng RNG handel
  * @return u8 random number
  */
-C_LINKAGE u8   yggdrasil_RNG_GetU8(rng_t rng);
+C_LINKAGE u8 yggdrasil_RNG_GetU8(rng_t rng);
 
 /**
  * @brief Get a random u16
@@ -59,7 +64,7 @@ C_LINKAGE u8   yggdrasil_RNG_GetU8(rng_t rng);
  * @param rng RNG handel
  * @return u16 random number
  */
-C_LINKAGE u16  yggdrasil_RNG_GetU16(rng_t rng);
+C_LINKAGE u16 yggdrasil_RNG_GetU16(rng_t rng);
 
 /**
  * @brief Get a random u32
@@ -67,5 +72,5 @@ C_LINKAGE u16  yggdrasil_RNG_GetU16(rng_t rng);
  * @param rng RNG handel
  * @return u32 random number
  */
-C_LINKAGE u32  yggdrasil_RNG_GetU32(rng_t rng);
+C_LINKAGE u32 yggdrasil_RNG_GetU32(rng_t rng);
 

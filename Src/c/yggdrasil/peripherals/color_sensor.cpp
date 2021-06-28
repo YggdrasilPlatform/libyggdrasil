@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/color_sensor.cpp
+  *  @file c/yggdrasil/peripherals/color_sensor.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Driver to use the TCS3472 color sensor

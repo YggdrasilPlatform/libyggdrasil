@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/motor_driver.cpp
+  *  @file c/yggdrasil/peripherals/motor_driver.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Driver to use the TC78H660FTG DC motor driver

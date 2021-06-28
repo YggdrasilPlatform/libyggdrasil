@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                          - Midgard -                            *
+  *                          - Asgard -                             *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file c/midgard/core/cortex.hpp
-  *  @ingroup midgard
+  *  @file c/asgard/core/cortex.hpp
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Core control functions
+  *  @brief Core control functions for Asgard
   */
 
 #pragma once
@@ -31,6 +31,7 @@
 
 /**
  * @brief Delays execution by a certain number of milliseconds
+ *
  * @param ms Number of milliseconds to wait
  */
 ALWAYS_INLINE void core_Delay(u32 ms) {

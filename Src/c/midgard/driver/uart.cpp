@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/uart.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/uart.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief UART abstraction implementation for Midgard
   */

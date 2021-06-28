@@ -27,6 +27,9 @@
 
 #include <stm32f7xx_hal.h>
 
+/**
+ * @brief I2C handle type
+ */
 typedef struct {
 	I2C_HandleTypeDef *interface;
 } i2c_t;
@@ -35,6 +38,7 @@ typedef struct {
  * @brief I2C initialization
  * 
  * @param i2c I2C handel
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c);
 
@@ -42,6 +46,7 @@ C_LINKAGE bool yggdrasil_I2C_Init(i2c_t i2c);
  * @brief I2C deinitialization
  * 
  * @param i2c I2C handel
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_I2C_Deinit(i2c_t i2c);
 

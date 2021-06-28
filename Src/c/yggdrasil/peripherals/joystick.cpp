@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/humidity_sensor.cpp
+  *  @file c/yggdrasil/peripherals/humidity_sensor.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Driver to use the SHT40-AD1B-R2 humidity sensor

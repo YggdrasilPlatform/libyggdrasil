@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/display.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/display.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Display abstraction implementation for Midgard
   */
@@ -81,8 +81,8 @@
 		return bsp::Display::getFramebufferAddress();
 	}
 
-	C_LINKAGE void yggdrasil_Display_Clear(u8 paletteIndex) {
-		bsp::Display::clear(paletteIndex);
+	C_LINKAGE void yggdrasil_Display_Clear(u8 colorIndex) {
+		bsp::Display::clear(colorIndex);
 	}
 
 	C_LINKAGE void yggdrasil_Display_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex){

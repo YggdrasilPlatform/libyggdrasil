@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/can.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/can.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief CAN abstraction implementation for Midgard
   */

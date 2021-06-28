@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file c/midgard/core/cortex.hpp
+  *  @file c/midgard/core/cortex.h
   *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Core control functions

@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/hash.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/hash.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Hash abstraction implementation for Midgard
   */

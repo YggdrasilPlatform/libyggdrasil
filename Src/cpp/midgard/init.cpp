@@ -5,7 +5,7 @@
  *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
  *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
  *   \/     /_____//_____/      \/            \/     \/            *
- *                         - Yggdrasil -                           *
+ *                         - Midgard -                             *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This software can be used by students and other personal of the *
  * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,10 +17,10 @@
  * All rights reserved.                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
- *  @file cpp/midgard/midgard/init.cpp
- *  @ingroup yggdrasil
+ *  @file cpp/midgard/init.cpp
+ *  @ingroup midgard
  *  @author Fabian Weber, Nikolaij Saegesser
- *  @brief Hardware initialization for midgard
+ *  @brief Hardware initialization for Midgard
  */
 
 #include <yggdrasil.h>

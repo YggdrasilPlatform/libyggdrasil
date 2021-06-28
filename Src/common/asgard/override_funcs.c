@@ -18,7 +18,7 @@
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
   *  @file common/asgard/override_funcs.c
-  *  @ingroup midgard
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Function overriding for Asgard
   */

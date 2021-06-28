@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/i2c.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/i2c.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief I2C abstraction implementation for Midgard
   */

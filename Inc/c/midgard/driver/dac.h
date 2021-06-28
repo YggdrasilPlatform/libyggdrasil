@@ -27,10 +27,12 @@
 
 #include <stm32f7xx_hal.h>
 
+/**
+ * @brief DAC handle type
+ */
 typedef struct {
 	DAC_HandleTypeDef *interface;
 	u8 channel;
-
 	u16 offset;
 	u16 maxValue;
 } dac_t;
@@ -39,7 +41,7 @@ typedef struct {
  * @brief DAC init function
  *
  * @param dac DAC handle
- * @return True when successfully stared, false when not
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_DAC_Init(dac_t dac);
 
@@ -47,7 +49,7 @@ C_LINKAGE bool yggdrasil_DAC_Init(dac_t dac);
  * @brief DAC deinit function
  *
  * @param dac DAC handle
- * @return True when successfully stopped, false when not
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_DAC_Deinit(dac_t dac);
 

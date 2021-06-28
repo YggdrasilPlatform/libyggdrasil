@@ -29,11 +29,15 @@
 
 /**
  * @brief Hash initialization
+ *
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_HASH_Init(void);
 
 /**
  * @brief Hash deinitialization
+ *
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_HASH_Deinit(void);
 
@@ -45,8 +49,9 @@ C_LINKAGE bool yggdrasil_HASH_Deinit(void);
  * @param initValue Start value
  * @param polynomial Used polynomial
  * @param xorOut Value to xor result value with
+ * @return CRC 8
  */
-C_LINKAGE u8   yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 polynomial, u8 xorOut);
+C_LINKAGE u8 yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 polynomial, u8 xorOut);
 
 /**
  * @brief Hardware accelerated CRC16 caluclation
@@ -56,8 +61,9 @@ C_LINKAGE u8   yggdrasil_HASH_getCRC8(void *data, size_t size, u8 initValue, u8 
  * @param initValue Start value
  * @param polynomial Used polynomial
  * @param xorOut Value to xor result value with
+ * @return CRC 16
  */
-C_LINKAGE u16  yggdrasil_HASH_getCRC16(void *data, size_t size, u16 initValue, u16 polynomial, u16 xorOut);
+C_LINKAGE u16 yggdrasil_HASH_getCRC16(void *data, size_t size, u16 initValue, u16 polynomial, u16 xorOut);
 
 /**
  * @brief Hardware accelerated CRC32 caluclation
@@ -67,5 +73,6 @@ C_LINKAGE u16  yggdrasil_HASH_getCRC16(void *data, size_t size, u16 initValue, u
  * @param initValue Start value
  * @param polynomial Used polynomial
  * @param xorOut Value to xor result value with
+ * @return CRC 32
  */
-C_LINKAGE u32  yggdrasil_HASH_getCRC32(void *data, size_t size, u32 initValue, u32 polynomial, u32 xorOut);
+C_LINKAGE u32 yggdrasil_HASH_getCRC32(void *data, size_t size, u32 initValue, u32 polynomial, u32 xorOut);

@@ -27,6 +27,9 @@
 
 #include <stm32f7xx_hal.h>
 
+/**
+ * @brief SPI handle type
+ */
 typedef struct {
 	SPI_HandleTypeDef *interface;
 } spi_t;
@@ -46,6 +49,7 @@ enum SPIMode {
  * @brief SPI initialization
  * 
  * @param spi SPI handel
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_SPI_Init(spi_t spi);
 
@@ -53,6 +57,7 @@ C_LINKAGE bool yggdrasil_SPI_Init(spi_t spi);
  * @brief SPI deinitialization
  * 
  * @param spi SPI handel
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_SPI_Deinit(spi_t spi);
 

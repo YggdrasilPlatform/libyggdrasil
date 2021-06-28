@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/dac.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/dac.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief DAC abstraction implementation for Midgard
   */

@@ -30,9 +30,19 @@
 #define LOW_ACTIVE true
 #define HIGH_ACTIVE false
 
+/**
+ * @brief GPIO port type
+ */
 typedef GPIO_TypeDef* port_t;
+
+/**
+ * @brief GPIO pin type
+ */
 typedef u8 pin_t;
 
+/**
+ * @brief GPIO handle type
+ */
 typedef struct {
 	port_t port;
 	pin_t pin;
@@ -43,6 +53,7 @@ typedef struct {
  * @brief GPIO initialization
  *
  * @param gpio GPIO handle
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio);
 
@@ -50,6 +61,7 @@ C_LINKAGE bool yggdrasil_GPIO_Init(gpio_t gpio);
  * @brief GPIO deinitialization
  *
  * @param gpio GPIO handle
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_GPIO_Deinit(gpio_t gpio);
 

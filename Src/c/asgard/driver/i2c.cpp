@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Midgard -                             *
+  *                         - Asgard -                              *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/i2c.cpp
-  *  @ingroup yggdrasil
+  *  @file c/asgard/driver/i2c.cpp
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief I2C abstraction implementation for Midgard
+  *  @brief I2C abstraction implementation for Asgard
   */
 
 #include <yggdrasil.h>

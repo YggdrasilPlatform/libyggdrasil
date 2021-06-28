@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/spi.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/spi.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief SPI abstraction implementation for Midgard
   */

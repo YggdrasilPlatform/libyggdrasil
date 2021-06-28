@@ -28,15 +28,19 @@
 #define LOW_ACTIVE true
 #define HIGH_ACTIVE false
 
+/**
+ * @brief GPIO handle type
+ */
 typedef struct {
 	u8 pinNumber;
-  bool lowActive;
+	bool lowActive;
 } gpio_t;
 
 /**
  * @brief GPIO initialization
  *
  * @param gpio GPIO handle
+ * @return Success
  */
 extern "C" bool yggdrasil_GPIO_Init(gpio_t gpio);
 
@@ -44,6 +48,7 @@ extern "C" bool yggdrasil_GPIO_Init(gpio_t gpio);
  * @brief GPIO deinitialization
  *
  * @param gpio GPIO handle
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_GPIO_Deinit(gpio_t gpio);
 
@@ -51,6 +56,7 @@ C_LINKAGE bool yggdrasil_GPIO_Deinit(gpio_t gpio);
  * @brief Turn pin into an output
  *
  * @param gpio GPIO handle
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_GPIO_MakeOutput(gpio_t gpio);
 
@@ -58,6 +64,7 @@ C_LINKAGE bool yggdrasil_GPIO_MakeOutput(gpio_t gpio);
  * @brief Turn pin into an input
  *
  * @param gpio GPIO handle
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_GPIO_MakeInput(gpio_t gpio);
 

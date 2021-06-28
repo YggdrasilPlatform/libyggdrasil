@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/pressure_sensor.cpp
+  *  @file c/yggdrasil/peripherals/pressure_sensor.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Driver to use the RV-3028-C7 RTC

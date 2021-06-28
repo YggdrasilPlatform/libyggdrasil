@@ -17,8 +17,8 @@
  * All rights reserved.                                            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
- *  @file midgard/driver/timer.cpp
- *  @ingroup yggdrasil
+ *  @file c/midgard/driver/timer.cpp
+ *  @ingroup midgard
  *  @author Fabian Weber, Nikolaij Saegesser
  *  @brief Timer abstraction implementation for Midgard
  */

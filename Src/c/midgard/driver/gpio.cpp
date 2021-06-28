@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/gpio.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/gpio.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief GPIO Pin abstraction implementation for Midgard
   */

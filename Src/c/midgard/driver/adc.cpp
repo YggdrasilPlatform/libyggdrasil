@@ -17,8 +17,8 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/adc.cpp
-  *  @ingroup yggdrasil
+  *  @file c/midgard/driver/adc.cpp
+  *  @ingroup midgard
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief ADC abstraction implementation for Midgard
   */

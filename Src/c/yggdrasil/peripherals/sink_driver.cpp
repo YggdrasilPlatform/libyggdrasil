@@ -17,7 +17,7 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file yggdrasil/peripherals/sink_driver.cpp
+  *  @file c/yggdrasil/peripherals/sink_driver.cpp
   *  @ingroup yggdrasil
   *  @author Fabian Weber, Nikolaij Saegesser
   *  @brief Driver to use the sink driver

@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file common/asgard/override_funcs.c
-  *  @ingroup midgard
+  *  @file common/asgard_coproc/override_funcs.c
+  *  @ingroup asgard_coproc
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Function overriding for Asgard
+  *  @brief Function overriding for Asgard coprocessor
   */
 
 #include <yggdrasil.h>

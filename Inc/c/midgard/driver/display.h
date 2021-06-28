@@ -28,6 +28,9 @@
 #include <stm32f7xx_hal.h>
 #include <c/resources/fonts/fonts.h>
 
+/**
+ * @brief Color palette type
+ */
 typedef struct {
 	u32 colors[256];
 } palette_t;
@@ -65,14 +68,14 @@ enum Color {
  * @brief Display initialization
  *
  * @param orientation Display orientation
- * @return True when successful, false when not
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_Display_Init(enum DisplayOrientation orientation);
 
 /*
  * @brief Display deinitialization
  *
- * @return True when successful, false when not
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_Display_Deinit();
 
@@ -108,7 +111,7 @@ C_LINKAGE u16  yggdrasil_Display_getHeight(void);
 /*
  * @brief Set the color palette
  *
- * @param palettet Color palette
+ * @param palette Color palette
  */
 C_LINKAGE void yggdrasil_Display_SetPalette(palette_t *palette);
 
@@ -129,9 +132,9 @@ C_LINKAGE void * yggdrasil_Display_GetFrameBufferAddress(void);
 /**
  * @brief Clear the display to a color
  *
- * @param paletteIndex Index for the color
+ * @param colorIndex Index for the color
  */
-C_LINKAGE void yggdrasil_Display_Clear(u8 paletteIndex);
+C_LINKAGE void yggdrasil_Display_Clear(u8 colorIndex);
 
 /**
  * @brief Draw a rectangle

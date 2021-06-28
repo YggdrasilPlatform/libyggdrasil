@@ -5,7 +5,7 @@
   *   \____   / /_/  > /_/  > /_/ | |  | \// __ \_\___ \|  |  |__   *
   *   / ______\___  /\___  /\____ | |__|  (____  /____  >__|____/   *
   *   \/     /_____//_____/      \/            \/     \/            *
-  *                         - Midgard -                             *
+  *                         - Asgard -                              *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * This software can be used by students and other personal of the *
   * Bern University of Applied Sciences under the terms of the MIT  *
@@ -17,10 +17,10 @@
   * All rights reserved.                                            *
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /**
-  *  @file midgard/driver/display.cpp
-  *  @ingroup yggdrasil
+  *  @file c/asgard/driver/display.cpp
+  *  @ingroup asgard
   *  @author Fabian Weber, Nikolaij Saegesser
-  *  @brief Display abstraction implementation for Midgard
+  *  @brief Display abstraction implementation for Asgard
   */
 
 #include <yggdrasil.h>
@@ -68,40 +68,40 @@
 		return bsp::Display::getFramebufferAddress();
 	}
 
-	C_LINKAGE void yggdrasil_Display_Clear(u8 paletteIndex) {
-		bsp::Display::clear(paletteIndex);
+	C_LINKAGE void yggdrasil_Display_Clear(u16 color) {
+		bsp::Display::clear(color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex){
-		bsp::Display::drawRectangle(x1, y1, x2, y2, colorIndex);
+	C_LINKAGE void yggdrasil_Display_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color){
+		bsp::Display::drawRectangle(x1, y1, x2, y2, color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex){
-		bsp::Display::fillRectangle(x1, y1, x2, y2, colorIndex);
+	C_LINKAGE void yggdrasil_Display_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color){
+		bsp::Display::fillRectangle(x1, y1, x2, y2, color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_DrawPixel(u16 x, u16 y, u8 colorIndex) {
-		bsp::Display::drawPixel(x, y, colorIndex);
+	C_LINKAGE void yggdrasil_Display_DrawPixel(u16 x, u16 y, u16 color) {
+		bsp::Display::drawPixel(x, y, color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u8 colorIndex) {
-		bsp::Display::drawLine(x1, y1, x2, y2, colorIndex);
+	C_LINKAGE void yggdrasil_Display_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color) {
+		bsp::Display::drawLine(x1, y1, x2, y2, color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_DrawCircle(i16 centerX, i16 centerY, u16 radius, u8 colorIndex) {
-		bsp::Display::drawCircle(centerX, centerY, radius, colorIndex);
+	C_LINKAGE void yggdrasil_Display_DrawCircle(i16 centerX, i16 centerY, u16 radius, u16 color) {
+		bsp::Display::drawCircle(centerX, centerY, radius, color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_FillCircle(i16 centerX, i16 centerY, u16 radius, u8 colorIndex) {
-		bsp::Display::fillCircle(centerX, centerY, radius, colorIndex);
+	C_LINKAGE void yggdrasil_Display_FillCircle(i16 centerX, i16 centerY, u16 radius, u16 color) {
+		bsp::Display::fillCircle(centerX, centerY, radius, color);
 	}
 
-	C_LINKAGE void yggdrasil_Display_DrawCharacter(u16 x, u16 y, char c, u8 colorIndex, Font *font) {
-		bsp::Display::drawCharacter(x, y, c, colorIndex, *font);
+	C_LINKAGE void yggdrasil_Display_DrawCharacter(u16 x, u16 y, char c, u16 color, Font *font) {
+		bsp::Display::drawCharacter(x, y, c, color, *font);
 	}
 
-	C_LINKAGE void yggdrasil_Display_DrawString(u16 x, u16 y, const char *string, u8 colorIndex, Font *font) {
-		bsp::Display::drawString(x, y, string, colorIndex, *font);
+	C_LINKAGE void yggdrasil_Display_DrawString(u16 x, u16 y, const char *string, u16 color, Font *font) {
+		bsp::Display::drawString(x, y, string, color, *font);
 	}
 
 

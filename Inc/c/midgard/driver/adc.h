@@ -27,6 +27,9 @@
 
 #include <stm32f7xx_hal.h>
 
+/**
+ * @brief ADC handle type
+ */
 typedef struct {
 	ADC_HandleTypeDef *interface;
 	u8 channel;
@@ -39,7 +42,7 @@ typedef struct {
  * @brief ADC init function
  *
  * @param adc ADC handle
- * @return True when successfully stared, false when not
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_ADC_Init(adc_t adc);
 
@@ -47,7 +50,7 @@ C_LINKAGE bool yggdrasil_ADC_Init(adc_t adc);
  * @brief ADC deinit function
  *
  * @param adc ADC handle
- * @return True when successfully stopped, false when not
+ * @return Success
  */
 C_LINKAGE bool yggdrasil_ADC_Deinit(adc_t adc);
 
