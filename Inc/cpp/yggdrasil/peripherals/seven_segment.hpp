@@ -34,7 +34,7 @@
 namespace bsp::ygg::prph {
 
 	/**
-	 * @ Sevensegment driver
+	 * @brief Sevensegment driver
 	 */
 	class SevenSegment {
 	public:

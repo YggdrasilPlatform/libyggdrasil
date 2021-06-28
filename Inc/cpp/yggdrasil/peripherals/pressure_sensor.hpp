@@ -42,7 +42,7 @@ namespace bsp::ygg::prph {
 		/**
 		 * @brief Initializes the LPS22HBTR pressure sensor
 		 *
-		 * @return True when the connected device matched the device id, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			u8 retries = 0;

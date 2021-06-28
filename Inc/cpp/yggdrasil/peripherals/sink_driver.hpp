@@ -101,7 +101,7 @@ namespace bsp::ygg::prph {
 			}
 
 			/**
-			 * @brief FUnction to set the high time of the pwm pulse
+			 * @brief Function to set the high time of the pwm pulse
 			 *
 			 * @param channel Channel which should be changed
 			 * @param delta High time of the pwm pulse in ms

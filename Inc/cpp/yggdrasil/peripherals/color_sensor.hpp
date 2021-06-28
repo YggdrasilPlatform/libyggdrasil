@@ -65,7 +65,7 @@ namespace bsp::ygg::prph {
 		 * @brief Initialization of the TCS3472 color sensor
 		 * @note This function does start a conversion. Values for integration time (2.4ms) and gain (1x) are set
 		 *
-		 * @return True when the connected device matched the device id, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			u8 retries = 0;

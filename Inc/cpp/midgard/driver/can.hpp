@@ -46,7 +46,7 @@ namespace bsp::mid::drv {
 		 * @brief Init function
 		 * @note Filter bank 0 will be set to 0 0 to accept all IDs
 		 *
-		 * @return True when successfully started, false when not
+		 * @return Success
 		 */
 		static bool init() {
 			setStdFilter(0, 0, 0);	// bank 0 will accept all IDs
@@ -56,7 +56,7 @@ namespace bsp::mid::drv {
 		/**
 		 * @brief Deinit function
 		 *
-		 * @return True when successfully stopped, false when not
+		 * @return Success
 		 */
 		static bool deinit() {
 			return true;
