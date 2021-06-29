@@ -340,7 +340,7 @@ namespace bsp::mid::drv {
 		 * @param color Index for the color
 		 */
 		ALWAYS_INLINE static void setPixel(u16 x, u16 y, u8 color) {
-			reinterpret_cast<u8*>(FramebufferAddress)[y * Display::s_xSize + x] = paletteIndex;
+			reinterpret_cast<u8*>(FramebufferAddress)[y * Display::s_xSize + x] = color;
 		}
 
 		/**
@@ -358,7 +358,7 @@ namespace bsp::mid::drv {
 
 			if(HAL_DMA2D_Init(hdma2d) == HAL_OK) {
 				if(HAL_DMA2D_ConfigLayer(hdma2d, 0) == HAL_OK) {
-					if (HAL_DMA2D_Start(hdma2d, paletteIndex << 24 | paletteIndex << 16 | paletteIndex << 8 | paletteIndex, FramebufferAddress, Display::s_xSize / 4, Display::s_ySize) == HAL_OK) {
+					if (HAL_DMA2D_Start(hdma2d, color << 24 | color << 16 | color << 8 | color, FramebufferAddress, Display::s_xSize / 4, Display::s_ySize) == HAL_OK) {
 
 						HAL_DMA2D_PollForTransfer(hdma2d, 10);
 					}

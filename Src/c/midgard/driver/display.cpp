@@ -35,8 +35,8 @@
 
 	#include <math.h>
 
-	C_LINKAGE bool yggdrasil_Display_Init(enum DisplayOrientation orientation) {
-		return bsp::Display::init(static_cast<bsp::Display::Impl::Orientation>(orientation));
+	C_LINKAGE bool yggdrasil_Display_Init(void) {
+		return bsp::Display::init();
 	}
 
 	bool yggdrasil_Display_Deinit() {
